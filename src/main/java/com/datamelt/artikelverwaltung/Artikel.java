@@ -2,22 +2,22 @@ package com.datamelt.artikelverwaltung;
 
 import com.datamelt.artikelverwaltung.enums.ArtikelArt;
 import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
+import org.graalvm.compiler.api.replacements.Snippet;
 
 import java.util.Date;
 
 public abstract class Artikel
 {
-    private ArtikelArt art;
     private ArtikelUrsprung ursprung;
     private String bezeichnung;
     private String beschreibung;
+    private String bemerkung;
     private Date gueltigVon;
     private Date gueltigBis;
 
 
-    public Artikel(ArtikelArt art, ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
+    public Artikel(ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
     {
-        this.art = art;
         this.ursprung = ursprung;
         this.bezeichnung = bezeichnung;
         this.gueltigVon = gueltigVon;
@@ -25,11 +25,6 @@ public abstract class Artikel
     }
 
     protected abstract void erstellen();
-
-    public ArtikelArt getArt()
-    {
-        return art;
-    }
 
     public ArtikelUrsprung getUrsprung()
     {
@@ -59,5 +54,15 @@ public abstract class Artikel
     public void setBeschreibung(String beschreibung)
     {
         this.beschreibung = beschreibung;
+    }
+
+    public String getBemerkung()
+    {
+        return bemerkung;
+    }
+
+    public void setBemerkung(String bemerkung)
+    {
+        this.bemerkung = bemerkung;
     }
 }

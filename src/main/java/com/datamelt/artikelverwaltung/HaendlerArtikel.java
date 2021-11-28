@@ -9,7 +9,7 @@ public class HaendlerArtikel extends Artikel
 {
     public HaendlerArtikel(ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
     {
-        super(ArtikelArt.HAENDLERARTIKEL, ursprung, bezeichnung, gueltigVon, gueltigBis);
+        super(ursprung, bezeichnung, gueltigVon, gueltigBis);
         erstellen();
     }
 

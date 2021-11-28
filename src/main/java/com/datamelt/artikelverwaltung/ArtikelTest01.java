@@ -27,9 +27,10 @@ public class ArtikelTest01
                 .build()
                 .getTime();
 
-        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(ArtikelArt.HAENDLERARTIKEL, ArtikelUrsprung.BORGMEIER, "Ei Größe M",gueltigVon, gueltigBis);
-
+        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(ArtikelUrsprung.BORGMEIER, "Ei Größe M",gueltigVon, gueltigBis);
         artikel1.setBeschreibung("Ein Ei");
+
+        Artikel artikel2 = ArtikelFabrik.erstelleArtikel(ArtikelUrsprung.MOGK,"Leberwurst",gueltigVon, gueltigBis);
 
         System.out.println();
 

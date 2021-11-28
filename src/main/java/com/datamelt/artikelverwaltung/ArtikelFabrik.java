@@ -7,16 +7,18 @@ import java.util.Date;
 
 public class ArtikelFabrik
 {
-    public static Artikel erstelleArtikel(ArtikelArt art, ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
+    public static Artikel erstelleArtikel(ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
     {
         Artikel artikel = null;
-        switch (art)
+        switch (ursprung)
         {
-            case HAENDLERARTIKEL:
+            case BORGMEIER:
                 artikel = new HaendlerArtikel(ursprung, bezeichnung, gueltigVon, gueltigBis);
                 break;
-
-            case HERSTELLUNGSARTIKEL:
+            case KUNSCHKE:
+                artikel = new HaendlerArtikel(ursprung, bezeichnung, gueltigVon, gueltigBis);
+                break;
+            case MOGK:
                 artikel = new HerstellungsArtikel(ursprung, bezeichnung, gueltigVon, gueltigBis);
                 break;
             default:

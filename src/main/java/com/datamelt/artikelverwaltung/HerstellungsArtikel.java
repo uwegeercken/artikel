@@ -9,7 +9,7 @@ public class HerstellungsArtikel extends Artikel
 {
     public HerstellungsArtikel(ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
     {
-        super(ArtikelArt.HAENDLERARTIKEL, ursprung, bezeichnung, gueltigVon, gueltigBis);
+        super(ursprung, bezeichnung, gueltigVon, gueltigBis);
         erstellen();
     }
 

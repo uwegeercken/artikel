@@ -4,5 +4,8 @@ public enum ArtikelUrsprung
 {
     MOGK,
     KUNSCHKE,
-    BORGMEIER,
+    BORGMEIER;
+
+    private String type;
+
 }
