@@ -3,25 +3,28 @@ package com.datamelt.artikelverwaltung;
 import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
 import com.datamelt.artikelverwaltung.enums.MengenTyp;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ArtikelTest01
 {
     public static void main(String[] args)
     {
+        ArtikelListe artikelListe = generiereArtikel();
 
+        Bestellung bestellung = new Bestellung();
+        bestellung.put(artikelListe.searchArtikel("1 Karton Eier Größe M"),5);
+        bestellung.put(artikelListe.searchArtikel("1 Glas Sauerfleisch 250gr"),10);
 
-
+        Artikel wegDamit = artikelListe.searchArtikel("1 Glas Sauerfleisch 250gr");
+        bestellung.remove(wegDamit);
 
         System.out.println();
-
-
-
-
     }
 
-    private static void generiereArtikel()
+    private static ArtikelListe generiereArtikel()
     {
         Date gueltigVon = new Calendar.Builder()
                 .set(Calendar.YEAR,2021)
@@ -44,10 +47,15 @@ public class ArtikelTest01
         BasisArtikel basisartikel2 = new BasisArtikel(ArtikelUrsprung.MOGK,"Glas Sauerfleisch 250gr",null);
         BasisArtikel basisartikel3 = new BasisArtikel(ArtikelUrsprung.MOGK,"Becher Fleischsalat 250gr",null);
 
-        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(basisartikel1, "1 Karton Eier Größe M",null,100, MengenTyp.KARTON);
-        Artikel artikel2 = ArtikelFabrik.erstelleArtikel(basisartikel2, "1 Glas Sauerfleisch 250gr",null,1, MengenTyp.EINZELMENGE);
+        ArtikelListe artikelListe = new ArtikelListe();
 
+        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(basisartikel1, "1 Karton Eier Größe M",null,new ArtikelMenge(100, MengenTyp.KARTON),new ArtikelGueltigkeit(gueltigVon, gueltigBis));
+        Artikel artikel2 = ArtikelFabrik.erstelleArtikel(basisartikel2, "1 Glas Sauerfleisch 250gr",null,new ArtikelMenge(1, MengenTyp.EINZELMENGE),new ArtikelGueltigkeit(gueltigVon, gueltigBis));
 
+        artikelListe.addArtikel(artikel1);
+        artikelListe.addArtikel(artikel2);
+
+        return artikelListe;
 
     }
 }

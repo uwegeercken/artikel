@@ -2,21 +2,21 @@ package com.datamelt.artikelverwaltung;
 
 import com.datamelt.artikelverwaltung.enums.MengenTyp;
 
+import java.util.Date;
+
 public class ArtikelFabrik
 {
-    public static Artikel erstelleArtikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, double einzelStueckzahl, MengenTyp mengenTyp)
+    public static Artikel erstelleArtikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung,  ArtikelMenge menge, ArtikelGueltigkeit gueltigkeit)
     {
         Artikel artikel = null;
         switch (basisArtikel.getUrsprung())
         {
             case BORGMEIER:
-                artikel = new HaendlerArtikel(basisArtikel, bezeichnung, beschreibung, einzelStueckzahl, mengenTyp);
-                break;
             case KUNSCHKE:
-                artikel = new HaendlerArtikel(basisArtikel, bezeichnung, beschreibung, einzelStueckzahl, mengenTyp);
+                artikel = new HaendlerArtikel(basisArtikel, bezeichnung, beschreibung, ArtikelMenge menge, ArtikelGueltigkeit gueltigkeit);
                 break;
             case MOGK:
-                artikel = new HerstellungsArtikel(basisArtikel, bezeichnung, beschreibung, einzelStueckzahl, mengenTyp);
+                artikel = new HerstellungsArtikel(basisArtikel, bezeichnung, beschreibung, ArtikelMenge menge, ArtikelGueltigkeit gueltigkeit);
                 break;
             default:
                 break;
