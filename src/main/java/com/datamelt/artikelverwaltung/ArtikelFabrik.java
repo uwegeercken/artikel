@@ -13,10 +13,10 @@ public class ArtikelFabrik
         {
             case BORGMEIER:
             case KUNSCHKE:
-                artikel = new HaendlerArtikel(basisArtikel, bezeichnung, beschreibung, ArtikelMenge menge, ArtikelGueltigkeit gueltigkeit);
+                artikel = new HaendlerArtikel(basisArtikel, bezeichnung, beschreibung, menge, gueltigkeit);
                 break;
             case MOGK:
-                artikel = new HerstellungsArtikel(basisArtikel, bezeichnung, beschreibung, ArtikelMenge menge, ArtikelGueltigkeit gueltigkeit);
+                artikel = new HerstellungsArtikel(basisArtikel, bezeichnung, beschreibung, menge, gueltigkeit);
                 break;
             default:
                 break;

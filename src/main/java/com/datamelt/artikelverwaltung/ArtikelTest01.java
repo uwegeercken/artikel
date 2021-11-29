@@ -43,14 +43,16 @@ public class ArtikelTest01
                 .build()
                 .getTime();
 
+        ArtikelGueltigkeit gueltigkeit = new ArtikelGueltigkeit(gueltigVon, gueltigBis);
+
         BasisArtikel basisartikel1 = new BasisArtikel(ArtikelUrsprung.BORGMEIER,"Ei Größe M",null);
         BasisArtikel basisartikel2 = new BasisArtikel(ArtikelUrsprung.MOGK,"Glas Sauerfleisch 250gr",null);
         BasisArtikel basisartikel3 = new BasisArtikel(ArtikelUrsprung.MOGK,"Becher Fleischsalat 250gr",null);
 
         ArtikelListe artikelListe = new ArtikelListe();
 
-        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(basisartikel1, "1 Karton Eier Größe M",null,new ArtikelMenge(100, MengenTyp.KARTON),new ArtikelGueltigkeit(gueltigVon, gueltigBis));
-        Artikel artikel2 = ArtikelFabrik.erstelleArtikel(basisartikel2, "1 Glas Sauerfleisch 250gr",null,new ArtikelMenge(1, MengenTyp.EINZELMENGE),new ArtikelGueltigkeit(gueltigVon, gueltigBis));
+        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(basisartikel1, "1 Karton Eier Größe M",null,new ArtikelMenge(100, MengenTyp.KARTON), gueltigkeit);
+        Artikel artikel2 = ArtikelFabrik.erstelleArtikel(basisartikel2, "1 Glas Sauerfleisch 250gr",null,new ArtikelMenge(1, MengenTyp.EINZELMENGE), gueltigkeit);
 
         artikelListe.addArtikel(artikel1);
         artikelListe.addArtikel(artikel2);
