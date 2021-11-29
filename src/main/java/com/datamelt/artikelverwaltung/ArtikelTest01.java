@@ -1,7 +1,7 @@
 package com.datamelt.artikelverwaltung;
 
-import com.datamelt.artikelverwaltung.enums.ArtikelArt;
 import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
+import com.datamelt.artikelverwaltung.enums.MengenTyp;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,6 +9,19 @@ import java.util.Date;
 public class ArtikelTest01
 {
     public static void main(String[] args)
+    {
+
+
+
+
+        System.out.println();
+
+
+
+
+    }
+
+    private static void generiereArtikel()
     {
         Date gueltigVon = new Calendar.Builder()
                 .set(Calendar.YEAR,2021)
@@ -27,13 +40,12 @@ public class ArtikelTest01
                 .build()
                 .getTime();
 
-        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(ArtikelUrsprung.BORGMEIER, "Ei Größe M",gueltigVon, gueltigBis);
-        artikel1.setBeschreibung("Ein Ei");
+        BasisArtikel basisartikel1 = new BasisArtikel(ArtikelUrsprung.BORGMEIER,"Ei Größe M",null);
+        BasisArtikel basisartikel2 = new BasisArtikel(ArtikelUrsprung.MOGK,"Glas Sauerfleisch 250gr",null);
+        BasisArtikel basisartikel3 = new BasisArtikel(ArtikelUrsprung.MOGK,"Becher Fleischsalat 250gr",null);
 
-        Artikel artikel2 = ArtikelFabrik.erstelleArtikel(ArtikelUrsprung.MOGK,"Leberwurst",gueltigVon, gueltigBis);
-
-        System.out.println();
-
+        Artikel artikel1 = ArtikelFabrik.erstelleArtikel(basisartikel1, "1 Karton Eier Größe M",null,100, MengenTyp.KARTON);
+        Artikel artikel2 = ArtikelFabrik.erstelleArtikel(basisartikel2, "1 Glas Sauerfleisch 250gr",null,1, MengenTyp.EINZELMENGE);
 
 
 

@@ -6,6 +6,7 @@ public enum ArtikelUrsprung
     KUNSCHKE,
     BORGMEIER;
 
+
     private String type;
 
 }

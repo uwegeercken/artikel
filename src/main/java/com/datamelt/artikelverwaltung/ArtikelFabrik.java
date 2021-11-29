@@ -1,25 +1,22 @@
 package com.datamelt.artikelverwaltung;
 
-import com.datamelt.artikelverwaltung.enums.ArtikelArt;
-import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
-
-import java.util.Date;
+import com.datamelt.artikelverwaltung.enums.MengenTyp;
 
 public class ArtikelFabrik
 {
-    public static Artikel erstelleArtikel(ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
+    public static Artikel erstelleArtikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, double einzelStueckzahl, MengenTyp mengenTyp)
     {
         Artikel artikel = null;
-        switch (ursprung)
+        switch (basisArtikel.getUrsprung())
         {
             case BORGMEIER:
-                artikel = new HaendlerArtikel(ursprung, bezeichnung, gueltigVon, gueltigBis);
+                artikel = new HaendlerArtikel(basisArtikel, bezeichnung, beschreibung, einzelStueckzahl, mengenTyp);
                 break;
             case KUNSCHKE:
-                artikel = new HaendlerArtikel(ursprung, bezeichnung, gueltigVon, gueltigBis);
+                artikel = new HaendlerArtikel(basisArtikel, bezeichnung, beschreibung, einzelStueckzahl, mengenTyp);
                 break;
             case MOGK:
-                artikel = new HerstellungsArtikel(ursprung, bezeichnung, gueltigVon, gueltigBis);
+                artikel = new HerstellungsArtikel(basisArtikel, bezeichnung, beschreibung, einzelStueckzahl, mengenTyp);
                 break;
             default:
                 break;

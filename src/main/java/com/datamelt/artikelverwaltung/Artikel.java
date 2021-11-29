@@ -1,68 +1,30 @@
 package com.datamelt.artikelverwaltung;
 
-import com.datamelt.artikelverwaltung.enums.ArtikelArt;
-import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
-import org.graalvm.compiler.api.replacements.Snippet;
+import com.datamelt.artikelverwaltung.enums.MengenTyp;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Artikel
 {
-    private ArtikelUrsprung ursprung;
     private String bezeichnung;
     private String beschreibung;
-    private String bemerkung;
-    private Date gueltigVon;
-    private Date gueltigBis;
+    private BasisArtikel basisArtikel;
+    private double einzelStueckzahl;
+    private MengenTyp mengenTyp;
 
-
-    public Artikel(ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
+    public Artikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, double einzelStueckzahl, MengenTyp mengenTyp)
     {
-        this.ursprung = ursprung;
         this.bezeichnung = bezeichnung;
-        this.gueltigVon = gueltigVon;
-        this.gueltigBis = gueltigBis;
-    }
-
-    protected abstract void erstellen();
-
-    public ArtikelUrsprung getUrsprung()
-    {
-        return ursprung;
-    }
-
-    public String getBezeichnung()
-    {
-        return bezeichnung;
-    }
-
-    public Date getGueltigVon()
-    {
-        return gueltigVon;
-    }
-
-    public Date getGueltigBis()
-    {
-        return gueltigBis;
-    }
-
-    public String getBeschreibung()
-    {
-        return beschreibung;
-    }
-
-    public void setBeschreibung(String beschreibung)
-    {
         this.beschreibung = beschreibung;
+        this.basisArtikel = basisArtikel;
+        this.einzelStueckzahl = einzelStueckzahl;
+        this.mengenTyp = mengenTyp;
     }
 
-    public String getBemerkung()
+    protected void erstellen()
     {
-        return bemerkung;
+
     }
 
-    public void setBemerkung(String bemerkung)
-    {
-        this.bemerkung = bemerkung;
-    }
 }

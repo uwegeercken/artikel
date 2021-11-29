@@ -1,15 +1,13 @@
 package com.datamelt.artikelverwaltung;
 
-import com.datamelt.artikelverwaltung.enums.ArtikelArt;
 import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
-
-import java.util.Date;
+import com.datamelt.artikelverwaltung.enums.MengenTyp;
 
 public class HerstellungsArtikel extends Artikel
 {
-    public HerstellungsArtikel(ArtikelUrsprung ursprung, String bezeichnung, Date gueltigVon, Date gueltigBis)
+    public HerstellungsArtikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, double menge, MengenTyp mengenTyp)
     {
-        super(ursprung, bezeichnung, gueltigVon, gueltigBis);
+        super(basisArtikel, bezeichnung, beschreibung, menge, mengenTyp);
         erstellen();
     }
 
