@@ -7,9 +7,9 @@ public class ArtikelTest01
 {
     public static void main(String[] args) throws Exception
     {
-        BasisArtikelListe basisArtikel = new BasisArtikelListe();
+        ArtikelListe artikelListe = new ArtikelListe();
 
-        BasisArtikel artikel1 = basisArtikel.searchByDescription("Hähnchen Gyros");
+        Artikel artikel1 = artikelListe.searchByDescription("Hähnchen Gyros");
 
         Date bestellDatum = new Calendar.Builder()
                 .set(Calendar.YEAR,2021)

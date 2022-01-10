@@ -1,30 +1,54 @@
 package com.datamelt.artikelverwaltung;
 
-import java.util.Date;
-
-public abstract class Artikel
+public class Artikel
 {
+    private long nummer;
+    private String ursprung;
+    private String behälter;
+    private String herkunft;
     private String bezeichnung;
     private String beschreibung;
-    private BasisArtikel basisArtikel;
-    private double einzelStueckzahl;
-    private Date gueltigVon;
-    private Date gueltigBis;
+    private float gewicht;
+    private float preis;
 
-    public Artikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, ArtikelGueltigkeit gueltigkeit)
+    public long getNummer()
     {
-        this.bezeichnung = bezeichnung;
-        this.beschreibung = beschreibung;
-        this.basisArtikel = basisArtikel;
-        this.einzelStueckzahl = einzelStueckzahl;
-        this.gueltigVon = gueltigVon;
-        this.gueltigBis = gueltigBis;
-
+        return nummer;
     }
 
-    protected void erstellen()
+    public void setNummer(long nummer)
     {
+        this.nummer = nummer;
+    }
 
+    public String getUrsprung()
+    {
+        return ursprung;
+    }
+
+    public void setUrsprung(String ursprung)
+    {
+        this.ursprung = ursprung;
+    }
+
+    public String getBehälter()
+    {
+        return behälter;
+    }
+
+    public void setBehälter(String behälter)
+    {
+        this.behälter = behälter;
+    }
+
+    public String getHerkunft()
+    {
+        return herkunft;
+    }
+
+    public void setHerkunft(String herkunft)
+    {
+        this.herkunft = herkunft;
     }
 
     public String getBezeichnung()
@@ -32,28 +56,38 @@ public abstract class Artikel
         return bezeichnung;
     }
 
+    public void setBezeichnung(String bezeichnung)
+    {
+        this.bezeichnung = bezeichnung;
+    }
+
     public String getBeschreibung()
     {
         return beschreibung;
     }
 
-    public BasisArtikel getBasisArtikel()
+    public void setBeschreibung(String beschreibung)
     {
-        return basisArtikel;
+        this.beschreibung = beschreibung;
     }
 
-    public double getEinzelStueckzahl()
+    public float getGewicht()
     {
-        return einzelStueckzahl;
+        return gewicht;
     }
 
-    public Date getGueltigVon()
+    public void setGewicht(float gewicht)
     {
-        return gueltigVon;
+        this.gewicht = gewicht;
     }
 
-    public Date getGueltigBis()
+    public float getPreis()
     {
-        return gueltigBis;
+        return preis;
+    }
+
+    public void setPreis(float preis)
+    {
+        this.preis = preis;
     }
 }

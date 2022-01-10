@@ -1,8 +1,8 @@
 package com.datamelt.artikelverwaltung;
 
-public class HerstellungsArtikel extends Artikel
+public class HerstellungsArtikel extends BestellArtikel
 {
-    public HerstellungsArtikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, ArtikelGueltigkeit gueltigkeit)
+    public HerstellungsArtikel(Artikel basisArtikel, String bezeichnung, String beschreibung, ArtikelGueltigkeit gueltigkeit)
     {
         super(basisArtikel, bezeichnung, beschreibung, gueltigkeit);
         erstellen();

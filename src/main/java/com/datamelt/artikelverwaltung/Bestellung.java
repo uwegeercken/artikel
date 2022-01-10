@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Bestellung
 {
-    private Map<BasisArtikel,Integer> artikelMap = new HashMap<>();
+    private Map<Artikel,Integer> artikelMap = new HashMap<>();
     private Date bestellDatum;
 
     public Bestellung(Date bestellDatum)
@@ -19,17 +19,17 @@ public class Bestellung
         return bestellDatum;
     }
 
-    public void put(BasisArtikel artikel, int menge) throws Exception
+    public void put(Artikel artikel, int menge) throws Exception
     {
         artikelMap.put(artikel, menge);
     }
 
-    public void remove(BasisArtikel artikel)
+    public void remove(Artikel artikel)
     {
         artikelMap.remove(artikel);
     }
 
-    public Map<BasisArtikel,Integer> getArtikel()
+    public Map<Artikel,Integer> getArtikel()
     {
         return artikelMap;
     }

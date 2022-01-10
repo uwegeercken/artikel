@@ -2,21 +2,20 @@ package com.datamelt.artikelverwaltung;
 
 import org.jdbi.v3.core.Jdbi;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class BasisArtikelListe
+public class ArtikelListe
 {
-    List<BasisArtikel> artikelListe;
+    List<Artikel> artikelListe;
 
-    public BasisArtikelListe()
+    public ArtikelListe()
     {
         ladeBasisArtikel();
     }
 
-    public BasisArtikel searchByDescription(String bezeichnung)
+    public Artikel searchByDescription(String bezeichnung)
     {
-        for(BasisArtikel artikel : artikelListe)
+        for(Artikel artikel : artikelListe)
         {
             if(artikel.getBezeichnung().equals(bezeichnung))
             {
@@ -26,9 +25,9 @@ public class BasisArtikelListe
         return null;
     }
 
-    public BasisArtikel searchByNumber(long number)
+    public Artikel searchByNumber(long number)
     {
-        for(BasisArtikel artikel : artikelListe)
+        for(Artikel artikel : artikelListe)
         {
             if(artikel.getNummer()== number)
             {
@@ -52,7 +51,7 @@ public class BasisArtikelListe
                                 " and basisartikel.ursprung_id=ursprung.id" +
                                 " and basisartikel.behälter_id=behälter.id"
                         )
-                        .mapToBean(BasisArtikel.class)
+                        .mapToBean(Artikel.class)
                         .list());
 
 
