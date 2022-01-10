@@ -1,66 +1,54 @@
 package com.datamelt.artikelverwaltung;
 
-import com.datamelt.artikelverwaltung.enums.ArtikelBehälter;
-import com.datamelt.artikelverwaltung.enums.ArtikelHerkunft;
-import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
-import org.jdbi.v3.core.statement.StatementContext;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class BasisArtikel
 {
-    private ArtikelUrsprung ursprung;
-    private ArtikelBehälter behälter;
-    private ArtikelHerkunft herkunft;
+    private long nummer;
+    private String ursprung;
+    private String behälter;
+    private String herkunft;
     private String bezeichnung;
     private String beschreibung;
     private float gewicht;
     private float preis;
 
-    public ArtikelHerkunft getHerkunft()
+    public long getNummer()
     {
-        return herkunft;
+        return nummer;
     }
 
-    public void setHerkunft(ArtikelHerkunft herkunft)
+    public void setNummer(long nummer)
     {
-        this.herkunft = herkunft;
+        this.nummer = nummer;
     }
 
-    public ArtikelBehälter getBehälter()
+    public String getUrsprung()
     {
-        return behälter;
+        return ursprung;
     }
 
-    public void setBehälter(ArtikelBehälter behälter)
-    {
-        this.behälter = behälter;
-    }
-
-    public void setUrsprung(ArtikelUrsprung ursprung)
+    public void setUrsprung(String ursprung)
     {
         this.ursprung = ursprung;
     }
 
-    public void setBezeichnung(String bezeichnung)
+    public String getBehälter()
     {
-        this.bezeichnung = bezeichnung;
+        return behälter;
     }
 
-    public void setBeschreibung(String beschreibung)
+    public void setBehälter(String behälter)
     {
-        this.beschreibung = beschreibung;
+        this.behälter = behälter;
     }
 
-    public void setGewicht(float gewicht)
+    public String getHerkunft()
     {
-        this.gewicht = gewicht;
+        return herkunft;
     }
 
-    public ArtikelUrsprung getUrsprung()
+    public void setHerkunft(String herkunft)
     {
-        return ursprung;
+        this.herkunft = herkunft;
     }
 
     public String getBezeichnung()
@@ -68,9 +56,30 @@ public class BasisArtikel
         return bezeichnung;
     }
 
-    public String getBeschreibung() { return beschreibung; }
+    public void setBezeichnung(String bezeichnung)
+    {
+        this.bezeichnung = bezeichnung;
+    }
 
-    public float getGewicht() { return gewicht; }
+    public String getBeschreibung()
+    {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung)
+    {
+        this.beschreibung = beschreibung;
+    }
+
+    public float getGewicht()
+    {
+        return gewicht;
+    }
+
+    public void setGewicht(float gewicht)
+    {
+        this.gewicht = gewicht;
+    }
 
     public float getPreis()
     {
