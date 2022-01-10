@@ -1,5 +1,9 @@
 package com.datamelt.artikelverwaltung;
 
+import com.datamelt.utilities.DateUtility;
+
+import java.util.Date;
+
 public class Artikel
 {
     private long nummer;
@@ -10,6 +14,8 @@ public class Artikel
     private String beschreibung;
     private float gewicht;
     private float preis;
+    private long gültigVon;
+    private long gültigBis;
 
     public long getNummer()
     {
@@ -90,4 +96,35 @@ public class Artikel
     {
         this.preis = preis;
     }
+
+    public long getGültigVon()
+    {
+        return gültigVon;
+    }
+
+    public void setGültigVon(long gültigVon)
+    {
+        this.gültigVon = gültigVon;
+    }
+
+    public long getGültigBis()
+    {
+        return gültigBis;
+    }
+
+    public void setGültigBis(long gültigBis)
+    {
+        this.gültigBis = gültigBis;
+    }
+
+    public Date getGültigVonAsDate()
+    {
+        return DateUtility.convertFromLong(gültigVon);
+    }
+
+    public Date getGültigBisAsDate()
+    {
+        return DateUtility.convertFromLong(gültigBis);
+    }
+
 }

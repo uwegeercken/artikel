@@ -1,60 +1,44 @@
 package com.datamelt.artikelverwaltung;
 
+import com.datamelt.utilities.Constants;
 import org.jdbi.v3.core.Jdbi;
 
+import java.util.Date;
 import java.util.List;
 
 public class ArtikelListe
 {
-    List<Artikel> artikelListe;
+    private static Jdbi jdbi;
 
-    public ArtikelListe()
+    public static List<Artikel> getAll(boolean validOnly)
     {
-        ladeBasisArtikel();
+        jdbi = Jdbi.create("jdbc:sqlite:" + Constants.DATABASE_FOLDER + "/" + Constants.DATABASE_NAME);
+        return ladeArtikel(validOnly);
     }
 
-    public Artikel searchByDescription(String bezeichnung)
+    private static List<Artikel> ladeArtikel(boolean validOnly)
     {
-        for(Artikel artikel : artikelListe)
+        long currentDatetime = new Date().getTime();
+
+        String sql = "select basisartikel.*," +
+            " herkunft.name as herkunft," +
+            " ursprung.name as ursprung," +
+            " behälter.name as behälter" +
+            " from basisartikel, herkunft, ursprung, behälter " +
+            " where basisartikel.herkunft_id=herkunft.id" +
+            " and basisartikel.ursprung_id=ursprung.id" +
+            " and basisartikel.behälter_id=behälter.id";
+
+        if(validOnly)
         {
-            if(artikel.getBezeichnung().equals(bezeichnung))
-            {
-                return artikel;
-            }
+            sql = sql +
+                " and gültig_von <= " + currentDatetime +
+                " and gültig_bis >= " + currentDatetime;
         }
-        return null;
-    }
-
-    public Artikel searchByNumber(long number)
-    {
-        for(Artikel artikel : artikelListe)
-        {
-            if(artikel.getNummer()== number)
-            {
-                return artikel;
-            }
-        }
-        return null;
-    }
-
-    private void ladeBasisArtikel()
-    {
-        Jdbi jdbi = Jdbi.create("jdbc:sqlite:/home/uwe/development/mogk.db");
-
-        this.artikelListe = jdbi.withHandle(handle ->
-                handle.createQuery("select basisartikel.*," +
-                                " herkunft.name as herkunft," +
-                                " ursprung.name as ursprung," +
-                                " behälter.name as behälter" +
-                                " from basisartikel, herkunft, ursprung, behälter " +
-                                " where basisartikel.herkunft_id=herkunft.id" +
-                                " and basisartikel.ursprung_id=ursprung.id" +
-                                " and basisartikel.behälter_id=behälter.id"
-                        )
+        String finalSql = sql;
+        return jdbi.withHandle(handle ->
+                handle.createQuery(finalSql)
                         .mapToBean(Artikel.class)
                         .list());
-
-
     }
-
 }

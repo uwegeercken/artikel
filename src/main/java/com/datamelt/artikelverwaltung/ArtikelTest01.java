@@ -1,25 +1,20 @@
 package com.datamelt.artikelverwaltung;
 
+import com.datamelt.utilities.DateUtility;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ArtikelTest01
 {
     public static void main(String[] args) throws Exception
     {
-        ArtikelListe artikelListe = new ArtikelListe();
+        List<Artikel> artikelListe = ArtikelListe.getAll(true);
 
-        Artikel artikel1 = artikelListe.searchByDescription("Hähnchen Gyros");
+        Artikel artikel1 = artikelListe.get(0);
 
-        Date bestellDatum = new Calendar.Builder()
-                .set(Calendar.YEAR,2021)
-                .set(Calendar.MONTH,Calendar.DECEMBER)
-                .set(Calendar.DAY_OF_MONTH,11)
-                .build()
-                .getTime();
-
-        Bestellung bestellung = new Bestellung(bestellDatum);
-        bestellung.put(artikel1,5);
+        Date gültigVon = artikel1.getGültigVonAsDate();
 
         System.out.println();
     }
