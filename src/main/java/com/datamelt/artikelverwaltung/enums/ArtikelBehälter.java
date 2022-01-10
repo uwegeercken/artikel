@@ -1,7 +1,7 @@
 package com.datamelt.artikelverwaltung.enums;
 
-public enum MengenTyp
+public enum ArtikelBehälter
 {
-    EINZELMENGE,
+    ATMOS,
     KARTON;
 }

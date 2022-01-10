@@ -1,7 +1,5 @@
 package com.datamelt.artikelverwaltung;
 
-import com.datamelt.artikelverwaltung.enums.MengenTyp;
-
 import java.util.Date;
 
 public abstract class Artikel
@@ -10,17 +8,15 @@ public abstract class Artikel
     private String beschreibung;
     private BasisArtikel basisArtikel;
     private double einzelStueckzahl;
-    private MengenTyp mengenTyp;
     private Date gueltigVon;
     private Date gueltigBis;
 
-    public Artikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, ArtikelMenge menge, ArtikelGueltigkeit gueltigkeit)
+    public Artikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, ArtikelGueltigkeit gueltigkeit)
     {
         this.bezeichnung = bezeichnung;
         this.beschreibung = beschreibung;
         this.basisArtikel = basisArtikel;
         this.einzelStueckzahl = einzelStueckzahl;
-        this.mengenTyp = mengenTyp;
         this.gueltigVon = gueltigVon;
         this.gueltigBis = gueltigBis;
 
@@ -49,11 +45,6 @@ public abstract class Artikel
     public double getEinzelStueckzahl()
     {
         return einzelStueckzahl;
-    }
-
-    public MengenTyp getMengenTyp()
-    {
-        return mengenTyp;
     }
 
     public Date getGueltigVon()

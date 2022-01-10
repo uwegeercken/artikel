@@ -1,15 +1,10 @@
 package com.datamelt.artikelverwaltung;
 
-import com.datamelt.artikelverwaltung.enums.ArtikelUrsprung;
-import com.datamelt.artikelverwaltung.enums.MengenTyp;
-
-import java.util.Date;
-
 public class HaendlerArtikel extends Artikel
 {
-    public HaendlerArtikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung,  ArtikelMenge menge, ArtikelGueltigkeit gueltigkeit)
+    public HaendlerArtikel(BasisArtikel basisArtikel, String bezeichnung, String beschreibung, ArtikelGueltigkeit gueltigkeit)
     {
-        super(basisArtikel, bezeichnung, beschreibung, menge, gueltigkeit);
+        super(basisArtikel, bezeichnung, beschreibung, gueltigkeit);
         erstellen();
     }
 
