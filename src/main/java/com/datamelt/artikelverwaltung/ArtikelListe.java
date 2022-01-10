@@ -20,14 +20,14 @@ public class ArtikelListe
     {
         long currentDatetime = new Date().getTime();
 
-        String sql = "select basisartikel.*," +
+        String sql = "select artikel.*," +
             " herkunft.name as herkunft," +
             " ursprung.name as ursprung," +
             " behälter.name as behälter" +
-            " from basisartikel, herkunft, ursprung, behälter " +
-            " where basisartikel.herkunft_id=herkunft.id" +
-            " and basisartikel.ursprung_id=ursprung.id" +
-            " and basisartikel.behälter_id=behälter.id";
+            " from artikel, herkunft, ursprung, behälter " +
+            " where artikel.herkunft_id=herkunft.id" +
+            " and artikel.ursprung_id=ursprung.id" +
+            " and artikel.behälter_id=behälter.id";
 
         if(validOnly)
         {
@@ -40,5 +40,17 @@ public class ArtikelListe
                 handle.createQuery(finalSql)
                         .mapToBean(Artikel.class)
                         .list());
+    }
+
+    public static Artikel getArtikelByNumber(List<Artikel> artikelListe, long nummer)
+    {
+        for(Artikel artikel : artikelListe)
+        {
+            if(artikel.getNummer()== nummer)
+            {
+                return artikel;
+            }
+        }
+        return null;
     }
 }
