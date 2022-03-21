@@ -10,24 +10,27 @@ import java.util.List;
 
 public class Order
 {
+    private long id;
     private int number;
     private Date date;
-    private List<ExternalProduct> items = new ArrayList<>();
-
-    private SimpleDateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
+    private List<Product> items = new ArrayList<>();
 
     public Order(int number, String date)
     {
         this.number = number;
         try
         {
-            this.date = sdf.parse(date);
+            this.date = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT).parse(date);
         }
         catch (ParseException ex)
         {
             ex.printStackTrace();
         }
     }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public int getNumber()
     {
@@ -39,22 +42,19 @@ public class Order
         this.number = number;
     }
 
-    public Date getDate()
-    {
-        return date;
-    }
+    public Date getDate() { return date; }
 
     public void setDate(Date date)
     {
         this.date = date;
     }
 
-    public List<ExternalProduct> getItems()
+    public List<Product> getItems()
     {
         return items;
     }
 
-    public void addItem(ExternalProduct product)
+    public void addItem(Product product)
     {
         items.add(product);
     }
@@ -67,27 +67,17 @@ public class Order
     public double getTotalWeight()
     {
         double totalWeight = 0;
-        for(ExternalProduct product : items)
+        for(Product product : items)
         {
             totalWeight = totalWeight + product.getWeight();
         }
         return totalWeight;
     }
 
-    public double getTotalNumberOfItemst()
-    {
-        int totalItems = 0;
-        for(ExternalProduct product : items)
-        {
-            totalItems = totalItems + product.getNumberOfItems();
-        }
-        return totalItems;
-    }
-
     public double getTotalPrice()
     {
         double totalPrice = 0;
-        for(ExternalProduct product : items)
+        for(Product product : items)
         {
             totalPrice = totalPrice + product.getPrice();
         }

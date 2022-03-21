@@ -5,14 +5,13 @@ import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.config.MainConfiguration;
 import com.datamelt.artikel.model.Product;
-import com.datamelt.artikel.service.ConfigurationLoaderService;
 import com.datamelt.artikel.service.ControllerService;
 
 public class Test1
 {
     public static void main(String[] args) throws Exception
     {
-        MainConfiguration configuration = new ConfigurationLoaderService().getMainConfiguration();
+        MainConfiguration configuration = new ConfigurationLoader().getMainConfiguration();
 
         ControllerService controllerService = new ControllerService(new SqliteRepository(configuration.getDatabase()));
         WebUiApi client = new WebUiApi(controllerService);

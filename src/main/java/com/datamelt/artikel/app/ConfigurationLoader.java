@@ -1,4 +1,4 @@
-package com.datamelt.artikel.service;
+package com.datamelt.artikel.app;
 
 import com.datamelt.artikel.model.config.MainConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,10 +7,8 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.io.File;
 import java.net.URL;
 
-public class ConfigurationLoaderService
+public class ConfigurationLoader
 {
-    MainConfiguration configuration;
-
     public MainConfiguration getMainConfiguration()
     {
         try
