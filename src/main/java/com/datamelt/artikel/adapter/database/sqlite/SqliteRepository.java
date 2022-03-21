@@ -3,6 +3,7 @@ package com.datamelt.artikel.adapter.database.sqlite;
 import com.datamelt.artikel.model.Market;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
+import com.datamelt.artikel.model.config.DatabaseConfiguration;
 import com.datamelt.artikel.port.RepositoryInterface;
 
 import java.sql.Connection;
@@ -12,9 +13,9 @@ public class SqliteRepository implements RepositoryInterface
 {
     private Connection connection;
 
-    public SqliteRepository(Connection connection)
+    public SqliteRepository(DatabaseConfiguration configuration)
     {
-        this.connection = connection;
+        this.connection = SqliteConnection.getConnection(configuration);;
     }
 
     @Override
