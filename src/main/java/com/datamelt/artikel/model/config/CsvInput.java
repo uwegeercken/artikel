@@ -5,6 +5,8 @@ public class CsvInput
     private String productsFilename;
     private String producersFilename;
     private String marketsFilename;
+    private String ordersFilename;
+    private String orderitemsFilename;
 
     public String getProductsFilename()
     {
@@ -20,4 +22,11 @@ public class CsvInput
     {
         return marketsFilename;
     }
+
+    public String getOrdersFilename()
+    {
+        return ordersFilename;
+    }
+
+    public String getOrderitemsFilename() { return orderitemsFilename; }
 }

@@ -11,43 +11,33 @@ import java.util.List;
 public class Order
 {
     private long id;
-    private int number;
-    private Date date;
+    private String number;
+    private long timestamp;
     private List<Product> items = new ArrayList<>();
 
-    public Order(int number, String date)
+    public Order(String number, long timestamp)
     {
         this.number = number;
-        try
-        {
-            this.date = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT).parse(date);
-        }
-        catch (ParseException ex)
-        {
-            ex.printStackTrace();
-        }
+        this.timestamp = timestamp;
     }
 
     public long getId() { return id; }
 
     public void setId(long id) { this.id = id; }
 
-    public int getNumber()
+    public String getNumber()
     {
         return number;
     }
 
-    public void setNumber(int number)
+    public void setNumber(String number)
     {
         this.number = number;
     }
 
-    public Date getDate() { return date; }
+    public long getTimestamp() { return timestamp; }
 
-    public void setDate(Date date)
-    {
-        this.date = date;
-    }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
     public List<Product> getItems()
     {
@@ -58,6 +48,8 @@ public class Order
     {
         items.add(product);
     }
+
+    public void setItems(List<Product> items) { this.items = items; }
 
     public int getNumberOfItems()
     {

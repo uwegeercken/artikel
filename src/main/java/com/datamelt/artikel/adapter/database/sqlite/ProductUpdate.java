@@ -50,6 +50,10 @@ class ProductUpdate
             resultset.next();
             product.setId(resultset.getLong(1));
 
+            resultset.close();
+            insertStatement.close();
+
+
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -69,6 +73,9 @@ class ProductUpdate
             updateStatement.setDouble(7, product.getPrice());
             updateStatement.executeUpdate();
             updateStatement.clearParameters();
+
+            updateStatement.close();
+
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -82,6 +89,9 @@ class ProductUpdate
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
             deleteStatement.clearParameters();
+
+            deleteStatement.close();
+
         } catch (SQLException ex)
         {
             ex.printStackTrace();

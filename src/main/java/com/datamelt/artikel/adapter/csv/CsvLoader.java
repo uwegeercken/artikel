@@ -1,22 +1,29 @@
 package com.datamelt.artikel.adapter.csv;
 
 import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.config.CsvInput;
 import com.datamelt.artikel.port.FileInterface;
 import com.datamelt.artikel.service.LoaderService;
+import com.datamelt.artikel.util.Constants;
 import com.datamelt.artikel.util.CsvFileType;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class CsvLoader implements FileInterface
 {
     private final LoaderService service;
     private CsvInput configuration;
+
+    private SimpleDateFormat formatter = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 
     public CsvLoader(LoaderService service, CsvInput configuration)
     {
@@ -36,6 +43,12 @@ public class CsvLoader implements FileInterface
                 break;
             case MARKET:
                 this.processMarketFile(getCsvFile(configuration.getMarketsFilename()));
+                break;
+            case ORDER:
+                this.processOrderFile(getCsvFile(configuration.getOrdersFilename()));
+                break;
+            case ORDERITEMS:
+                this.processOrderItemFile(getCsvFile(configuration.getOrderitemsFilename()));
                 break;
         }
     }
@@ -148,6 +161,59 @@ public class CsvLoader implements FileInterface
         }
     }
 
+    private void processOrderFile(File inputFile)
+    {
+        BufferedReader br;
+        try
+        {
+            br = new BufferedReader(new FileReader(inputFile));
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                String[] fields = line.split(",");
+                try
+                {
+                    long timestamp = formatter.parse(fields[1]).getTime();
+
+                    Order order = new Order(fields[0],timestamp);
+                    addOrder(order);
+                } catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void processOrderItemFile(File inputFile)
+    {
+        BufferedReader br;
+        try
+        {
+            br = new BufferedReader(new FileReader(inputFile));
+            String line;
+            while ((line = br.readLine()) != null)
+            {
+                String[] fields = line.split(",");
+                try
+                {
+                    addOrderItem(Long.parseLong(fields[0]), Long.parseLong(fields[1]));
+                } catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void addProduct(Product product)
     {
@@ -165,4 +231,13 @@ public class CsvLoader implements FileInterface
     {
         service.addMarket(market);
     }
+
+    @Override
+    public void addOrder(Order order)
+    {
+        service.addOrder(order);
+    }
+
+    @Override
+    public void addOrderItem(long orderId, long productId) { service.addOrderItem(orderId,productId); }
 }

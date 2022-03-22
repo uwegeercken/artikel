@@ -1,6 +1,7 @@
 package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 
@@ -29,4 +30,14 @@ public interface RepositoryInterface
     Market getMarketById(long id) throws Exception;
     Market getMarketByName(String name) throws Exception;
     List<Market> getAllMarkets() throws Exception;
+
+    void addOrder(Order order);
+    void updateOrder(Order order);
+    void removeOrder(long id);
+    Order getOrderById(long id) throws Exception;
+    Order getOrderByNumber(String number) throws Exception;
+    List<Order> getAllOrders() throws Exception;
+
+    public void addOrderItem(long orderId, long productId);
+    public void removeAllOrderItems(long orderId);
 }

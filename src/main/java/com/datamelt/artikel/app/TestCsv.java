@@ -14,9 +14,11 @@ public class TestCsv
 
         LoaderService service = new LoaderService(new SqliteRepository(configuration.getDatabase()));
         CsvLoader loader = new CsvLoader(service, configuration.getCsvInput());
-        loader.processFile(CsvFileType.PRODUCT);
+        loader.processFile(CsvFileType.ORDERITEMS);
 
         System.out.println();
+
+
 
     }
 

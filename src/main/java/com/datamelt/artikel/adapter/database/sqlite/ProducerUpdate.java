@@ -43,6 +43,9 @@ class ProducerUpdate
             resultset.next();
             producer.setId(resultset.getLong(1));
 
+            resultset.close();
+            insertStatement.close();
+
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -58,6 +61,8 @@ class ProducerUpdate
             updateStatement.executeUpdate();
             updateStatement.clearParameters();
 
+            updateStatement.close();
+
         } catch (SQLException ex)
         {
             ex.printStackTrace();
@@ -71,6 +76,8 @@ class ProducerUpdate
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
             deleteStatement.clearParameters();
+
+            deleteStatement.close();
 
         } catch (SQLException ex)
         {

@@ -1,6 +1,7 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.config.DatabaseConfiguration;
@@ -11,11 +12,11 @@ import java.util.List;
 
 public class SqliteRepository implements RepositoryInterface
 {
-    private Connection connection;
+    private final Connection connection;
 
     public SqliteRepository(DatabaseConfiguration configuration)
     {
-        this.connection = SqliteConnection.getConnection(configuration);;
+        this.connection = SqliteConnection.getConnection(configuration);
     }
 
     @Override
@@ -139,5 +140,58 @@ public class SqliteRepository implements RepositoryInterface
     public List<Market> getAllMarkets() throws Exception
     {
         return CollectionHandler.getAllMarkets(connection);
+    }
+
+    @Override
+    public void addOrder(Order order)
+    {
+        OrderUpdate p = new OrderUpdate(connection);
+        p.addOrder(order);
+    }
+
+    @Override
+    public void updateOrder(Order order)
+    {
+        OrderUpdate p = new OrderUpdate(connection);
+        p.updateOrder(order);
+    }
+
+    @Override
+    public void removeOrder(long id)
+    {
+        OrderUpdate p = new OrderUpdate(connection);
+        p.removeOrder(id);
+    }
+
+    @Override
+    public Order getOrderById(long id) throws Exception
+    {
+        return OrderSearch.getOrderById(connection,id);
+    }
+
+    @Override
+    public Order getOrderByNumber(String number) throws Exception
+    {
+        return OrderSearch.getOrderByNumber(connection,number);
+    }
+
+    @Override
+    public List<Order> getAllOrders() throws Exception
+    {
+        return CollectionHandler.getAllOrders(connection);
+    }
+
+    @Override
+    public void addOrderItem(long orderId, long productId)
+    {
+        OrderItemUpdate p = new OrderItemUpdate(connection);
+        p.addOrderItem(orderId,productId);
+    }
+
+    @Override
+    public void removeAllOrderItems(long orderId)
+    {
+        OrderItemUpdate p = new OrderItemUpdate(connection);
+        p.removeAllOrderItems(orderId);
     }
 }

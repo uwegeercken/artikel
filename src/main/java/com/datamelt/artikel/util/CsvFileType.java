@@ -4,6 +4,8 @@ public enum CsvFileType
 {
     PRODUCT,
     PRODUCER,
+    ORDER,
+    ORDERITEMS,
     MARKET;
 
 

@@ -1,6 +1,7 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 
@@ -64,5 +65,35 @@ class CollectionHandler
         return markets;
     }
 
+    public static List<Order> getAllOrders(Connection connection) throws Exception
+    {
+        List<Order> orders = new ArrayList<>();
+        Statement stmt = connection.createStatement();
+        ResultSet resultset = stmt.executeQuery("select * from productorder");
+        while(resultset.next())
+        {
+            Order order = new Order(resultset.getString("number"),resultset.getLong("timestamp"));
+            order.setId(resultset.getLong("id"));
+            order.setItems(getAllOrderItems(connection, order));
+            orders.add(order);
+        }
+        resultset.close();
+        stmt.close();
+        return orders;
+    }
 
+    public static List<Product> getAllOrderItems(Connection connection, Order order) throws Exception
+    {
+        List<Product> products = new ArrayList<>();
+        Statement stmt = connection.createStatement();
+        ResultSet resultset = stmt.executeQuery("select product_id from productorder_item where productorder_id=" + order.getId());
+        while(resultset.next())
+        {
+            Product product = ProductSearch.getProductById(connection, resultset.getLong("product_id"));
+            products.add(product);
+        }
+        resultset.close();
+        stmt.close();
+        return products;
+    }
 }

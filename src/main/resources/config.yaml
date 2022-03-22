@@ -6,3 +6,5 @@ csvInput:
   productsFilename: products.csv
   producersFilename: producers.csv
   marketsFilename: markets.csv
+  ordersFilename: orders.csv
+  orderitemsFilename: orderitems.csv

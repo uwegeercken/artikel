@@ -1,35 +1,46 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Producer;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 class MarketSearch
 {
     public static Market getMarketById(Connection connection, long id) throws Exception
     {
-        List<Market> markets = CollectionHandler.getAllMarkets(connection);
-        for(Market market : markets)
+        PreparedStatement queryStatement = connection.prepareStatement("select * from market where id=?");
+        queryStatement.setLong(1, id);
+        ResultSet resultset = queryStatement.executeQuery();
+        Market market = null;
+        if(resultset.next())
         {
-            if(market.getId()== id)
-            {
-                return market;
-            }
+            market = new Market(resultset.getString("name"));
+            market.setId(resultset.getLong("id"));
         }
-        return null;
+        queryStatement.clearParameters();
+        resultset.close();
+        queryStatement.close();
+        return market;
     }
 
     public static Market getMarketByName(Connection connection, String name) throws Exception
     {
-        List<Market> markets = CollectionHandler.getAllMarkets(connection);
-        for(Market market : markets)
+        PreparedStatement queryStatement = connection.prepareStatement("select * from market where name=?");
+        queryStatement.setString(1, name);
+        ResultSet resultset = queryStatement.executeQuery();
+        Market market = null;
+        if(resultset.next())
         {
-            if(market.getName().equals(name))
-            {
-                return market;
-            }
+            market = new Market(resultset.getString("name"));
+            market.setId(resultset.getLong("id"));
         }
-        return null;
+        queryStatement.clearParameters();
+        resultset.close();
+        queryStatement.close();
+        return market;
     }
 }
