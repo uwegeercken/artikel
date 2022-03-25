@@ -2,12 +2,16 @@ package com.datamelt.artikel.app;
 
 import com.datamelt.artikel.adapter.web.WebUiApi;
 import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
+import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.config.MainConfiguration;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.service.ControllerService;
 
-public class Test1
+import java.util.List;
+
+public class TestWeb
 {
     public static void main(String[] args) throws Exception
     {
@@ -16,11 +20,13 @@ public class Test1
         ControllerService controllerService = new ControllerService(new SqliteRepository(configuration.getDatabase()));
         WebUiApi client = new WebUiApi(controllerService);
 
-        Producer producer = client.getProducerById(1);
-        Product newProduct =  new Product.ProductBuilder("71","huhu muku", producer).build();
+        List<Product> products = client.getAllProducts();
+        List<Producer> producers = client.getAllProducers();
+        List<Market> markets = client.getAllMarkets();
+        List<Order> orders = client.getAllOrders();
 
-        client.addProduct(newProduct);
-        //Product product = client.getProductByNumber("1");
+        client.
+
         System.out.println();
 
     }

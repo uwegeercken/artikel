@@ -1,5 +1,7 @@
 package com.datamelt.artikel.adapter.web;
 
+import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.port.ApiInterface;
@@ -82,5 +84,17 @@ public class WebUiApi implements ApiInterface
     public List<Producer> getAllProducers() throws Exception
     {
         return service.getAllProducers();
+    }
+
+    @Override
+    public List<Market> getAllMarkets() throws Exception
+    {
+        return service.getAllMarkets();
+    }
+
+    @Override
+    public List<Order> getAllOrders() throws Exception
+    {
+        return service.getAllOrders();
     }
 }

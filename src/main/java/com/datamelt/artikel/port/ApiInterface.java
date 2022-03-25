@@ -1,5 +1,7 @@
 package com.datamelt.artikel.port;
 
+import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 
@@ -22,4 +24,6 @@ public interface ApiInterface
     Producer getProducerByName(String name) throws Exception;
     List<Producer> getAllProducers() throws Exception;
 
+    List<Market> getAllMarkets() throws Exception;
+    List<Order> getAllOrders() throws Exception;
 }
