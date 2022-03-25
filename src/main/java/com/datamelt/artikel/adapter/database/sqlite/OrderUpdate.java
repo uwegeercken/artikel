@@ -9,48 +9,32 @@ import java.sql.SQLException;
 
 class OrderUpdate
 {
-    private Connection connection = null;
+    private static final String SQL_INSERT = "insert into productorder (number,timestamp) values(?,?)";
+    private static final String SQL_UPDATE = "update productorder set number=?, timestamp=? where id=?";
+    private static final String SQL_DELETE = "delete from productorder where id=?";
 
-    private PreparedStatement insertStatement;
-    private PreparedStatement updateStatement;
-    private PreparedStatement deleteStatement;
+    private Connection connection;
 
     public OrderUpdate(Connection connection)
     {
         this.connection = connection;
-        initStatements();
     }
-
-    private void initStatements()
-    {
-        try
-        {
-            insertStatement = connection.prepareStatement("insert into productorder (number,timestamp) values(?,?)");
-            updateStatement = connection.prepareStatement("update productorder set number=?, timestamp=? where id=?");
-            deleteStatement = connection.prepareStatement("delete from productorder where id=?");
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
 
     public void addOrder(Order order)
     {
         try
         {
-            insertStatement.setString(1, order.getNumber());
-            insertStatement.setLong(2, order.getTimestamp());
-            insertStatement.executeUpdate();
-            insertStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
+            statement.setString(1, order.getNumber());
+            statement.setLong(2, order.getTimestamp());
+            statement.executeUpdate();
 
-            ResultSet resultset = insertStatement.getGeneratedKeys();
+            ResultSet resultset = statement.getGeneratedKeys();
             resultset.next();
             order.setId(resultset.getLong(1));
 
             resultset.close();
-            insertStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {
@@ -62,13 +46,14 @@ class OrderUpdate
     {
         try
         {
-            updateStatement.setString(1, order.getNumber());
-            updateStatement.setLong(2, order.getTimestamp());
-            updateStatement.setLong(3, order.getId());
-            updateStatement.executeUpdate();
-            updateStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
+            statement.setString(1, order.getNumber());
+            statement.setLong(2, order.getTimestamp());
+            statement.setLong(3, order.getId());
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            updateStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {
@@ -80,11 +65,12 @@ class OrderUpdate
     {
         try
         {
-            deleteStatement.setLong(1, id);
-            deleteStatement.executeUpdate();
-            deleteStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            deleteStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {

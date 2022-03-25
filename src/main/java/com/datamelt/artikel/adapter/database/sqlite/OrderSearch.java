@@ -12,11 +12,15 @@ import java.util.List;
 
 class OrderSearch
 {
+    private static final String SQL_QUERY_BY_ID = "select * from productorder where id=?";
+    private static final String SQL_QUERY_BY_NUMBER = "select * from productorder where number=?";
+    private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productorder where number=?";
+
     public static Order getOrderById(Connection connection, long id) throws Exception
     {
-        PreparedStatement queryStatement = connection.prepareStatement("select * from productorder where id=?");
-        queryStatement.setLong(1, id);
-        ResultSet resultset = queryStatement.executeQuery();
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_ID);
+        statement.setLong(1, id);
+        ResultSet resultset = statement.executeQuery();
         Order order = null;
         if(resultset.next())
         {
@@ -26,17 +30,17 @@ class OrderSearch
             List<Product> products = CollectionHandler.getAllOrderItems(connection, order);
             order.setItems(products);
         }
-        queryStatement.clearParameters();
+        statement.clearParameters();
         resultset.close();
-        queryStatement.close();
+        statement.close();
         return order;
     }
 
     public static Order getOrderByNumber(Connection connection, String number) throws Exception
     {
-        PreparedStatement queryStatement = connection.prepareStatement("select * from productorder where number=?");
-        queryStatement.setString(1, number);
-        ResultSet resultset = queryStatement.executeQuery();
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_NUMBER);
+        statement.setString(1, number);
+        ResultSet resultset = statement.executeQuery();
         Order order = null;
         if(resultset.next())
         {
@@ -46,9 +50,25 @@ class OrderSearch
             List<Product> products = CollectionHandler.getAllOrderItems(connection, order);
             order.setItems(products);
         }
-        queryStatement.clearParameters();
+        statement.clearParameters();
         resultset.close();
-        queryStatement.close();
+        statement.close();
         return order;
+    }
+
+    public static boolean getExistOrder(Connection connection, String number) throws Exception
+    {
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_EXISTS);
+        statement.setString(1, number);
+        ResultSet resultset = statement.executeQuery();
+        boolean exist = false;
+        if(resultset.next())
+        {
+            exist = resultset.getLong("counter") == 1;
+        }
+        statement.clearParameters();
+        resultset.close();
+        statement.close();
+        return exist;
     }
 }

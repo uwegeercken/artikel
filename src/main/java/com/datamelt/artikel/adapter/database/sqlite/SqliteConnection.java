@@ -5,6 +5,7 @@ import com.datamelt.artikel.model.config.MainConfiguration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 class SqliteConnection
 {

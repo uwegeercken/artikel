@@ -1,50 +1,35 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
+import com.datamelt.artikel.model.Producer;
+
 import java.sql.*;
 
 class ProducerUpdate
 {
-    private Connection connection = null;
+    private static final String SQL_INSERT = "insert into producer (name) values(?)";
+    private static final String SQL_UPDATE = "update producer set name=? where id=?";
+    private static final String SQL_DELETE = "delete from producer where id=?";
 
-    private PreparedStatement insertStatement;
-    private PreparedStatement updateStatement;
-    private PreparedStatement deleteStatement;
+    private Connection connection;
 
     public ProducerUpdate(Connection connection)
     {
         this.connection = connection;
-        initStatements();
     }
-
-    private void initStatements()
+    public void addProducer(Producer producer)
     {
         try
         {
-            insertStatement = connection.prepareStatement("insert into producer (name) values(?)");
-            updateStatement = connection.prepareStatement("update product set name=? where id=?");
-            deleteStatement = connection.prepareStatement("delete from product where id=?");
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-    }
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
+            statement.setString(1, producer.getName());
+            statement.executeUpdate();
 
-
-    public void addProducer(com.datamelt.artikel.model.Producer producer)
-    {
-        try
-        {
-            insertStatement.setString(1, producer.getName());
-            insertStatement.executeUpdate();
-            insertStatement.clearParameters();
-
-            ResultSet resultset = insertStatement.getGeneratedKeys();
+            ResultSet resultset = statement.getGeneratedKeys();
             resultset.next();
             producer.setId(resultset.getLong(1));
 
             resultset.close();
-            insertStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {
@@ -52,16 +37,17 @@ class ProducerUpdate
         }
     }
 
-    public void updateProducer(com.datamelt.artikel.model.Producer producer)
+    public void updateProducer(Producer producer)
     {
         try
         {
-            updateStatement.setString(1, producer.getName());
-            updateStatement.setLong(2, producer.getId());
-            updateStatement.executeUpdate();
-            updateStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
+            statement.setString(1, producer.getName());
+            statement.setLong(2, producer.getId());
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            updateStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {
@@ -73,11 +59,12 @@ class ProducerUpdate
     {
         try
         {
-            deleteStatement.setLong(1, id);
-            deleteStatement.executeUpdate();
-            deleteStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            deleteStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {

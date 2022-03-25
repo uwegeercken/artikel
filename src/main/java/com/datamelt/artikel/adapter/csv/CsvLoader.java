@@ -17,6 +17,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.logging.Logger;
 
 public class CsvLoader implements FileInterface
 {
@@ -77,6 +78,7 @@ public class CsvLoader implements FileInterface
         {
             br = new BufferedReader(new FileReader(inputFile));
             String line;
+            long counter=0;
             while ((line = br.readLine()) != null)
             {
                 String[] fields = line.split(",");
@@ -91,17 +93,28 @@ public class CsvLoader implements FileInterface
                                 .weight(Integer.parseInt(fields[4]))
                                 .price(Double.parseDouble(fields[5]))
                                 .build();
-                        addProduct(product);
+
+                        boolean exists = getExistProduct(fields[0]);
+                        if(!exists)
+                        {
+                            addProduct(product);
+                            counter++;
+                        }
+                        else
+                        {
+                            System.out.println("already existing - producer: " + fields[0]);
+                        }
                     }
                     else
                     {
-                        throw new Exception("producer not found: " + fields[6]);
+                        System.out.println("referenced producer unavailable. id: " + fields[6]);
                     }
                 } catch (Exception ex)
                 {
                     ex.printStackTrace();
                 }
             }
+            System.out.println("added products: " + counter);
         }
         catch (Exception e)
         {
@@ -116,18 +129,30 @@ public class CsvLoader implements FileInterface
         {
             br = new BufferedReader(new FileReader(inputFile));
             String line;
+            long counter=0;
             while ((line = br.readLine()) != null)
             {
                 String[] fields = line.split(",");
                 try
                 {
                     Producer producer = new Producer(fields[0]);
-                    addProducer(producer);
+                    boolean exists = getExistProducer(fields[0]);
+                    if(!exists)
+                    {
+                        addProducer(producer);
+                        counter++;
+                    }
+                    else
+                    {
+                        System.out.println("already existing - producer: " + fields[0]);
+                    }
+
                 } catch (Exception ex)
                 {
                     ex.printStackTrace();
                 }
             }
+            System.out.println("added producers: " + counter);
         }
         catch (Exception e)
         {
@@ -142,18 +167,29 @@ public class CsvLoader implements FileInterface
         {
             br = new BufferedReader(new FileReader(inputFile));
             String line;
+            long counter=0;
             while ((line = br.readLine()) != null)
             {
                 String[] fields = line.split(",");
                 try
                 {
                     Market market = new Market(fields[0]);
-                    addMarket(market);
+                    boolean exists = getExistMarket(fields[0]);
+                    if(!exists)
+                    {
+                        addMarket(market);
+                        counter++;
+                    }
+                    else
+                    {
+                        System.out.println("already existing - market: " + fields[0]);
+                    }
                 } catch (Exception ex)
                 {
                     ex.printStackTrace();
                 }
             }
+            System.out.println("added markets: " + counter);
         }
         catch (Exception e)
         {
@@ -168,6 +204,7 @@ public class CsvLoader implements FileInterface
         {
             br = new BufferedReader(new FileReader(inputFile));
             String line;
+            long counter=0;
             while ((line = br.readLine()) != null)
             {
                 String[] fields = line.split(",");
@@ -176,12 +213,22 @@ public class CsvLoader implements FileInterface
                     long timestamp = formatter.parse(fields[1]).getTime();
 
                     Order order = new Order(fields[0],timestamp);
-                    addOrder(order);
+                    boolean exists = getExistOrder(fields[0]);
+                    if(!exists)
+                    {
+                        addOrder(order);
+                        counter++;
+                    }
+                    else
+                    {
+                        System.out.println("already existing - order: " + fields[0]);
+                    }
                 } catch (Exception ex)
                 {
                     ex.printStackTrace();
                 }
             }
+            System.out.println("added orders: " + counter);
         }
         catch (Exception e)
         {
@@ -196,17 +243,50 @@ public class CsvLoader implements FileInterface
         {
             br = new BufferedReader(new FileReader(inputFile));
             String line;
+            long counter=0;
             while ((line = br.readLine()) != null)
             {
                 String[] fields = line.split(",");
+                long orderId = Long.parseLong(fields[0]);
+                long productId = Long.parseLong(fields[1]);
                 try
                 {
-                    addOrderItem(Long.parseLong(fields[0]), Long.parseLong(fields[1]));
+                    boolean exists = getExistOrderItem(orderId,productId);
+
+                    Order order = getOrderById(orderId);
+                    Product product = getProductById(productId);
+
+
+                    if(product !=null && order != null)
+                    {
+                        if (!exists)
+                        {
+                            addOrderItem(orderId, productId);
+                            counter++;
+                        } else
+                        {
+                            System.out.println("already existing - order item: " + orderId + "/" + productId);
+                        }
+                    }
+                    else
+                    {
+                        if(order == null)
+                        {
+                            System.out.println("referenced order unavailable. id: " + orderId);
+                        }
+                        if(product ==null )
+                        {
+                            System.out.println("referenced product unavailable. id: " + productId);
+                        }
+                    }
+
                 } catch (Exception ex)
                 {
                     ex.printStackTrace();
                 }
             }
+            System.out.println("added products: " + counter);
+
         }
         catch (Exception e)
         {
@@ -215,29 +295,43 @@ public class CsvLoader implements FileInterface
     }
 
     @Override
-    public void addProduct(Product product)
-    {
-        service.addProduct(product);
-    }
+    public void addProduct(Product product) { service.addProduct(product); }
+
+    @Override
+    public Product getProductById(long id) throws Exception { return service.getProductById(id); }
+
+    @Override
+    public boolean getExistProduct(String number) throws Exception { return service.getExistProduct(number); }
 
     @Override
     public void addProducer(Producer producer) { service.addProducer(producer); }
 
     @Override
+    public boolean getExistProducer(String name) throws Exception { return service.getExistProducer(name); }
+
+    @Override
     public Producer getProducerByName(String name) throws Exception { return service.getProducerByName(name); }
 
     @Override
-    public void addMarket(Market market)
-    {
-        service.addMarket(market);
-    }
+    public void addMarket(Market market) { service.addMarket(market); }
 
     @Override
-    public void addOrder(Order order)
-    {
-        service.addOrder(order);
-    }
+    public boolean getExistMarket(String name) throws Exception { return service.getExistMarket(name); }
+
+    @Override
+    public void addOrder(Order order) { service.addOrder(order); }
+
+    @Override
+    public Order getOrderById(long id) throws Exception { return service.getOrderById(id); }
+
+    @Override
+    public boolean getExistOrder(String number) throws Exception { return service.getExistOrder(number); }
 
     @Override
     public void addOrderItem(long orderId, long productId) { service.addOrderItem(orderId,productId); }
+
+    @Override
+    public boolean getExistOrderItem(long orderId, long productId) throws Exception { return service.getExistOrderItem(orderId,productId);
+    }
+
 }

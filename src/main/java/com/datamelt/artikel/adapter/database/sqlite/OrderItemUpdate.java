@@ -11,43 +11,25 @@ import java.util.List;
 
 class OrderItemUpdate
 {
-    private Connection connection = null;
+    private static final String SQL_INSERT = "insert into productorder_item (productorder_id,product_id) values(?,?)";
+    private static final String SQL_DELETE = "delete from productorder_item where product_id=?";
+    private static final String SQL_DELETE_ALL = "delete from productorder_item where productorder_id=?";
 
-    private PreparedStatement insertStatement;
-    private PreparedStatement deleteStatement;
-    private PreparedStatement deleteAllItemsStatement;
+    private Connection connection;
 
     public OrderItemUpdate(Connection connection)
     {
         this.connection = connection;
-        initStatements();
     }
-
-    private void initStatements()
-    {
-        try
-        {
-            insertStatement = connection.prepareStatement("insert into productorder_item (productorder_id,product_id) values(?,?)");
-            deleteStatement = connection.prepareStatement("delete from productorder_item where product_id=?");
-            deleteAllItemsStatement = connection.prepareStatement("delete from productorder_item where productorder_id=?");
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
 
     public void addOrderItem(long orderId, long productId)
     {
         try
         {
-            insertStatement.setLong(1, orderId);
-            insertStatement.setLong(2, productId);
-            insertStatement.executeUpdate();
-            insertStatement.clearParameters();
-
-            insertStatement.close();
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
+            statement.setLong(1, orderId);
+            statement.setLong(2, productId);
+            statement.executeUpdate();
 
         } catch (SQLException ex)
         {
@@ -59,11 +41,12 @@ class OrderItemUpdate
     {
         try
         {
-            deleteStatement.setLong(1, id);
-            deleteStatement.executeUpdate();
-            deleteStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            deleteStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {
@@ -75,11 +58,12 @@ class OrderItemUpdate
     {
         try
         {
-            deleteAllItemsStatement.setLong(1, orderId);
-            deleteAllItemsStatement.executeUpdate();
-            deleteAllItemsStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ALL);
+            statement.setLong(1, orderId);
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            deleteAllItemsStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {

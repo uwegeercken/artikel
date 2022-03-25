@@ -20,14 +20,14 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void addProducer(com.datamelt.artikel.model.Producer producer)
+    public void addProducer(Producer producer)
     {
         ProducerUpdate p = new ProducerUpdate(connection);
         p.addProducer(producer);
     }
 
     @Override
-    public void updateProducer(com.datamelt.artikel.model.Producer producer)
+    public void updateProducer(Producer producer)
     {
         ProducerUpdate p = new ProducerUpdate(connection);
         p.updateProducer(producer);
@@ -50,6 +50,12 @@ public class SqliteRepository implements RepositoryInterface
     public Producer getProducerByName(String name) throws Exception
     {
         return ProducerSearch.getProducerByName(connection, name);
+    }
+
+    @Override
+    public boolean getExistProducer(String name) throws Exception
+    {
+        return ProducerSearch.getExistProducer(connection, name);
     }
 
     @Override
@@ -98,6 +104,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public boolean getExistProduct(String number) throws Exception
+    {
+        return ProductSearch.getExistProduct(connection, number);
+    }
+
+    @Override
     public List<Product> getAllProducts() throws Exception
     {
         return CollectionHandler.getAllProducts(connection);
@@ -134,6 +146,12 @@ public class SqliteRepository implements RepositoryInterface
     public Market getMarketByName(String name) throws Exception
     {
         return MarketSearch.getMarketByName(connection,name);
+    }
+
+    @Override
+    public boolean getExistMarket(String name) throws Exception
+    {
+        return MarketSearch.getExistMarket(connection, name);
     }
 
     @Override
@@ -176,6 +194,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public boolean getExistOrder(String number) throws Exception
+    {
+        return OrderSearch.getExistOrder(connection, number);
+    }
+
+    @Override
     public List<Order> getAllOrders() throws Exception
     {
         return CollectionHandler.getAllOrders(connection);
@@ -186,6 +210,12 @@ public class SqliteRepository implements RepositoryInterface
     {
         OrderItemUpdate p = new OrderItemUpdate(connection);
         p.addOrderItem(orderId,productId);
+    }
+
+    @Override
+    public boolean getExistOrderItem(long orderId, long productId) throws Exception
+    {
+        return OrderItemSearch.getExistOrderItem(connection, orderId, productId);
     }
 
     @Override

@@ -35,6 +35,7 @@
             <artifactId>jackson-annotations</artifactId>
             <version>2.12.4</version>
         </dependency>
+
     </dependencies>
 
 </project>

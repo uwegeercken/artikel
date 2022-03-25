@@ -8,47 +8,32 @@ import java.sql.SQLException;
 
 class MarketUpdate
 {
-    private Connection connection = null;
+    private static final String SQL_INSERT = "insert into market (name) values(?)";
+    private static final String SQL_UPDATE = "update market set name=? where id=?";
+    private static final String SQL_DELETE = "delete from market where id=?";
 
-    private PreparedStatement insertStatement;
-    private PreparedStatement updateStatement;
-    private PreparedStatement deleteStatement;
+    private Connection connection;
 
     public MarketUpdate(Connection connection)
     {
         this.connection = connection;
-        initStatements();
     }
-
-    private void initStatements()
-    {
-        try
-        {
-            insertStatement = connection.prepareStatement("insert into market (name) values(?)");
-            updateStatement = connection.prepareStatement("update market set name=? where id=?");
-            deleteStatement = connection.prepareStatement("delete from market where id=?");
-        }
-        catch (Exception ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
 
     public void addMarket(Market market)
     {
         try
         {
-            insertStatement.setString(1, market.getName());
-            insertStatement.executeUpdate();
-            insertStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
+            statement.setString(1, market.getName());
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            ResultSet resultset = insertStatement.getGeneratedKeys();
+            ResultSet resultset = statement.getGeneratedKeys();
             resultset.next();
             market.setId(resultset.getLong(1));
 
             resultset.close();
-            insertStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {
@@ -60,12 +45,13 @@ class MarketUpdate
     {
         try
         {
-            updateStatement.setString(1, market.getName());
-            updateStatement.setLong(2, market.getId());
-            updateStatement.executeUpdate();
-            updateStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
+            statement.setString(1, market.getName());
+            statement.setLong(2, market.getId());
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            updateStatement.close();
+            statement.close();
 
 
         } catch (SQLException ex)
@@ -78,11 +64,12 @@ class MarketUpdate
     {
         try
         {
-            deleteStatement.setLong(1, id);
-            deleteStatement.executeUpdate();
-            deleteStatement.clearParameters();
+            PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+            statement.clearParameters();
 
-            deleteStatement.close();
+            statement.close();
 
         } catch (SQLException ex)
         {
