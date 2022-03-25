@@ -20,7 +20,7 @@ class OrderUpdate
         this.connection = connection;
     }
 
-    public void addOrder(Order order)
+    void addOrder(Order order)
     {
         try
         {
@@ -42,7 +42,7 @@ class OrderUpdate
         }
     }
 
-    public void updateOrder(Order order)
+    void updateOrder(Order order)
     {
         try
         {
@@ -61,7 +61,7 @@ class OrderUpdate
         }
     }
 
-    public void removeOrder(long id)
+    void removeOrder(long id)
     {
         try
         {

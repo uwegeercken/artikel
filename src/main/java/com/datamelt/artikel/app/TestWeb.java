@@ -25,7 +25,7 @@ public class TestWeb
         List<Market> markets = client.getAllMarkets();
         List<Order> orders = client.getAllOrders();
 
-        client.
+
 
         System.out.println();
 

@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 
 class SqliteConnection
 {
-    public static Connection getConnection(DatabaseConfiguration configuration)
+    static Connection getConnection(DatabaseConfiguration configuration)
     {
         try
         {

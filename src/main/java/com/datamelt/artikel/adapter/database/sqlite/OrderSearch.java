@@ -16,7 +16,7 @@ class OrderSearch
     private static final String SQL_QUERY_BY_NUMBER = "select * from productorder where number=?";
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productorder where number=?";
 
-    public static Order getOrderById(Connection connection, long id) throws Exception
+    static Order getOrderById(Connection connection, long id) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_ID);
         statement.setLong(1, id);
@@ -36,7 +36,7 @@ class OrderSearch
         return order;
     }
 
-    public static Order getOrderByNumber(Connection connection, String number) throws Exception
+    static Order getOrderByNumber(Connection connection, String number) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_NUMBER);
         statement.setString(1, number);
@@ -56,7 +56,7 @@ class OrderSearch
         return order;
     }
 
-    public static boolean getExistOrder(Connection connection, String number) throws Exception
+    static boolean getExistOrder(Connection connection, String number) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_EXISTS);
         statement.setString(1, number);

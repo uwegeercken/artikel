@@ -247,36 +247,39 @@ public class CsvLoader implements FileInterface
             while ((line = br.readLine()) != null)
             {
                 String[] fields = line.split(",");
-                long orderId = Long.parseLong(fields[0]);
+                String orderNumber = fields[0];
                 long productId = Long.parseLong(fields[1]);
                 try
                 {
-                    boolean exists = getExistOrderItem(orderId,productId);
-
-                    Order order = getOrderById(orderId);
+                    Order order = getOrderByNumber(orderNumber);
                     Product product = getProductById(productId);
 
+                    boolean exists = getExistOrderItem(order.getId(),product.getId());
 
-                    if(product !=null && order != null)
+                    if(product !=null && product.getProducer().getNoOrdering()==0 && order != null)
                     {
                         if (!exists)
                         {
-                            addOrderItem(orderId, productId);
+                            addOrderItem(order.getId(), product.getId());
                             counter++;
                         } else
                         {
-                            System.out.println("already existing - order item: " + orderId + "/" + productId);
+                            System.out.println("already existing - order item: " + order.getNumber() + "/" + product.getName());
                         }
                     }
                     else
                     {
                         if(order == null)
                         {
-                            System.out.println("referenced order unavailable. id: " + orderId);
+                            System.out.println("referenced order unavailable. number: " + orderNumber);
                         }
                         if(product ==null )
                         {
                             System.out.println("referenced product unavailable. id: " + productId);
+                        }
+                        if(product.getProducer().getNoOrdering()!=0)
+                        {
+                            System.out.println("referenced product is unavailable for ordering. id: " + productId);
                         }
                     }
 
@@ -322,7 +325,7 @@ public class CsvLoader implements FileInterface
     public void addOrder(Order order) { service.addOrder(order); }
 
     @Override
-    public Order getOrderById(long id) throws Exception { return service.getOrderById(id); }
+    public Order getOrderByNumber(String number) throws Exception { return service.getOrderByNumber(number); }
 
     @Override
     public boolean getExistOrder(String number) throws Exception { return service.getExistOrder(number); }

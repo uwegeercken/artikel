@@ -14,7 +14,7 @@ class MarketSearch
     private static final String SQL_QUERY_BY_NAME = "select * from market where name=?";
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from market where name=?";
 
-    public static Market getMarketById(Connection connection, long id) throws Exception
+    static Market getMarketById(Connection connection, long id) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_ID);
         statement.setLong(1, id);
@@ -31,7 +31,7 @@ class MarketSearch
         return market;
     }
 
-    public static Market getMarketByName(Connection connection, String name) throws Exception
+    static Market getMarketByName(Connection connection, String name) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_NAME);
         statement.setString(1, name);
@@ -48,19 +48,19 @@ class MarketSearch
         return market;
     }
 
-    public static boolean getExistMarket(Connection connection, String name) throws Exception
-{
-    PreparedStatement statement = connection.prepareStatement(SQL_QUERY_EXISTS);
-    statement.setString(1, name);
-    ResultSet resultset = statement.executeQuery();
-    boolean exist = false;
-    if(resultset.next())
+    static boolean getExistMarket(Connection connection, String name) throws Exception
     {
-        exist = resultset.getLong("counter") == 1;
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_EXISTS);
+        statement.setString(1, name);
+        ResultSet resultset = statement.executeQuery();
+        boolean exist = false;
+        if(resultset.next())
+        {
+            exist = resultset.getLong("counter") == 1;
+        }
+        statement.clearParameters();
+        resultset.close();
+        statement.close();
+        return exist;
     }
-    statement.clearParameters();
-    resultset.close();
-    statement.close();
-    return exist;
-}
 }

@@ -6,8 +6,8 @@ import java.sql.*;
 
 class ProducerUpdate
 {
-    private static final String SQL_INSERT = "insert into producer (name) values(?)";
-    private static final String SQL_UPDATE = "update producer set name=? where id=?";
+    private static final String SQL_INSERT = "insert into producer (name,no_ordering) values(?,?)";
+    private static final String SQL_UPDATE = "update producer set name=?, no_ordering=? where id=?";
     private static final String SQL_DELETE = "delete from producer where id=?";
 
     private Connection connection;
@@ -16,12 +16,14 @@ class ProducerUpdate
     {
         this.connection = connection;
     }
-    public void addProducer(Producer producer)
+
+    void addProducer(Producer producer)
     {
         try
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, producer.getName());
+            statement.setLong(2, producer.getNoOrdering());
             statement.executeUpdate();
 
             ResultSet resultset = statement.getGeneratedKeys();
@@ -37,13 +39,14 @@ class ProducerUpdate
         }
     }
 
-    public void updateProducer(Producer producer)
+    void updateProducer(Producer producer)
     {
         try
         {
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
             statement.setString(1, producer.getName());
-            statement.setLong(2, producer.getId());
+            statement.setLong(2, producer.getNoOrdering());
+            statement.setLong(3, producer.getId());
             statement.executeUpdate();
             statement.clearParameters();
 
@@ -55,7 +58,7 @@ class ProducerUpdate
         }
     }
 
-    public void removeProducer(long id)
+    void removeProducer(long id)
     {
         try
         {

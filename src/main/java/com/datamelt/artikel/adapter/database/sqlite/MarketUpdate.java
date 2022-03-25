@@ -19,7 +19,7 @@ class MarketUpdate
         this.connection = connection;
     }
 
-    public void addMarket(Market market)
+    void addMarket(Market market)
     {
         try
         {
@@ -41,7 +41,7 @@ class MarketUpdate
         }
     }
 
-    public void updateMarket(Market market)
+    void updateMarket(Market market)
     {
         try
         {
@@ -60,7 +60,7 @@ class MarketUpdate
         }
     }
 
-    public void removeMarket(long id)
+    void removeMarket(long id)
     {
         try
         {

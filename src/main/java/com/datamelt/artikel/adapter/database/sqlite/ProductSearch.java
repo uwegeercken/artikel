@@ -14,7 +14,7 @@ class ProductSearch
     private static final String SQL_QUERY_BY_NUMBER = "select * from product where number=?";
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from product where number=?";
 
-    public static Product getProductById(Connection connection, long id) throws Exception
+    static Product getProductById(Connection connection, long id) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_ID);
         statement.setLong(1, id);
@@ -26,6 +26,9 @@ class ProductSearch
             product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
                     .id(resultset.getLong("id"))
                     .description(resultset.getString("description"))
+                    .quantity(resultset.getInt("quantity"))
+                    .weight(resultset.getDouble("weight"))
+                    .price(resultset.getDouble("price"))
                     .build();
         }
         resultset.close();
@@ -33,7 +36,7 @@ class ProductSearch
         return product;
     }
 
-    public static Product getProductByName(Connection connection, String name) throws Exception
+    static Product getProductByName(Connection connection, String name) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_NAME);
         statement.setString(1, name);
@@ -45,6 +48,9 @@ class ProductSearch
             product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
                     .id(resultset.getLong("id"))
                     .description(resultset.getString("description"))
+                    .quantity(resultset.getInt("quantity"))
+                    .weight(resultset.getDouble("weight"))
+                    .price(resultset.getDouble("price"))
                     .build();
         }
         statement.clearParameters();
@@ -53,7 +59,7 @@ class ProductSearch
         return product;
     }
 
-    public static Product getProductByNumber(Connection connection, String number) throws Exception
+    static Product getProductByNumber(Connection connection, String number) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_NUMBER);
         statement.setString(1, number);
@@ -65,6 +71,9 @@ class ProductSearch
             product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
                     .id(resultset.getLong("id"))
                     .description(resultset.getString("description"))
+                    .quantity(resultset.getInt("quantity"))
+                    .weight(resultset.getDouble("weight"))
+                    .price(resultset.getDouble("price"))
                     .build();
         }
         statement.clearParameters();
@@ -73,7 +82,7 @@ class ProductSearch
         return product;
     }
 
-    public static boolean getExistProduct(Connection connection, String number) throws Exception
+    static boolean getExistProduct(Connection connection, String number) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_EXISTS);
         statement.setString(1, number);

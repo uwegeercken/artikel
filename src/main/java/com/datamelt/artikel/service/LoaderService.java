@@ -33,7 +33,7 @@ public class LoaderService
 
     public void addOrder(Order order) { repository.addOrder(order); }
 
-    public Order getOrderById(long id) throws Exception { return repository.getOrderById(id); }
+    public Order getOrderByNumber(String number) throws Exception { return repository.getOrderByNumber(number); }
 
     public boolean getExistOrder(String number) throws Exception { return repository.getExistOrder(number); }
 

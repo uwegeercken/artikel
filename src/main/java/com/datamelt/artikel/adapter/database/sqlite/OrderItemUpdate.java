@@ -22,7 +22,7 @@ class OrderItemUpdate
         this.connection = connection;
     }
 
-    public void addOrderItem(long orderId, long productId)
+    void addOrderItem(long orderId, long productId)
     {
         try
         {
@@ -37,7 +37,7 @@ class OrderItemUpdate
         }
     }
 
-    public void removeOrderItem(long id)
+    void removeOrderItem(long id)
     {
         try
         {
@@ -54,7 +54,7 @@ class OrderItemUpdate
         }
     }
 
-    public void removeAllOrderItems(long orderId)
+    void removeAllOrderItems(long orderId)
     {
         try
         {

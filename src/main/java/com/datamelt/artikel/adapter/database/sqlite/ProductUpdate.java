@@ -16,7 +16,7 @@ class ProductUpdate
         this.connection = connection;
     }
 
-    public void addProduct(Product product)
+    void addProduct(Product product)
     {
         try
         {
@@ -46,7 +46,7 @@ class ProductUpdate
         }
     }
 
-    public void updateProduct(Product product)
+    void updateProduct(Product product)
     {
         try
         {
@@ -69,7 +69,7 @@ class ProductUpdate
         }
     }
 
-    public void removeProduct(long id)
+    void removeProduct(long id)
     {
         try
         {
