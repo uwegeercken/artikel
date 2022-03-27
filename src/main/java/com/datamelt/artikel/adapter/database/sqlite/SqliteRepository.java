@@ -115,37 +115,40 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public void addProductContainer(ProductContainer container)
     {
-
+        ProductContainerUpdate p = new ProductContainerUpdate(connection);
+        p.addProductContainer(container);
     }
 
     @Override
     public void updateProductContainer(ProductContainer container)
     {
-
+        ProductContainerUpdate p = new ProductContainerUpdate(connection);
+        p.updateProductContainer(container);
     }
 
     @Override
     public void removeProductContainer(long id)
     {
-
+        ProductContainerUpdate p = new ProductContainerUpdate(connection);
+        p.removeProductContainer(id);
     }
 
     @Override
     public ProductContainer getProductContainerById(long id) throws Exception
     {
-        return null;
+        return ProductContainerSearch.getProductContainerById(connection, id);
     }
 
     @Override
     public ProductContainer getProductContainerByName(String name) throws Exception
     {
-        return null;
+        return ProductContainerSearch.getProductContainerByName(connection, name);
     }
 
     @Override
     public boolean getExistProductContainer(String name) throws Exception
     {
-        return false;
+        return ProductContainerSearch.getExistProductContainer(connection,name);
     }
 
     @Override
@@ -157,37 +160,40 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public void addProductOrigin(ProductOrigin origin)
     {
-
+        ProductOriginUpdate p = new ProductOriginUpdate(connection);
+        p.addProductOrigin(origin);
     }
 
     @Override
     public void updateProductOrigin(ProductOrigin origin)
     {
-
+        ProductOriginUpdate p = new ProductOriginUpdate(connection);
+        p.updateProductOrigin(origin);
     }
 
     @Override
     public void removeProductOrigin(long id)
     {
-
+        ProductOriginUpdate p = new ProductOriginUpdate(connection);
+        p.removeProductOrigin(id);
     }
 
     @Override
     public ProductOrigin getProductOriginById(long id) throws Exception
     {
-        return null;
+        return ProductOriginSearch.getProductOriginById(connection, id);
     }
 
     @Override
     public ProductOrigin getProductOriginByName(String name) throws Exception
     {
-        return null;
+        return ProductOriginSearch.getProductOriginByName(connection, name);
     }
 
     @Override
     public boolean getExistProductOrigin(String name) throws Exception
     {
-        return false;
+        return ProductOriginSearch.getExistProductCOrigin(connection,name);
     }
 
     @Override

@@ -10,6 +10,8 @@ public class Product
     private final double weight;
     private final double price;
     private final Producer producer;
+    private final ProductContainer container;
+    private final ProductOrigin origin;
 
     private Product(ProductBuilder builder) {
         this.id = builder.id;
@@ -20,6 +22,8 @@ public class Product
         this.weight = builder.weight;
         this.price = builder.price;
         this.producer = builder.producer;
+        this.container = builder.container;
+        this.origin = builder.origin;
     }
 
     public long getId() { return id; }
@@ -52,6 +56,10 @@ public class Product
 
     public Producer getProducer() { return producer; }
 
+    public ProductContainer getContainer() { return container; }
+
+    public ProductOrigin getOrigin() { return origin; }
+
     public static class ProductBuilder
     {
         private final String number;
@@ -63,6 +71,8 @@ public class Product
         private double weight;
         private double price;
         private Producer producer;
+        private ProductContainer container;
+        private ProductOrigin origin;
 
         public ProductBuilder(String number, String name, Producer producer)
         {
@@ -104,6 +114,18 @@ public class Product
         public ProductBuilder producer(Producer producer)
         {
             this.producer = producer;
+            return this;
+        }
+
+        public ProductBuilder container(ProductContainer container)
+        {
+            this.container = container;
+            return this;
+        }
+
+        public ProductBuilder origin(ProductOrigin origin)
+        {
+            this.origin = origin;
             return this;
         }
 

@@ -49,6 +49,12 @@ public class CsvLoader implements FileInterface
             case ORDERITEMS:
                 this.processOrderItemFile(getCsvFile(configuration.getOrderitemsFilename()));
                 break;
+            case CONTAINER:
+                this.processProductContainerFile(getCsvFile(configuration.getProductContainersFilename()));
+                break;
+            case ORIGIN:
+                this.processProductOriginFile(getCsvFile(configuration.getProductOriginsFilename()));
+                break;
         }
     }
 
@@ -149,6 +155,43 @@ public class CsvLoader implements FileInterface
                 }
             }
             logger.info("added product containers: [{}]", counter);
+        }
+        catch (Exception e)
+        {
+            logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
+        }
+    }
+
+    private void processProductOriginFile(File inputFile)
+    {
+        BufferedReader br;
+        try
+        {
+            br = new BufferedReader(new FileReader(inputFile));
+            String line;
+            long counter=0;
+            while ((line = br.readLine()) != null)
+            {
+                String[] fields = line.split(",");
+                try
+                {
+                    ProductOrigin origin = new ProductOrigin(fields[0]);
+                    boolean exists = getExistProductContainer(fields[0]);
+                    if(!exists)
+                    {
+                        addProductOrigin(origin);
+                        counter++;
+                    }
+                    else
+                    {
+                        logger.warn("already existing - product origin: [{}]", fields[0]);
+                    }
+                } catch (Exception ex)
+                {
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
+                }
+            }
+            logger.info("added product origins: [{}]", counter);
         }
         catch (Exception e)
         {

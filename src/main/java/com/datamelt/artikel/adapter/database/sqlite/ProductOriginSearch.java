@@ -12,7 +12,7 @@ class ProductOriginSearch
     private static final String SQL_QUERY_BY_NAME = "select * from productcontainer where name=?";
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productcontainer where name=?";
 
-    static ProductOrigin getProductCOriginById(Connection connection, long id) throws Exception
+    static ProductOrigin getProductOriginById(Connection connection, long id) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_ID);
         statement.setLong(1, id);

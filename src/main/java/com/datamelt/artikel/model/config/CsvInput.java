@@ -7,8 +7,8 @@ public class CsvInput
     private String marketsFilename;
     private String ordersFilename;
     private String orderitemsFilename;
-    private String productContainersFilenma;
-    private String productOriginsFilenma;
+    private String productContainersFilename;
+    private String productOriginsFilename;
 
     public String getProductsFilename()
     {
@@ -32,7 +32,7 @@ public class CsvInput
 
     public String getOrderitemsFilename() { return orderitemsFilename; }
 
-    public String getProductContainersFilenma() { return productContainersFilenma; }
+    public String getProductContainersFilename() { return productContainersFilename; }
 
-    public String getProductOriginsFilenma() { return productOriginsFilenma; }
+    public String getProductOriginsFilename() { return productOriginsFilename; }
 }
