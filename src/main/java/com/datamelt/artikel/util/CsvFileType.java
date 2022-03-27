@@ -6,7 +6,7 @@ public enum CsvFileType
     PRODUCER,
     ORDER,
     ORDERITEMS,
-    MARKET;
-
-
+    MARKET,
+    CONTAINER,
+    ORIGIN;
 }

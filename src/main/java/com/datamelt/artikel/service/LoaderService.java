@@ -1,9 +1,6 @@
 package com.datamelt.artikel.service;
 
-import com.datamelt.artikel.model.Market;
-import com.datamelt.artikel.model.Order;
-import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.model.Product;
+import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.RepositoryInterface;
 
 public class LoaderService
@@ -19,7 +16,17 @@ public class LoaderService
 
     public Product getProductById(long id) throws Exception { return repository.getProductById(id); }
 
+    public Product getProductByNumber(String number) throws Exception { return repository.getProductByNumber(number); }
+
     public boolean getExistProduct(String number) throws Exception { return repository.getExistProduct(number); }
+
+    public void addProductContainer(ProductContainer container) { repository.addProductContainer(container); }
+
+    public boolean getExistProductContainer(String name) throws Exception { return repository.getExistProductOrigin(name); }
+
+    public void addProductOrigin(ProductOrigin origin) { repository.addProductOrigin(origin); }
+
+    public boolean getExistProductOrigin(String name) throws Exception { return repository.getExistProductOrigin(name); }
 
     public void addProducer(Producer producer) { repository.addProducer(producer); }
 

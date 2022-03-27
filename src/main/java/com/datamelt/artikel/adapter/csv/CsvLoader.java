@@ -1,26 +1,24 @@
 package com.datamelt.artikel.adapter.csv;
 
-import com.datamelt.artikel.model.Market;
-import com.datamelt.artikel.model.Order;
-import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.model.Product;
+import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.model.config.CsvInput;
 import com.datamelt.artikel.port.FileInterface;
 import com.datamelt.artikel.service.LoaderService;
 import com.datamelt.artikel.util.Constants;
 import com.datamelt.artikel.util.CsvFileType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.logging.Logger;
 
 public class CsvLoader implements FileInterface
 {
+    private static final Logger logger = LogManager.getLogger(CsvLoader.class);
+
     private final LoaderService service;
     private CsvInput configuration;
 
@@ -53,7 +51,6 @@ public class CsvLoader implements FileInterface
                 break;
         }
     }
-
 
     private File getCsvFile(String filename)
     {
@@ -102,23 +99,60 @@ public class CsvLoader implements FileInterface
                         }
                         else
                         {
-                            System.out.println("already existing - producer: " + fields[0]);
+                            logger.info("already existing - product: [{}]", fields[0]);
                         }
                     }
                     else
                     {
-                        System.out.println("referenced producer unavailable. id: " + fields[6]);
+                       logger.error("referenced producer unavailable. id: [{}]", fields[6]);
                     }
                 } catch (Exception ex)
                 {
-                    ex.printStackTrace();
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
                 }
             }
-            System.out.println("added products: " + counter);
+            logger.info("added products: [{}]", counter);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
+        }
+    }
+
+    private void processProductContainerFile(File inputFile)
+    {
+        BufferedReader br;
+        try
+        {
+            br = new BufferedReader(new FileReader(inputFile));
+            String line;
+            long counter=0;
+            while ((line = br.readLine()) != null)
+            {
+                String[] fields = line.split(",");
+                try
+                {
+                    ProductContainer container = new ProductContainer(fields[0]);
+                    boolean exists = getExistProductContainer(fields[0]);
+                    if(!exists)
+                    {
+                        addProductContainer(container);
+                        counter++;
+                    }
+                    else
+                    {
+                        logger.warn("already existing - product container: [{}]", fields[0]);
+                    }
+                } catch (Exception ex)
+                {
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
+                }
+            }
+            logger.info("added product containers: [{}]", counter);
+        }
+        catch (Exception e)
+        {
+            logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
         }
     }
 
@@ -144,19 +178,19 @@ public class CsvLoader implements FileInterface
                     }
                     else
                     {
-                        System.out.println("already existing - producer: " + fields[0]);
+                        logger.warn("already existing - producer: [{}]", fields[0]);
                     }
 
                 } catch (Exception ex)
                 {
-                    ex.printStackTrace();
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
                 }
             }
-            System.out.println("added producers: " + counter);
+            logger.info("added producers: [{}]", counter);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+           logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
         }
     }
 
@@ -182,18 +216,18 @@ public class CsvLoader implements FileInterface
                     }
                     else
                     {
-                        System.out.println("already existing - market: " + fields[0]);
+                        logger.warn("already existing - market: [{}]", fields[0]);
                     }
                 } catch (Exception ex)
                 {
-                    ex.printStackTrace();
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
                 }
             }
-            System.out.println("added markets: " + counter);
+            logger.info("added markets: [{}]", counter);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
         }
     }
 
@@ -221,18 +255,18 @@ public class CsvLoader implements FileInterface
                     }
                     else
                     {
-                        System.out.println("already existing - order: " + fields[0]);
+                        logger.warn("already existing - order: [{}]", fields[0]);
                     }
                 } catch (Exception ex)
                 {
-                    ex.printStackTrace();
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
                 }
             }
-            System.out.println("added orders: " + counter);
+            logger.info("added orders: [{}]", counter);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
         }
     }
 
@@ -248,11 +282,11 @@ public class CsvLoader implements FileInterface
             {
                 String[] fields = line.split(",");
                 String orderNumber = fields[0];
-                long productId = Long.parseLong(fields[1]);
+                String productNumber = fields[1];
                 try
                 {
                     Order order = getOrderByNumber(orderNumber);
-                    Product product = getProductById(productId);
+                    Product product = getProductByNumber(productNumber);
 
                     boolean exists = getExistOrderItem(order.getId(),product.getId());
 
@@ -264,36 +298,36 @@ public class CsvLoader implements FileInterface
                             counter++;
                         } else
                         {
-                            System.out.println("already existing - order item: " + order.getNumber() + "/" + product.getName());
+                            logger.warn("already existing - order item: [{}], product: [{}]", order.getNumber(), product.getName());
                         }
                     }
                     else
                     {
                         if(order == null)
                         {
-                            System.out.println("referenced order unavailable. number: " + orderNumber);
+                            logger.error("referenced order unavailable. number: [{}]" + orderNumber);
                         }
                         if(product ==null )
                         {
-                            System.out.println("referenced product unavailable. id: " + productId);
+                            logger.error("referenced product unavailable. number: [{}]", productNumber);
                         }
-                        if(product.getProducer().getNoOrdering()!=0)
+                        else if(product.getProducer().getNoOrdering()!=0)
                         {
-                            System.out.println("referenced product is unavailable for ordering. id: " + productId);
+                            logger.error("referenced product is unavailable for ordering. name: [{}]", product.getName());
                         }
                     }
 
                 } catch (Exception ex)
                 {
-                    ex.printStackTrace();
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
                 }
             }
-            System.out.println("added products: " + counter);
+            logger.info("added order items: [{}]", counter);
 
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
         }
     }
 
@@ -307,6 +341,18 @@ public class CsvLoader implements FileInterface
     public boolean getExistProduct(String number) throws Exception { return service.getExistProduct(number); }
 
     @Override
+    public void addProductContainer(ProductContainer container) { service.addProductContainer(container); }
+
+    @Override
+    public boolean getExistProductContainer(String name) throws Exception { return service.getExistProductContainer(name); }
+
+    @Override
+    public void addProductOrigin(ProductOrigin origin) { service.addProductOrigin(origin); }
+
+    @Override
+    public boolean getExistProductOrigin(String name) throws Exception { return service.getExistProductOrigin(name); }
+
+    @Override
     public void addProducer(Producer producer) { service.addProducer(producer); }
 
     @Override
@@ -314,6 +360,9 @@ public class CsvLoader implements FileInterface
 
     @Override
     public Producer getProducerByName(String name) throws Exception { return service.getProducerByName(name); }
+
+    @Override
+    public Product getProductByNumber(String number) throws Exception { return service.getProductByNumber(number); }
 
     @Override
     public void addMarket(Market market) { service.addMarket(market); }

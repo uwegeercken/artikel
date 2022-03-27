@@ -1,9 +1,6 @@
 package com.datamelt.artikel.port;
 
-import com.datamelt.artikel.model.Market;
-import com.datamelt.artikel.model.Order;
-import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.model.Product;
+import com.datamelt.artikel.model.*;
 
 import java.util.List;
 
@@ -25,6 +22,22 @@ public interface RepositoryInterface
     Product getProductByNumber(String number) throws Exception;
     boolean getExistProduct(String number) throws Exception;
     List<Product> getAllProducts() throws Exception;
+
+    void addProductContainer(ProductContainer container);
+    void updateProductContainer(ProductContainer container);
+    void removeProductContainer(long id);
+    ProductContainer getProductContainerById(long id) throws Exception;
+    ProductContainer getProductContainerByName(String name) throws Exception;
+    boolean getExistProductContainer(String name) throws Exception;
+    List<ProductContainer> getAllProductContainers() throws Exception;
+
+    void addProductOrigin(ProductOrigin origin);
+    void updateProductOrigin(ProductOrigin origin);
+    void removeProductOrigin(long id);
+    ProductOrigin getProductOriginById(long id) throws Exception;
+    ProductOrigin getProductOriginByName(String name) throws Exception;
+    boolean getExistProductOrigin(String name) throws Exception;
+    List<ProductOrigin> getAllProductOrigins() throws Exception;
 
     void addMarket(Market market);
     void updateMarket(Market market);

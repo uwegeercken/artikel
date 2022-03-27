@@ -1,52 +1,51 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
-import com.datamelt.artikel.model.Market;
-
+import com.datamelt.artikel.model.ProductContainer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-class MarketSearch
+class ProductContainerSearch
 {
-    private static final String SQL_QUERY_BY_ID = "select * from market where id=?";
-    private static final String SQL_QUERY_BY_NAME = "select * from market where name=?";
-    private static final String SQL_QUERY_EXISTS = "select count(1) as counter from market where name=?";
+    private static final String SQL_QUERY_BY_ID = "select * from productcontainer where id=?";
+    private static final String SQL_QUERY_BY_NAME = "select * from productcontainer where name=?";
+    private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productcontainer where name=?";
 
-    static Market getMarketById(Connection connection, long id) throws Exception
+    static ProductContainer getProductContainerById(Connection connection, long id) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_ID);
         statement.setLong(1, id);
         ResultSet resultset = statement.executeQuery();
-        Market market = null;
+        ProductContainer container = null;
         if(resultset.next())
         {
-            market = new Market(resultset.getString("name"));
-            market.setId(resultset.getLong("id"));
+            container = new ProductContainer(resultset.getString("name"));
+            container.setId(resultset.getLong("id"));
         }
         statement.clearParameters();
         resultset.close();
         statement.close();
-        return market;
+        return container;
     }
 
-    static Market getMarketByName(Connection connection, String name) throws Exception
+    static ProductContainer getProductContainerByName(Connection connection, String name) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_NAME);
         statement.setString(1, name);
         ResultSet resultset = statement.executeQuery();
-        Market market = null;
+        ProductContainer container = null;
         if(resultset.next())
         {
-            market = new Market(resultset.getString("name"));
-            market.setId(resultset.getLong("id"));
+            container = new ProductContainer(resultset.getString("name"));
+            container.setId(resultset.getLong("id"));
         }
         statement.clearParameters();
         resultset.close();
         statement.close();
-        return market;
+        return container;
     }
 
-    static boolean getExistMarket(Connection connection, String name) throws Exception
+    static boolean getExistProductContainer(Connection connection, String name) throws Exception
     {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_EXISTS);
         statement.setString(1, name);

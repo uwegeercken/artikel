@@ -1,9 +1,6 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
-import com.datamelt.artikel.model.Market;
-import com.datamelt.artikel.model.Order;
-import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.model.Product;
+import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.model.config.DatabaseConfiguration;
 import com.datamelt.artikel.port.RepositoryInterface;
 
@@ -113,6 +110,90 @@ public class SqliteRepository implements RepositoryInterface
     public List<Product> getAllProducts() throws Exception
     {
         return CollectionHandler.getAllProducts(connection);
+    }
+
+    @Override
+    public void addProductContainer(ProductContainer container)
+    {
+
+    }
+
+    @Override
+    public void updateProductContainer(ProductContainer container)
+    {
+
+    }
+
+    @Override
+    public void removeProductContainer(long id)
+    {
+
+    }
+
+    @Override
+    public ProductContainer getProductContainerById(long id) throws Exception
+    {
+        return null;
+    }
+
+    @Override
+    public ProductContainer getProductContainerByName(String name) throws Exception
+    {
+        return null;
+    }
+
+    @Override
+    public boolean getExistProductContainer(String name) throws Exception
+    {
+        return false;
+    }
+
+    @Override
+    public List<ProductContainer> getAllProductContainers() throws Exception
+    {
+        return CollectionHandler.getAllProductContainers(connection);
+    }
+
+    @Override
+    public void addProductOrigin(ProductOrigin origin)
+    {
+
+    }
+
+    @Override
+    public void updateProductOrigin(ProductOrigin origin)
+    {
+
+    }
+
+    @Override
+    public void removeProductOrigin(long id)
+    {
+
+    }
+
+    @Override
+    public ProductOrigin getProductOriginById(long id) throws Exception
+    {
+        return null;
+    }
+
+    @Override
+    public ProductOrigin getProductOriginByName(String name) throws Exception
+    {
+        return null;
+    }
+
+    @Override
+    public boolean getExistProductOrigin(String name) throws Exception
+    {
+        return false;
+    }
+
+    @Override
+    public List<ProductOrigin> getAllProductOrigins() throws Exception
+    {
+        return CollectionHandler.getAllProductOrigins(connection);
     }
 
     @Override

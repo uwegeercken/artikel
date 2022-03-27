@@ -8,3 +8,5 @@ csvInput:
   marketsFilename: markets.csv
   ordersFilename: orders.csv
   orderitemsFilename: orderitems.csv
+  productContainersFilenma: productcontainers.csv
+  productOriginsFilenma: productorigins.csv
