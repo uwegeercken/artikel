@@ -88,6 +88,8 @@ public class CsvLoader implements FileInterface
                 try
                 {
                     Producer producer = getProducerByName(fields[6]);
+                    ProductOrigin origin = getProductOriginByName(fields[7]);
+                    ProductContainer container = getProductContainerByName(fields[7]);
                     if(producer!=null)
                     {
                         Product product = new Product.ProductBuilder(fields[0], fields[1], producer)
@@ -95,6 +97,8 @@ public class CsvLoader implements FileInterface
                                 .quantity(Integer.parseInt(fields[3]))
                                 .weight(Integer.parseInt(fields[4]))
                                 .price(Double.parseDouble(fields[5]))
+                                .origin(origin)
+                                .container(container)
                                 .build();
 
                         boolean exists = getExistProduct(fields[0]);
@@ -387,10 +391,22 @@ public class CsvLoader implements FileInterface
     public void addProductContainer(ProductContainer container) { service.addProductContainer(container); }
 
     @Override
+    public ProductContainer getProductContainerByName(String name) throws Exception
+    {
+        return service.getProducContainerByName(name);
+    }
+
+    @Override
     public boolean getExistProductContainer(String name) throws Exception { return service.getExistProductContainer(name); }
 
     @Override
     public void addProductOrigin(ProductOrigin origin) { service.addProductOrigin(origin); }
+
+    @Override
+    public ProductOrigin getProductOriginByName(String name) throws Exception
+    {
+        return service.getProducOriginByName(name);
+    }
 
     @Override
     public boolean getExistProductOrigin(String name) throws Exception { return service.getExistProductOrigin(name); }

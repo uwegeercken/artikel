@@ -1,0 +1,252 @@
+#macro(mainLayout)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>Artikelverwaltung | $!{pagetitle}</title>
+<link rel="stylesheet" type="text/css" href="/css/style_new.css">
+<link rel="stylesheet" href="css/jquery-ui.min.css">
+<link rel="stylesheet" href="css/jquery-ui.theme.min.css">
+<script type="text/javascript" src="jquery/jquery-2.1.3.js"></script>
+<script src="jquery/jquery-ui.js"></script>
+<script src="jquery/jstorage.js"></script>
+<script src="jquery/jquery.bpopup.min.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<script type='text/javascript'>
+$(document).ready(function() {
+  $('#search').on('input',function()
+  {
+	  if(this.value)
+	  {
+	  	$(".unit").not("[tag*='" + this.value.toLowerCase() + "']").hide();
+	  	$(".unit[tag*='" + this.value.toLowerCase() + "']").show();
+	  	$.jStorage.set("searchtext" + $('#search').attr("searchtype") , this.value)
+	  }
+	  else
+	  {
+	  	$(".unit").show();
+	  	$.jStorage.deleteKey("searchtext" + $('#search').attr("searchtype"));
+	  }
+  });
+
+  $( "#proposepassed" ).click(function() {
+  		var field=$("#object1_parameter option:selected").text();
+		if(field==null || field=="")
+		{
+			field=$("#object1_parameter").val();
+		}
+		else
+		{
+			pos = field.indexOf("(");
+			field = field.substring(0,pos).trim();
+
+		}
+		var field2=$("#object2_parameter option:selected").text();
+		if(field2==null || field2=="")
+		{
+  			field2=$("#object2_parameter").val();
+  		}
+  		else
+		{
+			pos = field2.indexOf("(");
+			field2 = field2.substring(0,pos).trim();
+
+		}
+  		var expectedvalue=$("#expectedvalue").val();
+		var check=$("#check option:selected").text();
+		var checktype=$("#check option:selected").data("type");
+
+		var partialmessage = "Field [" + field + "] $1 correctly " + check;
+		if(checktype==1)
+		{
+			$("#messagepassed").val(partialmessage);
+		}
+		else
+		{
+			if(expectedvalue)
+			{
+				$("#messagepassed").val(partialmessage + " $0");
+			}
+			else if(field2)
+			{
+				$("#messagepassed").val(partialmessage + " field [" + field2 + "] $0");
+			}
+			else
+			{
+				$("#messagepassed").val(partialmessage);
+			}
+
+		}
+  });
+
+  $( "#proposefailed" ).click(function() {
+  		var field=$("#object1_parameter option:selected").text();
+		if(field==null || field=="")
+		{
+			field=$("#object1_parameter").val();
+		}
+		else
+		{
+			pos = field.indexOf("(");
+			field = field.substring(0,pos).trim();
+
+		}
+		var field2=$("#object2_parameter option:selected").text();
+		if(field2==null || field2=="")
+		{
+  			field2=$("#object2_parameter").val();
+  		}
+  		else
+		{
+			pos = field2.indexOf("(");
+			field2 = field2.substring(0,pos).trim();
+
+		}
+  		var expectedvalue=$("#expectedvalue").val();
+		var check=$("#check option:selected").text();
+		var checktype=$("#check option:selected").data("type");
+
+		var partialmessage = "Field [" + field + "] $1 incorrectly not " + check;
+
+		if(checktype==1)
+		{
+			$("#messagefailed").val(partialmessage);
+		}
+		else
+		{
+			if(expectedvalue)
+			{
+				$("#messagefailed").val(partialmessage + " $0");
+			}
+			else if(field2)
+			{
+				$("#messagefailed").val(partialmessage + " field [" + field2 + "] $0");
+			}
+			else
+			{
+				$("#messagefailed").val(partialmessage);
+			}
+		}
+  });
+
+  $(function() {
+
+	    $('#popup').on('click', function(e) {
+			var id=$("#check option:selected").val() || $("#action option:selected").val();
+			var baseurl="process?action=bsh&ro=1&scriptname=";
+			var suffix="&id=";
+			var url= $("#popupurl").text();
+	        // Prevents the default action to be triggered.
+	        e.preventDefault();
+
+	        if(id!=0)
+	        {
+	        // Triggering bPopup when click event is fired
+	        $('#element_to_pop_up').bPopup({
+	        		loadUrl: baseurl + url + suffix + id,
+	        		transitionClose: true,
+	        		transition: 'fadeln',
+	        		speed: 700
+	        })
+	        }
+	    });
+
+	    $('#popup2').on('click', function(e) {
+			var baseurl="process?action=bsh&ro=1&scriptname=";
+			var url= $("#popupurl2").text();
+	        // Prevents the default action to be triggered.
+	        e.preventDefault();
+
+	        // Triggering bPopup when click event is fired
+	        $('#element_to_pop_up2').bPopup({
+	        		loadUrl: baseurl + url,
+	        		transitionClose: true,
+	        		transition: 'fadeln',
+	        		speed: 700
+	        })
+	    });
+
+	    $('#testdata').on('click', function(e) {
+			window.alert('gaga');
+	    });
+  });
+
+  $( "#helpimg" ).click(function() {
+		$("#help").toggle();
+  });
+
+  $( "#testimg" ).click(function() {
+		$("#help").hide();
+		$("#listrulegroup").toggle();
+		$("#testrulegroup").toggle();
+  });
+  $( "#moretoshow" ).click(function() {
+  		$(".hiddenrow").toggle();
+  });
+	var value = $.jStorage.get("searchtext"+ $('#search').attr("searchtype"));
+	if(value)
+	{
+  		$('#search').val(value);
+  		$("#search").trigger("input");
+  	}
+});
+
+</script>
+<script>
+	$(function() {
+		$( "#datepicker1" ).datepicker({
+				dateFormat: "yy-mm-dd",
+				changeMonth: true,
+				changeYear: true,
+				firstDay: 1
+		});
+	});
+	$(function() {
+		$( "#datepicker2" ).datepicker({
+				dateFormat: "yy-mm-dd",
+				changeMonth: true,
+				changeYear: true,
+				firstDay: 1
+		});
+	});
+	$(function() {
+		$( ".datepicker" ).datepicker({
+				dateFormat: "yy-mm-dd ",
+				constrainInput: false,
+				changeMonth: true,
+				changeYear: true,
+				firstDay: 1
+		});
+	});
+
+</script>
+</head>
+<body>
+<div>
+<div class="top">
+		<table width="100%">
+		<tr>
+			<td width="88%">#parse("web/templates/layout/logo.vm")</td>
+			<td>#if($user)
+					#if(${user.hasAvatar()})
+						<a href="process?action=bsh&scriptname=selecteditavatar&userid=${user.userid}"><img width="60" height="60" src="img/users/${user.userid}" title="$!{user.name} ($!{user.userid})" alt="$!{user.name} ($!{user.userid})"></a>
+					#else
+						<a href="process?action=bsh&scriptname=selecteditavatar&userid=${user.userid}"><img width="60" height="60" src="img/users/dummy.png" title="$!{user.name} ($!{user.userid})" alt="$!{user.name} ($!{user.userid})"></a>
+					#end
+				#end
+			</td>
+		</tr>
+	</table>
+
+</div>
+<div>
+	#parse("web/templates/layout/menu.vm")
+	<div class="data">
+		$bodyContent
+	</div>
+</div>
+</div>
+</body>
+</html>
+#end

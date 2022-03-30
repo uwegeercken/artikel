@@ -22,9 +22,13 @@ public class LoaderService
 
     public void addProductContainer(ProductContainer container) { repository.addProductContainer(container); }
 
+    public ProductContainer getProducContainerByName(String name) throws Exception { return repository.getProductContainerByName(name); }
+
     public boolean getExistProductContainer(String name) throws Exception { return repository.getExistProductOrigin(name); }
 
     public void addProductOrigin(ProductOrigin origin) { repository.addProductOrigin(origin); }
+
+    public ProductOrigin getProducOriginByName(String name) throws Exception { return repository.getProductOriginByName(name); }
 
     public boolean getExistProductOrigin(String name) throws Exception { return repository.getExistProductOrigin(name); }
 

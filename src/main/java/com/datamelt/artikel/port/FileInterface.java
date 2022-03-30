@@ -10,9 +10,11 @@ public interface FileInterface
     boolean getExistProduct(String number) throws Exception;
 
     void addProductContainer(ProductContainer container);
+    ProductContainer getProductContainerByName(String name) throws Exception;
     boolean getExistProductContainer(String name) throws Exception;
 
     void addProductOrigin(ProductOrigin origin);
+    ProductOrigin getProductOriginByName(String name) throws Exception;
     boolean getExistProductOrigin(String name) throws Exception;
 
     void addProducer(Producer producer);
