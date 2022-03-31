@@ -1,5 +1,6 @@
 package com.datamelt.artikel.service;
 
+import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.port.RepositoryInterface;
 
@@ -15,4 +16,6 @@ public class WebService
     }
 
     public List<Product> getAllProducts() throws Exception { return repository.getAllProducts(); }
+
+    public List<Producer> getAllProducers() throws Exception { return repository.getAllProducers(); }
 }

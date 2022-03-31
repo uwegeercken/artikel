@@ -26,10 +26,17 @@ class CollectionHandler
         while(resultset.next())
         {
             Producer producer = ProducerSearch.getProducerById(connection, resultset.getLong("producer_id"));
+            ProductContainer container = ProductContainerSearch.getProductContainerById(connection, resultset.getLong("productcontainer_id"));
+            ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
 
             Product product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
                     .id(resultset.getLong("id"))
                     .description(resultset.getString("description"))
+                    .quantity(resultset.getInt("quantity"))
+                    .weight(resultset.getDouble("weight"))
+                    .price(resultset.getDouble("price"))
+                    .container(container)
+                    .origin(origin)
                     .build();
             products.add(product);
         }

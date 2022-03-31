@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 
 class ProductOriginSearch
 {
-    private static final String SQL_QUERY_BY_ID = "select * from productcontainer where id=?";
-    private static final String SQL_QUERY_BY_NAME = "select * from productcontainer where name=?";
-    private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productcontainer where name=?";
+    private static final String SQL_QUERY_BY_ID = "select * from productorigin where id=?";
+    private static final String SQL_QUERY_BY_NAME = "select * from productorigin where name=?";
+    private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productorigin where name=?";
 
     static ProductOrigin getProductOriginById(Connection connection, long id) throws Exception
     {

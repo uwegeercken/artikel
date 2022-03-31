@@ -19,9 +19,10 @@
             <div class="grouptop">
                 <p class="small">Produkt #$!product.number </p>
                 <p class="big">$!product.name</a></p>
-                <p class="normal">$!product.description</p>
-                <p class="normal">Menge: $!{product.quantity} - Gewicht: $!{product.weight}</p>
-                <p class="normal">Preis: $!{product.price}</p>
+                <p class="normal">$!product.description - $!product.producer.name</p>
+                <p class="normal">Container: $!{product.container.name} - Ursprung: $!{product.origin.name}</p>
+                <p class="normal">Menge: $!{product.quantity} - Gewicht: $!{product.weight} kg</p>
+                <p class="normal">Preis: € $!{product.price}</p>
             </div>
         </div>
     #end

@@ -2,6 +2,8 @@ package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
+import com.datamelt.artikel.model.ProductContainer;
+import com.datamelt.artikel.model.ProductOrigin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,12 +25,16 @@ class ProductSearch
         if(resultset.next())
         {
             Producer producer = ProducerSearch.getProducerById(connection, resultset.getLong("producer_id"));
+            ProductContainer container = ProductContainerSearch.getProductContainerById(connection, resultset.getLong("productcontainer_id"));
+            ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
             product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
                     .id(resultset.getLong("id"))
                     .description(resultset.getString("description"))
                     .quantity(resultset.getInt("quantity"))
                     .weight(resultset.getDouble("weight"))
                     .price(resultset.getDouble("price"))
+                    .container(container)
+                    .origin(origin)
                     .build();
         }
         resultset.close();
@@ -45,12 +51,16 @@ class ProductSearch
         if(resultset.next())
         {
             Producer producer = ProducerSearch.getProducerById(connection, resultset.getLong("producer_id"));
+            ProductContainer container = ProductContainerSearch.getProductContainerById(connection, resultset.getLong("productcontainer_id"));
+            ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
             product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
                     .id(resultset.getLong("id"))
                     .description(resultset.getString("description"))
                     .quantity(resultset.getInt("quantity"))
                     .weight(resultset.getDouble("weight"))
                     .price(resultset.getDouble("price"))
+                    .container(container)
+                    .origin(origin)
                     .build();
         }
         statement.clearParameters();
@@ -68,12 +78,16 @@ class ProductSearch
         if(resultset.next())
         {
             Producer producer = ProducerSearch.getProducerById(connection, resultset.getLong("producer_id"));
+            ProductContainer container = ProductContainerSearch.getProductContainerById(connection, resultset.getLong("productcontainer_id"));
+            ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
             product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
                     .id(resultset.getLong("id"))
                     .description(resultset.getString("description"))
                     .quantity(resultset.getInt("quantity"))
                     .weight(resultset.getDouble("weight"))
                     .price(resultset.getDouble("price"))
+                    .container(container)
+                    .origin(origin)
                     .build();
         }
         statement.clearParameters();
