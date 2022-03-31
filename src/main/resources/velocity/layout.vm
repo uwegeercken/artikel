@@ -4,12 +4,12 @@
 <head>
 <title>Artikelverwaltung | $!{pagetitle}</title>
 <link rel="stylesheet" type="text/css" href="/css/style_new.css">
-<link rel="stylesheet" href="css/jquery-ui.min.css">
-<link rel="stylesheet" href="css/jquery-ui.theme.min.css">
-<script type="text/javascript" src="jquery/jquery-2.1.3.js"></script>
-<script src="jquery/jquery-ui.js"></script>
-<script src="jquery/jstorage.js"></script>
-<script src="jquery/jquery.bpopup.min.js"></script>
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+<link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
+<script type="text/javascript" src="/jquery/jquery-2.1.3.js"></script>
+<script src="/jquery/jquery-ui.js"></script>
+<script src="/jquery/jstorage.js"></script>
+<script src="/jquery/jquery.bpopup.min.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
@@ -227,7 +227,7 @@ $(document).ready(function() {
 <div class="top">
 		<table width="100%">
 		<tr>
-			<td width="88%">#parse("web/templates/layout/logo.vm")</td>
+			<td width="88%">#parse("/velocity/logo.vm")</td>
 			<td>#if($user)
 					#if(${user.hasAvatar()})
 						<a href="process?action=bsh&scriptname=selecteditavatar&userid=${user.userid}"><img width="60" height="60" src="img/users/${user.userid}" title="$!{user.name} ($!{user.userid})" alt="$!{user.name} ($!{user.userid})"></a>
@@ -241,7 +241,7 @@ $(document).ready(function() {
 
 </div>
 <div>
-	#parse("web/templates/layout/menu.vm")
+	#parse("/velocity/menu.vm")
 	<div class="data">
 		$bodyContent
 	</div>

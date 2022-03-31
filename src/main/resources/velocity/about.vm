@@ -1,12 +1,8 @@
-#parse("web/templates/layout/layout.vm")
+#parse("/velocity/layout.vm")
 #@mainLayout()
 
     <p class="heading">Information Geflügel Mogk Artikelverwaltung</p>
     <p>Version der Web-Anwendung: ${version} (${lastupdate})</p>
-
-    <p>Test: ${product.name}</p>
-    <br>
-    <br>
     <p>Copyright Uwe Geercken, 2022. Entwicklung von: Uwe Geercken, uwe.geercken@web.de</p>
 
     <br>

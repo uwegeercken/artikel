@@ -1,0 +1,7 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+    <p class="heading">Startseite</p>
+
+    <br>
+#end

@@ -57,7 +57,7 @@
 		</ul>
 		#end
 		<ul>
-			<li><a href="about">Info</a></li>
+			<li><a href="/about/25">Info</a></li>
 		</ul>
 	#end
 </div>

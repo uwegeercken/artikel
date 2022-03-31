@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IndexController implements ProductApiInterface
+public class IndexController
 {
     private WebService service;
 
@@ -25,12 +25,18 @@ public class IndexController implements ProductApiInterface
         this.service = service;
     }
 
+    public Route serveIndexPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("pagetitle", "Startseite");
+        return ViewUtility.render(request,model,Path.Template.INDEX);
+
+    };
+
     public Route serveAboutPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("pagetitle", "Information");
         model.put("version", WebApplication.APPLCATION_VERSION);
         model.put("lastupdate", WebApplication.APPLCATION_LAST_UPDATE);
-        model.put("product", getProductById(Long.parseLong(request.params(":id"))));
         return ViewUtility.render(request,model,Path.Template.ABOUT);
 
     };
@@ -42,47 +48,4 @@ public class IndexController implements ProductApiInterface
         response.status(HttpStatus.NOT_FOUND_404);
         return ViewUtility.render(request,model,Path.Template.NOTFOUND);
     };
-
-
-    @Override
-    public void addProduct(Product product)
-    {
-
-    }
-
-    @Override
-    public void updateProduct(Product product)
-    {
-
-    }
-
-    @Override
-    public void removeProduct(long id)
-    {
-
-    }
-
-    @Override
-    public Product getProductById(long id) throws Exception
-    {
-        return service.getProductById(id);
-    }
-
-    @Override
-    public Product getProductByName(String name) throws Exception
-    {
-        return null;
-    }
-
-    @Override
-    public Product getProductByNumber(String number) throws Exception
-    {
-        return null;
-    }
-
-    @Override
-    public List<Product> getAllProducts() throws Exception
-    {
-        return null;
-    }
 }

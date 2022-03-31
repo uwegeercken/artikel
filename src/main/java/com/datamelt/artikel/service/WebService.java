@@ -3,6 +3,8 @@ package com.datamelt.artikel.service;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.port.RepositoryInterface;
 
+import java.util.List;
+
 public class WebService
 {
     private final RepositoryInterface repository;
@@ -12,5 +14,5 @@ public class WebService
         this.repository = respository;
     }
 
-    public Product getProductById(long id) throws Exception { return repository.getProductById(id); }
+    public List<Product> getAllProducts() throws Exception { return repository.getAllProducts(); }
 }

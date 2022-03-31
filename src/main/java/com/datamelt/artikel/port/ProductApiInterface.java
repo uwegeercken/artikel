@@ -9,11 +9,5 @@ import java.util.List;
 
 public interface ProductApiInterface
 {
-    void addProduct(Product product);
-    void updateProduct(Product product);
-    void removeProduct(long id);
-    Product getProductById(long id) throws Exception;
-    Product getProductByName(String name) throws Exception;
-    Product getProductByNumber(String number) throws Exception;
     List<Product> getAllProducts() throws Exception;
 }

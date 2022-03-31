@@ -1,0 +1,28 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    #set($pagetitle='Produktliste')
+    <p class="heading">Produktliste ($products.size())</p>
+    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="Produkt hinzufügen"></a></p>
+    <div id="help">
+        <p class="helptitle">Produktliste</p>
+        <p>Users are organized in groups which allow write access to projects that belong to the group.</p>
+        <p>The Admin group is a system required group and can not be deleted.</p>
+        <p><img height="22" width="22" src="/img/group_add2.png">&nbsp;add new group&nbsp;<img height="22" width="22" src="img/edit.png">&nbsp;edit group&nbsp;<img height="22" width="22" src="img/remove.png">&nbsp;delete group</p>
+    </div>
+    <div id="filter">
+        <p>Filter: <input id="search" searchtype="groups" type="text""></p>
+    </div>
+    #foreach($product in $products)
+        <div class="unit" tag="$!product.name.toLowerCase()">
+            #if($product.id>1)<a href="process?action=bsh&ro=1&scriptname=selectdeletegroup&id=${group.id}"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
+            #if($product.id>1)<a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=${group.id}&mode=change"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
+            <div class="grouptop">
+                <p class="small">Produkt #$!product.number </p>
+                <p class="big">$!product.name</a></p>
+                <p class="normal">$!product.description</p>
+                <p class="normal">Menge: $!{product.quantity} - Gewicht: $!{product.weight}</p>
+                <p class="normal">Preis: $!{product.price}</p>
+            </div>
+        </div>
+    #end
+#end

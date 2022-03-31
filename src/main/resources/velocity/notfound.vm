@@ -1,0 +1,4 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <p>$message</p>
+#end

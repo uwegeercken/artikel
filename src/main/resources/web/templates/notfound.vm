@@ -1,4 +1,0 @@
-#parse("web/templates/layout/layout.vm")
-#@mainLayout()
-    <p>$message</p>
-#end

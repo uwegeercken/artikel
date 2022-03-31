@@ -1,4 +1,4 @@
-#parse("web/templates/layout/layout.vm")
+#parse("/velocity/layout.vm")
 #@mainLayout()
     #set($pagetitle='Login Page')
     <p class="heading">Login Page</p>
