@@ -15,7 +15,7 @@ public interface RepositoryInterface
     List<Producer> getAllProducers() throws Exception;
 
     void addProduct(Product product);
-    void updateProduct(Product product);
+    void updateProduct(Product product) throws Exception;
     void removeProduct(long id);
     Product getProductById(long id) throws Exception;
     Product getProductByName(String name) throws Exception;

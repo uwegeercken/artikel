@@ -12,6 +12,7 @@ public class Product
     private Producer producer;
     private ProductContainer container;
     private ProductOrigin origin;
+    private long timestamp;
 
     public Product(String number) {
         this.number = number;
@@ -94,5 +95,15 @@ public class Product
     public void setOrigin(ProductOrigin origin)
     {
         this.origin = origin;
+    }
+
+    public long getTimestamp()
+    {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp)
+    {
+        this.timestamp = timestamp;
     }
 }

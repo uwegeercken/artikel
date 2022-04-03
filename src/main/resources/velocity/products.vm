@@ -2,7 +2,9 @@
 #@mainLayout()
     #set($pagetitle='Produktliste')
     <p class="heading">Produktliste ($products.size())</p>
-    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="Produkt hinzufügen"></a></p>
+    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()">
+        <a href="/product/0/"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="Produkt hinzufügen"></a>
+    </p>
     <div id="help">
         <p class="helptitle">Produktliste</p>
         <p>Users are organized in groups which allow write access to projects that belong to the group.</p>

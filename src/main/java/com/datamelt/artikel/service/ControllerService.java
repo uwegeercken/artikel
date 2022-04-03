@@ -18,7 +18,7 @@ public class ControllerService
     }
 
     public void addProduct(Product product) { repository.addProduct(product); }
-    public void updateProduct(Product product) { repository.updateProduct(product); }
+    public void updateProduct(Product product) throws Exception { repository.updateProduct(product); }
     public void removeProduct(long id)
     {
         repository.removeProduct(id);

@@ -69,7 +69,7 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void updateProduct(Product product)
+    public void updateProduct(Product product) throws Exception
     {
         ProductUpdate p = new ProductUpdate(connection);
         p.updateProduct(product);

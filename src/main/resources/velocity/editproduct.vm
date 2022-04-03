@@ -2,26 +2,26 @@
 #@mainLayout()
 
     #set($pagetitle='Produkt ändern')
-    <p class="heading">#if($mode!="add")Artikel bearbeiten: $!{group.name}#else Artikel hinzufügen#end</p>
-    <p><img id="helpimg" height="22" width="22" src="img/help_black.png" title="show help" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=listgroups"><img class="go_back" height="22" width="22" src="img/go_back.png" title="go back: List of groups"></a></p>
+    <p class="heading">#if($product.id>0)Produkt bearbeiten: $!{product.name}#else Produkt hinzufügen#end</p>
+    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()"></p>
     <div id="help">
         <p class="helptitle">Selektiertes Produkt ändern</p>
-        <p>Enter the group name and description.</p>
-        <p>Users are members of one or multiple groups. Group membership gives write access for projects to users that belong to the group.</p>
+        <p>Ergänze alle Felder</p>
+        <p></p>
     </div>
 
     <div class="formbox">
-    #if($mode=="add")
+    #if(${product.id}>0)
         <form method="POST" action="/product/${product.id}/">
 
     #else
-        <form method="POST" action="/product/${product.id}/">
+        <form method="POST" action="/product/0/">
     #end
     <table align="center" width="95%" border="0">
         <tr>
             <td>Nummer:</td>
             <td>
-                <input name="number" type="text" size="40" maxlength="80" value="$!{product.number}">
+                <input name="$fields.valueOf("NAME").fieldName()" type="text" size="40" maxlength="80" value="$!{form.get($fields.NAME.fieldName($fields.valueOf("name")))}">
             </td>
         </tr>
         <tr>
@@ -102,25 +102,19 @@
 		</tr>
 
         <tr>
-        #if($mode && ($mode=="inserted" || $mode=="updated"))
             <td colspan="2" align="center"><br />
-                <input type="submit" value="close" name="submit">
+                <input type="submit" value="speichern" name="submit">
+                <input type="submit" value="abbrechen" name="submit">
             </td>
-        #else
-            <td colspan="2" align="center"><br />
-                <input type="submit" value="save" name="submit">
-                <input type="submit" value="cancel" name="submit">
-            </td>
-        #end
         </tr>
     </table>
     </form>
     </div>
-    #if(${group.id}>0)
-        <p class="small">last edited: ${group.lastUpdate}</p>
+    #if(${product.id}>0)
+        <p class="small">letze Änderung: ${Timestamp.convertFromUnixTimestamp(${product.timestamp})}</p>
     #end
     #if (${infomessage})
-        <p align="center">#insert_message($infomessage)</p>
+        <p align="center">$infomessage</p>
     #end
 #end
 

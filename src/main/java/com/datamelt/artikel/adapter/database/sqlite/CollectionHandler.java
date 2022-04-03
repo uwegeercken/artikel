@@ -39,6 +39,7 @@ class CollectionHandler
             product.setContainer(container);
             product.setProducer(producer);
             product.setOrigin(origin);
+            product.setTimestamp(resultset.getLong("timestamp"));
 
             products.add(product);
         }

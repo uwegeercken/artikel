@@ -37,6 +37,7 @@ class ProductSearch
             product.setContainer(container);
             product.setProducer(producer);
             product.setOrigin(origin);
+            product.setTimestamp(resultset.getLong("timestamp"));
         }
         resultset.close();
         statement.close();
@@ -64,6 +65,7 @@ class ProductSearch
             product.setContainer(container);
             product.setProducer(producer);
             product.setOrigin(origin);
+            product.setTimestamp(resultset.getLong("timestamp"));
         }
         statement.clearParameters();
         resultset.close();
