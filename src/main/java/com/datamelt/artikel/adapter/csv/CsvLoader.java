@@ -92,14 +92,15 @@ public class CsvLoader implements FileInterface
                     ProductContainer container = getProductContainerByName(fields[7]);
                     if(producer!=null)
                     {
-                        Product product = new Product.ProductBuilder(fields[0], fields[1], producer)
-                                .description(fields[2])
-                                .quantity(Integer.parseInt(fields[3]))
-                                .weight(Integer.parseInt(fields[4]))
-                                .price(Double.parseDouble(fields[5]))
-                                .origin(origin)
-                                .container(container)
-                                .build();
+                        Product product = new Product(fields[0]);
+                        product.setName(fields[1]);
+                        product.setDescription(fields[2]);
+                        product.setQuantity(Integer.parseInt(fields[3]));
+                        product.setWeight(Double.parseDouble(fields[4]));
+                        product.setPrice(Double.parseDouble(fields[5]));
+                        product.setContainer(container);
+                        product.setProducer(producer);
+                        product.setOrigin(origin);
 
                         boolean exists = getExistProduct(fields[0]);
                         if(!exists)

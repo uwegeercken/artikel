@@ -26,15 +26,16 @@ public class WebService
         ProductContainer container = getProductContainerById(Long.parseLong(queryParamsMap.get("container_id")));
         ProductOrigin origin = getProductOriginById(Long.parseLong(queryParamsMap.get("origin_id")));
 
-        Product product = new Product.ProductBuilder(queryParamsMap.get("number"), queryParamsMap.get("name"), producer)
-                .id(id)
-                .description(queryParamsMap.get("description"))
-                .quantity(Integer.parseInt(queryParamsMap.get("quantity")))
-                .weight(Double.parseDouble(queryParamsMap.get("weight")))
-                .price(Double.parseDouble(queryParamsMap.get("price")))
-                .container(container)
-                .origin(origin)
-                .build();
+        Product product = new Product(queryParamsMap.get("number"));
+        product.setId(id);
+        product.setName(queryParamsMap.get("name"));
+        product.setDescription(queryParamsMap.get("description"));
+        product.setQuantity(Integer.parseInt(queryParamsMap.get("quantity")));
+        product.setWeight(Double.parseDouble(queryParamsMap.get("weight")));
+        product.setPrice(Double.parseDouble(queryParamsMap.get("price")));
+        product.setContainer(container);
+        product.setProducer(producer);
+        product.setOrigin(origin);
         repository.updateProduct(product);
         return product;
     }

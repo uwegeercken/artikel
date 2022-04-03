@@ -29,15 +29,17 @@ class CollectionHandler
             ProductContainer container = ProductContainerSearch.getProductContainerById(connection, resultset.getLong("productcontainer_id"));
             ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
 
-            Product product = new Product.ProductBuilder(resultset.getString("number"), resultset.getString("name"), producer)
-                    .id(resultset.getLong("id"))
-                    .description(resultset.getString("description"))
-                    .quantity(resultset.getInt("quantity"))
-                    .weight(resultset.getDouble("weight"))
-                    .price(resultset.getDouble("price"))
-                    .container(container)
-                    .origin(origin)
-                    .build();
+            Product product = new Product(resultset.getString("number"));
+            product.setId(resultset.getLong("id"));
+            product.setName(resultset.getString("name"));
+            product.setDescription(resultset.getString("description"));
+            product.setQuantity(resultset.getInt("quantity"));
+            product.setWeight(resultset.getDouble("weight"));
+            product.setPrice(resultset.getDouble("price"));
+            product.setContainer(container);
+            product.setProducer(producer);
+            product.setOrigin(origin);
+
             products.add(product);
         }
         resultset.close();

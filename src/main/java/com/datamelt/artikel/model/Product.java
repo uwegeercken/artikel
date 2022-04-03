@@ -3,27 +3,18 @@ package com.datamelt.artikel.model;
 public class Product
 {
     private long id;
-    private final String number;
-    private final String name;
-    private final String description;
-    private final int quantity;
-    private final double weight;
-    private final double price;
-    private final Producer producer;
-    private final ProductContainer container;
-    private final ProductOrigin origin;
+    private String number;
+    private String name;
+    private String description;
+    private int quantity;
+    private double weight;
+    private double price;
+    private Producer producer;
+    private ProductContainer container;
+    private ProductOrigin origin;
 
-    private Product(ProductBuilder builder) {
-        this.id = builder.id;
-        this.number = builder.number;
-        this.name = builder.name;
-        this.description = builder.description;
-        this.quantity = builder.quantity;
-        this.weight = builder.weight;
-        this.price = builder.price;
-        this.producer = builder.producer;
-        this.container = builder.container;
-        this.origin = builder.origin;
+    public Product(String number) {
+        this.number = number;
     }
 
     public long getId() { return id; }
@@ -60,77 +51,48 @@ public class Product
 
     public ProductOrigin getOrigin() { return origin; }
 
-    public static class ProductBuilder
+    public void setNumber(String number)
     {
-        private final String number;
-        private final String name;
+        this.number = number;
+    }
 
-        private long id;
-        private String description;
-        private int quantity;
-        private double weight;
-        private double price;
-        private Producer producer;
-        private ProductContainer container;
-        private ProductOrigin origin;
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 
-        public ProductBuilder(String number, String name, Producer producer)
-        {
-            this.number = number;
-            this.name = name;
-            this.producer = producer;
-        }
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
 
-        public ProductBuilder id(long id)
-        {
-            this.id = id;
-            return this;
-        }
+    public void setQuantity(int quantity)
+    {
+        this.quantity = quantity;
+    }
 
-        public ProductBuilder description(String description)
-        {
-            this.description = description;
-            return this;
-        }
+    public void setWeight(double weight)
+    {
+        this.weight = weight;
+    }
 
-        public ProductBuilder quantity(int quantity)
-        {
-            this.quantity = quantity;
-            return this;
-        }
+    public void setPrice(double price)
+    {
+        this.price = price;
+    }
 
-        public ProductBuilder weight(double weight)
-        {
-            this.weight = weight;
-            return this;
-        }
+    public void setProducer(Producer producer)
+    {
+        this.producer = producer;
+    }
 
-        public ProductBuilder price(double price)
-        {
-            this.price = price;
-            return this;
-        }
+    public void setContainer(ProductContainer container)
+    {
+        this.container = container;
+    }
 
-        public ProductBuilder producer(Producer producer)
-        {
-            this.producer = producer;
-            return this;
-        }
-
-        public ProductBuilder container(ProductContainer container)
-        {
-            this.container = container;
-            return this;
-        }
-
-        public ProductBuilder origin(ProductOrigin origin)
-        {
-            this.origin = origin;
-            return this;
-        }
-
-        public Product build() {
-            return new Product(this);
-        }
+    public void setOrigin(ProductOrigin origin)
+    {
+        this.origin = origin;
     }
 }
