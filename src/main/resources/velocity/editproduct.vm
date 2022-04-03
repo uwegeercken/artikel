@@ -1,0 +1,126 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+    #set($pagetitle='Produkt ändern')
+    <p class="heading">#if($mode!="add")Artikel bearbeiten: $!{group.name}#else Artikel hinzufügen#end</p>
+    <p><img id="helpimg" height="22" width="22" src="img/help_black.png" title="show help" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=listgroups"><img class="go_back" height="22" width="22" src="img/go_back.png" title="go back: List of groups"></a></p>
+    <div id="help">
+        <p class="helptitle">Selektiertes Produkt ändern</p>
+        <p>Enter the group name and description.</p>
+        <p>Users are members of one or multiple groups. Group membership gives write access for projects to users that belong to the group.</p>
+    </div>
+
+    <div class="formbox">
+    #if($mode=="add")
+        <form method="POST" action="/product/${product.id}/">
+
+    #else
+        <form method="POST" action="/product/${product.id}/">
+    #end
+    <table align="center" width="95%" border="0">
+        <tr>
+            <td>Nummer:</td>
+            <td>
+                <input name="number" type="text" size="40" maxlength="80" value="$!{product.number}">
+            </td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td>
+                <input name="name" type="text" size="40" maxlength="80" value="$!{product.name}">
+            </td>
+
+        </tr>
+        <tr>
+            <td>Beschreibung:</td>
+            <td>
+                <input name="description" type="text" size="40" maxlength="255" value="$!{product.description}">
+            </td>
+        </tr>
+        <tr>
+            <td>Menge:</td>
+            <td>
+                <input name="quantity" type="text" size="40" maxlength="255" value="$!{product.quantity}">
+            </td>
+        </tr>
+        <tr>
+            <td>Gewicht:</td>
+            <td>
+                <input name="weight" type="text" size="40" maxlength="255" value="$!{product.weight}">
+            </td>
+        </tr>
+        <tr>
+            <td>Preis:</td>
+            <td>
+                <input name="price" type="text" size="40" maxlength="255" value="$!{product.price}">
+            </td>
+        </tr>
+        <tr>
+			<td>Hersteller:</td>
+			<td>
+				<select id="producer_id" name="producer_id" size="1">
+				<option value="0"></option>
+				#foreach($producer in $producers)
+					#if(${product.producer.id}==${producer.id})
+						<option selected value="${producer.id}">${producer.name}</option>
+					#else
+						<option value="${producer.id}">${producer.name}</option>
+					#end
+				#end
+	    		</select>
+			</td>
+		</tr>
+        <tr>
+			<td>Container:</td>
+			<td>
+				<select id="container_id" name="container_id" size="1">
+				<option value="0"></option>
+				#foreach($container in $containers)
+					#if(${product.container.id}==${container.id})
+						<option selected value="${container.id}">${container.name}</option>
+					#else
+						<option value="${container.id}">${container.name}</option>
+					#end
+				#end
+	    		</select>
+			</td>
+		</tr>
+        <tr>
+			<td>Herkunft:</td>
+			<td>
+				<select id="origin_id" name="origin_id" size="1">
+				<option value="0"></option>
+				#foreach($origin in $origins)
+					#if(${product.origin.id}==${origin.id})
+						<option selected value="${origin.id}">${origin.name}</option>
+					#else
+						<option value="${origin.id}">${origin.name}</option>
+					#end
+				#end
+	    		</select>
+			</td>
+		</tr>
+
+        <tr>
+        #if($mode && ($mode=="inserted" || $mode=="updated"))
+            <td colspan="2" align="center"><br />
+                <input type="submit" value="close" name="submit">
+            </td>
+        #else
+            <td colspan="2" align="center"><br />
+                <input type="submit" value="save" name="submit">
+                <input type="submit" value="cancel" name="submit">
+            </td>
+        #end
+        </tr>
+    </table>
+    </form>
+    </div>
+    #if(${group.id}>0)
+        <p class="small">last edited: ${group.lastUpdate}</p>
+    #end
+    #if (${infomessage})
+        <p align="center">#insert_message($infomessage)</p>
+    #end
+#end
+

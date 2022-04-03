@@ -14,8 +14,8 @@
     </div>
     #foreach($product in $products)
         <div class="unit" tag="$!product.name.toLowerCase()">
-            #if($product.id>1)<a href="process?action=bsh&ro=1&scriptname=selectdeletegroup&id=${group.id}"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
-            #if($product.id>1)<a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=${group.id}&mode=change"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
+            #if($product.id>1)<a href="/product/${product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
+            #if($product.id>1)<a href="/product/${product.id}?test=gaga/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
             <div class="grouptop">
                 <p class="small">Produkt #$!product.number </p>
                 <p class="big">$!product.name</a></p>

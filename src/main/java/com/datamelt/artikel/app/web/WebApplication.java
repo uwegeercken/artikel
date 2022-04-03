@@ -36,6 +36,9 @@ public class WebApplication
         get(Path.Web.ABOUT, indexController.serveAboutPage);
 
         get(Path.Web.PRODUCTS, productController.serveAllProductsPage);
+        get(Path.Web.PRODUCT, productController.serveProductPage);
+        post(Path.Web.PRODUCT, productController.serveUpdateProductPage);
+
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
 
 

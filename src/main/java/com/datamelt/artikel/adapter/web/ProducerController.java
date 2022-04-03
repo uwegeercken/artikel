@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class ProducerController implements ProducerApiInterface
 {
-    private WebService service;
+    private static WebService service;
 
     public ProducerController(WebService service)
     {
