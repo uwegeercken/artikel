@@ -1,12 +1,12 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
     #set($pagetitle='Produktliste')
-    <p class="heading">Produktliste ($products.size())</p>
+    <p class="heading">${messages.get("PAGETITLE_PRODUCT_LIST")} ($products.size())</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()">
         <a href="/product/0/"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="Produkt hinzufügen"></a>
     </p>
     <div id="help">
-        <p class="helptitle">Produktliste</p>
+        <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_LIST")}</p>
         <p>Users are organized in groups which allow write access to projects that belong to the group.</p>
         <p>The Admin group is a system required group and can not be deleted.</p>
         <p><img height="22" width="22" src="/img/group_add2.png">&nbsp;add new group&nbsp;<img height="22" width="22" src="img/edit.png">&nbsp;edit group&nbsp;<img height="22" width="22" src="img/remove.png">&nbsp;delete group</p>

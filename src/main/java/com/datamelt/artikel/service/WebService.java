@@ -1,6 +1,8 @@
 package com.datamelt.artikel.service;
 
 import com.datamelt.artikel.adapter.csv.CsvLoader;
+import com.datamelt.artikel.adapter.web.form.ProductForm;
+import com.datamelt.artikel.adapter.web.form.ProductFormField;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.ProductContainer;
@@ -11,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class WebService
 {
@@ -24,20 +25,25 @@ public class WebService
     }
 
     public List<Product> getAllProducts() throws Exception { return repository.getAllProducts(); }
-    public Product getProductById(long id) throws Exception { return repository.getProductById(id); }
-    public Product updateProduct(long id, Map<String,String> queryParamsMap) throws Exception
-    {
-        Producer producer = getProducerById(Long.parseLong(queryParamsMap.get("producer_id")));
-        ProductContainer container = getProductContainerById(Long.parseLong(queryParamsMap.get("container_id")));
-        ProductOrigin origin = getProductOriginById(Long.parseLong(queryParamsMap.get("origin_id")));
 
-        Product product = new Product(queryParamsMap.get("number"));
+    public Product getProductById(long id) throws Exception
+    {
+        return repository.getProductById(id);
+    }
+
+    public Product updateProduct(long id, ProductForm form) throws Exception
+    {
+        Producer producer = getProducerById(Long.parseLong(form.get(ProductFormField.PRODUCER_ID)));
+        ProductContainer container = getProductContainerById(Long.parseLong(form.get(ProductFormField.CONTAINER_ID)));
+        ProductOrigin origin = getProductOriginById(Long.parseLong(form.get(ProductFormField.ORIGIN_ID)));
+
+        Product product = new Product(form.get(ProductFormField.NUMBER));
         product.setId(id);
-        product.setName(queryParamsMap.get("name"));
-        product.setDescription(queryParamsMap.get("description"));
-        product.setQuantity(Integer.parseInt(queryParamsMap.get("quantity")));
-        product.setWeight(Double.parseDouble(queryParamsMap.get("weight")));
-        product.setPrice(Double.parseDouble(queryParamsMap.get("price")));
+        product.setName(form.get(ProductFormField.NAME));
+        product.setDescription(form.get(ProductFormField.DESCRIPTION));
+        product.setQuantity(Integer.parseInt(form.get(ProductFormField.QUANTITY)));
+        product.setWeight(Double.parseDouble(form.get(ProductFormField.WEIGHT)));
+        product.setPrice(Double.parseDouble(form.get(ProductFormField.PRICE)));
         product.setContainer(container);
         product.setProducer(producer);
         product.setOrigin(origin);
@@ -54,18 +60,18 @@ public class WebService
         return product;
     }
 
-    public Product addProduct(Map<String,String> queryParamsMap) throws Exception
+    public Product addProduct(ProductForm form) throws Exception
     {
-        Producer producer = getProducerById(Long.parseLong(queryParamsMap.get("producer_id")));
-        ProductContainer container = getProductContainerById(Long.parseLong(queryParamsMap.get("container_id")));
-        ProductOrigin origin = getProductOriginById(Long.parseLong(queryParamsMap.get("origin_id")));
+        Producer producer = getProducerById(Long.parseLong(form.get(ProductFormField.PRODUCER_ID)));
+        ProductContainer container = getProductContainerById(Long.parseLong(form.get(ProductFormField.CONTAINER_ID)));
+        ProductOrigin origin = getProductOriginById(Long.parseLong(form.get(ProductFormField.ORIGIN_ID)));
 
-        Product product = new Product(queryParamsMap.get("number"));
-        product.setName(queryParamsMap.get("name"));
-        product.setDescription(queryParamsMap.get("description"));
-        product.setQuantity(Integer.parseInt(queryParamsMap.get("quantity")));
-        product.setWeight(Double.parseDouble(queryParamsMap.get("weight")));
-        product.setPrice(Double.parseDouble(queryParamsMap.get("price")));
+        Product product = new Product(form.get(ProductFormField.NUMBER));
+        product.setName(form.get(ProductFormField.NAME));
+        product.setDescription(form.get(ProductFormField.DESCRIPTION));
+        product.setQuantity(Integer.parseInt(form.get(ProductFormField.QUANTITY)));
+        product.setWeight(Double.parseDouble(form.get(ProductFormField.WEIGHT)));
+        product.setPrice(Double.parseDouble(form.get(ProductFormField.PRICE)));
         product.setContainer(container);
         product.setProducer(producer);
         product.setOrigin(origin);

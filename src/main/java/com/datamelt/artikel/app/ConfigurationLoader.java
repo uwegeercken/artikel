@@ -1,6 +1,6 @@
 package com.datamelt.artikel.app;
 
-import com.datamelt.artikel.model.config.MainConfiguration;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 

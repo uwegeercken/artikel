@@ -19,22 +19,26 @@ import java.util.Map;
 public class IndexController
 {
     private WebService service;
+    private MessageBundle messages;
 
-    public IndexController(WebService service)
+    public IndexController(WebService service, MessageBundle messages)
     {
         this.service = service;
+        this.messages = messages;
     }
 
     public Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("pagetitle", "Startseite");
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
         return ViewUtility.render(request,model,Path.Template.INDEX);
 
     };
 
     public Route serveAboutPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("pagetitle", "Information");
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_ABOUT"));
         model.put("version", WebApplication.APPLCATION_VERSION);
         model.put("lastupdate", WebApplication.APPLCATION_LAST_UPDATE);
         return ViewUtility.render(request,model,Path.Template.ABOUT);
@@ -43,7 +47,8 @@ public class IndexController
 
     public Route serveNotFoundPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("pagetitle", "Seite nicht gefunden");
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_NOT_FOUND"));
         model.put("message", Message.PAGE_NOT_FOUND);
         response.status(HttpStatus.NOT_FOUND_404);
         return ViewUtility.render(request,model,Path.Template.NOTFOUND);

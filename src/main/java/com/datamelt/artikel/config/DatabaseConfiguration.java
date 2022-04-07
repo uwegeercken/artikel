@@ -1,4 +1,4 @@
-package com.datamelt.artikel.model.config;
+package com.datamelt.artikel.config;
 
 public class DatabaseConfiguration
 {

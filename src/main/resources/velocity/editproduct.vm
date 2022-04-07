@@ -1,8 +1,7 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
-    #set($pagetitle='Produkt ändern')
-    <p class="heading">#if($product.id>0)Produkt bearbeiten: $!{product.name}#else Produkt hinzufügen#end</p>
+    <p class="heading">#if($!{form.id}>0)${messages.get("PAGETITLE_PRODUCT_CHANGE")}: $!{form.get($fields.valueOf("NAME"))}#else ${messages.get("PAGETITLE_PRODUCT_ADD")}#end</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()"></p>
     <div id="help">
         <p class="helptitle">Selektiertes Produkt ändern</p>
@@ -11,57 +10,57 @@
     </div>
 
     <div class="formbox">
-    #if(${product.id}>0)
-        <form method="POST" action="/product/${product.id}/">
-
+    #if($!{form.id}>0)
+        <form method="POST" action="/product/${form.id}/">
     #else
         <form method="POST" action="/product/0/">
     #end
+    <input name="$fields.valueOf("ID")" type="hidden" value="${form.id}">
     <table align="center" width="95%" border="0">
         <tr>
             <td>Nummer:</td>
             <td>
-                <input name="$fields.valueOf("NAME").fieldName()" type="text" size="40" maxlength="80" value="$!{form.get($fields.NAME.fieldName($fields.valueOf("name")))}">
+                <input name="$fields.valueOf("NUMBER")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("NUMBER"))}">
             </td>
         </tr>
         <tr>
             <td>Name:</td>
             <td>
-                <input name="name" type="text" size="40" maxlength="80" value="$!{product.name}">
+                <input name="$fields.valueOf("NAME")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("NAME"))}">
             </td>
 
         </tr>
         <tr>
             <td>Beschreibung:</td>
             <td>
-                <input name="description" type="text" size="40" maxlength="255" value="$!{product.description}">
+                <input name="$fields.valueOf("DESCRIPTION")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("DESCRIPTION"))}">
             </td>
         </tr>
         <tr>
             <td>Menge:</td>
             <td>
-                <input name="quantity" type="text" size="40" maxlength="255" value="$!{product.quantity}">
+                <input name="$fields.valueOf("QUANTITY")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("QUANTITY"))}">
             </td>
         </tr>
         <tr>
             <td>Gewicht:</td>
             <td>
-                <input name="weight" type="text" size="40" maxlength="255" value="$!{product.weight}">
+                <input name="$fields.valueOf("WEIGHT")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("WEIGHT"))}">
             </td>
         </tr>
         <tr>
             <td>Preis:</td>
             <td>
-                <input name="price" type="text" size="40" maxlength="255" value="$!{product.price}">
+                <input name="$fields.valueOf("PRICE")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("PRICE"))}">
             </td>
         </tr>
         <tr>
 			<td>Hersteller:</td>
 			<td>
-				<select id="producer_id" name="producer_id" size="1">
+				<select id="producer_id" name="$fields.valueOf("PRODUCER_ID")" size="1">
 				<option value="0"></option>
 				#foreach($producer in $producers)
-					#if(${product.producer.id}==${producer.id})
+					#if($!{form.get($fields.valueOf("PRODUCER_ID"))}==${producer.id})
 						<option selected value="${producer.id}">${producer.name}</option>
 					#else
 						<option value="${producer.id}">${producer.name}</option>
@@ -73,10 +72,10 @@
         <tr>
 			<td>Container:</td>
 			<td>
-				<select id="container_id" name="container_id" size="1">
+				<select id="container_id" name="$fields.valueOf("CONTAINER_ID")" size="1">
 				<option value="0"></option>
 				#foreach($container in $containers)
-					#if(${product.container.id}==${container.id})
+					#if($!{form.get($fields.valueOf("CONTAINER_ID"))}==${container.id})
 						<option selected value="${container.id}">${container.name}</option>
 					#else
 						<option value="${container.id}">${container.name}</option>
@@ -88,10 +87,10 @@
         <tr>
 			<td>Herkunft:</td>
 			<td>
-				<select id="origin_id" name="origin_id" size="1">
+				<select id="origin_id" name="$fields.valueOf("ORIGIN_ID")" size="1">
 				<option value="0"></option>
 				#foreach($origin in $origins)
-					#if(${product.origin.id}==${origin.id})
+					#if($!{form.get($fields.valueOf("ORIGIN_ID"))}==${origin.id})
 						<option selected value="${origin.id}">${origin.name}</option>
 					#else
 						<option value="${origin.id}">${origin.name}</option>
@@ -103,16 +102,13 @@
 
         <tr>
             <td colspan="2" align="center"><br />
-                <input type="submit" value="speichern" name="submit">
-                <input type="submit" value="abbrechen" name="submit">
+                <input type="submit" value="${messages.get("FORM_BUTTON_OK")}" name="submit">
+                <input type="submit" value="${messages.get("FORM_BUTTON_CANCEL")}" name="submit">
             </td>
         </tr>
     </table>
     </form>
     </div>
-    #if(${product.id}>0)
-        <p class="small">letze Änderung: ${Timestamp.convertFromUnixTimestamp(${product.timestamp})}</p>
-    #end
     #if (${infomessage})
         <p align="center">$infomessage</p>
     #end

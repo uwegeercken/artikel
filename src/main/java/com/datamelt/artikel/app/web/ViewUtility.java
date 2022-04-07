@@ -1,5 +1,6 @@
 package com.datamelt.artikel.app.web;
 
+import com.datamelt.artikel.adapter.web.MessageBundle;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.app.web.util.Timestamp;
 import spark.ModelAndView;

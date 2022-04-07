@@ -1,7 +1,7 @@
 package com.datamelt.artikel.adapter.csv;
 
 import com.datamelt.artikel.model.*;
-import com.datamelt.artikel.model.config.CsvInput;
+import com.datamelt.artikel.config.CsvInput;
 import com.datamelt.artikel.port.FileInterface;
 import com.datamelt.artikel.service.LoaderService;
 import com.datamelt.artikel.util.Constants;

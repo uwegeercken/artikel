@@ -1,11 +1,9 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
-import com.datamelt.artikel.model.config.DatabaseConfiguration;
-import com.datamelt.artikel.model.config.MainConfiguration;
+import com.datamelt.artikel.config.DatabaseConfiguration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 
 class SqliteConnection
 {

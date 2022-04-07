@@ -1,7 +1,7 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.*;
-import com.datamelt.artikel.model.config.DatabaseConfiguration;
+import com.datamelt.artikel.config.DatabaseConfiguration;
 import com.datamelt.artikel.port.RepositoryInterface;
 
 import java.sql.Connection;

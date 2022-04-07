@@ -18,10 +18,12 @@ import java.util.Map;
 public class ProducerController implements ProducerApiInterface
 {
     private static WebService service;
+    private MessageBundle messages;
 
-    public ProducerController(WebService service)
+    public ProducerController(WebService service, MessageBundle messages)
     {
         this.service = service;
+        this.messages = messages;
     }
 
     public Route serveAllProducersPage = (Request request, Response response) -> {
