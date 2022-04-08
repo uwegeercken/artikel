@@ -7,5 +7,5 @@
 	</div>
 </div>
 <div id="title">
-	<p>Geflügel Mogk Artikelverwaltung</p>
+	<p>${messages.get("APPLICATION_TITLE")}</p>
 </div>

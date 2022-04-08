@@ -1,7 +1,7 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
-    <p class="heading">Startseite</p>
-
+    <p class="heading">${messages.get("MENU_ENTRY_INDEX")}</p>
+    <p>Willkommen bei der Artikelverwaltung der Firma Mogk</p>
     <br>
 #end

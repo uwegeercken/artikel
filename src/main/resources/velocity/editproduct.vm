@@ -18,44 +18,44 @@
     <input name="$fields.valueOf("ID")" type="hidden" value="${form.id}">
     <table align="center" width="95%" border="0">
         <tr>
-            <td>Nummer:</td>
+            <td>${messages.get("PRODUCT_FORM_FIELD_NUMBER")}:</td>
             <td>
                 <input name="$fields.valueOf("NUMBER")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("NUMBER"))}">
             </td>
         </tr>
         <tr>
-            <td>Name:</td>
+            <td>${messages.get("PRODUCT_FORM_FIELD_NAME")}:</td>
             <td>
                 <input name="$fields.valueOf("NAME")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("NAME"))}">
             </td>
 
         </tr>
         <tr>
-            <td>Beschreibung:</td>
+            <td>${messages.get("PRODUCT_FORM_FIELD_DESCRIPTION")}:</td>
             <td>
                 <input name="$fields.valueOf("DESCRIPTION")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("DESCRIPTION"))}">
             </td>
         </tr>
         <tr>
-            <td>Menge:</td>
+            <td>${messages.get("PRODUCT_FORM_FIELD_QUANTITY")}:</td>
             <td>
                 <input name="$fields.valueOf("QUANTITY")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("QUANTITY"))}">
             </td>
         </tr>
         <tr>
-            <td>Gewicht:</td>
+            <td>${messages.get("PRODUCT_FORM_FIELD_WEIGHT")}:</td>
             <td>
                 <input name="$fields.valueOf("WEIGHT")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("WEIGHT"))}">
             </td>
         </tr>
         <tr>
-            <td>Preis:</td>
+            <td>${messages.get("PRODUCT_FORM_FIELD_PRICE")}:</td>
             <td>
                 <input name="$fields.valueOf("PRICE")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("PRICE"))}">
             </td>
         </tr>
         <tr>
-			<td>Hersteller:</td>
+			<td>${messages.get("PRODUCT_FORM_FIELD_PRODUCER")}:</td>
 			<td>
 				<select id="producer_id" name="$fields.valueOf("PRODUCER_ID")" size="1">
 				<option value="0"></option>
@@ -70,7 +70,7 @@
 			</td>
 		</tr>
         <tr>
-			<td>Container:</td>
+			<td>${messages.get("PRODUCT_FORM_FIELD_CONTAINER")}:</td>
 			<td>
 				<select id="container_id" name="$fields.valueOf("CONTAINER_ID")" size="1">
 				<option value="0"></option>
@@ -85,7 +85,7 @@
 			</td>
 		</tr>
         <tr>
-			<td>Herkunft:</td>
+			<td>${messages.get("PRODUCT_FORM_FIELD_ORIGIN")}:</td>
 			<td>
 				<select id="origin_id" name="$fields.valueOf("ORIGIN_ID")" size="1">
 				<option value="0"></option>

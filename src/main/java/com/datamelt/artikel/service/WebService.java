@@ -3,10 +3,7 @@ package com.datamelt.artikel.service;
 import com.datamelt.artikel.adapter.csv.CsvLoader;
 import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.adapter.web.form.ProductFormField;
-import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.model.Product;
-import com.datamelt.artikel.model.ProductContainer;
-import com.datamelt.artikel.model.ProductOrigin;
+import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.RepositoryInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -82,6 +79,7 @@ public class WebService
 
     public Producer getProducerById(long id) throws Exception { return repository.getProducerById(id); }
     public List<Producer> getAllProducers() throws Exception { return repository.getAllProducers(); }
+    public List<Market> getAllMarkets() throws Exception { return repository.getAllMarkets(); }
     public List<ProductContainer> getAllProductContainers() throws Exception { return repository.getAllProductContainers(); }
     public List<ProductOrigin> getAllProductOrigins() throws Exception { return repository.getAllProductOrigins(); }
 

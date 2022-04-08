@@ -1,17 +1,17 @@
 
 <div id='cssmenu'>
 		<ul>
-			<li><a href="/index/">Startseite</a></li>
+			<li><a href="/index/">${messages.get("MENU_ENTRY_INDEX")}</a></li>
 		</ul>
 		<ul>
-			<li><a href="/products/">Produkte</a></li>
-			<li><a href="/producers/">Hersteller</a></li>
-			<li><a href="/markets/">Märkte</a></li>
-			<li><a href="/containers">Container</a></li>
-			<li><a href="/origins/">Ursprung</a></li>
+			<li><a href="/products/">${messages.get("MENU_ENTRY_PRODUCTS")}</a></li>
+			<li><a href="/producers/">${messages.get("MENU_ENTRY_PRODUCERS")}</a></li>
+			<li><a href="/markets/">${messages.get("MENU_ENTRY_MARKETS")}</a></li>
+			<li><a href="/containers">${messages.get("MENU_ENTRY_CONTAINERS")}</a></li>
+			<li><a href="/origins/">${messages.get("MENU_ENTRY_ORIGINS")}</a></li>
 		</ul>
 		<ul>
-			<li><a href="/about/">Info</a></li>
+			<li><a href="/about/">${messages.get("MENU_ENTRY_ABOUT")}</a></li>
 		</ul>
 </div>
 

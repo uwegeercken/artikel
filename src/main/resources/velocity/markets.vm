@@ -1,9 +1,9 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">Herstellerliste ($producers.size())</p>
+    <p class="heading">${messages.get("PAGETITLE_MARKET_LIST")} ($producers.size())</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="Produkt hinzufügen"></a></p>
     <div id="help">
-        <p class="helptitle">Produktliste</p>
+        <p class="helptitle">${messages.get("PAGETITLE_MARKET_LIST")}</p>
         <p>Users are organized in groups which allow write access to projects that belong to the group.</p>
         <p>The Admin group is a system required group and can not be deleted.</p>
         <p><img height="22" width="22" src="/img/group_add2.png">&nbsp;add new group&nbsp;<img height="22" width="22" src="img/edit.png">&nbsp;edit group&nbsp;<img height="22" width="22" src="img/remove.png">&nbsp;delete group</p>
@@ -11,13 +11,13 @@
     <div id="filter">
         <p>Filter: <input id="search" searchtype="groups" type="text""></p>
     </div>
-    #foreach($producer in $producers)
+    #foreach($market in $markets)
         <div class="unit" tag="$!producer.name.toLowerCase()">
-            #if($producer.id>1)<a href="process?action=bsh&ro=1&scriptname=selectdeletegroup&id=${group.id}"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
-            #if($producer.id>1)<a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=${group.id}&mode=change"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
+            #if($market.id>1)<a href="process?action=bsh&ro=1&scriptname=selectdeletegroup&id=${group.id}"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
+            #if($market.id>1)<a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=${group.id}&mode=change"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
             <div class="grouptop">
-                <p class="small">Hersteller</p>
-                <p class="big">$!producer.name</a></p>
+                <p class="small">Market</p>
+                <p class="big">$!market.name</a></p>
             </div>
         </div>
     #end

@@ -2,9 +2,6 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
-import com.datamelt.artikel.app.web.util.Message;
-import com.datamelt.artikel.model.Product;
-import com.datamelt.artikel.port.ProductApiInterface;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
 import org.eclipse.jetty.http.HttpStatus;
@@ -13,7 +10,6 @@ import spark.Response;
 import spark.Route;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class IndexController
@@ -49,7 +45,6 @@ public class IndexController
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_NOT_FOUND"));
-        model.put("message", Message.PAGE_NOT_FOUND);
         response.status(HttpStatus.NOT_FOUND_404);
         return ViewUtility.render(request,model,Path.Template.NOTFOUND);
     };
