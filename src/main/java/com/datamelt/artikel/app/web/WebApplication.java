@@ -29,6 +29,8 @@ public class WebApplication
         ProductController productController = new ProductController(service, messages);
         ProducerController producerController = new ProducerController(service, messages);
         MarketController marketController = new MarketController(service, messages);
+        ProductContainerController containerController = new ProductContainerController(service, messages);
+        ProductOriginController originController = new ProductOriginController(service, messages);
 
         before("*", Filters.addTrailingSlashes);
 
@@ -41,6 +43,8 @@ public class WebApplication
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.MARKETS, marketController.serveAllMarketsPage);
+        get(Path.Web.PRODUCTCONTAINERS, containerController.serveAllProductContainersPage);
+        get(Path.Web.PRODUCTORIGINS, originController.serveAllProductOriginsPage);
 
         get("*", indexController.serveNotFoundPage);
 

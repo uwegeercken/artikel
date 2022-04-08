@@ -7,8 +7,8 @@
 			<li><a href="/products/">${messages.get("MENU_ENTRY_PRODUCTS")}</a></li>
 			<li><a href="/producers/">${messages.get("MENU_ENTRY_PRODUCERS")}</a></li>
 			<li><a href="/markets/">${messages.get("MENU_ENTRY_MARKETS")}</a></li>
-			<li><a href="/containers">${messages.get("MENU_ENTRY_CONTAINERS")}</a></li>
-			<li><a href="/origins/">${messages.get("MENU_ENTRY_ORIGINS")}</a></li>
+			<li><a href="/productcontainers">${messages.get("MENU_ENTRY_CONTAINERS")}</a></li>
+			<li><a href="/productorigins/">${messages.get("MENU_ENTRY_ORIGINS")}</a></li>
 		</ul>
 		<ul>
 			<li><a href="/about/">${messages.get("MENU_ENTRY_ABOUT")}</a></li>

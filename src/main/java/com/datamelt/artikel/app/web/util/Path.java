@@ -9,6 +9,8 @@ public class Path
         public static final String PRODUCT = "/product/:id/";
         public static final String PRODUCERS = "/producers/";
         public static final String MARKETS = "/markets/";
+        public static final String PRODUCTCONTAINERS = "/productcontainers/";
+        public static final String PRODUCTORIGINS = "/productorigins/";
     }
 
     public static class Template {
@@ -18,6 +20,8 @@ public class Path
         public static final String PRODUCT = "/velocity/editproduct.vm";
         public static final String PRODUCERS = "/velocity/producers.vm";
         public static final String MARKETS = "/velocity/markets.vm";
+        public static final String PRODUCTCONTAINERS = "/velocity/productcontainers.vm";
+        public static final String PRODUCTORIGINS = "/velocity/productorigins.vm";
 
         public static final String NOTFOUND = "/velocity/notfound.vm";
     }

@@ -19,7 +19,7 @@
             #if($product.id>1)<a href="/product/${product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
             #if($product.id>1)<a href="/product/${product.id}?test=gaga/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
             <div class="grouptop">
-                <p class="small">Produkt #$!product.number </p>
+                <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number </p>
                 <p class="big">$!product.name</a></p>
                 <p class="normal">$!product.description - $!product.producer.name</p>
                 <p class="normal">Container: $!{product.container.name} - Ursprung: $!{product.origin.name}</p>

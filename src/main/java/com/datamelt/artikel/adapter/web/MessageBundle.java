@@ -21,7 +21,16 @@ public class MessageBundle
     }
 
     public String get(String message) {
-        return messages.getString(message);
+        String msg;
+        try
+        {
+            msg = messages.getString(message);
+        }
+        catch(Exception ex)
+        {
+            msg = messages.getString("NO_MESSAGE_DEFINED");
+        }
+        return msg;
     }
 
     public final String get(final String key, final Object... args) {

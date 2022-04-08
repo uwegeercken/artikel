@@ -1,6 +1,6 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">${messages.get("PAGETITLE_MARKET_LIST")} ($producers.size())</p>
+    <p class="heading">${messages.get("PAGETITLE_MARKET_LIST")} ($markets.size())</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="show help" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="Produkt hinzufügen"></a></p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_MARKET_LIST")}</p>
@@ -16,7 +16,7 @@
             #if($market.id>1)<a href="process?action=bsh&ro=1&scriptname=selectdeletegroup&id=${group.id}"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
             #if($market.id>1)<a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=${group.id}&mode=change"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
             <div class="grouptop">
-                <p class="small">Market</p>
+                <p class="small">${messages.get("TYPE_MARKET")}</p>
                 <p class="big">$!market.name</a></p>
             </div>
         </div>
