@@ -1,3 +1,4 @@
+#parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
@@ -109,8 +110,8 @@
     </table>
     </form>
     </div>
-    #if (${infomessage})
-        <p align="center">$infomessage</p>
+    #if (${result})
+       <p align="center">#insert_message($result)</p>
     #end
 #end
 

@@ -3,7 +3,7 @@ package com.datamelt.artikel.adapter.web;
 import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.adapter.web.form.ProductFormConverter;
 import com.datamelt.artikel.adapter.web.form.ProductFormField;
-import com.datamelt.artikel.adapter.web.validator.FormValidatorResult;
+import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.adapter.web.form.ProductFormValidator;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
@@ -77,15 +77,15 @@ public class ProductController implements ProductApiInterface
                 form.put(field,value );
             }
             model.put("form", form);
-            FormValidatorResult result = ProductFormValidator.validate(form,messages);
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
-            if(result.getResultOk())
+            ValidatorResult result = ProductFormValidator.validate(form,messages);
+            if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProduct(model, form);
             }
             else
             {
-                model.put("infomessage",result.getMessage());
+                model.put("result", result);
             }
             model.put("fields",ProductFormField.class);
             model.put("producers", getAllProducers());
@@ -111,11 +111,11 @@ public class ProductController implements ProductApiInterface
             try
             {
                 updateProduct(Long.parseLong(form.get(ProductFormField.ID)), form);
-                model.put("infomessage", messages.get("PRODUCT_FORM_CHANGED"));
+                model.put("result", new ValidatorResult(messages.get("PRODUCT_FORM_CHANGED")));
             }
             catch (Exception ex)
             {
-                model.put("infomessage", messages.get("PRODUCT_FORM_CHANGE_ERROR"));
+                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("PRODUCT_FORM_CHANGE_ERROR")));
             }
         } else
         {
@@ -123,11 +123,11 @@ public class ProductController implements ProductApiInterface
             try
             {
                 addProduct(form);
-                model.put("infomessage", messages.get("PRODUCT_FORM_ADDED"));
+                model.put("result", new ValidatorResult(messages.get("PRODUCT_FORM_ADDED")));
             }
             catch (Exception ex)
             {
-                model.put("infomessage", messages.get("PRODUCT_FORM_ADD_ERROR"));
+                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("PRODUCT_FORM_ADD_ERROR")));
             }
         }
     }

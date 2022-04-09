@@ -22,7 +22,7 @@
     </div>
     #insert_focus_scriptcode("userid")
 
-    #if (${infomessage})
-        <p align="center">#insert_message($infomessage)</p>
+    #if (${result})
+      <p align="center">#insert_message($result)</p>
     #end
 #end

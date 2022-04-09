@@ -1,0 +1,20 @@
+
+## focus on a form field on the page
+#macro(insert_focus_scriptcode $fieldid)
+<script type="text/Javascript" language="JavaScript">
+<!--
+	document.getElementById("$fieldid").focus();
+//-->
+</script>
+
+#end
+
+## display a message
+#macro(insert_message $result)
+	#if($result.resultType==1)
+		<font color="red">$result.message</font>
+	#else
+		$result.message
+	#end
+#end
+
