@@ -44,7 +44,7 @@ public class ProductController implements ProductApiInterface
     public Route serveProductPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
-        model.put("pagetitle", "Produkt");
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
         model.put("fields", ProductFormField.class);
         Product product = getProductById(Long.parseLong(request.params(":id")));
         if(product!=null)
@@ -62,6 +62,14 @@ public class ProductController implements ProductApiInterface
         model.put("origins", getAllProductOrigins());
         return ViewUtility.render(request,model,Path.Template.PRODUCT);
 
+    };
+
+    public Route serveProductDeletePage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_DELETE"));
+        Product product = getProductById(Long.parseLong(request.params(":id")));
+        return ViewUtility.render(request,model,Path.Template.PRODUCT_DELETE);
     };
 
     public Route serveUpdateProductPage = (Request request, Response response) -> {
@@ -99,8 +107,6 @@ public class ProductController implements ProductApiInterface
             model.put("products", getAllProducts());
             return ViewUtility.render(request,model,Path.Template.PRODUCTS);
         }
-
-
     };
 
     private void addOrUpdateProduct(Map<String, Object> model, ProductForm form)
