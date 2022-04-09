@@ -12,8 +12,8 @@
     </div>
     #foreach($container in $containers)
         <div class="unit" tag="$!container.name.toLowerCase()">
-            #if($container.id>1)<a href="process?action=bsh&ro=1&scriptname=selectdeletegroup&id=${group.id}"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCTCONTAINER_DELETE")}"></a>#end
-            #if($container.id>1)<a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=${group.id}&mode=change"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCTCONTAINER_EDIT")}"></a>#end
+            #if($container.id>0)<a href="/container/${container.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCTCONTAINER_DELETE")}"></a>#end
+            #if($container.id>0)<a href="/container/${container.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCTCONTAINER_EDIT")}"></a>#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCTCONTAINER")}</p>
                 <p class="big">$!container.name</a></p>
