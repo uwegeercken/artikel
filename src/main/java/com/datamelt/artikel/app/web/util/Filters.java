@@ -13,4 +13,11 @@ public class Filters
             response.redirect(request.pathInfo() + "/");
         }
     };
+
+    public static Filter redirectToIndex = (Request request, Response response) -> {
+        String test = request.pathInfo();
+        if (request.pathInfo().equals("/")) {
+            response.redirect(Path.Web.INDEX);
+        }
+    };
 }

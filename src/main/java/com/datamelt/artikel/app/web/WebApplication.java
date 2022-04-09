@@ -32,6 +32,7 @@ public class WebApplication
         ProductContainerController containerController = new ProductContainerController(service, messages);
         ProductOriginController originController = new ProductOriginController(service, messages);
 
+        before("*", Filters.redirectToIndex);
         before("*", Filters.addTrailingSlashes);
 
         get(Path.Web.INDEX, indexController.serveIndexPage);
