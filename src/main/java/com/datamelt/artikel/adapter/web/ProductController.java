@@ -86,7 +86,12 @@ public class ProductController implements ProductApiInterface
             }
             model.put("form", form);
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
-            ValidatorResult result = ProductFormValidator.validate(form,messages);
+            model.put("fields",ProductFormField.class);
+            model.put("producers", getAllProducers());
+            model.put("containers", getAllProductContainers());
+            model.put("origins", getAllProductOrigins());
+
+            ValidatorResult result = validateProduct(form);
             if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProduct(model, form);
@@ -95,10 +100,6 @@ public class ProductController implements ProductApiInterface
             {
                 model.put("result", result);
             }
-            model.put("fields",ProductFormField.class);
-            model.put("producers", getAllProducers());
-            model.put("containers", getAllProductContainers());
-            model.put("origins", getAllProductOrigins());
             return ViewUtility.render(request,model,Path.Template.PRODUCT);
         }
         else
@@ -108,6 +109,36 @@ public class ProductController implements ProductApiInterface
             return ViewUtility.render(request,model,Path.Template.PRODUCTS);
         }
     };
+
+    private ValidatorResult validateProduct(ProductForm form)
+    {
+        ValidatorResult validateNotEmpty = ProductFormValidator.validateNotEMpty(form, messages);
+        if(validateNotEmpty.getResultType() == ValidatorResult.RESULT_TYPE_OK)
+        {
+            ValidatorResult validateValues = ProductFormValidator.validate(form, messages);
+            if(validateValues.getResultType() == ValidatorResult.RESULT_TYPE_OK)
+            {
+                try
+                {
+                    ValidatorResult validateUnique = ProductFormValidator.validateUniqueness(form, messages, getIsUniqueProduct(Long.parseLong(form.get(ProductFormField.ID)), form.get(ProductFormField.NUMBER)));
+                    return validateUnique;
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                    return null;
+                }
+            }
+            else
+            {
+                return validateValues;
+            }
+        }
+        else
+        {
+            return validateNotEmpty;
+        }
+    }
 
     private void addOrUpdateProduct(Map<String, Object> model, ProductForm form)
     {
@@ -178,5 +209,11 @@ public class ProductController implements ProductApiInterface
     public void addProduct(ProductForm form) throws Exception
     {
         service.addProduct(form);
+    }
+
+    @Override
+    public boolean getIsUniqueProduct(long id, String number) throws Exception
+    {
+        return service.getIsUniqueProduct(id, number);
     }
 }

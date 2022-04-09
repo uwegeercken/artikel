@@ -107,6 +107,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public boolean getIsUniqueProduct(long id, String number) throws Exception
+    {
+        return ProductSearch.getIsUniqueProduct(connection, id, number);
+    }
+
+    @Override
     public List<Product> getAllProducts() throws Exception
     {
         return CollectionHandler.getAllProducts(connection);

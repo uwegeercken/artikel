@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 class MarketUpdate
 {
-    private static final String SQL_INSERT = "insert into market (name) values(?)";
-    private static final String SQL_UPDATE = "update market set name=? where id=?";
+    private static final String SQL_INSERT = "insert into market (name, type) values(?,?)";
+    private static final String SQL_UPDATE = "update market set name=?, type=? where id=?";
     private static final String SQL_DELETE = "delete from market where id=?";
 
     private Connection connection;
@@ -25,6 +25,7 @@ class MarketUpdate
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, market.getName());
+            statement.setString(2, market.getType());
             statement.executeUpdate();
             statement.clearParameters();
 
@@ -47,7 +48,8 @@ class MarketUpdate
         {
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
             statement.setString(1, market.getName());
-            statement.setLong(2, market.getId());
+            statement.setString(2, market.getType());
+            statement.setLong(3, market.getId());
             statement.executeUpdate();
             statement.clearParameters();
 

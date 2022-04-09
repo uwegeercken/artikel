@@ -59,7 +59,6 @@
 			<td>${messages.get("PRODUCT_FORM_FIELD_PRODUCER")}:</td>
 			<td>
 				<select id="producer_id" name="$fields.valueOf("PRODUCER_ID")" size="1">
-				<option value="0"></option>
 				#foreach($producer in $producers)
 					#if($!{form.get($fields.valueOf("PRODUCER_ID"))}==${producer.id})
 						<option selected value="${producer.id}">${producer.name}</option>
@@ -74,7 +73,6 @@
 			<td>${messages.get("PRODUCT_FORM_FIELD_CONTAINER")}:</td>
 			<td>
 				<select id="container_id" name="$fields.valueOf("CONTAINER_ID")" size="1">
-				<option value="0"></option>
 				#foreach($container in $containers)
 					#if($!{form.get($fields.valueOf("CONTAINER_ID"))}==${container.id})
 						<option selected value="${container.id}">${container.name}</option>
@@ -89,7 +87,6 @@
 			<td>${messages.get("PRODUCT_FORM_FIELD_ORIGIN")}:</td>
 			<td>
 				<select id="origin_id" name="$fields.valueOf("ORIGIN_ID")" size="1">
-				<option value="0"></option>
 				#foreach($origin in $origins)
 					#if($!{form.get($fields.valueOf("ORIGIN_ID"))}==${origin.id})
 						<option selected value="${origin.id}">${origin.name}</option>

@@ -4,6 +4,7 @@ public class Market
 {
     private long id;
     private String name;
+    private String type;
 
     public Market(String name)
     {
@@ -25,4 +26,7 @@ public class Market
         return name;
     }
 
+    public void setType(String type) { this.type = type; }
+
+    public String getType() { return type; }
 }

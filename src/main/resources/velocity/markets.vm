@@ -17,6 +17,7 @@
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_MARKET")}</p>
                 <p class="big">$!market.name</a></p>
+                <p class="normal">$!market.type</p>
             </div>
         </div>
     #end

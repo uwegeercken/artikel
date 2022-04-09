@@ -15,6 +15,7 @@ class ProductSearch
     private static final String SQL_QUERY_BY_NAME = "select * from product where name=?";
     private static final String SQL_QUERY_BY_NUMBER = "select * from product where number=?";
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from product where number=?";
+    private static final String SQL_QUERY_IS_UNIQUE = "select count(1) as counter from product where number=? and id!=?";
 
     static Product getProductById(Connection connection, long id) throws Exception
     {
@@ -115,5 +116,22 @@ class ProductSearch
         resultset.close();
         statement.close();
         return exist;
+    }
+
+    public static boolean getIsUniqueProduct(Connection connection, long id, String number) throws Exception
+    {
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_IS_UNIQUE);
+        statement.setString(1, number);
+        statement.setLong(2, id);
+        ResultSet resultset = statement.executeQuery();
+        boolean isUnique = false;
+        if(resultset.next())
+        {
+            isUnique = resultset.getLong("counter") == 1;
+        }
+        statement.clearParameters();
+        resultset.close();
+        statement.close();
+        return isUnique;
     }
 }

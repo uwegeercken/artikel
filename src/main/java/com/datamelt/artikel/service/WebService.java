@@ -78,6 +78,7 @@ public class WebService
     }
 
     public Producer getProducerById(long id) throws Exception { return repository.getProducerById(id); }
+    public boolean getExistProduct(String number) throws Exception { return repository.getExistProduct(number); }
     public List<Producer> getAllProducers() throws Exception { return repository.getAllProducers(); }
     public List<Market> getAllMarkets() throws Exception { return repository.getAllMarkets(); }
     public List<ProductContainer> getAllProductContainers() throws Exception { return repository.getAllProductContainers(); }
@@ -85,4 +86,6 @@ public class WebService
 
     public ProductContainer getProductContainerById(long id) throws Exception { return repository.getProductContainerById(id); }
     public ProductOrigin getProductOriginById(long id) throws Exception { return repository.getProductOriginById(id); }
+
+    public boolean getIsUniqueProduct(long id, String number) throws Exception { return repository.getIsUniqueProduct(id, number); }
 }

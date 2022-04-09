@@ -21,6 +21,7 @@ public interface RepositoryInterface
     Product getProductByName(String name) throws Exception;
     Product getProductByNumber(String number) throws Exception;
     boolean getExistProduct(String number) throws Exception;
+    boolean getIsUniqueProduct(long id, String number) throws Exception;
     List<Product> getAllProducts() throws Exception;
 
     void addProductContainer(ProductContainer container);

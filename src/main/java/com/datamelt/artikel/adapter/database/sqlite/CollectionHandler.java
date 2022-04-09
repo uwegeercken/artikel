@@ -73,6 +73,7 @@ class CollectionHandler
         {
             Market market = new Market(resultset.getString("name"));
             market.setId(resultset.getLong("id"));
+            market.setType(resultset.getString("type"));
             markets.add(market);
         }
         resultset.close();
