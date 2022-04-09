@@ -226,20 +226,6 @@ img.dependent {
 	border: none;
 }
 
-img.testimg {
-	position: absolute;
-	margin-top: 6px;
-	margin-left: 255px;
-	border: none;
-}
-
-img.teststopimg {
-	position: absolute;
-	margin-top: 6px;
-	margin-left: 230px;
-	border: none;
-}
-
 img.edit {
 	position: absolute;
 	margin-top: 150px;

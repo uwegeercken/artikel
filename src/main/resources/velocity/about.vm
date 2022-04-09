@@ -1,7 +1,11 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
-    <p class="heading">Information Geflügel Mogk Artikelverwaltung</p>
+    <p class="heading">${messages.get("PAGE_HEADIND_ABOUT")}</p>
+    <p>Die Applikation zur Artikelverwaltung basiert im wesentlichen auf SparkJava, Java, sowie Apache Velocity als Template Engine.</p>
+    <br>
+    <br>
+    <br>
     <p>Version der Web-Anwendung: ${version} (${lastupdate})</p>
     <p>Copyright Uwe Geercken, 2022. Entwicklung von: Uwe Geercken, uwe.geercken@web.de</p>
 

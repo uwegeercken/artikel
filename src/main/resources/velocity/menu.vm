@@ -5,6 +5,9 @@
 		</ul>
 		<ul>
 			<li><a href="/products/">${messages.get("MENU_ENTRY_PRODUCTS")}</a></li>
+			<li><a href="/purchaseorder/">${messages.get("MENU_ENTRY_PURCHASE_ORDER")}</a></li>
+		</ul>
+        <ul>
 			<li><a href="/producers/">${messages.get("MENU_ENTRY_PRODUCERS")}</a></li>
 			<li><a href="/markets/">${messages.get("MENU_ENTRY_MARKETS")}</a></li>
 			<li><a href="/productcontainers">${messages.get("MENU_ENTRY_CONTAINERS")}</a></li>

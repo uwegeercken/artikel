@@ -1,7 +1,7 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
 
-    <p class="heading">${messages.get("MENU_ENTRY_INDEX")}</p>
-    <p>Willkommen bei der Artikelverwaltung der Firma Mogk</p>
+    <p class="heading">${messages.get("PAGE_HEADIND_INDEX")}</p>
+    <p>In der Artikelverwaltung sind alle selbst hergestellten, sowie eingekauften Produkte abrufbar. Die Applikation bietet vielfältige Funktionen, um den Bestand zu verwalten, Bestellungen zu tätigen und statistische Daten abzurufen.</p>
     <br>
 #end
