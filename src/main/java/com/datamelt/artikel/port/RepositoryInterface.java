@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface RepositoryInterface
 {
+    void createDatabaseTables() throws Exception;
     void addProducer(Producer product);
     void updateProducer(Producer product);
     void removeProducer(long id);

@@ -17,6 +17,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public void createDatabaseTables() throws Exception
+    {
+        SqliteTable.createTables(connection);
+    }
+
+    @Override
     public void addProducer(Producer producer)
     {
         ProducerUpdate p = new ProducerUpdate(connection);

@@ -10,12 +10,12 @@ class SqliteConnection
 {
     static Connection getConnection(DatabaseConfiguration configuration) throws Exception {
         File databaseFile = new File(configuration.getName());
-        if(databaseFile.isFile()) {
+        if(databaseFile.isFile() && databaseFile.canWrite()) {
             try {
                 Class.forName(configuration.getJdbcClass());
                 return DriverManager.getConnection(configuration.getConnection() + ":" + configuration.getName());
             } catch (Exception ex) {
-                ex.printStackTrace();
+                //ex.printStackTrace();
                 return null;
             }
         }

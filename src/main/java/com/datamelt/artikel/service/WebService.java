@@ -88,4 +88,6 @@ public class WebService
     public ProductOrigin getProductOriginById(long id) throws Exception { return repository.getProductOriginById(id); }
 
     public boolean getIsUniqueProduct(long id, String number) throws Exception { return repository.getIsUniqueProduct(id, number); }
+
+    public void createDatabaseTables() throws Exception { repository.createDatabaseTables(); }
 }
