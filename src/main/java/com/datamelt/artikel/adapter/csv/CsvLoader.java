@@ -256,6 +256,7 @@ public class CsvLoader implements FileInterface
                 try
                 {
                     Market market = new Market(fields[0]);
+                    market.setType(fields[1]);
                     boolean exists = getExistMarket(fields[0]);
                     if(!exists)
                     {
