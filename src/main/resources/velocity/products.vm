@@ -21,7 +21,7 @@
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>
                 <p class="big">$!product.name</a></p>
                 <p class="normal">$!product.description </p>
-                <p class="normal">Behälter: $!{product.container.name} - Ursprung: $!{product.origin.name}</p>
+                <p class="normal">Behälter: $!{product.container.name} - Herkunft: $!{product.origin.name}</p>
                 <p class="normal">Menge: $!{product.quantity} - Gewicht: $!{product.weight} kg</p>
                 <p class="normal">Preis: € $!{product.price}</p>
             </div>
