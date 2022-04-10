@@ -1,6 +1,7 @@
 package com.datamelt.artikel.app;
 
 import com.datamelt.artikel.config.MainConfiguration;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
@@ -22,8 +23,7 @@ public class ConfigurationLoader
         }
     }
 
-    private MainConfiguration loadConfiguration() throws Exception
-    {
+    private MainConfiguration loadConfiguration() throws Exception {
         ClassLoader classLoader = this.getClass().getClassLoader();
         URL resource = classLoader.getResource("config.yaml");
         ObjectMapper config = new YAMLMapper();

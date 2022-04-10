@@ -15,8 +15,9 @@ public class WebApplication
     public static final String APPLCATION_VERSION = "v0.2";
     public static final String APPLCATION_LAST_UPDATE = "08.04.2022";
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
+
         staticFiles.location("/public");
         staticFiles.expireTime(600L);
         //enableDebugScreen();

@@ -4,6 +4,7 @@ public class DatabaseConfiguration
 {
     private String connection;
     private String jdbcClass;
+    private String name;
 
     public String getConnection()
     {
@@ -14,4 +15,6 @@ public class DatabaseConfiguration
     {
         return jdbcClass;
     }
+
+    public String getName() { return name; }
 }

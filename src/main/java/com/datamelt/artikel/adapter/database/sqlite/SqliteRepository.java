@@ -11,7 +11,7 @@ public class SqliteRepository implements RepositoryInterface
 {
     private final Connection connection;
 
-    public SqliteRepository(DatabaseConfiguration configuration)
+    public SqliteRepository(DatabaseConfiguration configuration) throws Exception
     {
         this.connection = SqliteConnection.getConnection(configuration);
     }
