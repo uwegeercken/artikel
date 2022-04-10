@@ -4,21 +4,21 @@ import java.sql.Connection;
 
 public class SqliteTable
 {
-    private static final String CREATE_TABLE_MARKET ="CREATE TABLE \"market\" (" +
+    private static final String CREATE_TABLE_MARKET ="CREATE TABLE if not exists \"market\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +
             "\"type\"TEXT NOT NULL," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
-    private static final String CREATE_TABLE_PRODUCER = "CREATE TABLE \"producer\" (" +
+    private static final String CREATE_TABLE_PRODUCER = "CREATE TABLE if not exists \"producer\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +
             "\"no_ordering\"INTEGER DEFAULT 0," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
-    private static final String CREATE_TABLE_PRODUCT ="CREATE TABLE \"product\" (" +
+    private static final String CREATE_TABLE_PRODUCT ="CREATE TABLE if not exists \"product\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"number\"TEXT NOT NULL UNIQUE," +
             "\"name\"TEXT NOT NULL," +
@@ -33,20 +33,20 @@ public class SqliteTable
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
-    private static final String CREATE_TABLE_PRODUCTCONTAINER = "CREATE TABLE \"productcontainer\" (" +
+    private static final String CREATE_TABLE_PRODUCTCONTAINER = "CREATE TABLE if not exists \"productcontainer\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
-    private static final String CREATE_TABLE_PRODUCTORDER = "CREATE TABLE \"productorder\" (" +
+    private static final String CREATE_TABLE_PRODUCTORDER = "CREATE TABLE if not exists \"productorder\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"number\"TEXT NOT NULL UNIQUE," +
             "\"timestamp\"INTEGER NOT NULL," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
-    private static final String CREATE_TABLE_PRODUCTORDER_ITEM = "CREATE TABLE \"productorder_item\" (" +
+    private static final String CREATE_TABLE_PRODUCTORDER_ITEM = "CREATE TABLE if not exists \"productorder_item\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"productorder_id\"INTEGER NOT NULL," +
             "\"product_id\"INTEGER NOT NULL," +
@@ -54,7 +54,7 @@ public class SqliteTable
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
-    private static final String CREATE_TABLE_PRODUCTORIGIN = "CREATE TABLE \"productorigin\" (" +
+    private static final String CREATE_TABLE_PRODUCTORIGIN = "CREATE TABLE if not exists \"productorigin\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +

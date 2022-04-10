@@ -9,19 +9,22 @@ import java.sql.DriverManager;
 class SqliteConnection
 {
     static Connection getConnection(DatabaseConfiguration configuration) throws Exception {
-        File databaseFile = new File(configuration.getName());
-        if(databaseFile.isFile() && databaseFile.canWrite()) {
-            try {
-                Class.forName(configuration.getJdbcClass());
-                return DriverManager.getConnection(configuration.getConnection() + ":" + configuration.getName());
-            } catch (Exception ex) {
-                //ex.printStackTrace();
-                return null;
+        Connection connection = null;
+        try {
+            File databaseFile = new File(configuration.getName());
+            boolean existDatabase = databaseFile.exists();
+            Class.forName(configuration.getJdbcClass());
+            // if db does not exist, the file is created by the driver
+            connection = DriverManager.getConnection(configuration.getConnection() + ":" + configuration.getName());
+            if(!existDatabase)
+            {
+                SqliteTable.createTables(connection);
             }
         }
-        else
+        catch (Exception ex)
         {
-            throw new Exception("database not found: " + configuration.getName());
+            ex.printStackTrace();
         }
+        return connection;
     }
 }
