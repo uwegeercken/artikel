@@ -50,6 +50,7 @@ public class SqliteTable
             "\"id\"INTEGER NOT NULL," +
             "\"productorder_id\"INTEGER NOT NULL," +
             "\"product_id\"INTEGER NOT NULL," +
+            "\"timestamp\"INTEGER NOT NULL," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
