@@ -14,6 +14,7 @@ public interface RepositoryInterface
     Producer getProducerByName(String name) throws Exception;
     boolean getExistProducer(String name) throws Exception;
     List<Producer> getAllProducers() throws Exception;
+    boolean getIsUniqueProducer(long id, String name) throws Exception;
 
     void addProduct(Product product);
     void updateProduct(Product product) throws Exception;

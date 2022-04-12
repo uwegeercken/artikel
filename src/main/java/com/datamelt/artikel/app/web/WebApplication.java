@@ -44,6 +44,9 @@ public class WebApplication
         post(Path.Web.PRODUCT, productController.serveUpdateProductPage);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
+        get(Path.Web.PRODUCER, producerController.serveProducerPage);
+        post(Path.Web.PRODUCER, producerController.serveUpdateProducerPage);
+
         get(Path.Web.MARKETS, marketController.serveAllMarketsPage);
         get(Path.Web.PRODUCTCONTAINERS, containerController.serveAllProductContainersPage);
         get(Path.Web.PRODUCTORIGINS, originController.serveAllProductOriginsPage);

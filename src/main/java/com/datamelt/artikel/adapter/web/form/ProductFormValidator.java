@@ -3,7 +3,6 @@ package com.datamelt.artikel.adapter.web.form;
 import com.datamelt.artikel.adapter.web.MessageBundle;
 import com.datamelt.artikel.adapter.web.validator.FormFieldValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
-import com.datamelt.artikel.service.WebService;
 
 import java.util.Map;
 

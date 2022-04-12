@@ -57,6 +57,7 @@ class CollectionHandler
         {
             Producer producer = new Producer(resultset.getString("name"));
             producer.setId(resultset.getLong("id"));
+            producer.setNoOrdering(resultset.getInt("no_ordering"));
             producers.add(producer);
         }
         resultset.close();

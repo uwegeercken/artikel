@@ -11,11 +11,7 @@ public class ProductForm
         fields.put(key, value);
     }
 
-    public String get(ProductFormField key)
-    {
-
-        return fields.get(key);
-    }
+    public String get(ProductFormField key) { return fields.get(key); }
 
     public long getId()
     {
