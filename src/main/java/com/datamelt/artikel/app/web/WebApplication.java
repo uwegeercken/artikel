@@ -17,7 +17,7 @@ public class WebApplication
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
     public static final String APPLCATION_VERSION = "v0.2";
-    public static final String APPLCATION_LAST_UPDATE = "08.04.2022";
+    public static final String APPLCATION_LAST_UPDATE = "15.04.2022";
 
     public static void main(String[] args) throws Exception
     {
@@ -35,7 +35,7 @@ public class WebApplication
         MessageBundle messages = new MessageBundle("de");
 
         staticFiles.location("/public");
-        staticFiles.expireTime(600L);
+        staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());
 
         WebService service = new WebService(new SqliteRepository(configuration.getDatabase()));
         IndexController indexController = new IndexController(service, messages);

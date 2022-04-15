@@ -3,6 +3,9 @@ database:
   connection: jdbc:sqlite
   name: /home/uwe/development/products-mogk.db
 
+sparkJava:
+  staticfilesExpiretime: 60
+
 csvInput:
   productsFilename: csv/products.csv
   producersFilename: csv/producers.csv
