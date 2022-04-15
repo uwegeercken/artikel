@@ -1,9 +1,14 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 
 public class SqliteTable
 {
+    private static final Logger logger =  LoggerFactory.getLogger(SqliteTable.class);
+
     private static final String CREATE_TABLE_MARKET ="CREATE TABLE if not exists \"market\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +

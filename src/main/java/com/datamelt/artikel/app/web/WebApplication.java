@@ -7,23 +7,37 @@ import com.datamelt.artikel.app.web.util.Filters;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static spark.Spark.*;
 
 public class WebApplication
 {
+    private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
+
     public static final String APPLCATION_VERSION = "v0.2";
     public static final String APPLCATION_LAST_UPDATE = "08.04.2022";
 
     public static void main(String[] args) throws Exception
     {
+        logger.info("initializing web application");
+
+        MainConfiguration configuration;
+        if(args!=null && args.length>0)
+        {
+            logger.info("loading configuration from file: [{}] ", args[0]);
+            configuration = new ConfigurationLoader().getMainConfiguration(args[0]);
+        }
+        else
+        {
+            logger.info("loading configuration from classpath");
+            configuration = new ConfigurationLoader().getMainConfiguration();
+        }
+        MessageBundle messages = new MessageBundle("de");
 
         staticFiles.location("/public");
         staticFiles.expireTime(600L);
-        //enableDebugScreen();
-
-        MainConfiguration configuration = new ConfigurationLoader().getMainConfiguration();
-        MessageBundle messages = new MessageBundle("de");
 
         WebService service = new WebService(new SqliteRepository(configuration.getDatabase()));
         IndexController indexController = new IndexController(service, messages);

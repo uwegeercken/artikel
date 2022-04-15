@@ -1,0 +1,13 @@
+database:
+  jdbcClass: org.sqlite.JDBC
+  connection: jdbc:sqlite
+  name: /home/uwe/development/products-mogk.db
+
+csvInput:
+  productsFilename: products.csv
+  producersFilename: producers.csv
+  marketsFilename: markets.csv
+  ordersFilename: orders.csv
+  orderitemsFilename: orderitems.csv
+  productContainersFilename: containers.csv
+  productOriginsFilename: origins.csv

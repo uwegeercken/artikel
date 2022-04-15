@@ -1,5 +1,6 @@
 package com.datamelt.artikel.adapter.csv;
 
+import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.config.CsvInput;
 import com.datamelt.artikel.port.FileInterface;
@@ -7,7 +8,8 @@ import com.datamelt.artikel.service.LoaderService;
 import com.datamelt.artikel.util.Constants;
 import com.datamelt.artikel.util.CsvFileType;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +19,7 @@ import java.text.SimpleDateFormat;
 
 public class CsvLoader implements FileInterface
 {
-    private static final Logger logger = LogManager.getLogger(CsvLoader.class);
+    private static final Logger logger =  LoggerFactory.getLogger(CsvLoader.class);
 
     private final LoaderService service;
     private CsvInput configuration;

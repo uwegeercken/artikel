@@ -1,21 +1,20 @@
 package com.datamelt.artikel.service;
 
-import com.datamelt.artikel.adapter.csv.CsvLoader;
 import com.datamelt.artikel.adapter.web.form.ProducerForm;
 import com.datamelt.artikel.adapter.web.form.ProducerFormField;
 import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.adapter.web.form.ProductFormField;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.RepositoryInterface;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
 
 public class WebService
 {
-    private static final Logger logger = LogManager.getLogger(CsvLoader.class);
+    private static final Logger logger =  LoggerFactory.getLogger(WebService.class);
     private final RepositoryInterface repository;
 
     public WebService(RepositoryInterface respository)
