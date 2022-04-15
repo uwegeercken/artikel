@@ -10,4 +10,12 @@ The implementation is:
 - a Web application using SparkJava and Apache Velocity technology (https://velocity.apache.org/)
 - a CSV loader to load data into the database
 
+
+The Web application can be run as follows:
+- run mvn clean install to generate the application jar file. dependencies will be in the generated .lib folder
+- provide a config.yaml file and adjust it to your needs
+- 
+
+
+
 Copyright Uwe Geercken, 2022. Last update: 2022-04-10

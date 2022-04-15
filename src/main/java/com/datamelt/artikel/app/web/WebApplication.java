@@ -22,7 +22,6 @@ public class WebApplication
     public static void main(String[] args) throws Exception
     {
         logger.info("initializing web application");
-
         MainConfiguration configuration;
         if(args!=null && args.length>0)
         {
@@ -31,8 +30,7 @@ public class WebApplication
         }
         else
         {
-            logger.info("loading configuration from classpath");
-            configuration = new ConfigurationLoader().getMainConfiguration();
+            throw new Exception("a configuration yaml file is required");
         }
         MessageBundle messages = new MessageBundle("de");
 

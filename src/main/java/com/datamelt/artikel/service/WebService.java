@@ -48,12 +48,13 @@ public class WebService
         product.setTimestamp(new Date().getTime());
         try
         {
+            logger.debug("updating product - number: [{}]", product.getNumber());
             repository.updateProduct(product);
         }
         catch (Exception ex)
         {
 
-            logger.error("Fehler beim ändern des Produktes: [{}]", ex.getMessage());
+            logger.error("error updating product: [{}]", ex.getMessage());
         }
         return product;
     }
@@ -74,7 +75,15 @@ public class WebService
         product.setProducer(producer);
         product.setOrigin(origin);
         product.setTimestamp(new Date().getTime());
-        repository.addProduct(product);
+        try
+        {
+            logger.debug("adding product - number: [{}]", product.getNumber());
+            repository.addProduct(product);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error adding product: [{}]", ex.getMessage());
+        }
         return product;
     }
 
@@ -85,12 +94,13 @@ public class WebService
         producer.setNoOrdering(Integer.parseInt(form.get(ProducerFormField.NO_ORDERING)));
         try
         {
+            logger.debug("updating producer - name: [{}]", producer.getName());
             repository.updateProducer(producer);
         }
         catch (Exception ex)
         {
 
-            logger.error("Fehler beim ändern des Herstellers: [{}]", ex.getMessage());
+            logger.error("error adding producer: [{}]", ex.getMessage());
         }
         return producer;
     }

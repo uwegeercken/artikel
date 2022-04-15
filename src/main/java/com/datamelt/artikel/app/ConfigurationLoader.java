@@ -35,25 +35,6 @@ public class ConfigurationLoader
             return null;
         }
     }
-    public MainConfiguration getMainConfiguration()
-    {
-        try
-        {
-            return loadConfiguration();
-        }
-        catch (Exception e)
-        {
-            logger.debug("exception loading configuration from classpath: [{}] ", e.getMessage());
-            return null;
-        }
-    }
-
-    private MainConfiguration loadConfiguration() throws Exception {
-        ClassLoader classLoader = this.getClass().getClassLoader();
-        URL resource = classLoader.getResource("config.yaml");
-        ObjectMapper config = new YAMLMapper();
-        return config.readValue(new File(resource.getFile()), MainConfiguration.class);
-    }
 
     private MainConfiguration loadConfiguration(File file) throws Exception {
         ObjectMapper config = new YAMLMapper();

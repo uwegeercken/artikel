@@ -1,13 +1,14 @@
 package com.datamelt.artikel.adapter.csv;
 
-import com.datamelt.artikel.app.web.WebApplication;
+import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
+import com.datamelt.artikel.app.ConfigurationLoader;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.config.CsvInput;
 import com.datamelt.artikel.port.FileInterface;
 import com.datamelt.artikel.service.LoaderService;
 import com.datamelt.artikel.util.Constants;
 import com.datamelt.artikel.util.CsvFileType;
-import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,33 @@ public class CsvLoader implements FileInterface
     {
         this.service = service;
         this.configuration = configuration;
+    }
+
+    public static void main(String[] args) throws Exception
+    {
+        MainConfiguration configuration;
+        if(args!=null && args.length>0)
+        {
+            logger.info("loading configuration from file: [{}] ", args[0]);
+            configuration = new ConfigurationLoader().getMainConfiguration(args[0]);
+        }
+        else
+        {
+            throw new Exception("a configuration yaml file is required");
+
+        }
+
+        LoaderService service = new LoaderService(new SqliteRepository(configuration.getDatabase()));
+        CsvLoader loader = new CsvLoader(service, configuration.getCsvInput());
+        loader.processFile(CsvFileType.CONTAINER);
+        loader.processFile(CsvFileType.PRODUCER);
+        loader.processFile(CsvFileType.MARKET);
+        loader.processFile(CsvFileType.ORIGIN);
+        loader.processFile(CsvFileType.PRODUCT);
+        loader.processFile(CsvFileType.ORDER);
+        loader.processFile(CsvFileType.ORDERITEMS);
+
+        System.out.println();
     }
 
     public void processFile(CsvFileType fileType)
@@ -78,6 +106,7 @@ public class CsvLoader implements FileInterface
 
     private void processProductFile(File inputFile)
     {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
         BufferedReader br;
         try
         {
@@ -134,6 +163,7 @@ public class CsvLoader implements FileInterface
 
     private void processProductContainerFile(File inputFile)
     {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
         BufferedReader br;
         try
         {
@@ -171,6 +201,7 @@ public class CsvLoader implements FileInterface
 
     private void processProductOriginFile(File inputFile)
     {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
         BufferedReader br;
         try
         {
@@ -208,6 +239,7 @@ public class CsvLoader implements FileInterface
 
     private void processProducerFile(File inputFile)
     {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
         BufferedReader br;
         try
         {
@@ -246,6 +278,7 @@ public class CsvLoader implements FileInterface
 
     private void processMarketFile(File inputFile)
     {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
         BufferedReader br;
         try
         {
@@ -284,6 +317,7 @@ public class CsvLoader implements FileInterface
 
     private void processOrderFile(File inputFile)
     {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
         BufferedReader br;
         try
         {
@@ -323,6 +357,7 @@ public class CsvLoader implements FileInterface
 
     private void processOrderItemFile(File inputFile)
     {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
         BufferedReader br;
         try
         {
