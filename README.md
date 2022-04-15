@@ -1,9 +1,11 @@
-# Artikelverwaltung
+# Product Maintenance Application
 
 Motivation for this code and application was to try to understand and implement the Hexagonal Architecture - also called Port and Adapter Architecture.
 Side motivation was to try SparkJava (https://sparkjava.com/) - a micro framework for creating web applications.
 
-The implementation is:
+The Web application allows for the maintenance of products, producers, markets, containers and orders.
+
+###Implementation details:
 - the code in Hexagonal Architecture way
 - CSS and jQuery for frontend styling and functionality
 - Sqlite Database for persistence (https://sqlite.org)
