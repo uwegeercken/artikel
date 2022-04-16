@@ -87,7 +87,7 @@ class ProductSearch
             ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
             product = new Product(number);
             product.setId(resultset.getLong("id"));
-            product.setName(resultset.getString("description"));
+            product.setName(resultset.getString("name"));
             product.setDescription(resultset.getString("description"));
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
