@@ -24,7 +24,7 @@ public class LoaderService
 
     public ProductContainer getProducContainerByName(String name) throws Exception { return repository.getProductContainerByName(name); }
 
-    public boolean getExistProductContainer(String name) throws Exception { return repository.getExistProductOrigin(name); }
+    public boolean getExistProductContainer(String name) throws Exception { return repository.getExistProductContainer(name); }
 
     public void addProductOrigin(ProductOrigin origin) { repository.addProductOrigin(origin); }
 

@@ -1,8 +1,5 @@
 package com.datamelt.artikel.adapter.csv;
 
-import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
-import com.datamelt.artikel.app.ConfigurationLoader;
-import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.config.CsvInput;
 import com.datamelt.artikel.port.FileInterface;
@@ -15,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 
 public class CsvLoader implements FileInterface
@@ -31,33 +27,6 @@ public class CsvLoader implements FileInterface
     {
         this.service = service;
         this.configuration = configuration;
-    }
-
-    public static void main(String[] args) throws Exception
-    {
-        MainConfiguration configuration;
-        if(args!=null && args.length>0)
-        {
-            logger.info("loading configuration from file: [{}] ", args[0]);
-            configuration = new ConfigurationLoader().getMainConfiguration(args[0]);
-        }
-        else
-        {
-            throw new Exception("a configuration yaml file is required");
-
-        }
-
-        LoaderService service = new LoaderService(new SqliteRepository(configuration.getDatabase()));
-        CsvLoader loader = new CsvLoader(service, configuration.getCsvInput());
-        loader.processFile(CsvFileType.CONTAINER);
-        loader.processFile(CsvFileType.PRODUCER);
-        loader.processFile(CsvFileType.MARKET);
-        loader.processFile(CsvFileType.ORIGIN);
-        loader.processFile(CsvFileType.PRODUCT);
-        loader.processFile(CsvFileType.ORDER);
-        loader.processFile(CsvFileType.ORDERITEMS);
-
-        System.out.println();
     }
 
     public void processFile(CsvFileType fileType)
@@ -90,18 +59,16 @@ public class CsvLoader implements FileInterface
 
     private File getCsvFile(String filename)
     {
-        ClassLoader classLoader = this.getClass().getClassLoader();
-        URL resource = classLoader.getResource(filename);
-        File file = null;
+        File csvFile = null;
         try
         {
-            file = new File(resource.getFile());
+            csvFile = new File(configuration.getFilesFolder() + "/" + filename);
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            logger.error("error with csv file: [{}] ", configuration.getFilesFolder() + "/" + filename);
         }
-        return file;
+        return csvFile;
     }
 
     private void processProductFile(File inputFile)
@@ -120,7 +87,7 @@ public class CsvLoader implements FileInterface
                 {
                     Producer producer = getProducerByName(fields[6]);
                     ProductOrigin origin = getProductOriginByName(fields[7]);
-                    ProductContainer container = getProductContainerByName(fields[7]);
+                    ProductContainer container = getProductContainerByName(fields[8]);
                     if(producer!=null)
                     {
                         Product product = new Product(fields[0]);
@@ -214,7 +181,7 @@ public class CsvLoader implements FileInterface
                 try
                 {
                     ProductOrigin origin = new ProductOrigin(fields[0]);
-                    boolean exists = getExistProductContainer(fields[0]);
+                    boolean exists = getExistProductOrigin(fields[0]);
                     if(!exists)
                     {
                         addProductOrigin(origin);
@@ -374,10 +341,9 @@ public class CsvLoader implements FileInterface
                     Order order = getOrderByNumber(orderNumber);
                     Product product = getProductByNumber(productNumber);
 
-                    boolean exists = getExistOrderItem(order.getId(),product.getId());
-
                     if(product !=null && product.getProducer().getNoOrdering()==0 && order != null)
                     {
+                        boolean exists = getExistOrderItem(order.getId(),product.getId());
                         if (!exists)
                         {
                             addOrderItem(order.getId(), product.getId());
@@ -391,15 +357,15 @@ public class CsvLoader implements FileInterface
                     {
                         if(order == null)
                         {
-                            logger.error("referenced order unavailable. number: [{}]" + orderNumber);
+                            logger.error("order item not added - referenced order unavailable. number: [{}]" + orderNumber);
                         }
                         if(product ==null )
                         {
-                            logger.error("referenced product unavailable. number: [{}]", productNumber);
+                            logger.error("order item not added - referenced product unavailable. number: [{}]", productNumber);
                         }
                         else if(product.getProducer().getNoOrdering()!=0)
                         {
-                            logger.error("referenced product is unavailable for ordering. name: [{}]", product.getName());
+                            logger.error("order item not added - referenced product is unavailable for ordering. name: [{}]", product.getName());
                         }
                     }
 

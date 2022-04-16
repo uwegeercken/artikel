@@ -7,10 +7,11 @@ sparkJava:
   staticfilesExpiretime: 60
 
 csvInput:
-  productsFilename: csv/products.csv
-  producersFilename: csv/producers.csv
-  marketsFilename: csv/markets.csv
-  ordersFilename: csv/orders.csv
-  orderitemsFilename: csv/orderitems.csv
-  productContainersFilename: csv/containers.csv
-  productOriginsFilename: csv/origins.csv
+  filesFolder: /home/uwe/development/csv
+  productsFilename: products.csv
+  producersFilename: producers.csv
+  marketsFilename: markets.csv
+  ordersFilename: orders.csv
+  orderitemsFilename: orderitems.csv
+  productContainersFilename: containers.csv
+  productOriginsFilename: origins.csv

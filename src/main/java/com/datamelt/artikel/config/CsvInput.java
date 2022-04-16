@@ -2,6 +2,7 @@ package com.datamelt.artikel.config;
 
 public class CsvInput
 {
+    private String filesFolder;
     private String productsFilename;
     private String producersFilename;
     private String marketsFilename;
@@ -9,6 +10,8 @@ public class CsvInput
     private String orderitemsFilename;
     private String productContainersFilename;
     private String productOriginsFilename;
+
+    public String getFilesFolder() { return filesFolder; }
 
     public String getProductsFilename()
     {
