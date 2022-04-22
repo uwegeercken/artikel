@@ -3,9 +3,9 @@ package com.datamelt.artikel.adapter.web;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Market;
-import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.port.MarketApiInterface;
-import com.datamelt.artikel.port.ProducerApiInterface;
+import com.datamelt.artikel.port.MessageBundleInterface;
+import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import spark.Request;
 import spark.Response;
@@ -17,10 +17,10 @@ import java.util.Map;
 
 public class MarketController implements MarketApiInterface
 {
-    private static WebService service;
-    private MessageBundle messages;
+    private static WebServiceInterface service;
+    private MessageBundleInterface messages;
 
-    public MarketController(WebService service, MessageBundle messages)
+    public MarketController(WebServiceInterface service, MessageBundleInterface messages)
     {
         this.service = service;
         this.messages = messages;

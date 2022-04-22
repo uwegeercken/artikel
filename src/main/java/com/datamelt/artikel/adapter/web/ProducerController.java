@@ -5,7 +5,9 @@ import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Producer;
+import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProducerApiInterface;
+import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import spark.Request;
 import spark.Response;
@@ -17,10 +19,10 @@ import java.util.Map;
 
 public class ProducerController implements ProducerApiInterface
 {
-    private static WebService service;
-    private MessageBundle messages;
+    private WebServiceInterface service;
+    private MessageBundleInterface messages;
 
-    public ProducerController(WebService service, MessageBundle messages)
+    public ProducerController(WebServiceInterface service, MessageBundleInterface messages)
     {
         this.service = service;
         this.messages = messages;

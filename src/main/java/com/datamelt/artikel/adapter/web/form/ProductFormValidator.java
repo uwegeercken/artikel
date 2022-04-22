@@ -3,12 +3,13 @@ package com.datamelt.artikel.adapter.web.form;
 import com.datamelt.artikel.adapter.web.MessageBundle;
 import com.datamelt.artikel.adapter.web.validator.FormFieldValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
+import com.datamelt.artikel.port.MessageBundleInterface;
 
 import java.util.Map;
 
 public class ProductFormValidator
 {
-    public static ValidatorResult validate(ProductForm form, MessageBundle messages)
+    public static ValidatorResult validate(ProductForm form, MessageBundleInterface messages)
     {
         for (final Map.Entry<ProductFormField, String> entry : form.getFields().entrySet())
         {
@@ -40,7 +41,7 @@ public class ProductFormValidator
         return new ValidatorResult(messages.get("FORM_FIELD_NO_ERROR"));
     }
 
-    public static ValidatorResult validateNotEMpty(ProductForm form, MessageBundle messages)
+    public static ValidatorResult validateNotEMpty(ProductForm form, MessageBundleInterface messages)
     {
         for (final Map.Entry<ProductFormField, String> entry : form.getFields().entrySet())
         {
@@ -55,7 +56,7 @@ public class ProductFormValidator
         return new ValidatorResult(messages.get("FORM_FIELD_NO_ERROR"));
     }
 
-    public static ValidatorResult validateUniqueness(ProductForm form, MessageBundle messages, boolean existProduct)
+    public static ValidatorResult validateUniqueness(ProductForm form, MessageBundleInterface messages, boolean existProduct)
     {
         ProductFormField uniqueField = ProductFormField.getUniqueField();
         if (form.get(uniqueField).equals(""))

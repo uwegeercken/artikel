@@ -1,10 +1,12 @@
 package com.datamelt.artikel.adapter.web;
 
+import com.datamelt.artikel.port.MessageBundleInterface;
+
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class MessageBundle
+public class MessageBundle implements MessageBundleInterface
 {
     private ResourceBundle messages;
 
@@ -20,6 +22,7 @@ public class MessageBundle
         }
     }
 
+    @Override
     public String get(String message) {
         String msg;
         try
@@ -33,6 +36,7 @@ public class MessageBundle
         return msg;
     }
 
+    @Override
     public final String get(final String key, final Object... args) {
         return MessageFormat.format(get(key), args);
     }

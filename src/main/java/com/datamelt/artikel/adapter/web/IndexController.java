@@ -2,6 +2,8 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
+import com.datamelt.artikel.port.MessageBundleInterface;
+import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
 import org.eclipse.jetty.http.HttpStatus;
@@ -14,10 +16,10 @@ import java.util.Map;
 
 public class IndexController
 {
-    private WebService service;
-    private MessageBundle messages;
+    private WebServiceInterface service;
+    private MessageBundleInterface messages;
 
-    public IndexController(WebService service, MessageBundle messages)
+    public IndexController(WebServiceInterface service, MessageBundleInterface messages)
     {
         this.service = service;
         this.messages = messages;

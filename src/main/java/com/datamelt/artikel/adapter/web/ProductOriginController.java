@@ -2,10 +2,10 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
-import com.datamelt.artikel.model.ProductContainer;
 import com.datamelt.artikel.model.ProductOrigin;
-import com.datamelt.artikel.port.ProductContainerApiInterface;
+import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductOriginApiInterface;
+import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import spark.Request;
 import spark.Response;
@@ -17,10 +17,10 @@ import java.util.Map;
 
 public class ProductOriginController implements ProductOriginApiInterface
 {
-    private static WebService service;
-    private MessageBundle messages;
+    private WebServiceInterface service;
+    private MessageBundleInterface messages;
 
-    public ProductOriginController(WebService service, MessageBundle messages)
+    public ProductOriginController(WebServiceInterface service, MessageBundleInterface messages)
     {
         this.service = service;
         this.messages = messages;

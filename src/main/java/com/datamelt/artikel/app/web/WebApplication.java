@@ -5,6 +5,8 @@ import com.datamelt.artikel.adapter.web.*;
 import com.datamelt.artikel.app.ConfigurationLoader;
 import com.datamelt.artikel.app.web.util.Filters;
 import com.datamelt.artikel.config.MainConfiguration;
+import com.datamelt.artikel.port.MessageBundleInterface;
+import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
 import org.slf4j.Logger;
@@ -32,12 +34,12 @@ public class WebApplication
         {
             throw new Exception("a configuration yaml file is required");
         }
-        MessageBundle messages = new MessageBundle("de");
+        MessageBundleInterface messages = new MessageBundle("de");
 
         staticFiles.location("/public");
         staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());
 
-        WebService service = new WebService(new SqliteRepository(configuration.getDatabase()));
+        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()));
         IndexController indexController = new IndexController(service, messages);
         ProductController productController = new ProductController(service, messages);
         ProducerController producerController = new ProducerController(service, messages);

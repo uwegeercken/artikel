@@ -3,12 +3,13 @@ package com.datamelt.artikel.adapter.web.form;
 import com.datamelt.artikel.adapter.web.MessageBundle;
 import com.datamelt.artikel.adapter.web.validator.FormFieldValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
+import com.datamelt.artikel.port.MessageBundleInterface;
 
 import java.util.Map;
 
 public class ProducerFormValidator
 {
-    public static ValidatorResult validate(ProducerForm form, MessageBundle messages)
+    public static ValidatorResult validate(ProducerForm form, MessageBundleInterface messages)
     {
         for (final Map.Entry<ProducerFormField, String> entry : form.getFields().entrySet())
         {
@@ -33,7 +34,7 @@ public class ProducerFormValidator
         return new ValidatorResult(messages.get("FORM_FIELD_NO_ERROR"));
     }
 
-    public static ValidatorResult validateNotEMpty(ProducerForm form, MessageBundle messages)
+    public static ValidatorResult validateNotEMpty(ProducerForm form, MessageBundleInterface messages)
     {
         for (final Map.Entry<ProducerFormField, String> entry : form.getFields().entrySet())
         {
@@ -48,7 +49,7 @@ public class ProducerFormValidator
         return new ValidatorResult(messages.get("FORM_FIELD_NO_ERROR"));
     }
 
-    public static ValidatorResult validateUniqueness(ProducerForm form, MessageBundle messages, boolean existProducer)
+    public static ValidatorResult validateUniqueness(ProducerForm form, MessageBundleInterface messages, boolean existProducer)
     {
         ProducerFormField uniqueField = ProducerFormField.getUniqueField();
         if (form.get(uniqueField).equals(""))

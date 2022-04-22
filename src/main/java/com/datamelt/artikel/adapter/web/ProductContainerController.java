@@ -2,10 +2,10 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
-import com.datamelt.artikel.model.Market;
 import com.datamelt.artikel.model.ProductContainer;
-import com.datamelt.artikel.port.MarketApiInterface;
+import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductContainerApiInterface;
+import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import spark.Request;
 import spark.Response;
@@ -17,10 +17,10 @@ import java.util.Map;
 
 public class ProductContainerController implements ProductContainerApiInterface
 {
-    private static WebService service;
-    private MessageBundle messages;
+    private WebServiceInterface service;
+    private MessageBundleInterface messages;
 
-    public ProductContainerController(WebService service, MessageBundle messages)
+    public ProductContainerController(WebServiceInterface service, MessageBundleInterface messages)
     {
         this.service = service;
         this.messages = messages;

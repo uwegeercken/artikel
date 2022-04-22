@@ -6,13 +6,14 @@ import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.adapter.web.form.ProductFormField;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.RepositoryInterface;
+import com.datamelt.artikel.port.WebServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.List;
 
-public class WebService
+public class WebService implements WebServiceInterface
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebService.class);
     private final RepositoryInterface repository;
@@ -22,13 +23,16 @@ public class WebService
         this.repository = respository;
     }
 
+    @Override
     public List<Product> getAllProducts() throws Exception { return repository.getAllProducts(); }
 
+    @Override
     public Product getProductById(long id) throws Exception
     {
         return repository.getProductById(id);
     }
 
+    @Override
     public Product updateProduct(long id, ProductForm form) throws Exception
     {
         Producer producer = getProducerById(Long.parseLong(form.get(ProductFormField.PRODUCER_ID)));
@@ -59,6 +63,7 @@ public class WebService
         return product;
     }
 
+    @Override
     public Product addProduct(ProductForm form) throws Exception
     {
         Producer producer = getProducerById(Long.parseLong(form.get(ProductFormField.PRODUCER_ID)));
@@ -87,6 +92,7 @@ public class WebService
         return product;
     }
 
+    @Override
     public Producer updateProducer(long id, ProducerForm form) throws Exception
     {
         Producer producer = new Producer(form.get(ProducerFormField.NAME));
@@ -105,26 +111,39 @@ public class WebService
         return producer;
     }
 
+    @Override
     public Producer getProducerById(long id) throws Exception { return repository.getProducerById(id); }
+    @Override
     public boolean getExistProduct(String number) throws Exception { return repository.getExistProduct(number); }
+    @Override
     public List<Producer> getAllProducers() throws Exception { return repository.getAllProducers(); }
+    @Override
     public List<Market> getAllMarkets() throws Exception { return repository.getAllMarkets(); }
+    @Override
     public List<ProductContainer> getAllProductContainers() throws Exception { return repository.getAllProductContainers(); }
+    @Override
     public List<ProductOrigin> getAllProductOrigins() throws Exception { return repository.getAllProductOrigins(); }
 
+    @Override
     public ProductContainer getProductContainerById(long id) throws Exception { return repository.getProductContainerById(id); }
+    @Override
     public ProductOrigin getProductOriginById(long id) throws Exception { return repository.getProductOriginById(id); }
 
+    @Override
     public boolean getIsUniqueProduct(long id, String number) throws Exception { return repository.getIsUniqueProduct(id, number); }
+    @Override
     public boolean getIsUniqueProducer(long id, String name) throws Exception { return repository.getIsUniqueProducer(id, name); }
 
+    @Override
     public void createDatabaseTables() throws Exception { repository.createDatabaseTables(); }
 
+    @Override
     public void deleteProduct(long id) throws Exception
     {
         repository.deleteProduct(id);
     }
 
+    @Override
     public void deleteProducer(long id) throws Exception
     {
         repository.deleteProducer(id);
