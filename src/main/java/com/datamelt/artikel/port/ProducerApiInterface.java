@@ -14,4 +14,5 @@ public interface ProducerApiInterface
     void updateProducer(long id, ProducerForm form) throws Exception;
     void addProducer(ProducerForm form) throws Exception;
     boolean getIsUniqueProducer(long id, String name) throws Exception;
+    void deleteProducer(long id) throws Exception;
 }

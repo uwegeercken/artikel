@@ -58,7 +58,7 @@ class ProducerUpdate
         }
     }
 
-    void removeProducer(long id)
+    void deleteProducer(long id) throws Exception
     {
         try
         {

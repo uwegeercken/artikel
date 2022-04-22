@@ -64,12 +64,26 @@ public class ProductController implements ProductApiInterface
 
     };
 
-    public Route serveProductDeletePage = (Request request, Response response) -> {
+    public Route serveDeleteProductPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_DELETE"));
         Product product = getProductById(Long.parseLong(request.params(":id")));
+        model.put("product", product);
         return ViewUtility.render(request,model,Path.Template.PRODUCT_DELETE);
+    };
+
+    public Route deleteProduct = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
+        String cancelled = request.queryParams("submit");
+        if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
+        {
+            deleteProduct(Long.parseLong(request.params(":id")));
+        }
+        model.put("products", getAllProducts());
+        return ViewUtility.render(request,model,Path.Template.PRODUCTS);
     };
 
     public Route serveUpdateProductPage = (Request request, Response response) -> {
@@ -215,5 +229,11 @@ public class ProductController implements ProductApiInterface
     public boolean getIsUniqueProduct(long id, String number) throws Exception
     {
         return service.getIsUniqueProduct(id, number);
+    }
+
+    @Override
+    public void deleteProduct(long id) throws Exception
+    {
+        service.deleteProduct(id);
     }
 }

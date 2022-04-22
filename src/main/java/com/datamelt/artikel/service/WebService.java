@@ -119,4 +119,14 @@ public class WebService
     public boolean getIsUniqueProducer(long id, String name) throws Exception { return repository.getIsUniqueProducer(id, name); }
 
     public void createDatabaseTables() throws Exception { repository.createDatabaseTables(); }
+
+    public void deleteProduct(long id) throws Exception
+    {
+        repository.deleteProduct(id);
+    }
+
+    public void deleteProducer(long id) throws Exception
+    {
+        repository.deleteProducer(id);
+    }
 }

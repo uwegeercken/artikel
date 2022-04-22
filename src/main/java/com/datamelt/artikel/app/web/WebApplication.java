@@ -54,10 +54,14 @@ public class WebApplication
         get(Path.Web.PRODUCTS, productController.serveAllProductsPage);
         get(Path.Web.PRODUCT, productController.serveProductPage);
         post(Path.Web.PRODUCT, productController.serveUpdateProductPage);
+        get(Path.Web.PRODUCT_DELETE, productController.serveDeleteProductPage);
+        post(Path.Web.PRODUCT_DELETE, productController.deleteProduct);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);
         post(Path.Web.PRODUCER, producerController.serveUpdateProducerPage);
+        get(Path.Web.PRODUCER_DELETE, producerController.serveDeleteProducerPage);
+        post(Path.Web.PRODUCER_DELETE, producerController.deleteProducer);
 
         get(Path.Web.MARKETS, marketController.serveAllMarketsPage);
         get(Path.Web.PRODUCTCONTAINERS, containerController.serveAllProductContainersPage);

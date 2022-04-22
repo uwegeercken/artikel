@@ -12,6 +12,7 @@ public interface ProductApiInterface
     void updateProduct(long id, ProductForm form) throws Exception;
     void addProduct(ProductForm form) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
+    void deleteProduct(long id) throws Exception;
 
     List<Producer> getAllProducers() throws Exception;
     List<ProductContainer> getAllProductContainers() throws Exception;

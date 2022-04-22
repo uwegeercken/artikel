@@ -70,7 +70,7 @@ class ProductUpdate
         statement.close();
     }
 
-    void removeProduct(long id)
+    void deleteProduct(long id)
     {
         try
         {

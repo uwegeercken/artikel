@@ -38,10 +38,10 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void removeProducer(long id)
+    public void deleteProducer(long id) throws Exception
     {
         ProducerUpdate p = new ProducerUpdate(connection);
-        p.removeProducer(id);
+        p.deleteProducer(id);
     }
 
     @Override
@@ -89,10 +89,10 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void removeProduct(long id)
+    public void deleteProduct(long id) throws Exception
     {
         ProductUpdate p = new ProductUpdate(connection);
-        p.removeProduct(id);
+        p.deleteProduct(id);
     }
 
     @Override

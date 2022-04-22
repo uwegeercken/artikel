@@ -89,6 +89,27 @@ public class ProducerController implements ProducerApiInterface
         }
     };
 
+    public Route serveDeleteProducerPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_DELETE"));
+        Producer producer = getProducerById(Long.parseLong(request.params(":id")));
+        model.put("producer", producer);
+        return ViewUtility.render(request,model,Path.Template.PRODUCER_DELETE);
+    };
+
+    public Route deleteProducer = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_LIST"));
+        String cancelled = request.queryParams("submit");
+        if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
+        {
+            deleteProducer(Long.parseLong(request.params(":id")));
+        }
+        model.put("producers", getAllProducers());
+        return ViewUtility.render(request,model,Path.Template.PRODUCERS);
+    };
     private ValidatorResult validateProducer(ProducerForm form)
     {
         ValidatorResult validateNotEmpty = ProducerFormValidator.validateNotEMpty(form, messages);
@@ -176,5 +197,11 @@ public class ProducerController implements ProducerApiInterface
     public boolean getIsUniqueProducer(long id, String name) throws Exception
     {
         return service.getIsUniqueProducer(id, name);
+    }
+
+    @Override
+    public void deleteProducer(long id) throws Exception
+    {
+        service.deleteProducer(id);
     }
 }

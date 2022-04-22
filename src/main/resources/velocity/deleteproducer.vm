@@ -1,0 +1,26 @@
+#parse("/velocity/macros.vm")
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <p class="heading">${messages.get("PAGETITLE_PRODUCT_DELETE")}</p>
+    <form method="POST" action="/producer/delete/${producer.id}/">
+    <div class="unit">
+        <div class="grouptop">
+            <p class="small">${messages.get("TYPE_PRODUCER")}</p>
+            <p class="big">$!producer.name</a></p>
+            <p class="normal">#if($!{producer.noOrdering}==1)keine Bestellung #end </p>
+
+        </div>
+    </div>
+    <div class="bottomtext">
+    <p>${messages.get("PRODUCER_DELETE_CONFIRMATION")}</p>
+    <p>
+        <input type="submit" value="${messages.get("FORM_BUTTON_DELETE")}" name="submit">
+        <input type="submit" value="${messages.get("FORM_BUTTON_CANCEL")}" name="submit">
+    </p>
+    </div>
+    </form>
+    <br>
+    <br>
+    <br>
+#end
+

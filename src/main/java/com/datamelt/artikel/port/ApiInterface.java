@@ -11,7 +11,7 @@ public interface ApiInterface
 {
     void addProduct(Product product);
     void updateProduct(Product product);
-    void removeProduct(long id);
+    void deleteProduct(long id) throws Exception;
     Product getProductById(long id) throws Exception;
     Product getProductByName(String name) throws Exception;
     Product getProductByNumber(String number) throws Exception;

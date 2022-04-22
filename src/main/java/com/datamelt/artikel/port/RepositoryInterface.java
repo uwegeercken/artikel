@@ -9,7 +9,7 @@ public interface RepositoryInterface
     void createDatabaseTables() throws Exception;
     void addProducer(Producer product);
     void updateProducer(Producer product);
-    void removeProducer(long id);
+    void deleteProducer(long id)throws Exception;
     Producer getProducerById(long id) throws Exception;
     Producer getProducerByName(String name) throws Exception;
     boolean getExistProducer(String name) throws Exception;
@@ -18,7 +18,6 @@ public interface RepositoryInterface
 
     void addProduct(Product product);
     void updateProduct(Product product) throws Exception;
-    void removeProduct(long id);
     Product getProductById(long id) throws Exception;
     Product getProductByName(String name) throws Exception;
     Product getProductByNumber(String number) throws Exception;
@@ -41,6 +40,7 @@ public interface RepositoryInterface
     ProductOrigin getProductOriginByName(String name) throws Exception;
     boolean getExistProductOrigin(String name) throws Exception;
     List<ProductOrigin> getAllProductOrigins() throws Exception;
+    void deleteProduct(long id) throws Exception;
 
     void addMarket(Market market);
     void updateMarket(Market market);
