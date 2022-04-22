@@ -22,6 +22,7 @@ import spark.Route;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductController implements ProductApiInterface
 {
@@ -48,10 +49,10 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
         model.put("fields", ProductFormField.class);
-        Product product = getProductById(Long.parseLong(request.params(":id")));
-        if(product!=null)
+        Optional<Product> product = Optional.ofNullable(getProductById(Long.parseLong(request.params(":id"))));
+        if(product.isPresent())
         {
-            model.put("form", ProductFormConverter.convertProduct(product));
+            model.put("form", ProductFormConverter.convertProduct(product.get()));
         }
         else
         {

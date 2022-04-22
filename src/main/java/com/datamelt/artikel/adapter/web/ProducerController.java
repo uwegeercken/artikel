@@ -16,6 +16,7 @@ import spark.Route;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProducerController implements ProducerApiInterface
 {
@@ -41,10 +42,10 @@ public class ProducerController implements ProducerApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
         model.put("fields", ProducerFormField.class);
-        Producer producer = getProducerById(Long.parseLong(request.params(":id")));
-        if(producer!=null)
+        Optional<Producer> producer = Optional.ofNullable(getProducerById(Long.parseLong(request.params(":id"))));
+        if(producer.isPresent())
         {
-            model.put("form", ProducerFormConverter.convertProducer(producer));
+            model.put("form", ProducerFormConverter.convertProducer(producer.get()));
         }
         else
         {
