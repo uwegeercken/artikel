@@ -148,4 +148,10 @@ public class WebService implements WebServiceInterface
     {
         repository.deleteProducer(id);
     }
+
+    @Override
+    public boolean getUserIsAuthenticated(String name, String password) throws Exception
+    {
+        return repository.getUserIsAuthenticated(name, password);
+    }
 }

@@ -75,6 +75,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public boolean getUserIsAuthenticated(String name, String password) throws Exception
+    {
+        return UserSearch.getUserIsAuthenticated(connection, name, password);
+    }
+
+    @Override
     public void addProduct(Product product)
     {
         ProductUpdate p = new ProductUpdate(connection);

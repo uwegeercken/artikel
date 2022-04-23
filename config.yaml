@@ -4,7 +4,7 @@ database:
   name: /home/uwe/development/products-mogk.db
 
 sparkJava:
-  staticfilesExpiretime: 60
+  staticfilesExpiretime: 10
 
 csvInput:
   filesFolder: /home/uwe/development/csv

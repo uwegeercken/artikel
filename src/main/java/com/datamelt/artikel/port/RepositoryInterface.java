@@ -16,6 +16,8 @@ public interface RepositoryInterface
     List<Producer> getAllProducers() throws Exception;
     boolean getIsUniqueProducer(long id, String name) throws Exception;
 
+    boolean getUserIsAuthenticated(String name, String password) throws Exception;
+
     void addProduct(Product product);
     void updateProduct(Product product) throws Exception;
     Product getProductById(long id) throws Exception;

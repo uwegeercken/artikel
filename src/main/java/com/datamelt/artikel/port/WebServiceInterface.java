@@ -43,4 +43,6 @@ public interface WebServiceInterface
     void deleteProduct(long id) throws Exception;
 
     void deleteProducer(long id) throws Exception;
+
+    boolean getUserIsAuthenticated(String name, String password) throws Exception;
 }

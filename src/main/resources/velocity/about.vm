@@ -8,6 +8,5 @@
     <br>
     <p>Version der Web-Anwendung: ${version} (${lastupdate})</p>
     <p>Copyright Uwe Geercken, 2022. Entwicklung von: Uwe Geercken, uwe.geercken@web.de</p>
-
     <br>
 #end

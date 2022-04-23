@@ -18,6 +18,7 @@ import com.datamelt.artikel.service.WebService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Session;
 
 import java.util.HashMap;
 import java.util.List;

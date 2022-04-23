@@ -3,6 +3,7 @@ package com.datamelt.artikel.app.web.util;
 import spark.Filter;
 import spark.Request;
 import spark.Response;
+import spark.Session;
 
 public class Filters
 {
@@ -15,9 +16,24 @@ public class Filters
     };
 
     public static Filter redirectToIndex = (Request request, Response response) -> {
-        String test = request.pathInfo();
         if (request.pathInfo().equals("/")) {
             response.redirect(Path.Web.INDEX);
+        }
+    };
+
+    public static Filter redirectToLogin = (Request request, Response response) -> {
+        if(!request.pathInfo().equals("/login/"))
+        {
+            boolean isAuthenticated = false;
+            if(request.session().attribute("authenticated")!=null)
+            {
+                isAuthenticated = request.session().attribute("authenticated");
+
+            }
+            if (!isAuthenticated)
+            {
+                response.redirect(Path.Web.LOGIN);
+            }
         }
     };
 }

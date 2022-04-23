@@ -41,17 +41,22 @@ public class WebApplication
 
         WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()));
         IndexController indexController = new IndexController(service, messages);
+        LoginController loginController = new LoginController(service, messages);
         ProductController productController = new ProductController(service, messages);
         ProducerController producerController = new ProducerController(service, messages);
         MarketController marketController = new MarketController(service, messages);
         ProductContainerController containerController = new ProductContainerController(service, messages);
         ProductOriginController originController = new ProductOriginController(service, messages);
 
-        before("*", Filters.redirectToIndex);
+
+        before("*", Filters.redirectToLogin);
         before("*", Filters.addTrailingSlashes);
+
 
         get(Path.Web.INDEX, indexController.serveIndexPage);
         get(Path.Web.ABOUT, indexController.serveAboutPage);
+        get(Path.Web.LOGIN, loginController.serveLoginPage);
+        post(Path.Web.LOGIN, loginController.authenticateUser);
 
         get(Path.Web.PRODUCTS, productController.serveAllProductsPage);
         get(Path.Web.PRODUCT, productController.serveProductPage);
