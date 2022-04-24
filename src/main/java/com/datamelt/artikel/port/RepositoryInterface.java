@@ -16,8 +16,6 @@ public interface RepositoryInterface
     List<Producer> getAllProducers() throws Exception;
     boolean getIsUniqueProducer(long id, String name) throws Exception;
 
-    boolean getUserIsAuthenticated(String name, String password) throws Exception;
-
     void addProduct(Product product);
     void updateProduct(Product product) throws Exception;
     Product getProductById(long id) throws Exception;
@@ -60,7 +58,9 @@ public interface RepositoryInterface
     boolean getExistOrder(String number) throws Exception;
     List<Order> getAllOrders() throws Exception;
 
-    public void addOrderItem(long orderId, long productId);
+    void addOrderItem(long orderId, long productId);
     boolean getExistOrderItem(long orderId, long productId) throws Exception;
-    public void removeAllOrderItems(long orderId);
+    void removeAllOrderItems(long orderId);
+
+    User getUserByName(String name) throws Exception;
 }

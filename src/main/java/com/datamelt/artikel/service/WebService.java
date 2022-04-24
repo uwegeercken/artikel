@@ -150,8 +150,8 @@ public class WebService implements WebServiceInterface
     }
 
     @Override
-    public boolean getUserIsAuthenticated(String name, String password) throws Exception
+    public User getUserByName(String name) throws Exception
     {
-        return repository.getUserIsAuthenticated(name, password);
+        return repository.getUserByName(name);
     }
 }

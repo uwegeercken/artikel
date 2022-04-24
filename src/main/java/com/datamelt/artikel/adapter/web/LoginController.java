@@ -2,18 +2,19 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
-import com.datamelt.artikel.app.web.WebApplication;
+import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.UserApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
-import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class LoginController implements UserApiInterface
 {
@@ -41,29 +42,47 @@ public class LoginController implements UserApiInterface
         String username = request.queryParams("userid");
         String password = request.queryParams("password");
 
-        boolean isAuthenticated = getUserIsAuthenticated(username, password);
+        Optional<User> loginUser = Optional.ofNullable(getUserByName(username));
 
-        if(isAuthenticated)
+        if(loginUser.isPresent())
         {
-            request.session().attribute("authenticated", true);
-            model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
+            boolean isAuthenticated = getUserIsAuthenticated(loginUser.get(), password);
+            if (isAuthenticated)
+            {
+                request.session().attribute("authenticated", true);
+                model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
+                model.put("user", loginUser.get());
 
-            return ViewUtility.render(request, model, Path.Template.INDEX);
+                return ViewUtility.render(request, model, Path.Template.INDEX);
+            } else
+            {
+                request.session().attribute("authenticated", false);
+                model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
+                model.put("user", loginUser.get());
+                model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_WRONG_PASSWORD")));
+                return ViewUtility.render(request, model, Path.Template.LOGIN);
+            }
         }
         else
         {
             request.session().attribute("authenticated", false);
             model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
-            model.put("result", new ValidatorResult(messages.get("ERROR_DURING_LOGIN")));
-            return ViewUtility.render(request,model,Path.Template.LOGIN);
+            model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_UNKNOWN_USER")));
+            return ViewUtility.render(request, model, Path.Template.LOGIN);
         }
 
     };
 
-
     @Override
-    public boolean getUserIsAuthenticated(String name, String password) throws Exception
+    public User getUserByName(String name) throws Exception
     {
-        return service.getUserIsAuthenticated(name, password);
+        return service.getUserByName(name);
+    }
+
+    private boolean getUserIsAuthenticated(User user, String loginPassword) throws Exception
+    {
+        String loginHashedPassword = HashGenerator.generate(user.getName(), loginPassword);
+
+        return loginHashedPassword.equals(user.getPassword());
     }
 }

@@ -22,7 +22,7 @@ public class Filters
     };
 
     public static Filter redirectToLogin = (Request request, Response response) -> {
-        if(!request.pathInfo().equals("/login/"))
+        if(!request.pathInfo().equals(Path.Web.LOGIN) && !request.pathInfo().equals(Path.Web.ABOUT) && !request.pathInfo().equals(Path.Web.INDEX))
         {
             boolean isAuthenticated = false;
             if(request.session().attribute("authenticated")!=null)

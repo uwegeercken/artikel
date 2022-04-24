@@ -44,5 +44,5 @@ public interface WebServiceInterface
 
     void deleteProducer(long id) throws Exception;
 
-    boolean getUserIsAuthenticated(String name, String password) throws Exception;
+    User getUserByName(String name) throws Exception;
 }

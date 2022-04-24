@@ -55,6 +55,13 @@ p {
 	font: normal 9pt/1.4 verdana, sans-serif;
 }
 
+p.big {
+	margin: 3px;
+	padding: 3px;
+	font: normal 14pt/1.4 verdana, sans-serif;
+	font-weight: bold;
+}
+
 p.small {
 	margin: 3px;
 	padding: 3px;

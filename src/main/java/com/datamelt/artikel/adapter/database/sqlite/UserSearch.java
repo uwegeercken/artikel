@@ -1,10 +1,12 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
+import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Optional;
 
 class UserSearch
 {
@@ -24,6 +26,7 @@ class UserSearch
         {
             user = new User(resultset.getString("name"));
             user.setId(resultset.getLong("id"));
+            user.setPassword(resultset.getString("password"));
         }
         statement.clearParameters();
         resultset.close();
@@ -41,6 +44,7 @@ class UserSearch
         {
             user = new User(resultset.getString("name"));
             user.setId(resultset.getLong("id"));
+            user.setPassword(resultset.getString("password"));
         }
         statement.clearParameters();
         resultset.close();
@@ -79,21 +83,5 @@ class UserSearch
         resultset.close();
         statement.close();
         return isUnique;
-    }
-
-    public static boolean getUserIsAuthenticated(Connection connection, String name, String password) throws Exception
-    {
-        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_BY_NAME);
-        statement.setString(1, name);
-        ResultSet resultset = statement.executeQuery();
-        String databasePassword = null;
-        if(resultset.next())
-        {
-            databasePassword = resultset.getString("password");
-        }
-        statement.clearParameters();
-        resultset.close();
-        statement.close();
-        return password.equals(databasePassword);
     }
 }

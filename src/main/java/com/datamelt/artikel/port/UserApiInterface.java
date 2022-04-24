@@ -1,10 +1,11 @@
 package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.User;
 
 import java.util.List;
 
 public interface UserApiInterface
 {
-    boolean getUserIsAuthenticated(String name, String password) throws Exception;
+    User getUserByName(String name) throws Exception;
 }
