@@ -50,15 +50,14 @@ public class LoginController implements UserApiInterface
             if (isAuthenticated)
             {
                 request.session().attribute("authenticated", true);
+                request.session().attribute("user", loginUser.get());
                 model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
-                model.put("user", loginUser.get());
-
                 return ViewUtility.render(request, model, Path.Template.INDEX);
             } else
             {
                 request.session().attribute("authenticated", false);
+                request.session().attribute("user", loginUser.get());
                 model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
-                model.put("user", loginUser.get());
                 model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_WRONG_PASSWORD")));
                 return ViewUtility.render(request, model, Path.Template.LOGIN);
             }

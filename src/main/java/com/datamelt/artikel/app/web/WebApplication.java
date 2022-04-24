@@ -48,10 +48,7 @@ public class WebApplication
         ProductContainerController containerController = new ProductContainerController(service, messages);
         ProductOriginController originController = new ProductOriginController(service, messages);
 
-
         before("*", Filters.redirectToLogin);
-        before("*", Filters.addTrailingSlashes);
-
 
         get(Path.Web.INDEX, indexController.serveIndexPage);
         get(Path.Web.ABOUT, indexController.serveAboutPage);
