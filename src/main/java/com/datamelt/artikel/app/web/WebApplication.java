@@ -53,6 +53,7 @@ public class WebApplication
         get(Path.Web.INDEX, indexController.serveIndexPage);
         get(Path.Web.ABOUT, indexController.serveAboutPage);
         get(Path.Web.LOGIN, loginController.serveLoginPage);
+        get(Path.Web.LOGOUT, loginController.logoutUser);
         post(Path.Web.LOGIN, loginController.authenticateUser);
 
         get(Path.Web.PRODUCTS, productController.serveAllProductsPage);

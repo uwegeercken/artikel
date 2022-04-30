@@ -228,7 +228,11 @@ $(document).ready(function() {
 		<table width="100%">
 		<tr>
 			<td width="88%">#parse("/velocity/logo.vm")</td>
-			<td>$!user.name</td>
+			<td>
+			    #if($user)
+                    <img width="60" height="60" src="/img/dummy_user.png" title="$!{user.name}" alt="$!{user.name}">
+                #end
+            </td>
 		</tr>
 	</table>
 

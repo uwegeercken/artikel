@@ -35,6 +35,16 @@ public class LoginController implements UserApiInterface
 
     };
 
+    public Route logoutUser = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
+        request.session().removeAttribute("user");
+        request.session().attribute("authenticated", false);
+        return ViewUtility.render(request,model,Path.Template.INDEX);
+
+    };
+
     public Route authenticateUser = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);

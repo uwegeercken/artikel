@@ -14,6 +14,13 @@
 			<li><a href="/productorigins/">${messages.get("MENU_ENTRY_ORIGINS")}</a></li>
 		</ul>
 		<ul>
+        #if(!$user)
+            <li><a href="/login/">Anmelden</a></li>
+        #else
+            <li><a href="/logout/">Abmelden</a></li>
+        #end
+        </ul>
+		<ul>
 			<li><a href="/about/">${messages.get("MENU_ENTRY_ABOUT")}</a></li>
 		</ul>
 </div>

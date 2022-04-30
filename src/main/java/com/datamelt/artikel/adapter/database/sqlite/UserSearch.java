@@ -12,7 +12,7 @@ class UserSearch
 {
 
     private static final String SQL_QUERY_BY_ID = "select * from user where id=?";
-    private static final String SQL_QUERY_BY_NAME = "select * from user where name=?";
+    private static final String SQL_QUERY_BY_NAME = "select * from user where lower(name)=lower(?)";
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from user where name=?";
     private static final String SQL_QUERY_IS_UNIQUE = "select count(1) as counter from user where name=? and id!=?";
 
