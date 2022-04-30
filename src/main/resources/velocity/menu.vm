@@ -3,22 +3,25 @@
 		<ul>
 			<li><a href="/index/">${messages.get("MENU_ENTRY_INDEX")}</a></li>
 		</ul>
+		#if($user)
+            <ul>
+                <li><a href="/products/">${messages.get("MENU_ENTRY_PRODUCTS")}</a></li>
+                <li><a href="/purchaseorder/">${messages.get("MENU_ENTRY_PURCHASE_ORDER")}</a></li>
+            </ul>
+            <ul>
+                <li><a href="/producers/">${messages.get("MENU_ENTRY_PRODUCERS")}</a></li>
+                <li><a href="/markets/">${messages.get("MENU_ENTRY_MARKETS")}</a></li>
+                <li><a href="/productcontainers/">${messages.get("MENU_ENTRY_CONTAINERS")}</a></li>
+                <li><a href="/productorigins/">${messages.get("MENU_ENTRY_ORIGINS")}</a></li>
+            </ul>
+		#end
 		<ul>
-			<li><a href="/products/">${messages.get("MENU_ENTRY_PRODUCTS")}</a></li>
-			<li><a href="/purchaseorder/">${messages.get("MENU_ENTRY_PURCHASE_ORDER")}</a></li>
-		</ul>
-        <ul>
-			<li><a href="/producers/">${messages.get("MENU_ENTRY_PRODUCERS")}</a></li>
-			<li><a href="/markets/">${messages.get("MENU_ENTRY_MARKETS")}</a></li>
-			<li><a href="/productcontainers/">${messages.get("MENU_ENTRY_CONTAINERS")}</a></li>
-			<li><a href="/productorigins/">${messages.get("MENU_ENTRY_ORIGINS")}</a></li>
-		</ul>
-		<ul>
-        #if(!$user)
-            <li><a href="/login/">Anmelden</a></li>
-        #else
-            <li><a href="/logout/">Abmelden</a></li>
-        #end
+            #if($user)
+                <li><a href="/logout/">Abmelden</a></li>
+            #else
+                <li><a href="/login/">Anmelden</a></li>
+
+            #end
         </ul>
 		<ul>
 			<li><a href="/about/">${messages.get("MENU_ENTRY_ABOUT")}</a></li>
