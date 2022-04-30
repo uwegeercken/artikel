@@ -3,7 +3,6 @@ package com.datamelt.artikel.app.web.util;
 import spark.Filter;
 import spark.Request;
 import spark.Response;
-import spark.Session;
 
 public class Filters
 {

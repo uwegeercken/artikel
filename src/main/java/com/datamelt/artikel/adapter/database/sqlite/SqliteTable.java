@@ -65,6 +65,13 @@ public class SqliteTable
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
+private static final String CREATE_TABLE_USER = "CREATE TABLE if not exists \"user\" (" +
+            "\"id\"INTEGER NOT NULL UNIQUE," +
+            "\"name\"\tTEXT NOT NULL UNIQUE," +
+            "\"password\"\tTEXT," +
+            "\"full_name\"\tTEXT," +
+            "PRIMARY KEY(\"id\")" +
+            ")";
 
     public static void createTables(Connection connection) throws Exception
     {
@@ -75,5 +82,6 @@ public class SqliteTable
         connection.createStatement().execute(CREATE_TABLE_PRODUCT);
         connection.createStatement().execute(CREATE_TABLE_PRODUCTORDER);
         connection.createStatement().execute(CREATE_TABLE_PRODUCTORDER_ITEM);
+        connection.createStatement().execute(CREATE_TABLE_MARKET);
     }
 }
