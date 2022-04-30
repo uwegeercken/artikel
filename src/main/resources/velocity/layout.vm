@@ -230,7 +230,7 @@ $(document).ready(function() {
 			<td width="88%">#parse("/velocity/logo.vm")</td>
 			<td>
 			    #if($user)
-                    <img width="60" height="60" src="/img/dummy_user.png" title="$!{user.name}" alt="$!{user.name}">
+                    <img width="60" height="60" src="/img/dummy_user.png" title="Angemeldet: $!{user.fullName}" alt="$!{user.fullName}">
                 #end
             </td>
 		</tr>

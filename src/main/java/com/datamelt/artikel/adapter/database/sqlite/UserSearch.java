@@ -26,6 +26,7 @@ class UserSearch
         {
             user = new User(resultset.getString("name"));
             user.setId(resultset.getLong("id"));
+            user.setFullName(resultset.getString("full_name"));
             user.setPassword(resultset.getString("password"));
         }
         statement.clearParameters();
@@ -44,6 +45,7 @@ class UserSearch
         {
             user = new User(resultset.getString("name"));
             user.setId(resultset.getLong("id"));
+            user.setFullName(resultset.getString("full_name"));
             user.setPassword(resultset.getString("password"));
         }
         statement.clearParameters();
