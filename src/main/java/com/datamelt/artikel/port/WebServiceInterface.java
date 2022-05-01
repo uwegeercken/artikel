@@ -5,6 +5,7 @@ import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.model.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface WebServiceInterface
 {
@@ -45,4 +46,6 @@ public interface WebServiceInterface
     void deleteProducer(long id) throws Exception;
 
     User getUserByName(String name) throws Exception;
+
+    Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception;
 }

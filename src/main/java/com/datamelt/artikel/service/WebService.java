@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WebService implements WebServiceInterface
 {
@@ -153,5 +155,16 @@ public class WebService implements WebServiceInterface
     public User getUserByName(String name) throws Exception
     {
         return repository.getUserByName(name);
+    }
+
+    @Override
+    public Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception
+    {
+        Map<Product, Integer> shopProducts = new HashMap<>();
+        for(ProductOrderItem item : order.getOrderItems().values())
+        {
+            shopProducts.put(repository.getProductById(item.getProductId()),item.getAmount());
+        }
+        return shopProducts;
     }
 }

@@ -4,6 +4,7 @@ import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.model.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductApiInterface
 {
@@ -14,6 +15,7 @@ public interface ProductApiInterface
     boolean getIsUniqueProduct(long id, String number) throws Exception;
     void deleteProduct(long id) throws Exception;
     void shopProduct(long id);
+    Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception;
 
     List<Producer> getAllProducers() throws Exception;
     List<ProductContainer> getAllProductContainers() throws Exception;

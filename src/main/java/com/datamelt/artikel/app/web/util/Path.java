@@ -17,6 +17,7 @@ public class Path
         public static final String PRODUCTCONTAINERS = "/productcontainers/";
         public static final String PRODUCTORIGINS = "/productorigins/";
         public static final String PRODUCT_SHOP = "/product/shop/:id/" ;
+        public static final String SHOPPRODUCTS = "/shopproducts/";
     }
 
     public static class Template {
@@ -25,6 +26,7 @@ public class Path
         public static final String LOGIN = "/velocity/login.vm";
         public static final String PRODUCTS = "/velocity/products.vm";
         public static final String PRODUCT = "/velocity/editproduct.vm";
+        public static final String SHOPPRODUCTS = "/velocity/shopproducts.vm";
         public static final String PRODUCT_DELETE = "/velocity/deleteproduct.vm";
         public static final String PRODUCERS = "/velocity/producers.vm";
         public static final String PRODUCER = "/velocity/editproducer.vm";

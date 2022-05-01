@@ -63,6 +63,21 @@ public class ProductController implements ProductApiInterface
 
     };
 
+    public Route serveShopProductsPage = (Request request, Response response) -> {
+        Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
+
+        Map<String, Object> model = new HashMap<>();
+        if(order.isPresent())
+        {
+            model.put("products", getShopProducts(order.get()));
+        }
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
+
+        return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
+
+    };
+
     public Route shopProduct = (Request request, Response response) -> {
         Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
         long productId = Long.parseLong(request.params(":id"));
@@ -222,6 +237,12 @@ public class ProductController implements ProductApiInterface
     public List<Product> getAllProducts() throws Exception
     {
         return service.getAllProducts();
+    }
+
+    @Override
+    public Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception
+    {
+        return service.getShopProducts(order);
     }
 
     @Override
