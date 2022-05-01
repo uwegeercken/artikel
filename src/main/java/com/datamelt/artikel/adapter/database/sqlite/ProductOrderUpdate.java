@@ -1,13 +1,13 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
-import com.datamelt.artikel.model.Order;
+import com.datamelt.artikel.model.ProductOrder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-class OrderUpdate
+class ProductOrderUpdate
 {
     private static final String SQL_INSERT = "insert into productorder (number,timestamp) values(?,?)";
     private static final String SQL_UPDATE = "update productorder set number=?, timestamp=? where id=?";
@@ -15,12 +15,12 @@ class OrderUpdate
 
     private Connection connection;
 
-    public OrderUpdate(Connection connection)
+    public ProductOrderUpdate(Connection connection)
     {
         this.connection = connection;
     }
 
-    void addOrder(Order order)
+    void addOrder(ProductOrder order)
     {
         try
         {
@@ -42,7 +42,7 @@ class OrderUpdate
         }
     }
 
-    void updateOrder(Order order)
+    void updateOrder(ProductOrder order)
     {
         try
         {

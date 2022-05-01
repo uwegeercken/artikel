@@ -3,8 +3,9 @@ package com.datamelt.artikel.model;
 public class ProductOrderItem
 {
     private long id;
-    private ProductOrder productOrder;
-    private Product product;
+    private long productOrderId;
+    private long productId;
+    private int amount;
     private long timestamp;
 
     public long getId()
@@ -17,24 +18,14 @@ public class ProductOrderItem
         this.id = id;
     }
 
-    public ProductOrder getProductOrder()
+    public int getAmount()
     {
-        return productOrder;
+        return amount;
     }
 
-    public void setProductOrder(ProductOrder productOrder)
+    public void setAmount(int amount)
     {
-        this.productOrder = productOrder;
-    }
-
-    public Product getProduct()
-    {
-        return product;
-    }
-
-    public void setProduct(Product product)
-    {
-        this.product = product;
+        this.amount = amount;
     }
 
     public long getTimestamp()
@@ -46,4 +37,43 @@ public class ProductOrderItem
     {
         this.timestamp = timestamp;
     }
+
+    public long getProductOrderId()
+    {
+        return productOrderId;
+    }
+
+    public void setProductOrderId(long productOrderId)
+    {
+        this.productOrderId = productOrderId;
+    }
+
+    public long getProductId()
+    {
+        return productId;
+    }
+
+    public void setProductId(long productId)
+    {
+        this.productId = productId;
+    }
+
+    public void increaseAmount()
+    {
+        amount = amount +1;
+    }
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if (!(object instanceof ProductOrderItem)) {
+            return false;
+        }
+        else
+        {
+            ProductOrderItem item = (ProductOrderItem) object;
+            return item.getProductId() == this.productId;
+        }
+    }
+
 }

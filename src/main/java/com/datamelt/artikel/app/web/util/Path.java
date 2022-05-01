@@ -16,6 +16,7 @@ public class Path
         public static final String MARKETS = "/markets/";
         public static final String PRODUCTCONTAINERS = "/productcontainers/";
         public static final String PRODUCTORIGINS = "/productorigins/";
+        public static final String PRODUCT_SHOP = "/product/shop/:id/" ;
     }
 
     public static class Template {

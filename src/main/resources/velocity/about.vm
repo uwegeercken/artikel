@@ -2,11 +2,11 @@
 #@mainLayout()
 
     <p class="heading">${messages.get("PAGE_HEADIND_ABOUT")}</p>
-    <p>Die Applikation zur Artikelverwaltung basiert im wesentlichen auf SparkJava, Java, sowie Apache Velocity als Template Engine.</p>
+    <p>${messages.get("PAGE_ABOUT_INFO")}</p>
     <br>
     <br>
     <br>
-    <p>Version der Web-Anwendung: ${version} (${lastupdate})</p>
-    <p>Copyright Uwe Geercken, 2022. Entwicklung von: Uwe Geercken, uwe.geercken@web.de</p>
+    <p>${messages.get("PAGE_ABOUT_VERSION")} ${version} (${lastupdate})</p>
+    <p>${messages.get("PAGE_ABOUT_COPYRIGHT")}</p>
     <br>
 #end

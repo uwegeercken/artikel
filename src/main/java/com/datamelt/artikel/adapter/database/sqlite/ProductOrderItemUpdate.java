@@ -1,34 +1,30 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
-import com.datamelt.artikel.model.Order;
-import com.datamelt.artikel.model.Product;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-class OrderItemUpdate
+class ProductOrderItemUpdate
 {
-    private static final String SQL_INSERT = "insert into productorder_item (productorder_id,product_id) values(?,?)";
+    private static final String SQL_INSERT = "insert into productorder_item (productorder_id,product_id, amount) values(?,?,?)";
     private static final String SQL_DELETE = "delete from productorder_item where product_id=?";
     private static final String SQL_DELETE_ALL = "delete from productorder_item where productorder_id=?";
 
     private Connection connection;
 
-    public OrderItemUpdate(Connection connection)
+    public ProductOrderItemUpdate(Connection connection)
     {
         this.connection = connection;
     }
 
-    void addOrderItem(long orderId, long productId)
+    void addOrderItem(long orderId, long productId, int amount)
     {
         try
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setLong(1, orderId);
             statement.setLong(2, productId);
+            statement.setLong(3, amount);
             statement.executeUpdate();
 
         } catch (SQLException ex)

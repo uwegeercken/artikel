@@ -240,6 +240,13 @@ img.edit {
 	border: none;
 }
 
+img.shop {
+	position: absolute;
+	margin-top: 150px;
+	margin-left: 235px;
+	border: none;
+}
+
 img.copy {
 	position: absolute;
 	margin-top: 150px;

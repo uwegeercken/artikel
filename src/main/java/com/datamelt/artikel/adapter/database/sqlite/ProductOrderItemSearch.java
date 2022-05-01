@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-class OrderItemSearch
+class ProductOrderItemSearch
 {
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productorder_item where productorder_id=? and product_id=?";
 

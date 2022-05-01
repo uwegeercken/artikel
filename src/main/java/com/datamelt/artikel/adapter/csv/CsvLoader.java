@@ -298,7 +298,7 @@ public class CsvLoader implements FileInterface
                 {
                     long timestamp = formatter.parse(fields[1]).getTime();
 
-                    Order order = new Order(fields[0],timestamp);
+                    ProductOrder order = new ProductOrder(fields[0],timestamp);
                     boolean exists = getExistOrder(fields[0]);
                     if(!exists)
                     {
@@ -336,9 +336,10 @@ public class CsvLoader implements FileInterface
                 String[] fields = line.split(",");
                 String orderNumber = fields[0];
                 String productNumber = fields[1];
+                int amount = Integer.parseInt(fields[2]);
                 try
                 {
-                    Order order = getOrderByNumber(orderNumber);
+                    ProductOrder order = getOrderByNumber(orderNumber);
                     Product product = getProductByNumber(productNumber);
 
                     if(product !=null && product.getProducer().getNoOrdering()==0 && order != null)
@@ -346,7 +347,7 @@ public class CsvLoader implements FileInterface
                         boolean exists = getExistOrderItem(order.getId(),product.getId());
                         if (!exists)
                         {
-                            addOrderItem(order.getId(), product.getId());
+                            addOrderItem(order.getId(), product.getId(), amount);
                             counter++;
                         } else
                         {
@@ -435,16 +436,16 @@ public class CsvLoader implements FileInterface
     public boolean getExistMarket(String name) throws Exception { return service.getExistMarket(name); }
 
     @Override
-    public void addOrder(Order order) { service.addOrder(order); }
+    public void addOrder(ProductOrder order) { service.addOrder(order); }
 
     @Override
-    public Order getOrderByNumber(String number) throws Exception { return service.getOrderByNumber(number); }
+    public ProductOrder getOrderByNumber(String number) throws Exception { return service.getOrderByNumber(number); }
 
     @Override
     public boolean getExistOrder(String number) throws Exception { return service.getExistOrder(number); }
 
     @Override
-    public void addOrderItem(long orderId, long productId) { service.addOrderItem(orderId,productId); }
+    public void addOrderItem(long orderId, long productId, int amount) { service.addOrderItem(orderId, productId, amount); }
 
     @Override
     public boolean getExistOrderItem(long orderId, long productId) throws Exception { return service.getExistOrderItem(orderId,productId);

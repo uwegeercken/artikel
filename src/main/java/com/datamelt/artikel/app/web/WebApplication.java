@@ -61,6 +61,7 @@ public class WebApplication
         post(Path.Web.PRODUCT, productController.serveUpdateProductPage);
         get(Path.Web.PRODUCT_DELETE, productController.serveDeleteProductPage);
         post(Path.Web.PRODUCT_DELETE, productController.deleteProduct);
+        get(Path.Web.PRODUCT_SHOP, productController.shopProduct);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);

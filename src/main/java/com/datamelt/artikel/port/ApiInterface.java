@@ -1,9 +1,10 @@
 package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.model.Market;
-import com.datamelt.artikel.model.Order;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
+import com.datamelt.artikel.model.ProductOrder;
+import org.apache.logging.log4j.core.config.Order;
 
 import java.util.List;
 
@@ -25,5 +26,5 @@ public interface ApiInterface
     List<Producer> getAllProducers() throws Exception;
 
     List<Market> getAllMarkets() throws Exception;
-    List<Order> getAllOrders() throws Exception;
+    List<ProductOrder> getAllOrders() throws Exception;
 }

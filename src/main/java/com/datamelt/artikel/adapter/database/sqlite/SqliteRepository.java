@@ -267,67 +267,67 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void addOrder(Order order)
+    public void addOrder(ProductOrder order)
     {
-        OrderUpdate p = new OrderUpdate(connection);
+        ProductOrderUpdate p = new ProductOrderUpdate(connection);
         p.addOrder(order);
     }
 
     @Override
-    public void updateOrder(Order order)
+    public void updateOrder(ProductOrder order)
     {
-        OrderUpdate p = new OrderUpdate(connection);
+        ProductOrderUpdate p = new ProductOrderUpdate(connection);
         p.updateOrder(order);
     }
 
     @Override
     public void removeOrder(long id)
     {
-        OrderUpdate p = new OrderUpdate(connection);
+        ProductOrderUpdate p = new ProductOrderUpdate(connection);
         p.removeOrder(id);
     }
 
     @Override
-    public Order getOrderById(long id) throws Exception
+    public ProductOrder getOrderById(long id) throws Exception
     {
-        return OrderSearch.getOrderById(connection,id);
+        return ProductOrderSearch.getOrderById(connection,id);
     }
 
     @Override
-    public Order getOrderByNumber(String number) throws Exception
+    public ProductOrder getOrderByNumber(String number) throws Exception
     {
-        return OrderSearch.getOrderByNumber(connection,number);
+        return ProductOrderSearch.getOrderByNumber(connection,number);
     }
 
     @Override
     public boolean getExistOrder(String number) throws Exception
     {
-        return OrderSearch.getExistOrder(connection, number);
+        return ProductOrderSearch.getExistOrder(connection, number);
     }
 
     @Override
-    public List<Order> getAllOrders() throws Exception
+    public List<ProductOrder> getAllOrders() throws Exception
     {
         return CollectionHandler.getAllOrders(connection);
     }
 
     @Override
-    public void addOrderItem(long orderId, long productId)
+    public void addOrderItem(long orderId, long productId, int amount)
     {
-        OrderItemUpdate p = new OrderItemUpdate(connection);
-        p.addOrderItem(orderId,productId);
+        ProductOrderItemUpdate p = new ProductOrderItemUpdate(connection);
+        p.addOrderItem(orderId,productId, amount);
     }
 
     @Override
     public boolean getExistOrderItem(long orderId, long productId) throws Exception
     {
-        return OrderItemSearch.getExistOrderItem(connection, orderId, productId);
+        return ProductOrderItemSearch.getExistOrderItem(connection, orderId, productId);
     }
 
     @Override
     public void removeAllOrderItems(long orderId)
     {
-        OrderItemUpdate p = new OrderItemUpdate(connection);
+        ProductOrderItemUpdate p = new ProductOrderItemUpdate(connection);
         p.removeAllOrderItems(orderId);
     }
 

@@ -231,6 +231,7 @@ $(document).ready(function() {
 			<td>
 			    #if($user)
                     <img width="60" height="60" src="/img/dummy_user.png" title="Angemeldet: $!{user.fullName}" alt="$!{user.fullName}">
+                    <a heref="/shoproducts/"><img width="60" height="60" src="/img/shopping_cart.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
                 #end
             </td>
 		</tr>

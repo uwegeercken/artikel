@@ -7,18 +7,13 @@ import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.adapter.web.form.ProductFormValidator;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
-import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.model.Product;
-import com.datamelt.artikel.model.ProductContainer;
-import com.datamelt.artikel.model.ProductOrigin;
+import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
-import com.datamelt.artikel.service.WebService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.Session;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,6 +63,42 @@ public class ProductController implements ProductApiInterface
 
     };
 
+    public Route shopProduct = (Request request, Response response) -> {
+        Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
+        long productId = Long.parseLong(request.params(":id"));
+
+        if(!order.isPresent())
+        {
+            ProductOrderItem item = new ProductOrderItem();
+            item.setProductId(productId);
+            item.setAmount(1);
+            ProductOrder emptyOrder = new ProductOrder("11111",1234567);
+            emptyOrder.addOrderItem(item);
+            request.session().attribute("order", emptyOrder);
+        }
+        else
+        {
+            if(order.get().getOrderItems().containsKey(productId))
+            {
+                ProductOrderItem shopItem = order.get().getOrderItem(productId);
+                shopItem.increaseAmount();
+            }
+            else
+            {
+                ProductOrderItem item = new ProductOrderItem();
+                item.setProductId(productId);
+                item.setAmount(1);
+                order.get().addOrderItem(item);
+            }
+        }
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
+        model.put("products", getAllProducts());
+        return ViewUtility.render(request,model,Path.Template.PRODUCTS);
+
+    };
     public Route serveDeleteProductPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
@@ -240,4 +271,12 @@ public class ProductController implements ProductApiInterface
     {
         service.deleteProduct(id);
     }
+
+    @Override
+    public void shopProduct(long id)
+    {
+
+    }
+
+
 }

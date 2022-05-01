@@ -13,6 +13,7 @@ public interface ProductApiInterface
     void addProduct(ProductForm form) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
     void deleteProduct(long id) throws Exception;
+    void shopProduct(long id);
 
     List<Producer> getAllProducers() throws Exception;
     List<ProductContainer> getAllProductContainers() throws Exception;

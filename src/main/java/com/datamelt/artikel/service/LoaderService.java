@@ -42,13 +42,13 @@ public class LoaderService
 
     public boolean getExistMarket(String name) throws Exception { return repository.getExistMarket(name); }
 
-    public void addOrder(Order order) { repository.addOrder(order); }
+    public void addOrder(ProductOrder order) { repository.addOrder(order); }
 
-    public Order getOrderByNumber(String number) throws Exception { return repository.getOrderByNumber(number); }
+    public ProductOrder getOrderByNumber(String number) throws Exception { return repository.getOrderByNumber(number); }
 
     public boolean getExistOrder(String number) throws Exception { return repository.getExistOrder(number); }
 
-    public void addOrderItem(long orderId, long productId) { repository.addOrderItem(orderId, productId); }
+    public void addOrderItem(long orderId, long productId, int amount) { repository.addOrderItem(orderId, productId, amount); }
 
     public boolean getExistOrderItem(long orderId, long productId) throws Exception { return repository.getExistOrderItem(orderId,productId); }
 

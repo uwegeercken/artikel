@@ -50,15 +50,15 @@ public interface RepositoryInterface
     boolean getExistMarket(String name) throws Exception;
     List<Market> getAllMarkets() throws Exception;
 
-    void addOrder(Order order);
-    void updateOrder(Order order);
+    void addOrder(ProductOrder order);
+    void updateOrder(ProductOrder order);
     void removeOrder(long id);
-    Order getOrderById(long id) throws Exception;
-    Order getOrderByNumber(String number) throws Exception;
+    ProductOrder getOrderById(long id) throws Exception;
+    ProductOrder getOrderByNumber(String number) throws Exception;
     boolean getExistOrder(String number) throws Exception;
-    List<Order> getAllOrders() throws Exception;
+    List<ProductOrder> getAllOrders() throws Exception;
 
-    void addOrderItem(long orderId, long productId);
+    void addOrderItem(long orderId, long productId, int amount);
     boolean getExistOrderItem(long orderId, long productId) throws Exception;
     void removeAllOrderItems(long orderId);
 

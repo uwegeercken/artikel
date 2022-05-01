@@ -5,8 +5,7 @@ import com.datamelt.artikel.model.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class CollectionHandler
 {
@@ -114,16 +113,16 @@ class CollectionHandler
         return origins;
     }
 
-    public static List<Order> getAllOrders(Connection connection) throws Exception
+    public static List<ProductOrder> getAllOrders(Connection connection) throws Exception
     {
-        List<Order> orders = new ArrayList<>();
+        List<ProductOrder> orders = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ORDERS);
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())
         {
-            Order order = new Order(resultset.getString("number"),resultset.getLong("timestamp"));
+            ProductOrder order = new ProductOrder(resultset.getString("number"),resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
-            order.setItems(getAllOrderItems(connection, order));
+            order.setOrderItems(getAllOrderItems(connection, order));
             orders.add(order);
         }
         resultset.close();
@@ -131,19 +130,22 @@ class CollectionHandler
         return orders;
     }
 
-    public static List<Product> getAllOrderItems(Connection connection, Order order) throws Exception
+    public static Map<Long, ProductOrderItem> getAllOrderItems(Connection connection, ProductOrder order) throws Exception
     {
-        List<Product> products = new ArrayList<>();
+        Map<Long, ProductOrderItem> items = new HashMap<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ORDER_ITEMS);
-        statement.setLong(1,order.getId());
+        statement.setLong(1, order.getId());
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())
         {
-            Product product = ProductSearch.getProductById(connection, resultset.getLong("product_id"));
-            products.add(product);
+            ProductOrderItem item = new ProductOrderItem();
+            item.setId(resultset.getLong("id"));
+            item.setAmount(resultset.getInt("amount"));
+            item.setTimestamp(resultset.getLong("timestamp"));
+            items.put(item.getProductId(), item);
         }
         resultset.close();
         statement.close();
-        return products;
+        return items;
     }
 }

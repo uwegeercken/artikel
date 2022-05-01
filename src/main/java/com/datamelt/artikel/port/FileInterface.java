@@ -24,10 +24,10 @@ public interface FileInterface
     void addMarket(Market market);
     boolean getExistMarket(String name) throws Exception;
 
-    void addOrder(Order order);
-    Order getOrderByNumber(String number) throws Exception;
+    void addOrder(ProductOrder order);
+    ProductOrder getOrderByNumber(String number) throws Exception;
     boolean getExistOrder(String number) throws Exception;
 
-    void addOrderItem(long orderId, long productId);
+    void addOrderItem(long orderId, long productId, int amount);
     boolean getExistOrderItem(long orderId, long productId) throws Exception;
 }
