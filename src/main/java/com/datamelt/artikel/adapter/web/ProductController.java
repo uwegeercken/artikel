@@ -65,15 +65,13 @@ public class ProductController implements ProductApiInterface
 
     public Route serveShopProductsPage = (Request request, Response response) -> {
         Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
-
         Map<String, Object> model = new HashMap<>();
         if(order.isPresent())
         {
-            model.put("products", getShopProducts(order.get()));
+            model.put("productorderitems", getShopProductOrderItems(order.get()));
         }
         model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
-
+        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -85,7 +83,7 @@ public class ProductController implements ProductApiInterface
         if(!order.isPresent())
         {
             ProductOrderItem item = new ProductOrderItem();
-            item.setProductId(productId);
+            item.setProduct(getProductById(productId));
             item.setAmount(1);
             ProductOrder emptyOrder = new ProductOrder("11111",1234567);
             emptyOrder.addOrderItem(item);
@@ -101,7 +99,7 @@ public class ProductController implements ProductApiInterface
             else
             {
                 ProductOrderItem item = new ProductOrderItem();
-                item.setProductId(productId);
+                item.setProduct(getProductById(productId));
                 item.setAmount(1);
                 order.get().addOrderItem(item);
             }
@@ -240,9 +238,9 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception
+    public Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception
     {
-        return service.getShopProducts(order);
+        return service.getShopProductOrderItems(order);
     }
 
     @Override

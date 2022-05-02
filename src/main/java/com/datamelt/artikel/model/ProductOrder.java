@@ -57,7 +57,12 @@ public class ProductOrder
 
     public void addOrderItem(ProductOrderItem item)
     {
-        orderItems.put(item.getProductId(), item);
+        orderItems.put(item.getProduct().getId(), item);
+    }
+
+    public void removeOrderItem(ProductOrderItem item)
+    {
+        orderItems.remove(item.getProduct().getId());
     }
 
     public void setOrderItems(Map<Long, ProductOrderItem> orderItems)

@@ -4,7 +4,7 @@ public class ProductOrderItem
 {
     private long id;
     private long productOrderId;
-    private long productId;
+    private Product product;
     private int amount;
     private long timestamp;
 
@@ -48,14 +48,14 @@ public class ProductOrderItem
         this.productOrderId = productOrderId;
     }
 
-    public long getProductId()
+    public Product getProduct()
     {
-        return productId;
+        return product;
     }
 
-    public void setProductId(long productId)
+    public void setProduct(Product product)
     {
-        this.productId = productId;
+        this.product = product;
     }
 
     public void increaseAmount()
@@ -72,7 +72,7 @@ public class ProductOrderItem
         else
         {
             ProductOrderItem item = (ProductOrderItem) object;
-            return item.getProductId() == this.productId;
+            return item.getProduct().getId() == this.product.getId();
         }
     }
 

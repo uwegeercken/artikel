@@ -10,10 +10,7 @@ import com.datamelt.artikel.port.WebServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WebService implements WebServiceInterface
 {
@@ -158,13 +155,8 @@ public class WebService implements WebServiceInterface
     }
 
     @Override
-    public Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception
+    public Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception
     {
-        Map<Product, Integer> shopProducts = new HashMap<>();
-        for(ProductOrderItem item : order.getOrderItems().values())
-        {
-            shopProducts.put(repository.getProductById(item.getProductId()),item.getAmount());
-        }
-        return shopProducts;
+        return order.getOrderItems();
     }
 }

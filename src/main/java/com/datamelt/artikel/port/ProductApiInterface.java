@@ -15,7 +15,7 @@ public interface ProductApiInterface
     boolean getIsUniqueProduct(long id, String number) throws Exception;
     void deleteProduct(long id) throws Exception;
     void shopProduct(long id);
-    Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception;
+    Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception;
 
     List<Producer> getAllProducers() throws Exception;
     List<ProductContainer> getAllProductContainers() throws Exception;

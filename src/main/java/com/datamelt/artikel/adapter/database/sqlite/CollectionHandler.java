@@ -139,10 +139,13 @@ class CollectionHandler
         while(resultset.next())
         {
             ProductOrderItem item = new ProductOrderItem();
+            Product product = ProductSearch.getProductById(connection, resultset.getLong("product_id"));
+            item.setProduct(product);
             item.setId(resultset.getLong("id"));
             item.setAmount(resultset.getInt("amount"));
             item.setTimestamp(resultset.getLong("timestamp"));
-            items.put(item.getProductId(), item);
+
+            items.put(item.getProduct().getId(), item);
         }
         resultset.close();
         statement.close();

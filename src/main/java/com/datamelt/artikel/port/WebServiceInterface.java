@@ -47,5 +47,5 @@ public interface WebServiceInterface
 
     User getUserByName(String name) throws Exception;
 
-    Map<Product, Integer> getShopProducts(ProductOrder order) throws Exception;
+    Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception;
 }
