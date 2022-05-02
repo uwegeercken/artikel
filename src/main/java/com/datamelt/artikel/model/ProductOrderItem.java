@@ -63,6 +63,14 @@ public class ProductOrderItem
         amount = amount +1;
     }
 
+    public void decreaseAmount()
+    {
+        if(amount >0)
+        {
+            amount = amount -1;
+        }
+    }
+
     @Override
     public boolean equals(Object object)
     {

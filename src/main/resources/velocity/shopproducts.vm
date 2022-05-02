@@ -2,13 +2,13 @@
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_SHOP_LIST")} ($productorderitems.size())</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/product/0/"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
+        <a href="/product/0/"><img class="add_external" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_SHOP_LIST")}</p>
         <p>${messages.get("HELP1_SHOP_LIST")}</p>
         <p>${messages.get("HELP2_SHOP_LIST")}</p>
-        <p><img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}</p>
+        <p><img height="22" width="22" src="/img/order.png">&nbsp;${messages.get("IMAGE_COMPLETE_ORDER")}</p>
     </div>
     <div id="filter">
         <p>Filter: <input id="search" searchtype="productorderitems" type="text""></p>
@@ -16,8 +16,8 @@
     #foreach($item in $productorderitems)
         <div class="unit" tag="$!item.product.name.toLowerCase()">
             #if($item.product.id>1)<a href="/product/delete/${product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
-            #if($item.product.id>1)<a href="/product/shop/${product.id}/"><img class="shop" height="22px" width="22px" src="/img/order_plus.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>#end
-            #if($item.product.id>1)<a href="/product/${product.id}/"><img class="edit" height="22px" width="22px" src="/img/order_minus.png" title="${messages.get("IMAGE_PRODUCT_EDIT")}"></a>#end
+            #if($item.product.id>1)<a href="/product/shop/increase/${item.product.id}/"><img class="shop" height="22px" width="22px" src="/img/order_plus.png" title="${messages.get("IMAGE_SHOP_PRODUCT_INCREASE")}"></a>#end
+            #if($item.product.id>1)<a href="/product/shop/decrease/${item.product.id}/"><img class="edit" height="22px" width="22px" src="/img/order_minus.png" title="${messages.get("IMAGE_SHOP_PRODUCT_DECREASE")}"></a>#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!item.product.number - $!item.product.producer.name </p>
                 <p class="big">${item.amount} - $!item.product.name</p>

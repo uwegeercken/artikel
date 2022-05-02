@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="bottomtext">
-    <p>PRODUCT_DELETE_CONFIRMATION</p>
+    <p>${messages.get("PRODUCT_DELETE_CONFIRMATION")}</p>
     <p>
         <input type="submit" value="${messages.get("FORM_BUTTON_DELETE")}" name="submit">
         <input type="submit" value="${messages.get("FORM_BUTTON_CANCEL")}" name="submit">
