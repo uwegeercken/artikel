@@ -19,6 +19,7 @@ public class Path
         public static final String PRODUCT_SHOP = "/product/shop/:id/" ;
         public static final String PRODUCT_SHOP_INCREASE = "/product/shop/increase/:id/" ;
         public static final String PRODUCT_SHOP_DECREASE = "/product/shop/decrease/:id/" ;
+        public static final String PRODUCT_SHOP_REMOVE = "/product/shop/remove/:id/" ;
         public static final String SHOPPRODUCTS = "/shopproducts/";
     }
 

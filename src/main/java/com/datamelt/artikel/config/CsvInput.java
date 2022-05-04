@@ -10,6 +10,7 @@ public class CsvInput
     private String orderitemsFilename;
     private String productContainersFilename;
     private String productOriginsFilename;
+    private String usersFilename;
 
     public String getFilesFolder() { return filesFolder; }
 
@@ -38,4 +39,6 @@ public class CsvInput
     public String getProductContainersFilename() { return productContainersFilename; }
 
     public String getProductOriginsFilename() { return productOriginsFilename; }
+
+    public String getUsersFilename() { return usersFilename; }
 }

@@ -54,6 +54,8 @@ public class CsvLoader implements FileInterface
             case ORIGIN:
                 this.processProductOriginFile(getCsvFile(configuration.getProductOriginsFilename()));
                 break;
+            case USER:
+                this.processUserFile(getCsvFile(configuration.getUsersFilename()));
         }
     }
 
@@ -204,6 +206,46 @@ public class CsvLoader implements FileInterface
         }
     }
 
+    private void processUserFile(File inputFile)
+    {
+        logger.info("loading data from csv file: [{}] ", inputFile.getName());
+        BufferedReader br;
+        try
+        {
+            br = new BufferedReader(new FileReader(inputFile));
+            String line;
+            long counter=0;
+            while ((line = br.readLine()) != null)
+            {
+                String[] fields = line.split(",");
+                try
+                {
+                    User user = new User(fields[0]);
+                    boolean exists = getExistUser(fields[0]);
+                    if(!exists)
+                    {
+                        user.setFullName(fields[1]);
+                        user.setPassword(fields[2]);
+                        addUser(user);
+                        counter++;
+                    }
+                    else
+                    {
+                        logger.warn("already existing - user: [{}]", fields[0]);
+                    }
+                } catch (Exception ex)
+                {
+                    logger.error("error processing file [{}], message: [{}]", inputFile.getName(),ex.getMessage());
+                }
+            }
+            logger.info("added user: [{}]", counter);
+        }
+        catch (Exception e)
+        {
+            logger.error("error processing file [{}], message: [{}]", inputFile.getName(),e.getMessage());
+        }
+    }
+
     private void processProducerFile(File inputFile)
     {
         logger.info("loading data from csv file: [{}] ", inputFile.getName());
@@ -219,6 +261,7 @@ public class CsvLoader implements FileInterface
                 try
                 {
                     Producer producer = new Producer(fields[0]);
+                    producer.setNoOrdering(Integer.parseInt(fields[1]));
                     boolean exists = getExistProducer(fields[0]);
                     if(!exists)
                     {
@@ -450,5 +493,11 @@ public class CsvLoader implements FileInterface
     @Override
     public boolean getExistOrderItem(long orderId, long productId) throws Exception { return service.getExistOrderItem(orderId,productId);
     }
+
+    @Override
+    public void addUser(User user) { service.addUser(user); }
+
+    @Override
+    public boolean getExistUser(String name) throws Exception { return service.getExistUser(name); }
 
 }

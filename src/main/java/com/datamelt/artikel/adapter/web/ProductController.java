@@ -128,12 +128,28 @@ public class ProductController implements ProductApiInterface
 
     };
 
+
     public Route shopProductDecrease = (Request request, Response response) -> {
         ProductOrder  order = request.session().attribute("order");
         long productId = Long.parseLong(request.params(":id"));
 
         ProductOrderItem shopItem = order.getOrderItem(productId);
         shopItem.decreaseAmount();
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
+        model.put("productorderitems", getShopProductOrderItems(order));
+        return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
+
+    };
+
+    public Route shopProductRemove = (Request request, Response response) -> {
+        ProductOrder  order = request.session().attribute("order");
+        long productId = Long.parseLong(request.params(":id"));
+
+        ProductOrderItem shopItem = order.getOrderItem(productId);
+        order.removeOrderItem(shopItem);
 
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);

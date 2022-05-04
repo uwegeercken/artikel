@@ -336,4 +336,15 @@ public class SqliteRepository implements RepositoryInterface
     {
         return UserSearch.getUserByName(connection, name);
     }
+
+    @Override
+    public void addUser(User user) {
+        UserUpdate u = new UserUpdate(connection);
+        u.addUser(user);
+    }
+
+    @Override
+    public boolean getExistUser(String name)  throws Exception{
+        return UserSearch.getExistUser(connection, name);
+    }
 }

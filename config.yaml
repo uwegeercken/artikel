@@ -15,3 +15,4 @@ csvInput:
   orderitemsFilename: orderitems.csv
   productContainersFilename: containers.csv
   productOriginsFilename: origins.csv
+  usersFilename: users.csv

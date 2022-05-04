@@ -7,7 +7,7 @@ public class HashGenerator
 {
     private static final String SALT = "A1bC3ut709lLpQ";
 
-    public static String generate(String username, String password)
+    public static String generate(String password)
     {
         return generateHash(SALT + password);
     }

@@ -53,4 +53,8 @@ public class LoaderService
     public boolean getExistOrderItem(long orderId, long productId) throws Exception { return repository.getExistOrderItem(orderId,productId); }
 
     public void removeAllOrderItems(long orderId) { repository.removeAllOrderItems(orderId); }
+
+    public void addUser(User user) { repository.addUser(user); }
+
+    public boolean getExistUser(String name) throws Exception { return repository.getExistUser(name); }
 }

@@ -63,4 +63,6 @@ public interface RepositoryInterface
     void removeAllOrderItems(long orderId);
 
     User getUserByName(String name) throws Exception;
+    void addUser(User user);
+    boolean getExistUser(String name) throws Exception;
 }

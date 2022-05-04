@@ -30,4 +30,7 @@ public interface FileInterface
 
     void addOrderItem(long orderId, long productId, int amount);
     boolean getExistOrderItem(long orderId, long productId) throws Exception;
+
+    void addUser(User user);
+    boolean getExistUser(String name) throws Exception;
 }

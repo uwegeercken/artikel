@@ -8,5 +8,6 @@ public enum CsvFileType
     ORDERITEMS,
     MARKET,
     CONTAINER,
-    ORIGIN;
+    ORIGIN,
+    USER;
 }

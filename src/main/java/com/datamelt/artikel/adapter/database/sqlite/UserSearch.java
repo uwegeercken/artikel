@@ -1,20 +1,18 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
-import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Optional;
 
 class UserSearch
 {
 
     private static final String SQL_QUERY_BY_ID = "select * from user where id=?";
     private static final String SQL_QUERY_BY_NAME = "select * from user where lower(name)=lower(?)";
-    private static final String SQL_QUERY_EXISTS = "select count(1) as counter from user where name=?";
-    private static final String SQL_QUERY_IS_UNIQUE = "select count(1) as counter from user where name=? and id!=?";
+    private static final String SQL_QUERY_EXISTS = "select count(1) as counter from user where lower(name)=lower(?)";
+    private static final String SQL_QUERY_IS_UNIQUE = "select count(1) as counter from user where lower(name)=lower(?) and id!=?";
 
     static User getUserById(Connection connection, long id) throws Exception
     {

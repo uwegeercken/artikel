@@ -90,8 +90,7 @@ public class LoginController implements UserApiInterface
 
     private boolean getUserIsAuthenticated(User user, String loginPassword) throws Exception
     {
-        String loginHashedPassword = HashGenerator.generate(user.getName(), loginPassword);
-
+        String loginHashedPassword = HashGenerator.generate(loginPassword);
         return loginHashedPassword.equals(user.getPassword());
     }
 }

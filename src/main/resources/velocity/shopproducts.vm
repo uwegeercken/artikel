@@ -2,7 +2,7 @@
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_SHOP_LIST")} ($productorderitems.size())</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/product/0/"><img class="add_external" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
+        <a href="/product/shop/complete/"><img class="add_external" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_SHOP_LIST")}</p>
@@ -15,7 +15,7 @@
     </div>
     #foreach($item in $productorderitems)
         <div class="unit" tag="$!item.product.name.toLowerCase()">
-            #if($item.product.id>1)<a href="/product/delete/${product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
+            #if($item.product.id>1)<a href="/product/shop/remove/${item.product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_SHOP_PRODUCT_REMOVE")}"></a>#end
             #if($item.product.id>1)<a href="/product/shop/increase/${item.product.id}/"><img class="shop" height="22px" width="22px" src="/img/order_plus.png" title="${messages.get("IMAGE_SHOP_PRODUCT_INCREASE")}"></a>#end
             #if($item.product.id>1)<a href="/product/shop/decrease/${item.product.id}/"><img class="edit" height="22px" width="22px" src="/img/order_minus.png" title="${messages.get("IMAGE_SHOP_PRODUCT_DECREASE")}"></a>#end
             <div class="grouptop">

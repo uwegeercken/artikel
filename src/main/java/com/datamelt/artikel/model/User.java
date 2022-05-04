@@ -1,5 +1,7 @@
 package com.datamelt.artikel.model;
 
+import com.datamelt.artikel.app.web.util.HashGenerator;
+
 public class User
 {
     private long id;
@@ -49,6 +51,6 @@ public class User
 
     public void setPassword(String password)
     {
-        this.password = password;
+        this.password = HashGenerator.generate(password);
     }
 }
