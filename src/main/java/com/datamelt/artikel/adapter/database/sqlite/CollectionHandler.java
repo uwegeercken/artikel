@@ -120,7 +120,9 @@ class CollectionHandler
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())
         {
-            ProductOrder order = new ProductOrder(resultset.getString("number"),resultset.getLong("timestamp"));
+            ProductOrder order = new ProductOrder();
+            order.setNumber(resultset.getString("number"));
+            order.setTimestamp(resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
             order.setOrderItems(getAllProductOrderItems(connection, order));
             orders.add(order);

@@ -342,7 +342,9 @@ public class CsvLoader implements FileInterface
                 {
                     long timestamp = formatter.parse(fields[1]).getTime();
 
-                    ProductOrder order = new ProductOrder(fields[0],timestamp);
+                    ProductOrder order = new ProductOrder();
+                    order.setNumber(fields[0]);
+                    order.setTimestamp(timestamp);
                     boolean exists = getExistOrder(fields[0]);
                     if(!exists)
                     {
@@ -391,7 +393,11 @@ public class CsvLoader implements FileInterface
                         boolean exists = getExistOrderItem(order.getId(),product.getId());
                         if (!exists)
                         {
-                            addOrderItem(order.getId(), product.getId(), amount);
+                            ProductOrderItem item = new ProductOrderItem();
+                            item.setProductOrderId(order.getId());
+                            item.getProduct().setId(product.getId());
+                            item.setAmount(amount);
+                            addOrderItem(item);
                             counter++;
                         } else
                         {
@@ -489,7 +495,7 @@ public class CsvLoader implements FileInterface
     public boolean getExistOrder(String number) throws Exception { return service.getExistOrder(number); }
 
     @Override
-    public void addOrderItem(long orderId, long productId, int amount) { service.addOrderItem(orderId, productId, amount); }
+    public void addOrderItem(ProductOrderItem item) { service.addOrderItem(item); }
 
     @Override
     public boolean getExistOrderItem(long orderId, long productId) throws Exception { return service.getExistOrderItem(orderId,productId);

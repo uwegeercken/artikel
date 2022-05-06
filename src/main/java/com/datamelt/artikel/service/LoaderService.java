@@ -48,7 +48,7 @@ public class LoaderService
 
     public boolean getExistOrder(String number) throws Exception { return repository.getExistOrder(number); }
 
-    public void addOrderItem(long orderId, long productId, int amount) { repository.addOrderItem(orderId, productId, amount); }
+    public void addOrderItem(ProductOrderItem item) { repository.addOrderItem(item); }
 
     public boolean getExistOrderItem(long orderId, long productId) throws Exception { return repository.getExistOrderItem(orderId,productId); }
 

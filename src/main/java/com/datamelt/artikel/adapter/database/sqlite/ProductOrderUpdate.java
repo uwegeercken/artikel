@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 class ProductOrderUpdate
 {
@@ -26,7 +27,7 @@ class ProductOrderUpdate
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, order.getNumber());
-            statement.setLong(2, order.getTimestamp());
+            statement.setLong(2, new Date().getTime());
             statement.executeUpdate();
 
             ResultSet resultset = statement.getGeneratedKeys();

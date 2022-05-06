@@ -6,16 +6,11 @@ import com.datamelt.artikel.model.ProductOrder;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductOrderApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
-import com.datamelt.artikel.util.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProductOrderController implements ProductOrderApiInterface
 {
@@ -37,9 +32,28 @@ public class ProductOrderController implements ProductOrderApiInterface
 
     };
 
+    public Route serveOrderItemsPage = (Request request, Response response) -> {
+
+        Optional<ProductOrder> order = Optional.ofNullable(getProductOrderById(Long.parseLong(request.params(":id"))));
+        Map<String, Object> model = new HashMap<>();
+        if(order.isPresent())
+        {
+            model.put("productorderitems", order.get().getOrderItems());
+        }
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCTORDER_ITEMS"));
+        return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
+    };
+
     @Override
     public List<ProductOrder> getAllProductOrders() throws Exception
     {
         return service.getAllProductOrders();
+    }
+
+    @Override
+    public ProductOrder getProductOrderById(long id) throws Exception
+    {
+        return service.getProductOrderById(id);
     }
 }

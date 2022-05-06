@@ -171,4 +171,10 @@ public class WebService implements WebServiceInterface
     {
         return repository.getAllProductOrders();
     }
+
+    @Override
+    public ProductOrder getProductOrderById(long id) throws Exception
+    {
+        return repository.getProductOrderById(id);
+    }
 }

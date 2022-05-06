@@ -52,4 +52,6 @@ public interface WebServiceInterface
     void addProductOrder(ProductOrder order);
 
     List<ProductOrder> getAllProductOrders() throws Exception;
+
+    ProductOrder getProductOrderById(long id) throws Exception;
 }

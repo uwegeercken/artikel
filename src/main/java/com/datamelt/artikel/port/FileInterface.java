@@ -28,7 +28,7 @@ public interface FileInterface
     ProductOrder getOrderByNumber(String number) throws Exception;
     boolean getExistOrder(String number) throws Exception;
 
-    void addOrderItem(long orderId, long productId, int amount);
+    void addOrderItem(ProductOrderItem item);
     boolean getExistOrderItem(long orderId, long productId) throws Exception;
 
     void addUser(User user);

@@ -69,6 +69,7 @@ public class WebApplication
         get(Path.Web.PRODUCT_SHOP_REMOVE, productController.shopProductRemove);
         get(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
+        get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);

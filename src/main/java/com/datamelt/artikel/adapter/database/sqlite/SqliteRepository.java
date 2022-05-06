@@ -274,6 +274,7 @@ public class SqliteRepository implements RepositoryInterface
         for(ProductOrderItem item : order.getOrderItems().values())
         {
             ProductOrderItemUpdate i = new ProductOrderItemUpdate(connection);
+            item.setProductOrderId(order.getId());
             i.addOrderItem(item);
         }
     }
@@ -317,10 +318,10 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void addOrderItem(long orderId, long productId, int amount)
+    public void addOrderItem(ProductOrderItem item)
     {
         ProductOrderItemUpdate p = new ProductOrderItemUpdate(connection);
-        p.addOrderItem(orderId,productId, amount);
+        p.addOrderItem(item);
     }
 
     @Override
@@ -357,5 +358,11 @@ public class SqliteRepository implements RepositoryInterface
     public List<ProductOrder> getAllProductOrders() throws Exception
     {
         return CollectionHandler.getAllProductOrders(connection);
+    }
+
+    @Override
+    public ProductOrder getProductOrderById(long id) throws Exception
+    {
+        return ProductOrderSearch.getOrderById(connection, id);
     }
 }

@@ -58,7 +58,7 @@ public interface RepositoryInterface
     boolean getExistOrder(String number) throws Exception;
     List<ProductOrder> getAllOrders() throws Exception;
 
-    void addOrderItem(long orderId, long productId, int amount);
+    void addOrderItem(ProductOrderItem item);
     boolean getExistOrderItem(long orderId, long productId) throws Exception;
     void removeAllOrderItems(long orderId);
 
@@ -67,4 +67,6 @@ public interface RepositoryInterface
     boolean getExistUser(String name) throws Exception;
 
     List<ProductOrder> getAllProductOrders() throws Exception;
+
+    ProductOrder getProductOrderById(long id) throws Exception;
 }

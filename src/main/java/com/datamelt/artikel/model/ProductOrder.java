@@ -14,12 +14,6 @@ public class ProductOrder
 
     private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT);
 
-    public ProductOrder(String number, long timestamp)
-    {
-        this.number = number;
-        this.timestamp = timestamp;
-    }
-
     public long getId()
     {
         return id;

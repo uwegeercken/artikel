@@ -9,4 +9,5 @@ import java.util.List;
 public interface ProductOrderApiInterface
 {
     List<ProductOrder> getAllProductOrders() throws Exception;
+    ProductOrder getProductOrderById(long id) throws Exception;
 }

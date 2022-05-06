@@ -82,7 +82,7 @@ public class ProductController implements ProductApiInterface
             ProductOrderItem item = new ProductOrderItem();
             item.setProduct(getProductById(productId));
             item.setAmount(1);
-            ProductOrder emptyOrder = new ProductOrder("11111",1234567);
+            ProductOrder emptyOrder = new ProductOrder();
             emptyOrder.addOrderItem(item);
             request.session().attribute("order", emptyOrder);
         }
@@ -158,7 +158,6 @@ public class ProductController implements ProductApiInterface
 
     public Route shopProductComplete = (Request request, Response response) -> {
         ProductOrder  order = request.session().attribute("order");
-        order.setTimestamp(new Date().getTime());
         addProductOrder(order);
         request.session().removeAttribute("order");
         Map<String, Object> model = new HashMap<>();
@@ -210,7 +209,7 @@ public class ProductController implements ProductApiInterface
             model.put("origins", getAllProductOrigins());
 
             ValidatorResult result = validateProduct(form);
-            if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
+            if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProduct(model, form);
             }

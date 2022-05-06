@@ -5,6 +5,7 @@ import com.datamelt.artikel.model.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ class ProductOrderSearch
     private static final String SQL_QUERY_BY_ID = "select * from productorder where id=?";
     private static final String SQL_QUERY_BY_NUMBER = "select * from productorder where number=?";
     private static final String SQL_QUERY_EXISTS = "select count(1) as counter from productorder where number=?";
+    private static final String SQL_QUERY_HIGHEST_NUMBER = "select number from productorder order by number desc limit 1";
 
     static ProductOrder getOrderById(Connection connection, long id) throws Exception
     {
@@ -24,7 +26,9 @@ class ProductOrderSearch
         ProductOrder order = null;
         if(resultset.next())
         {
-            order = new ProductOrder(resultset.getString("number"),resultset.getLong("timestamp"));
+            order = new ProductOrder();
+            order.setNumber(resultset.getString("number"));
+            order.setTimestamp(resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
 
             Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);
@@ -44,7 +48,9 @@ class ProductOrderSearch
         ProductOrder order = null;
         if(resultset.next())
         {
-            order = new ProductOrder(resultset.getString("number"),resultset.getLong("timestamp"));
+            order = new ProductOrder();
+            order.setNumber(resultset.getString("number"));
+            order.setTimestamp(resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
 
             Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);
@@ -70,5 +76,19 @@ class ProductOrderSearch
         resultset.close();
         statement.close();
         return exist;
+    }
+
+    static String getHighestOrderNumber(Connection connection) throws Exception
+    {
+        Statement statement = connection.createStatement();
+        ResultSet resultset = statement.executeQuery(SQL_QUERY_HIGHEST_NUMBER);
+        String highestNumber = "";
+        if(resultset.next())
+        {
+            highestNumber = resultset.getString("number");
+        }
+        resultset.close();
+        statement.close();
+        return highestNumber;
     }
 }
