@@ -1,5 +1,6 @@
 package com.datamelt.artikel.adapter.csv;
 
+import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.config.CsvInput;
 import com.datamelt.artikel.port.FileInterface;
@@ -225,7 +226,7 @@ public class CsvLoader implements FileInterface
                     if(!exists)
                     {
                         user.setFullName(fields[1]);
-                        user.setPassword(fields[2]);
+                        user.setPassword(HashGenerator.generate(fields[2]));
                         addUser(user);
                         counter++;
                     }

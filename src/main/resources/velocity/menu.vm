@@ -3,7 +3,7 @@
 		<ul>
 			<li><a href="/index/">${messages.get("MENU_ENTRY_INDEX")}</a></li>
 		</ul>
-		#if($user)
+		#if($user.isAuthenticated())
             <ul>
                 <li><a href="/products/">${messages.get("MENU_ENTRY_PRODUCTS")}</a></li>
                 <li><a href="/purchaseorder/">${messages.get("MENU_ENTRY_PURCHASE_ORDER")}</a></li>

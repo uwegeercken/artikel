@@ -8,6 +8,7 @@ public class User
     private String name;
     private String fullName;
     private String password;
+    private boolean isAuthenticated;
 
     public User(String name)
     {
@@ -49,8 +50,18 @@ public class User
         return password;
     }
 
+    public boolean isAuthenticated()
+    {
+        return isAuthenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated)
+    {
+        isAuthenticated = authenticated;
+    }
+
     public void setPassword(String password)
     {
-        this.password = HashGenerator.generate(password);
+        this.password = password;
     }
 }

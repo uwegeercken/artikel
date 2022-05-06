@@ -40,7 +40,6 @@ public class LoginController implements UserApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
         request.session().removeAttribute("user");
-        request.session().attribute("authenticated", false);
         return ViewUtility.render(request,model,Path.Template.INDEX);
 
     };
@@ -59,13 +58,13 @@ public class LoginController implements UserApiInterface
             boolean isAuthenticated = getUserIsAuthenticated(loginUser.get(), password);
             if (isAuthenticated)
             {
-                request.session().attribute("authenticated", true);
+                loginUser.get().setAuthenticated(true);
                 request.session().attribute("user", loginUser.get());
                 model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
                 return ViewUtility.render(request, model, Path.Template.INDEX);
             } else
             {
-                request.session().attribute("authenticated", false);
+                loginUser.get().setAuthenticated(false);
                 request.session().attribute("user", loginUser.get());
                 model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
                 model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_WRONG_PASSWORD")));
@@ -74,7 +73,7 @@ public class LoginController implements UserApiInterface
         }
         else
         {
-            request.session().attribute("authenticated", false);
+            //request.session().attribute("authenticated", false);
             model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
             model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_UNKNOWN_USER")));
             return ViewUtility.render(request, model, Path.Template.LOGIN);

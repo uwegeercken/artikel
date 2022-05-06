@@ -1,7 +1,5 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
-import com.datamelt.artikel.app.web.util.HashGenerator;
-import com.datamelt.artikel.model.Market;
 import com.datamelt.artikel.model.User;
 
 import java.sql.Connection;

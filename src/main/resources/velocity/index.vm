@@ -2,7 +2,7 @@
 #@mainLayout()
 
     <p class="heading">${messages.get("PAGE_HEADIND_INDEX")}</p>
-    #if($user)
+    #if($user.isAuthenticated())
         <p class="big">${messages.get("PAGE_INDEX_WELCOME_BACK")} ${user.name}</p>
     #end
     <p>${messages.get("PAGE_INDEX_INFO")}</p>
