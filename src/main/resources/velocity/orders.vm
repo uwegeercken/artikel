@@ -1,0 +1,29 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <p class="heading">${messages.get("PAGETITLE_PRODUCTORDERS_LIST")} ($orders.size())</p>
+    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
+        <a href="/product/0/"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
+    </p>
+    <div id="help">
+        <p class="helptitle">${messages.get("PAGETITLE_PRODUCTORDERS_LIST")}</p>
+        <p>${messages.get("HELP1_ORDERS_LIST")}</p>
+        <p>${messages.get("HELP2_ORDERS_LIST")}</p>
+        <p><img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}</p>
+    </div>
+    <div id="filter">
+        <p>Filter: <input id="search" searchtype="products" type="text""></p>
+    </div>
+    #foreach($order in $orders)
+        <div class="unit" tag="$!order.number.toLowerCase()">
+            #if($product.id>1)<a href="/product/delete/${product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
+            #if($product.id>1)<a href="/product/shop/${product.id}/"><img class="shop" height="22px" width="22px" src="/img/shopping_cart.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>#end
+            #if($product.id>1)<a href="/product/${product.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCT_EDIT")}"></a>#end
+            <div class="grouptop">
+                <p class="small">${messages.get("TYPE_PRODUCT")} #$!order.number</p>
+                <p class="big">Anzahl Produkte: $!order.orderItems.size()</p>
+                <p class="normal">Gesamtmenge: $!order.totalProductOrderItemAmount</p>
+                <p class="normal">Bestelldatum: $!order.productOrderDate</p>
+            </div>
+        </div>
+    #end
+#end

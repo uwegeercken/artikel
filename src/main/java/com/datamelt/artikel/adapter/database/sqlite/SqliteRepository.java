@@ -267,10 +267,15 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void addOrder(ProductOrder order)
+    public void addProductOrder(ProductOrder order)
     {
         ProductOrderUpdate p = new ProductOrderUpdate(connection);
         p.addOrder(order);
+        for(ProductOrderItem item : order.getOrderItems().values())
+        {
+            ProductOrderItemUpdate i = new ProductOrderItemUpdate(connection);
+            i.addOrderItem(item);
+        }
     }
 
     @Override
@@ -308,7 +313,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<ProductOrder> getAllOrders() throws Exception
     {
-        return CollectionHandler.getAllOrders(connection);
+        return CollectionHandler.getAllProductOrders(connection);
     }
 
     @Override
@@ -346,5 +351,11 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public boolean getExistUser(String name)  throws Exception{
         return UserSearch.getExistUser(connection, name);
+    }
+
+    @Override
+    public List<ProductOrder> getAllProductOrders() throws Exception
+    {
+        return CollectionHandler.getAllProductOrders(connection);
     }
 }

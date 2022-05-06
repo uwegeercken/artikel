@@ -42,7 +42,7 @@ public class LoaderService
 
     public boolean getExistMarket(String name) throws Exception { return repository.getExistMarket(name); }
 
-    public void addOrder(ProductOrder order) { repository.addOrder(order); }
+    public void addProductOrder(ProductOrder order) { repository.addProductOrder(order); }
 
     public ProductOrder getOrderByNumber(String number) throws Exception { return repository.getOrderByNumber(number); }
 

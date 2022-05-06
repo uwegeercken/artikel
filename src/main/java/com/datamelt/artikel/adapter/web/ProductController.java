@@ -15,10 +15,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ProductController implements ProductApiInterface
 {
@@ -155,6 +152,18 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
+        return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
+
+    };
+
+    public Route shopProductComplete = (Request request, Response response) -> {
+        ProductOrder  order = request.session().attribute("order");
+        order.setTimestamp(new Date().getTime());
+        addProductOrder(order);
+        request.session().removeAttribute("order");
+        Map<String, Object> model = new HashMap<>();
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -339,10 +348,12 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public void shopProduct(long id)
+    public void addProductOrder(ProductOrder order) throws Exception
     {
+        service.addProductOrder(order);
 
     }
+
 
 
 }

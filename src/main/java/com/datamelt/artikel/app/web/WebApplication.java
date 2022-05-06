@@ -47,6 +47,7 @@ public class WebApplication
         MarketController marketController = new MarketController(service, messages);
         ProductContainerController containerController = new ProductContainerController(service, messages);
         ProductOriginController originController = new ProductOriginController(service, messages);
+        ProductOrderController orderController = new ProductOrderController(service,messages);
 
         before("*", Filters.redirectToLogin);
 
@@ -66,6 +67,8 @@ public class WebApplication
         get(Path.Web.PRODUCT_SHOP_INCREASE, productController.shopProductIncrease);
         get(Path.Web.PRODUCT_SHOP_DECREASE, productController.shopProductDecrease);
         get(Path.Web.PRODUCT_SHOP_REMOVE, productController.shopProductRemove);
+        get(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
+        get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);

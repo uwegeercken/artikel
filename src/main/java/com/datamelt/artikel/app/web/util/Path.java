@@ -20,7 +20,9 @@ public class Path
         public static final String PRODUCT_SHOP_INCREASE = "/product/shop/increase/:id/" ;
         public static final String PRODUCT_SHOP_DECREASE = "/product/shop/decrease/:id/" ;
         public static final String PRODUCT_SHOP_REMOVE = "/product/shop/remove/:id/" ;
+        public static final String SHOP_COMPLETE = "/shopcomplete/" ;
         public static final String SHOPPRODUCTS = "/shopproducts/";
+        public static final String ORDERS = "/orders/";
     }
 
     public static class Template {
@@ -37,6 +39,7 @@ public class Path
         public static final String MARKETS = "/velocity/markets.vm";
         public static final String PRODUCTCONTAINERS = "/velocity/productcontainers.vm";
         public static final String PRODUCTORIGINS = "/velocity/productorigins.vm";
+        public static final String ORDERS = "/velocity/orders.vm";
 
         public static final String NOTFOUND = "/velocity/notfound.vm";
     }

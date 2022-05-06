@@ -346,7 +346,7 @@ public class CsvLoader implements FileInterface
                     boolean exists = getExistOrder(fields[0]);
                     if(!exists)
                     {
-                        addOrder(order);
+                        addProductOrder(order);
                         counter++;
                     }
                     else
@@ -480,7 +480,7 @@ public class CsvLoader implements FileInterface
     public boolean getExistMarket(String name) throws Exception { return service.getExistMarket(name); }
 
     @Override
-    public void addOrder(ProductOrder order) { service.addOrder(order); }
+    public void addProductOrder(ProductOrder order) { service.addProductOrder(order); }
 
     @Override
     public ProductOrder getOrderByNumber(String number) throws Exception { return service.getOrderByNumber(number); }

@@ -24,7 +24,7 @@ public interface FileInterface
     void addMarket(Market market);
     boolean getExistMarket(String name) throws Exception;
 
-    void addOrder(ProductOrder order);
+    void addProductOrder(ProductOrder order);
     ProductOrder getOrderByNumber(String number) throws Exception;
     boolean getExistOrder(String number) throws Exception;
 

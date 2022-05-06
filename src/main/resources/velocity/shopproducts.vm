@@ -2,7 +2,7 @@
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_SHOP_LIST")} ($productorderitems.size())</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/product/shop/complete/"><img class="add_external" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
+        <a href="/shopcomplete/"><img class="add_external" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_SHOP_LIST")}</p>

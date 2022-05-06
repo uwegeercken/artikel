@@ -50,7 +50,7 @@ public interface RepositoryInterface
     boolean getExistMarket(String name) throws Exception;
     List<Market> getAllMarkets() throws Exception;
 
-    void addOrder(ProductOrder order);
+    void addProductOrder(ProductOrder order);
     void updateOrder(ProductOrder order);
     void removeOrder(long id);
     ProductOrder getOrderById(long id) throws Exception;
@@ -65,4 +65,6 @@ public interface RepositoryInterface
     User getUserByName(String name) throws Exception;
     void addUser(User user);
     boolean getExistUser(String name) throws Exception;
+
+    List<ProductOrder> getAllProductOrders() throws Exception;
 }

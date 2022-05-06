@@ -113,7 +113,7 @@ class CollectionHandler
         return origins;
     }
 
-    public static List<ProductOrder> getAllOrders(Connection connection) throws Exception
+    public static List<ProductOrder> getAllProductOrders(Connection connection) throws Exception
     {
         List<ProductOrder> orders = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ORDERS);
@@ -122,7 +122,7 @@ class CollectionHandler
         {
             ProductOrder order = new ProductOrder(resultset.getString("number"),resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
-            order.setOrderItems(getAllOrderItems(connection, order));
+            order.setOrderItems(getAllProductOrderItems(connection, order));
             orders.add(order);
         }
         resultset.close();
@@ -130,7 +130,7 @@ class CollectionHandler
         return orders;
     }
 
-    public static Map<Long, ProductOrderItem> getAllOrderItems(Connection connection, ProductOrder order) throws Exception
+    public static Map<Long, ProductOrderItem> getAllProductOrderItems(Connection connection, ProductOrder order) throws Exception
     {
         Map<Long, ProductOrderItem> items = new HashMap<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ORDER_ITEMS);

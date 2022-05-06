@@ -48,4 +48,8 @@ public interface WebServiceInterface
     User getUserByName(String name) throws Exception;
 
     Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception;
+
+    void addProductOrder(ProductOrder order);
+
+    List<ProductOrder> getAllProductOrders() throws Exception;
 }

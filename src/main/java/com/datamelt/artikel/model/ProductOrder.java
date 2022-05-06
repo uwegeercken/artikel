@@ -1,5 +1,8 @@
 package com.datamelt.artikel.model;
 
+import com.datamelt.artikel.util.Constants;
+
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ProductOrder
@@ -8,6 +11,8 @@ public class ProductOrder
     private String number;
     private long timestamp;
     private Map<Long, ProductOrderItem> orderItems = new HashMap<>();
+
+    private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT);
 
     public ProductOrder(String number, long timestamp)
     {
@@ -68,5 +73,19 @@ public class ProductOrder
     public void setOrderItems(Map<Long, ProductOrderItem> orderItems)
     {
         this.orderItems = orderItems;
+    }
+
+    public int getTotalProductOrderItemAmount()
+    {
+        int totalAmount = 0;
+        for(ProductOrderItem item : orderItems.values())
+        {
+            totalAmount = totalAmount + item.getAmount();
+        }
+        return totalAmount;
+    }
+    public String getProductOrderDate()
+    {
+        return formatter.format(new Date(timestamp));
     }
 }

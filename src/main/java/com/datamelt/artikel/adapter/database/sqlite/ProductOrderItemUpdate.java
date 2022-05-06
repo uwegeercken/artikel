@@ -1,5 +1,7 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
+import com.datamelt.artikel.model.ProductOrderItem;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,6 +17,22 @@ class ProductOrderItemUpdate
     public ProductOrderItemUpdate(Connection connection)
     {
         this.connection = connection;
+    }
+
+    void addOrderItem(ProductOrderItem item)
+    {
+        try
+        {
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
+            statement.setLong(1, item.getProductOrderId());
+            statement.setLong(2, item.getProduct().getId());
+            statement.setLong(3, item.getAmount());
+            statement.executeUpdate();
+
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 
     void addOrderItem(long orderId, long productId, int amount)

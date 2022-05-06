@@ -159,4 +159,16 @@ public class WebService implements WebServiceInterface
     {
         return order.getOrderItems();
     }
+
+    @Override
+    public void addProductOrder(ProductOrder order)
+    {
+        repository.addProductOrder(order);
+    }
+
+    @Override
+    public List<ProductOrder> getAllProductOrders() throws Exception
+    {
+        return repository.getAllProductOrders();
+    }
 }

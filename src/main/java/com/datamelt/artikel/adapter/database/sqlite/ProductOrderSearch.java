@@ -27,7 +27,7 @@ class ProductOrderSearch
             order = new ProductOrder(resultset.getString("number"),resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
 
-            Map<Long, ProductOrderItem> items = CollectionHandler.getAllOrderItems(connection, order);
+            Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);
             order.setOrderItems(items);
         }
         statement.clearParameters();
@@ -47,7 +47,7 @@ class ProductOrderSearch
             order = new ProductOrder(resultset.getString("number"),resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
 
-            Map<Long, ProductOrderItem> items = CollectionHandler.getAllOrderItems(connection, order);
+            Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);
             order.setOrderItems(items);
         }
         statement.clearParameters();
