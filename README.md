@@ -36,7 +36,7 @@ provide the path and name of the configuration file and run:
 
 ## CSV Loader
 ### Loading CSV Data from files
-Load basic data from CSV files into the database. The file are contained in the application jar file.
+Load basic data from CSV files into the database.
 
 ### Configuration file content:
 The configuration yaml file needs to contain - additionally to the configuration from above - the path where the csv files are
@@ -51,6 +51,7 @@ located and a list of filenames for the different files:
         orderitemsFilename: orderitems.csv
         productContainersFilename: containers.csv
         productOriginsFilename: origins.csv
+        usersFilename: users.csv
 
 ### Run the CSV Loader application
 provide the path and name of the configuration file and run:
@@ -58,4 +59,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-04-16
+Copyright Uwe Geercken, 2022. Last update: 2022-05-07
