@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class ProductOrderUpdate
@@ -14,7 +15,10 @@ class ProductOrderUpdate
     private static final String SQL_UPDATE = "update productorder set number=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from productorder where id=?";
 
+    private static final String PRODUCT_ORDER_NUMBER_DATE_FORMAT = "yyyyMMddhhmmss";
+
     private Connection connection;
+    private SimpleDateFormat sdf = new SimpleDateFormat(PRODUCT_ORDER_NUMBER_DATE_FORMAT);
 
     public ProductOrderUpdate(Connection connection)
     {
@@ -26,7 +30,7 @@ class ProductOrderUpdate
         try
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
-            statement.setString(1, order.getNumber());
+            statement.setString(1, getGeneratedNumber());
             statement.setLong(2, new Date().getTime());
             statement.executeUpdate();
 
@@ -77,5 +81,10 @@ class ProductOrderUpdate
         {
             ex.printStackTrace();
         }
+    }
+
+    private String getGeneratedNumber()
+    {
+        return "B-" + sdf.format(new Date());
     }
 }
