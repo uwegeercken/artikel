@@ -30,6 +30,11 @@ public class ProductController implements ProductApiInterface
 
     public Route serveAllProductsPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
+        Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
+        if(order.isPresent())
+        {
+            model.put("order", order.get());
+        }
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts());
@@ -74,6 +79,7 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route shopProduct = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
         Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
         long productId = Long.parseLong(request.params(":id"));
 
@@ -82,9 +88,10 @@ public class ProductController implements ProductApiInterface
             ProductOrderItem item = new ProductOrderItem();
             item.setProduct(getProductById(productId));
             item.setAmount(1);
-            ProductOrder emptyOrder = new ProductOrder();
-            emptyOrder.addOrderItem(item);
-            request.session().attribute("order", emptyOrder);
+            ProductOrder newOrder = new ProductOrder();
+            newOrder.addOrderItem(item);
+            request.session().attribute("order", newOrder);
+            model.put("order", newOrder);
         }
         else
         {
@@ -100,9 +107,10 @@ public class ProductController implements ProductApiInterface
                 item.setAmount(1);
                 order.get().addOrderItem(item);
             }
+            model.put("order", order.get());
+
         }
 
-        Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts());

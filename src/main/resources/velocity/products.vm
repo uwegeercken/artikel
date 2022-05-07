@@ -14,9 +14,11 @@
         <p>Filter: <input id="search" searchtype="products" type="text""></p>
     </div>
     #foreach($product in $products)
+        #set($amount=0)
+        #if(${order.getOrderItem($product.id)}) #if(${order.getOrderItem($product.id).amount}>5) #set($amount=9999) #else #set($amount=${order.getOrderItem($product.id).amount}) #end #end
         <div class="unit" tag="$!product.name.toLowerCase()">
             #if($product.id>1)<a href="/product/delete/${product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
-            #if($product.id>1)<a href="/product/shop/${product.id}/"><img class="shop" height="22px" width="22px" src="/img/shopping_cart.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>#end
+            #if($product.id>1 && $product.producer.noOrdering==0)<a href="/product/shop/${product.id}/"><img class="shop" height="32px" width="32px" src="/img/shopping_cart_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>#end
             #if($product.id>1)<a href="/product/${product.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCT_EDIT")}"></a>#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>

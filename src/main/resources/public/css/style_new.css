@@ -235,15 +235,15 @@ img.dependent {
 
 img.edit {
 	position: absolute;
-	margin-top: 150px;
-	margin-left: 255px;
+	margin-top: 6px;
+    margin-left: 230px;
 	border: none;
 }
 
 img.shop {
 	position: absolute;
-	margin-top: 150px;
-	margin-left: 235px;
+	margin-top: 140px;
+	margin-left: 240px;
 	border: none;
 }
 
