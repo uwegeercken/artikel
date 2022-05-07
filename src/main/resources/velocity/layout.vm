@@ -30,106 +30,6 @@ $(document).ready(function() {
 	  }
   });
 
-  $( "#proposepassed" ).click(function() {
-  		var field=$("#object1_parameter option:selected").text();
-		if(field==null || field=="")
-		{
-			field=$("#object1_parameter").val();
-		}
-		else
-		{
-			pos = field.indexOf("(");
-			field = field.substring(0,pos).trim();
-
-		}
-		var field2=$("#object2_parameter option:selected").text();
-		if(field2==null || field2=="")
-		{
-  			field2=$("#object2_parameter").val();
-  		}
-  		else
-		{
-			pos = field2.indexOf("(");
-			field2 = field2.substring(0,pos).trim();
-
-		}
-  		var expectedvalue=$("#expectedvalue").val();
-		var check=$("#check option:selected").text();
-		var checktype=$("#check option:selected").data("type");
-
-		var partialmessage = "Field [" + field + "] $1 correctly " + check;
-		if(checktype==1)
-		{
-			$("#messagepassed").val(partialmessage);
-		}
-		else
-		{
-			if(expectedvalue)
-			{
-				$("#messagepassed").val(partialmessage + " $0");
-			}
-			else if(field2)
-			{
-				$("#messagepassed").val(partialmessage + " field [" + field2 + "] $0");
-			}
-			else
-			{
-				$("#messagepassed").val(partialmessage);
-			}
-
-		}
-  });
-
-  $( "#proposefailed" ).click(function() {
-  		var field=$("#object1_parameter option:selected").text();
-		if(field==null || field=="")
-		{
-			field=$("#object1_parameter").val();
-		}
-		else
-		{
-			pos = field.indexOf("(");
-			field = field.substring(0,pos).trim();
-
-		}
-		var field2=$("#object2_parameter option:selected").text();
-		if(field2==null || field2=="")
-		{
-  			field2=$("#object2_parameter").val();
-  		}
-  		else
-		{
-			pos = field2.indexOf("(");
-			field2 = field2.substring(0,pos).trim();
-
-		}
-  		var expectedvalue=$("#expectedvalue").val();
-		var check=$("#check option:selected").text();
-		var checktype=$("#check option:selected").data("type");
-
-		var partialmessage = "Field [" + field + "] $1 incorrectly not " + check;
-
-		if(checktype==1)
-		{
-			$("#messagefailed").val(partialmessage);
-		}
-		else
-		{
-			if(expectedvalue)
-			{
-				$("#messagefailed").val(partialmessage + " $0");
-			}
-			else if(field2)
-			{
-				$("#messagefailed").val(partialmessage + " field [" + field2 + "] $0");
-			}
-			else
-			{
-				$("#messagefailed").val(partialmessage);
-			}
-		}
-  });
-
   $(function() {
 
 	    $('#popup').on('click', function(e) {
@@ -176,14 +76,6 @@ $(document).ready(function() {
 		$("#help").toggle();
   });
 
-  $( "#testimg" ).click(function() {
-		$("#help").hide();
-		$("#listrulegroup").toggle();
-		$("#testrulegroup").toggle();
-  });
-  $( "#moretoshow" ).click(function() {
-  		$(".hiddenrow").toggle();
-  });
 	var value = $.jStorage.get("searchtext"+ $('#search').attr("searchtype"));
 	if(value)
 	{
@@ -229,9 +121,11 @@ $(document).ready(function() {
 		<tr>
 			<td width="88%">#parse("/velocity/logo.vm")</td>
 			<td>
+			    #set($amount=0)
+                #if(${order}) #if(${order.orderItems.size()}>5) #set($amount=9999) #else #set($amount=${order.orderItems.size()}) #end #end
 			    #if($user)
-                    <img width="60" height="60" src="/img/dummy_user.png" title="Angemeldet: $!{user.fullName}" alt="$!{user.fullName}">
-                    <a href="/shopproducts/"><img width="60" height="60" src="/img/shopping_cart_0.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
+                    <a href="/shopproducts/"><img width="40" height="40" src="/img/shopping_cart_${amount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
+                    &nbsp;&nbsp;<img width="40" height="40" src="/img/dummy_user.png" title="$!{user.fullName}" alt="$!{user.fullName}">
                 #end
             </td>
 		</tr>

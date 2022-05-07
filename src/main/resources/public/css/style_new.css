@@ -212,27 +212,6 @@ img.delete {
 	border: none;
 }
 
-img.disablerulegroup {
-	position: absolute;
-	margin-top: 6px;
-	margin-left: 180px;
-	border: none;
-}
-
-img.rulegrouplogic {
-	position: absolute;
-	margin-top: 6px;
-	margin-left: 230px;
-	border: none;
-}
-
-img.dependent {
-	position: absolute;
-	margin-top: 6px;
-	margin-left: 205px;
-	border: none;
-}
-
 img.edit {
 	position: absolute;
 	margin-top: 6px;
@@ -247,17 +226,24 @@ img.shop {
 	border: none;
 }
 
+img.plus {
+	position: absolute;
+	margin-top: 140px;
+	margin-left: 255px;
+	border: none;
+}
+
+img.minus {
+	position: absolute;
+	margin-top: 140px;
+	margin-left: 232px;
+	border: none;
+}
+
 img.copy {
 	position: absolute;
 	margin-top: 150px;
 	margin-left: 230px;
-	border: none;
-}
-
-img.data {
-	position: absolute;
-	margin-top: 150px;
-	margin-left: 205px;
 	border: none;
 }
 

@@ -30,11 +30,6 @@ public class ProductController implements ProductApiInterface
 
     public Route serveAllProductsPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
-        if(order.isPresent())
-        {
-            model.put("order", order.get());
-        }
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts());
@@ -91,7 +86,6 @@ public class ProductController implements ProductApiInterface
             ProductOrder newOrder = new ProductOrder();
             newOrder.addOrderItem(item);
             request.session().attribute("order", newOrder);
-            model.put("order", newOrder);
         }
         else
         {
@@ -107,8 +101,6 @@ public class ProductController implements ProductApiInterface
                 item.setAmount(1);
                 order.get().addOrderItem(item);
             }
-            model.put("order", order.get());
-
         }
 
         model.put("messages", messages);
