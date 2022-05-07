@@ -166,8 +166,11 @@ public class ProductController implements ProductApiInterface
 
     public Route shopProductComplete = (Request request, Response response) -> {
         ProductOrder  order = request.session().attribute("order");
-        addProductOrder(order);
-        request.session().removeAttribute("order");
+        if(order!=null)
+        {
+            addProductOrder(order);
+            request.session().removeAttribute("order");
+        }
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));

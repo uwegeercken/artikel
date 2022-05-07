@@ -1,6 +1,6 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">${messages.get("PAGETITLE_SHOP_LIST")} ($productorderitems.size())</p>
+    <p class="heading">${messages.get("PAGETITLE_SHOP_LIST")} (#if($productorderitems)$productorderitems.size() #else 0#end)</p>
     <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
         <a href="/shopcomplete/"><img class="add_external" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
     </p>
