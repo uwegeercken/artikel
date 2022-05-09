@@ -6,8 +6,8 @@
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_SHOP_LIST")}</p>
-        <p>${messages.get("HELP1_SHOP_LIST")}</p>
-        <p>${messages.get("HELP2_SHOP_LIST")}</p>
+        <p>${messages.get("HELP1_SHOPPRODUCTS")}</p>
+        <p>${messages.get("HELP2_SHOPPRODUCTS")}</p>
         <p><img height="22" width="22" src="/img/order.png">&nbsp;${messages.get("IMAGE_COMPLETE_ORDER")}</p>
     </div>
     <div id="filter">

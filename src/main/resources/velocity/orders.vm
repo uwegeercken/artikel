@@ -6,7 +6,7 @@
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCTORDERS_LIST")}</p>
         <p>${messages.get("HELP1_ORDERS_LIST")}</p>
         <p>${messages.get("HELP2_ORDERS_LIST")}</p>
-        <p><img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}</p>
+        <p><img height="22" width="22" src="/img/order.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS")}</p>
     </div>
     <div id="filter">
         <p>Filter: <input id="search" searchtype="products" type="text""></p>
