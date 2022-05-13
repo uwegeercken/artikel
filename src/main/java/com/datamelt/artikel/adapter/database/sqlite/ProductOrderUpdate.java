@@ -11,8 +11,8 @@ import java.util.Date;
 
 class ProductOrderUpdate
 {
-    private static final String SQL_INSERT = "insert into productorder (number,timestamp) values(?,?)";
-    private static final String SQL_UPDATE = "update productorder set number=?, timestamp=? where id=?";
+    private static final String SQL_INSERT = "insert into productorder (number, producer_id, timestamp) values(?,?,?)";
+    private static final String SQL_UPDATE = "update productorder set number=?, producer_id=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from productorder where id=?";
 
     private static final String PRODUCT_ORDER_NUMBER_DATE_FORMAT = "yyyyMMddhhmmss";
@@ -30,8 +30,9 @@ class ProductOrderUpdate
         try
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
-            statement.setString(1, getGeneratedNumber());
-            statement.setLong(2, new Date().getTime());
+            statement.setString(1, getGeneratedNumber(order.getProducerId()));
+            statement.setLong(2, order.getProducerId());
+            statement.setLong(3, new Date().getTime());
             statement.executeUpdate();
 
             ResultSet resultset = statement.getGeneratedKeys();
@@ -53,6 +54,7 @@ class ProductOrderUpdate
         {
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
             statement.setString(1, order.getNumber());
+            statement.setLong(2, order.getProducerId());
             statement.setLong(2, order.getTimestamp());
             statement.setLong(3, order.getId());
             statement.executeUpdate();
@@ -83,8 +85,8 @@ class ProductOrderUpdate
         }
     }
 
-    private String getGeneratedNumber()
+    private String getGeneratedNumber(long producerId)
     {
-        return "B-" + sdf.format(new Date());
+        return producerId + "--" + sdf.format(new Date());
     }
 }

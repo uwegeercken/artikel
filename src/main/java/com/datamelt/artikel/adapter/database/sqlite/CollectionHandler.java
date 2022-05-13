@@ -124,6 +124,7 @@ class CollectionHandler
         {
             ProductOrder order = new ProductOrder();
             order.setNumber(resultset.getString("number"));
+            order.setProducerId(resultset.getLong("producer_id"));
             order.setTimestamp(resultset.getLong("timestamp"));
             order.setId(resultset.getLong("id"));
             order.setOrderItems(getAllProductOrderItems(connection, order));

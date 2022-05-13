@@ -12,9 +12,9 @@
 
     <div class="formbox">
     #if($!{form.id}>0)
-        <form method="POST" action="/product/${form.id}/">
+        <form method="POST" action="/product/${form.id}/producer/${producerid}/">
     #else
-        <form method="POST" action="/product/0/">
+        <form method="POST" action="/product/0/producer/${producerid}/">
     #end
     <input name="$fields.valueOf("ID")" type="hidden" value="${form.id}">
     <table align="center" width="95%" border="0">

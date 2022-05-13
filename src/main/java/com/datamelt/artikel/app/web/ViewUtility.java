@@ -29,11 +29,14 @@ public class ViewUtility
         {
             ProductOrderCollection newProductOrderCollection = new ProductOrderCollection();
             request.session().attribute("ordercollection",newProductOrderCollection);
-            model.put("ordercollection", newProductOrderCollection);
         }
         else
         {
-            model.put("ordercollection", orderCollection.get());
+            if(model.get("producerid")!=null)
+            {
+                long producerId = (Long) model.get("producerid");
+                model.put("order", orderCollection.get().get(producerId));
+            }
         }
         return new VelocityTemplateEngine().render(new ModelAndView(model, template));
     }

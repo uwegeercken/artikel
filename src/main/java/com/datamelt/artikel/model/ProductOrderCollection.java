@@ -17,6 +17,11 @@ public class ProductOrderCollection
         orders.put(order.getProducerId(),order);
     }
 
+    public void remove(long producerId)
+    {
+        orders.remove(producerId);
+    }
+
     public int size()
     {
         return orders.size();

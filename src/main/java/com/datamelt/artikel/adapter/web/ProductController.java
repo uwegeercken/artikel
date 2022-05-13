@@ -41,10 +41,13 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route serveProductPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
         model.put("fields", ProductFormField.class);
+        model.put("producerid", producerId);
         Optional<Product> product = Optional.ofNullable(getProductById(Long.parseLong(request.params(":id"))));
         if(product.isPresent())
         {
@@ -159,9 +162,11 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route shopProductRemove = (Request request, Response response) -> {
-        ProductOrder  order = request.session().attribute("order");
         long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
+
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrder  order = orderCollection.get(producerId);
 
         ProductOrderItem shopItem = order.getOrderItem(productId);
         order.removeOrderItem(shopItem);
@@ -176,17 +181,20 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route shopProductComplete = (Request request, Response response) -> {
-        ProductOrder order = request.session().attribute("order");
+        long producerId = Long.parseLong(request.params(":producerid"));
+
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrder order = orderCollection.get(producerId);
         if(order!=null)
         {
             addProductOrder(order);
-            request.session().removeAttribute("order");
+            orderCollection.remove(producerId);
         }
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
-
     };
 
     public Route serveDeleteProductPage = (Request request, Response response) -> {
@@ -218,6 +226,7 @@ public class ProductController implements ProductApiInterface
 
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
+        model.put("producerid", producerId);
         String cancelled = request.queryParams("submit");
         if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
         {
