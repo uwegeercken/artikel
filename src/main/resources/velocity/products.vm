@@ -1,8 +1,12 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_LIST")} ($products.size())</p>
-    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/product/0/"><img class="add_external" height="22px" width="22px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
+    <p><img id="helpimg" height="32" width="32" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
+        <a href="/product/0/"><img class="add_external" height="32px" width="32px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
+	    #set($productamount=0)
+	    #set($order=${ordercollection.get(${producerid})})
+        #if($order && ${order.orderItems.size()}>5) #set($productamount=9999) #else #set($productamount=${order.orderItems.size()}) #end
+        <a href="/shopproducts/producer/${producerid}/"><img width="32" height="32" src="/img/shopping_cart_${productamount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_LIST")}</p>
@@ -15,10 +19,10 @@
     </div>
     #foreach($product in $products)
         #set($amount=0)
-        #if(${order.getOrderItem($product.id)}) #if(${order.getOrderItem($product.id).amount}>5) #set($amount=9999) #else #set($amount=${order.getOrderItem($product.id).amount}) #end #end
+        #if($order && ${order.getOrderItem($product.id)}) #if(${order.getOrderItem($product.id).amount}>5) #set($amount=9999) #else #set($amount=${order.getOrderItem($product.id).amount}) #end #end
         <div class="unit" tag="$!product.name.toLowerCase()">
             #if($product.id>1)<a href="/product/delete/${product.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
-            #if($product.id>1 && $product.producer.noOrdering==0)<a href="/product/shop/${product.id}/"><img class="shop" height="32px" width="32px" src="/img/shopping_cart_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>#end
+            #if($product.id>1 && $product.producer.noOrdering==0)<a href="/product/shop/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/shopping_cart_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>#end
             #if($product.id>1)<a href="/product/${product.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCT_EDIT")}"></a>#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>

@@ -121,11 +121,8 @@ $(document).ready(function() {
 		<tr>
 			<td width="88%">#parse("/velocity/logo.vm")</td>
 			<td>
-			    #set($amount=0)
-                #if(${order}) #if(${order.orderItems.size()}>5) #set($amount=9999) #else #set($amount=${order.orderItems.size()}) #end #end
 			    #if($user)
-                    <a href="/shopproducts/"><img width="40" height="40" src="/img/shopping_cart_${amount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
-                    &nbsp;&nbsp;<img width="40" height="40" src="/img/dummy_user.png" title="$!{user.fullName}" alt="$!{user.fullName}">
+                    <img width="40" height="40" src="/img/dummy_user.png" title="$!{user.fullName}" alt="$!{user.fullName}">
                 #end
             </td>
 		</tr>

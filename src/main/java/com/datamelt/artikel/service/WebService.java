@@ -23,7 +23,7 @@ public class WebService implements WebServiceInterface
     }
 
     @Override
-    public List<Product> getAllProducts() throws Exception { return repository.getAllProducts(); }
+    public List<Product> getAllProducts(long producerId) throws Exception { return repository.getAllProducts(producerId); }
 
     @Override
     public Product getProductById(long id) throws Exception

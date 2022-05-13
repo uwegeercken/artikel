@@ -5,7 +5,8 @@
 		</ul>
 		#if($user.isAuthenticated())
             <ul>
-                <li><a href="/products/">${messages.get("MENU_ENTRY_PRODUCTS")}</a></li>
+                <li><a href="/products/producer/5/">${messages.get("MENU_ENTRY_PRODUCTS_MOGK")}</a></li>
+                <li><a href="/products/producer/8/">${messages.get("MENU_ENTRY_PRODUCTS_BORGMEIER")}</a></li>
                 <li><a href="/orders/">${messages.get("MENU_ENTRY_PURCHASE_ORDER")}</a></li>
             </ul>
             <ul>

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface WebServiceInterface
 {
-    List<Product> getAllProducts() throws Exception;
+    List<Product> getAllProducts(long producerId) throws Exception;
 
     Product getProductById(long id) throws Exception;
 

@@ -23,7 +23,7 @@ public interface RepositoryInterface
     Product getProductByNumber(String number) throws Exception;
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
-    List<Product> getAllProducts() throws Exception;
+    List<Product> getAllProducts(long producerId) throws Exception;
 
     void addProductContainer(ProductContainer container);
     void updateProductContainer(ProductContainer container);

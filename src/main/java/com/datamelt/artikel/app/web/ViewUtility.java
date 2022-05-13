@@ -4,6 +4,7 @@ import com.datamelt.artikel.adapter.web.MessageBundle;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.app.web.util.Timestamp;
 import com.datamelt.artikel.model.ProductOrder;
+import com.datamelt.artikel.model.ProductOrderCollection;
 import com.datamelt.artikel.model.User;
 import spark.ModelAndView;
 import spark.Request;
@@ -23,10 +24,16 @@ public class ViewUtility
         {
             model.put("user", user.get());
         }
-        Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
-        if(order.isPresent())
+        Optional<ProductOrderCollection> orderCollection = Optional.ofNullable(request.session().attribute("ordercollection"));
+        if(!orderCollection.isPresent())
         {
-            model.put("order", order.get());
+            ProductOrderCollection newProductOrderCollection = new ProductOrderCollection();
+            request.session().attribute("ordercollection",newProductOrderCollection);
+            model.put("ordercollection", newProductOrderCollection);
+        }
+        else
+        {
+            model.put("ordercollection", orderCollection.get());
         }
         return new VelocityTemplateEngine().render(new ModelAndView(model, template));
     }

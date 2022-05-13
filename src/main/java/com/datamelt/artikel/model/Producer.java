@@ -11,6 +11,11 @@ public class Producer
         this.name = name;
     }
 
+    public Producer(long id)
+    {
+        this.id = id;
+    }
+
     public int getNoOrdering() { return noOrdering; }
 
     public void setNoOrdering(int noOrdering) { this.noOrdering = noOrdering; }

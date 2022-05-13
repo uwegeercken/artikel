@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ProductApiInterface
 {
-    List<Product> getAllProducts() throws Exception;
+    List<Product> getAllProducts(long producerId) throws Exception;
     Product getProductById(long id) throws Exception;
     void updateProduct(long id, ProductForm form) throws Exception;
     void addProduct(ProductForm form) throws Exception;

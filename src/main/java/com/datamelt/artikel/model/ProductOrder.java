@@ -9,10 +9,19 @@ public class ProductOrder
 {
     private long id;
     private String number;
+    private long producerId;
     private long timestamp;
     private Map<Long, ProductOrderItem> orderItems = new HashMap<>();
-
     private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT);
+
+    public ProductOrder()
+    {
+    }
+
+    public ProductOrder(long producerId)
+    {
+        this.producerId = producerId;
+    }
 
     public long getId()
     {
@@ -32,6 +41,16 @@ public class ProductOrder
     public void setNumber(String number)
     {
         this.number = number;
+    }
+
+    public long getProducerId()
+    {
+        return producerId;
+    }
+
+    public void setProducerId(long producerId)
+    {
+        this.producerId = producerId;
     }
 
     public long getTimestamp()

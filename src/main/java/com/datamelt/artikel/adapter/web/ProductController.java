@@ -29,10 +29,13 @@ public class ProductController implements ProductApiInterface
     }
 
     public Route serveAllProductsPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
-        model.put("products", getAllProducts());
+        model.put("products", getAllProducts(producerId));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
@@ -61,7 +64,10 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route serveShopProductsPage = (Request request, Response response) -> {
-        Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
+        long producerId = Long.parseLong(request.params(":producerid"));
+
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
         Map<String, Object> model = new HashMap<>();
         if(order.isPresent())
         {
@@ -69,23 +75,26 @@ public class ProductController implements ProductApiInterface
         }
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
 
     public Route shopProduct = (Request request, Response response) -> {
-        Map<String, Object> model = new HashMap<>();
-        Optional<ProductOrder> order = Optional.ofNullable(request.session().attribute("order"));
         long productId = Long.parseLong(request.params(":id"));
+        long producerId = Long.parseLong(request.params(":producerid"));
 
+        Map<String, Object> model = new HashMap<>();
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
         if(!order.isPresent())
         {
             ProductOrderItem item = new ProductOrderItem();
             item.setProduct(getProductById(productId));
             item.setAmount(1);
-            ProductOrder newOrder = new ProductOrder();
+            ProductOrder newOrder = new ProductOrder(producerId);
             newOrder.addOrderItem(item);
-            request.session().attribute("order", newOrder);
+            orderCollection.add(newOrder);
         }
         else
         {
@@ -105,15 +114,19 @@ public class ProductController implements ProductApiInterface
 
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
-        model.put("products", getAllProducts());
+        model.put("products", getAllProducts(producerId));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
 
     public Route shopProductIncrease = (Request request, Response response) -> {
-        ProductOrder  order = request.session().attribute("order");
-        long productId = Long.parseLong(request.params(":id"));
 
+        long productId = Long.parseLong(request.params(":id"));
+        long producerId = Long.parseLong(request.params(":producerid"));
+
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrder order = orderCollection.get(producerId);
         ProductOrderItem shopItem = order.getOrderItem(productId);
         shopItem.increaseAmount();
 
@@ -121,15 +134,18 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
 
 
     public Route shopProductDecrease = (Request request, Response response) -> {
-        ProductOrder  order = request.session().attribute("order");
         long productId = Long.parseLong(request.params(":id"));
+        long producerId = Long.parseLong(request.params(":producerid"));
 
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrder order = orderCollection.get(producerId);
         ProductOrderItem shopItem = order.getOrderItem(productId);
         shopItem.decreaseAmount();
 
@@ -137,6 +153,7 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -144,6 +161,7 @@ public class ProductController implements ProductApiInterface
     public Route shopProductRemove = (Request request, Response response) -> {
         ProductOrder  order = request.session().attribute("order");
         long productId = Long.parseLong(request.params(":id"));
+        long producerId = Long.parseLong(request.params(":producerid"));
 
         ProductOrderItem shopItem = order.getOrderItem(productId);
         order.removeOrderItem(shopItem);
@@ -152,12 +170,13 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
 
     public Route shopProductComplete = (Request request, Response response) -> {
-        ProductOrder  order = request.session().attribute("order");
+        ProductOrder order = request.session().attribute("order");
         if(order!=null)
         {
             addProductOrder(order);
@@ -180,6 +199,8 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route deleteProduct = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
@@ -188,11 +209,13 @@ public class ProductController implements ProductApiInterface
         {
             deleteProduct(Long.parseLong(request.params(":id")));
         }
-        model.put("products", getAllProducts());
+        model.put("products", getAllProducts(producerId));
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
     };
 
     public Route serveUpdateProductPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         String cancelled = request.queryParams("submit");
@@ -225,7 +248,7 @@ public class ProductController implements ProductApiInterface
         else
         {
             model.put("pagetitle", messages.get("FORM_BUTTON_CANCEL"));
-            model.put("products", getAllProducts());
+            model.put("products", getAllProducts(producerId));
             return ViewUtility.render(request,model,Path.Template.PRODUCTS);
         }
     };
@@ -290,9 +313,9 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public List<Product> getAllProducts() throws Exception
+    public List<Product> getAllProducts(long producerId) throws Exception
     {
-        return service.getAllProducts();
+        return service.getAllProducts(producerId);
     }
 
     @Override
