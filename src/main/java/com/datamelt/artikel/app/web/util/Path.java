@@ -9,7 +9,7 @@ public class Path
         public static final String LOGOUT = "/logout/";
         public static final String PRODUCTS = "/products/producer/:producerid/";
         public static final String PRODUCT = "/product/:id/producer/:producerid/";
-        public static final String PRODUCT_DELETE = "/product/delete/:id/";
+        public static final String PRODUCT_DELETE = "/product/delete/:id/producer/:producerid/";
         public static final String PRODUCERS = "/producers/";
         public static final String PRODUCER = "/producer/:id/";
         public static final String PRODUCER_DELETE = "/producer/delete/:id/";

@@ -2,7 +2,7 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_DELETE")}</p>
-    <form method="POST" action="/product/delete/${product.id}/">
+    <form method="POST" action="/product/delete/${product.id}/producer/${producerid}/">
     <div class="unit">
         <div class="grouptop">
             <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>

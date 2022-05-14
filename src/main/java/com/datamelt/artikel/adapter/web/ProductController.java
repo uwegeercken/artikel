@@ -198,11 +198,13 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route serveDeleteProductPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_DELETE"));
         Product product = getProductById(Long.parseLong(request.params(":id")));
         model.put("product", product);
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.PRODUCT_DELETE);
     };
 
@@ -218,6 +220,7 @@ public class ProductController implements ProductApiInterface
             deleteProduct(Long.parseLong(request.params(":id")));
         }
         model.put("products", getAllProducts(producerId));
+        model.put("producerid", producerId);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
     };
 
