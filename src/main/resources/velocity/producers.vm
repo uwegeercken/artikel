@@ -1,7 +1,7 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">Herstellerliste ($producers.size())</p>
-    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add"><img class="add_external" height="22px" width="22px" src="/img/general_add.png" title="${messages.get("IMAGE_PRODUCER_ADD")}"></a></p>
+    <p><img id="helpimg" height="22" width="22" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"><a href="/producer/0/"><img class="add_external" height="22px" width="22px" src="/img/general_add.png" title="${messages.get("IMAGE_PRODUCER_ADD")}"></a></p>
     <div id="help">
         <p class="helptitle">Produktliste</p>
         <p>${messages.get("HELP1_PRODUCER_LIST")}</p>

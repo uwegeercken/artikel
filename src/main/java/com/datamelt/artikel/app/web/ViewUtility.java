@@ -19,6 +19,7 @@ public class ViewUtility
     {
         model.put("WebPath", Path.Web.class);
         model.put("Timestamp", Timestamp.class);
+        model.put("producers", request.session().attribute("producers"));
         Optional<User> user = Optional.ofNullable(request.session().attribute("user"));
         if(user.isPresent())
         {

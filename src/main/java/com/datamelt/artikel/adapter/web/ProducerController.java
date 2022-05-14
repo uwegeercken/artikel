@@ -87,7 +87,9 @@ public class ProducerController implements ProducerApiInterface
         else
         {
             model.put("pagetitle", messages.get("FORM_BUTTON_CANCEL"));
-            model.put("producers", getAllProducers());
+            List<Producer> producers = getAllProducers();
+            model.put("producers", producers);
+            request.session().attribute("producers", producers);
             return ViewUtility.render(request,model,Path.Template.PRODUCERS);
         }
     };
@@ -110,7 +112,9 @@ public class ProducerController implements ProducerApiInterface
         {
             deleteProducer(Long.parseLong(request.params(":id")));
         }
-        model.put("producers", getAllProducers());
+        List<Producer> producers = getAllProducers();
+        model.put("producers", producers);
+        request.session().attribute("producers", producers);
         return ViewUtility.render(request,model,Path.Template.PRODUCERS);
     };
     private ValidatorResult validateProducer(ProducerForm form)
@@ -193,7 +197,7 @@ public class ProducerController implements ProducerApiInterface
     @Override
     public void addProducer(ProducerForm form) throws Exception
     {
-
+        service.addProducer(form);
     }
 
     @Override

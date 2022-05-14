@@ -4,6 +4,7 @@ import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.UserApiInterface;
@@ -13,6 +14,7 @@ import spark.Response;
 import spark.Route;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,6 +63,7 @@ public class LoginController implements UserApiInterface
                 loginUser.get().setAuthenticated(true);
                 request.session().attribute("user", loginUser.get());
                 model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
+                request.session().attribute("producers",getAllProducers());
                 return ViewUtility.render(request, model, Path.Template.INDEX);
             } else
             {
@@ -85,6 +88,12 @@ public class LoginController implements UserApiInterface
     public User getUserByName(String name) throws Exception
     {
         return service.getUserByName(name);
+    }
+
+    @Override
+    public List<Producer> getAllProducers() throws Exception
+    {
+        return service.getAllProducers();
     }
 
     private boolean getUserIsAuthenticated(User user, String loginPassword) throws Exception

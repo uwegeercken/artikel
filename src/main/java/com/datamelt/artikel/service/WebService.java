@@ -111,6 +111,24 @@ public class WebService implements WebServiceInterface
     }
 
     @Override
+    public Producer addProducer(ProducerForm form) throws Exception
+    {
+        Producer producer = new Producer(form.get(ProducerFormField.NAME));
+        producer.setName(form.get(ProducerFormField.NAME));
+        producer.setNoOrdering(Integer.parseInt(form.get(ProducerFormField.NO_ORDERING)));
+        try
+        {
+            logger.debug("adding producer - name: [{}]", producer.getName());
+            repository.addProducer(producer);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error adding producer: [{}]", ex.getMessage());
+        }
+        return producer;
+    }
+
+    @Override
     public Producer getProducerById(long id) throws Exception { return repository.getProducerById(id); }
     @Override
     public boolean getExistProduct(String number) throws Exception { return repository.getExistProduct(number); }
