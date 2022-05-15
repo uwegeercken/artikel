@@ -6,8 +6,8 @@ import java.util.Date;
 
 class ProductUpdate
 {
-    private static final String SQL_INSERT = "insert into product (number,name,description,title, subtitle, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, timestamp) values(?,?,?,?,?,?,?,?,?,?, ?, ?)";
-    private static final String SQL_UPDATE = "update product set name=?, description=?, title=?, subtitle=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, timestamp=? where id=?";
+    private static final String SQL_INSERT = "insert into product (number,name,description, label_title, label_subtitle, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, timestamp) values(?,?,?,?,?,?,?,?,?,?, ?, ?)";
+    private static final String SQL_UPDATE = "update product set name=?, description=?, label_title=?, label_subtitle=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from product where id=?";
 
     private final Connection connection;

@@ -9,6 +9,7 @@ sparkJava:
 
 labels:
   glabelsFile: /home/uwe/development/mogk-etiketten-01.glabels
+  csvOutputFilename: /home/uwe/development/output.csv
 
 csvInput:
   filesFolder: /home/uwe/development/csv

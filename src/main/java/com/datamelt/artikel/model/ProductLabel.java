@@ -1,5 +1,9 @@
 package com.datamelt.artikel.model;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class ProductLabel
 {
     private String title;
@@ -7,6 +11,9 @@ public class ProductLabel
     private String subtitle;
     private String unit;
     private String price;
+
+    private static final DecimalFormat formatPrice = new DecimalFormat("#.00");
+    private static final DecimalFormat formatWeight = new DecimalFormat("#");
 
     public ProductLabel(Product product)
     {
@@ -18,9 +25,17 @@ public class ProductLabel
         this.title = product.getTitle();
         this.name = product.getName();
         this.subtitle = product.getSubtitle();
+        this.price =  formatPrice.format(product.getPrice());
         if(product.getWeight()>0)
         {
-            this.unit = product.getWeight() + " Kg";
+            if(product.getWeight()<1)
+            {
+                this.unit = formatWeight.format(product.getWeight() * 1000) + " g";
+            }
+            else
+            {
+                this.unit = formatWeight.format(product.getWeight()) + " Kg";
+            }
         }
         else
         {

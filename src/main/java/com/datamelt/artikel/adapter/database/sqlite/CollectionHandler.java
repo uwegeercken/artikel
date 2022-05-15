@@ -34,6 +34,8 @@ class CollectionHandler
             product.setId(resultset.getLong("id"));
             product.setName(resultset.getString("name"));
             product.setDescription(resultset.getString("description"));
+            product.setTitle(resultset.getString("label_title"));
+            product.setSubtitle(resultset.getString("label_subtitle"));
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));

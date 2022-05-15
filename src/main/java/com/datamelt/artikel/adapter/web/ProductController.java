@@ -231,6 +231,7 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("producerid", producerId);
         String cancelled = request.queryParams("submit");
+
         if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
         {
             ProductForm form = new ProductForm();
@@ -352,6 +353,18 @@ public class ProductController implements ProductApiInterface
     public List<ProductOrigin> getAllProductOrigins() throws Exception
     {
         return service.getAllProductOrigins();
+    }
+
+    @Override
+    public void writeLabelsCsvFile(long producerId) throws Exception
+    {
+        List<Product> products = getAllProducts(producerId);
+        List<ProductLabel> labels = new ArrayList<>();
+        for(Product product : products)
+        {
+            labels.add(new ProductLabel(product));
+        }
+        service.writeLabelsCsvFile(labels);
     }
 
     @Override

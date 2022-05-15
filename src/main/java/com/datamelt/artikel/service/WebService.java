@@ -19,9 +19,10 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     private final RepositoryInterface repository;
     private final CsvWriterInterface csvLabelWriter;
 
-    public WebService(RepositoryInterface respository)
+    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter)
     {
         this.repository = respository;
+        this.csvLabelWriter = csvLabelWriter;
     }
 
     @Override
@@ -199,8 +200,8 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public void writeLabelsCsvFile(long producerId)
+    public void writeLabelsCsvFile(List<ProductLabel> productLabels) throws Exception
     {
-
+        csvLabelWriter.writeLabelsCsvFile(productLabels);
     }
 }
