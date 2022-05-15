@@ -34,7 +34,7 @@ public class WebApplication
         {
             throw new Exception("a configuration yaml file is required");
         }
-        MessageBundleInterface messages = new MessageBundle("de");
+        MessageBundleInterface messages = new MessageBundle(configuration.getSparkJava().getLocale());
 
         staticFiles.location("/public");
         staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());

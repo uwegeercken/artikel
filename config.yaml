@@ -5,6 +5,7 @@ database:
 
 sparkJava:
   staticfilesExpiretime: 10
+  locale: de
 
 labels:
   glabelsFile: /home/uwe/development/mogk-etiketten-01.glabels
