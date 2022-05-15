@@ -6,8 +6,8 @@ import java.util.Date;
 
 class ProductUpdate
 {
-    private static final String SQL_INSERT = "insert into product (number,name,description,producer_id, productcontainer_id, productorigin_id, quantity,weight,price, timestamp) values(?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "update product set name=?, description=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, timestamp=? where id=?";
+    private static final String SQL_INSERT = "insert into product (number,name,description,title, subtitle, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, timestamp) values(?,?,?,?,?,?,?,?,?,?, ?, ?)";
+    private static final String SQL_UPDATE = "update product set name=?, description=?, title=?, subtitle=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from product where id=?";
 
     private final Connection connection;
@@ -25,13 +25,15 @@ class ProductUpdate
             statement.setString(1, product.getNumber());
             statement.setString(2, product.getName());
             statement.setString(3, product.getDescription());
-            statement.setLong(4, product.getProducer().getId());
-            statement.setLong(5, product.getContainer().getId());
-            statement.setLong(6, product.getOrigin().getId());
-            statement.setLong(7, product.getQuantity());
-            statement.setDouble(8, product.getWeight());
-            statement.setDouble(9, product.getPrice());
-            statement.setLong(10, product.getTimestamp());
+            statement.setString(4, product.getTitle());
+            statement.setString(5, product.getSubtitle());
+            statement.setLong(6, product.getProducer().getId());
+            statement.setLong(7, product.getContainer().getId());
+            statement.setLong(8, product.getOrigin().getId());
+            statement.setLong(9, product.getQuantity());
+            statement.setDouble(10, product.getWeight());
+            statement.setDouble(11, product.getPrice());
+            statement.setLong(12, product.getTimestamp());
 
             statement.executeUpdate();
             statement.clearParameters();
@@ -55,15 +57,17 @@ class ProductUpdate
         PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
         statement.setString(1, product.getName());
         statement.setString(2, product.getDescription());
-        statement.setString(3, product.getNumber());
-        statement.setLong(4, product.getProducer().getId());
-        statement.setLong(5, product.getContainer().getId());
-        statement.setLong(6, product.getOrigin().getId());
-        statement.setLong(7, product.getQuantity());
-        statement.setDouble(8, product.getWeight());
-        statement.setDouble(9, product.getPrice());
-        statement.setLong(10, product.getTimestamp());
-        statement.setLong(11, product.getId());
+        statement.setString(3, product.getTitle());
+        statement.setString(4, product.getSubtitle());
+        statement.setString(5, product.getNumber());
+        statement.setLong(6, product.getProducer().getId());
+        statement.setLong(7, product.getContainer().getId());
+        statement.setLong(8, product.getOrigin().getId());
+        statement.setLong(9, product.getQuantity());
+        statement.setDouble(10, product.getWeight());
+        statement.setDouble(11, product.getPrice());
+        statement.setLong(12, product.getTimestamp());
+        statement.setLong(13, product.getId());
         statement.executeUpdate();
         statement.clearParameters();
 
