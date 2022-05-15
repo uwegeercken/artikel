@@ -6,6 +6,9 @@ database:
 sparkJava:
   staticfilesExpiretime: 10
 
+labels:
+  glabelsFile: /home/uwe/development/mogk-etiketten-01.glabels
+
 csvInput:
   filesFolder: /home/uwe/development/csv
   productsFilename: products.csv

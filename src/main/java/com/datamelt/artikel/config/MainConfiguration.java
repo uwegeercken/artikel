@@ -5,6 +5,7 @@ public class MainConfiguration
     private DatabaseConfiguration database;
     private SparkJava sparkJava;
     private CsvInput csvInput;
+    private LabelsConfiguration labels;
 
     public DatabaseConfiguration getDatabase()
     {
@@ -17,4 +18,6 @@ public class MainConfiguration
     }
 
     public SparkJava getSparkJava() { return sparkJava; }
+
+    public LabelsConfiguration getLabels() { return labels; }
 }

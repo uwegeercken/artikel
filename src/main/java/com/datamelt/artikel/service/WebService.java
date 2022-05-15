@@ -5,6 +5,7 @@ import com.datamelt.artikel.adapter.web.form.ProducerFormField;
 import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.adapter.web.form.ProductFormField;
 import com.datamelt.artikel.model.*;
+import com.datamelt.artikel.port.CsvWriterInterface;
 import com.datamelt.artikel.port.RepositoryInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import org.slf4j.Logger;
@@ -12,10 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-public class WebService implements WebServiceInterface
+public class WebService implements WebServiceInterface, CsvWriterInterface
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebService.class);
     private final RepositoryInterface repository;
+    private final CsvWriterInterface csvLabelWriter;
 
     public WebService(RepositoryInterface respository)
     {
@@ -194,5 +196,11 @@ public class WebService implements WebServiceInterface
     public ProductOrder getProductOrderById(long id) throws Exception
     {
         return repository.getProductOrderById(id);
+    }
+
+    @Override
+    public void writeLabelsCsvFile(long producerId)
+    {
+
     }
 }
