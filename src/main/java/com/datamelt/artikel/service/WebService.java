@@ -200,8 +200,8 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public void writeLabelsCsvFile(List<ProductLabel> productLabels) throws Exception
+    public byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
     {
-        csvLabelWriter.writeLabelsCsvFile(productLabels);
+        return csvLabelWriter.getLabelsOutputFile(productLabels);
     }
 }

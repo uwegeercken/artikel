@@ -224,6 +224,19 @@ public class ProductController implements ProductApiInterface
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
     };
 
+    public Route createLabels = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+
+        byte[] pdfOutputFile = getLabelsOutputFile(producerId);
+
+        response.type("application/pdf;charset=UTF-8");
+        response.header("Content-Disposition","inline; filename=" + "etiketten.pdf");
+        response.raw().getOutputStream().write(pdfOutputFile);
+        response.raw().getOutputStream().flush();
+        response.raw().getOutputStream().close();
+        return null;
+    };
+
     public Route serveUpdateProductPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
 
@@ -356,7 +369,7 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public void writeLabelsCsvFile(long producerId) throws Exception
+    public byte[] getLabelsOutputFile(long producerId) throws Exception
     {
         List<Product> products = getAllProducts(producerId);
         List<ProductLabel> labels = new ArrayList<>();
@@ -364,7 +377,7 @@ public class ProductController implements ProductApiInterface
         {
             labels.add(new ProductLabel(product));
         }
-        service.writeLabelsCsvFile(labels);
+        return service.getLabelsOutputFile(labels);
     }
 
     @Override

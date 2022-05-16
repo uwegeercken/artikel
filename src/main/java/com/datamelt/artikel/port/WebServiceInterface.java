@@ -41,5 +41,5 @@ public interface WebServiceInterface
     List<ProductOrder> getAllProductOrders() throws Exception;
     ProductOrder getProductOrderById(long id) throws Exception;
 
-    void writeLabelsCsvFile(List<ProductLabel> labels) throws Exception;
+    byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
 }

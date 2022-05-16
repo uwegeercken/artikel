@@ -3,6 +3,7 @@
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_LIST")} ($products.size())</p>
     <p><img id="helpimg" height="32" width="32" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
         <a href="/product/0/producer/${producerid}/"><img class="add_external" height="32px" width="32px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
+        <a href="/products/labels/${producerid}/"><img class="add_external" height="32px" width="32px" src="/img/product_add.png" title="${messages.get("IMAGE_LABELS")}"></a>
 	    #set($productamount=0)
         #if($order && ${order.orderItems.size()}>5) #set($productamount=9999) #else #set($productamount=${order.orderItems.size()}) #end
         <a href="/shopproducts/producer/${producerid}/"><img width="32" height="32" src="/img/shopping_cart_${productamount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
