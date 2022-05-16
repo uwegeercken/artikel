@@ -11,6 +11,7 @@ import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.util.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -226,11 +227,11 @@ public class ProductController implements ProductApiInterface
 
     public Route createLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
-
         byte[] pdfOutputFile = getLabelsOutputFile(producerId);
+        String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producerId + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
-        response.type("application/pdf;charset=UTF-8");
-        response.header("Content-Disposition","inline; filename=" + "etiketten.pdf");
+        response.type(Constants.LABELS_FILE_CONTENT_TYPE);
+        response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
         response.raw().getOutputStream().write(pdfOutputFile);
         response.raw().getOutputStream().flush();
         response.raw().getOutputStream().close();

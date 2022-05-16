@@ -11,7 +11,6 @@ labels:
   glabelsBinary: /usr/bin/glabels-3-batch
   glabelsFile: /home/uwe/development/mogk-etiketten-01.glabels
   tempFolder: /tmp
-  outputFilename: etiketten.pdf
 
 csvInput:
   filesFolder: /home/uwe/development/csv
