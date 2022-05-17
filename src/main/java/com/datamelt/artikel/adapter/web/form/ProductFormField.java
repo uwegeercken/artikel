@@ -4,7 +4,8 @@ public enum ProductFormField
 {
     ID("id", "long", false,false),
     NAME("name", "string", false, false),
-    DESCRIPTION("description", "string", false, true),
+    TITLE("title", "string", false, true),
+    SUBTITLE("title", "string", false, true),
     NUMBER("number", "string", true, false),
     QUANTITY("quantity", "int", false, true),
     WEIGHT("weight","double", false, true),

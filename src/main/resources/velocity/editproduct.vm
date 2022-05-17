@@ -32,9 +32,15 @@
 
         </tr>
         <tr>
-            <td>${messages.get("PRODUCT_FORM_FIELD_DESCRIPTION")}:</td>
+            <td>${messages.get("PRODUCT_FORM_FIELD_TITLE")}:</td>
             <td>
-                <input name="$fields.valueOf("DESCRIPTION")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("DESCRIPTION"))}">
+                <input name="$fields.valueOf("TITLE")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("TITLE"))}">
+            </td>
+        </tr>
+        <tr>
+            <td>${messages.get("PRODUCT_FORM_FIELD_SUBTITLE")}:</td>
+            <td>
+                <input name="$fields.valueOf("SUBTITLE")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("SUBTITLE"))}">
             </td>
         </tr>
         <tr>

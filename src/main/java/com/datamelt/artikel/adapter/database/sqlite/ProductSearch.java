@@ -31,9 +31,8 @@ class ProductSearch
             product = new Product(resultset.getString("number"));
             product.setId(id);
             product.setName(resultset.getString("name"));
-            product.setDescription(resultset.getString("description"));
-            product.setTitle(resultset.getString("label_title"));
-            product.setTitle(resultset.getString("label_subtitle"));
+            product.setTitle(resultset.getString("title"));
+            product.setSubtitle(resultset.getString("subtitle"));
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
@@ -61,9 +60,8 @@ class ProductSearch
             product = new Product(resultset.getString("number"));
             product.setId(resultset.getLong("id"));
             product.setName(name);
-            product.setDescription(resultset.getString("description"));
-            product.setTitle(resultset.getString("label_title"));
-            product.setTitle(resultset.getString("label_subtitle"));
+            product.setTitle(resultset.getString("title"));
+            product.setSubtitle(resultset.getString("subtitle"));
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
@@ -92,9 +90,8 @@ class ProductSearch
             product = new Product(number);
             product.setId(resultset.getLong("id"));
             product.setName(resultset.getString("name"));
-            product.setDescription(resultset.getString("description"));
-            product.setTitle(resultset.getString("label_title"));
-            product.setTitle(resultset.getString("label_subtitle"));
+            product.setTitle(resultset.getString("title"));
+            product.setSubtitle(resultset.getString("subtitle"));
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));

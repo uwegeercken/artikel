@@ -5,7 +5,6 @@ public class Product
     private long id;
     private String number;
     private String name;
-    private String description;
     private String title;
     private String subtitle;
     private int quantity;
@@ -34,11 +33,6 @@ public class Product
         return name;
     }
 
-    public String getDescription()
-    {
-        return description;
-    }
-
     public int getQuantity()
     {
         return quantity;
@@ -62,11 +56,6 @@ public class Product
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
     }
 
     public void setQuantity(int quantity)

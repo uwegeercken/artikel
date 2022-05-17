@@ -26,8 +26,9 @@
             #if($product.id>1)<a href="/product/${product.id}/producer/${product.producer.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCT_EDIT")}"></a>#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>
+                <p class="small">$!product.title</p>
                 <p class="big">$!product.name</p>
-                <p class="normal">$!product.description </p>
+                <p class="normal">$!product.subtitle</p>
                 <p class="normal">${messages.get("PRODUCT_FORM_FIELD_CONTAINER")}: $!{product.container.name} - ${messages.get("PRODUCT_FORM_FIELD_ORIGIN")}: $!{product.origin.name}</p>
                 <p class="normal">${messages.get("PRODUCT_FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("PRODUCT_FORM_FIELD_WEIGHT")}: $!{product.weight} kg</p>
                 <p class="normal">${messages.get("PRODUCT_FORM_FIELD_PRICE")}: € $!{product.price}</p>

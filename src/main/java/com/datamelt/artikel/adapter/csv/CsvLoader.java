@@ -88,17 +88,18 @@ public class CsvLoader implements FileInterface
                 String[] fields = line.split(",");
                 try
                 {
-                    Producer producer = getProducerByName(fields[6]);
-                    ProductOrigin origin = getProductOriginByName(fields[7]);
-                    ProductContainer container = getProductContainerByName(fields[8]);
+                    Producer producer = getProducerByName(fields[7]);
+                    ProductOrigin origin = getProductOriginByName(fields[8]);
+                    ProductContainer container = getProductContainerByName(fields[9]);
                     if(producer!=null)
                     {
                         Product product = new Product(fields[0]);
                         product.setName(fields[1]);
-                        product.setDescription(fields[2]);
-                        product.setQuantity(Integer.parseInt(fields[3]));
-                        product.setWeight(Double.parseDouble(fields[4]));
-                        product.setPrice(Double.parseDouble(fields[5]));
+                        product.setTitle(fields[2]);
+                        product.setSubtitle(fields[3]);
+                        product.setQuantity(Integer.parseInt(fields[4]));
+                        product.setWeight(Double.parseDouble(fields[5]));
+                        product.setPrice(Double.parseDouble(fields[6]));
                         product.setContainer(container);
                         product.setProducer(producer);
                         product.setOrigin(origin);

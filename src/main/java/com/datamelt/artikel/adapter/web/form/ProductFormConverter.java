@@ -10,7 +10,8 @@ public class ProductFormConverter
         form.put(ProductFormField.ID, String.valueOf(product.getId()));
         form.put(ProductFormField.NAME, product.getName());
         form.put(ProductFormField.NUMBER, product.getNumber());
-        form.put(ProductFormField.DESCRIPTION, product.getDescription());
+        form.put(ProductFormField.TITLE, product.getTitle());
+        form.put(ProductFormField.SUBTITLE, product.getSubtitle());
         form.put(ProductFormField.QUANTITY, String.valueOf(product.getQuantity()));
         form.put(ProductFormField.WEIGHT,String.valueOf(product.getWeight()));
         form.put(ProductFormField.PRICE,String.valueOf(product.getPrice()));
@@ -25,7 +26,8 @@ public class ProductFormConverter
         Product product = new Product(form.get(ProductFormField.NUMBER));
         product.setId(Long.parseLong(form.get(ProductFormField.ID)));
         product.setName(form.get(ProductFormField.NAME));
-        product.setDescription(form.get(ProductFormField.DESCRIPTION));
+        product.setTitle(form.get(ProductFormField.TITLE));
+        product.setSubtitle(form.get(ProductFormField.SUBTITLE));
         product.setQuantity(Integer.parseInt(form.get(ProductFormField.QUANTITY)));
         product.setWeight(Double.parseDouble(form.get(ProductFormField.WEIGHT)));
         product.setPrice(Double.parseDouble(form.get(ProductFormField.PRICE)));

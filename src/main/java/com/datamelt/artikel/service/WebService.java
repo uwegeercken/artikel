@@ -44,7 +44,8 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         Product product = new Product(form.get(ProductFormField.NUMBER));
         product.setId(id);
         product.setName(form.get(ProductFormField.NAME));
-        product.setDescription(form.get(ProductFormField.DESCRIPTION));
+        product.setTitle(form.get(ProductFormField.TITLE));
+        product.setSubtitle(form.get(ProductFormField.SUBTITLE));
         product.setQuantity(Integer.parseInt(form.get(ProductFormField.QUANTITY)));
         product.setWeight(Double.parseDouble(form.get(ProductFormField.WEIGHT)));
         product.setPrice(Double.parseDouble(form.get(ProductFormField.PRICE)));
@@ -74,7 +75,8 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
 
         Product product = new Product(form.get(ProductFormField.NUMBER));
         product.setName(form.get(ProductFormField.NAME));
-        product.setDescription(form.get(ProductFormField.DESCRIPTION));
+        product.setTitle(form.get(ProductFormField.TITLE));
+        product.setSubtitle(form.get(ProductFormField.SUBTITLE));
         product.setQuantity(Integer.parseInt(form.get(ProductFormField.QUANTITY)));
         product.setWeight(Double.parseDouble(form.get(ProductFormField.WEIGHT)));
         product.setPrice(Double.parseDouble(form.get(ProductFormField.PRICE)));
