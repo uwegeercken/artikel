@@ -3,7 +3,7 @@
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_LIST")} ($products.size())</p>
     <p><img id="helpimg" height="32" width="32" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
         <a href="/product/0/producer/${producerid}/"><img class="add_external" height="32px" width="32px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
-        <a href="/products/labels/${producerid}/"><img class="add_external" height="32px" width="32px" src="/img/product_add.png" title="${messages.get("IMAGE_LABELS")}"></a>
+        <a href="/products/labels/${producerid}/"><img class="add_external" height="32px" width="32px" src="/img/labels.png" title="${messages.get("IMAGE_LABELS")}"></a>
 	    #set($productamount=0)
         #if($order && ${order.orderItems.size()}>5) #set($productamount=9999) #else #set($productamount=${order.orderItems.size()}) #end
         <a href="/shopproducts/producer/${producerid}/"><img width="32" height="32" src="/img/shopping_cart_${productamount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
@@ -15,7 +15,7 @@
         <p><img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}</p>
     </div>
     <div id="filter">
-        <p>Filter: <input id="search" searchtype="products" type="text""></p>
+        <p>Filter: <input id="search" searchtype="products_${producerid}" type="text""></p>
     </div>
     #foreach($product in $products)
         #set($amount=0)
@@ -27,7 +27,7 @@
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>
                 <p class="small">$!{product.title}&nbsp;</p>
-                <p class="big">$!product.name</p>
+                <p class="big">$!{product.name}</p>
                 <p class="normal">$!{product.subtitle}&nbsp;</p>
                 <p class="normal">${messages.get("PRODUCT_FORM_FIELD_CONTAINER")}: $!{product.container.name} - ${messages.get("PRODUCT_FORM_FIELD_ORIGIN")}: $!{product.origin.name}</p>
                 <p class="normal">${messages.get("PRODUCT_FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("PRODUCT_FORM_FIELD_WEIGHT")}: $!{product.weight} kg</p>
