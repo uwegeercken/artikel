@@ -3,6 +3,7 @@ package com.datamelt.artikel.app.web;
 import com.datamelt.artikel.adapter.web.MessageBundle;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.app.web.util.Timestamp;
+import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.ProductOrder;
 import com.datamelt.artikel.model.ProductOrderCollection;
 import com.datamelt.artikel.model.User;
@@ -33,10 +34,10 @@ public class ViewUtility
         }
         else
         {
-            if(model.get("producerid")!=null)
+            if(model.get("producer")!=null)
             {
-                long producerId = (Long) model.get("producerid");
-                model.put("order", orderCollection.get().get(producerId));
+                Producer producer = (Producer) model.get("producer");
+                model.put("order", orderCollection.get().get(producer.getId()));
             }
         }
         return new VelocityTemplateEngine().render(new ModelAndView(model, template));

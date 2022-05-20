@@ -15,7 +15,7 @@ class CollectionHandler
     public static final String SQL_QUERY_MARKETS = "select * from market";
     public static final String SQL_QUERY_CONTAINERS = "select * from productcontainer";
     public static final String SQL_QUERY_ORIGINS = "select * from productorigin";
-    public static final String SQL_QUERY_ORDERS = "select * from productorder";
+    public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp desc";
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
 
     public static List<Product> getAllProducts(Connection connection, long producerId) throws Exception

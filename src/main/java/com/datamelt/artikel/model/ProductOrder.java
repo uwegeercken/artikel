@@ -11,6 +11,7 @@ public class ProductOrder
     private String number;
     private long producerId;
     private long timestamp;
+    private boolean shopLabelsOnly = false;
     private Map<Long, ProductOrderItem> orderItems = new HashMap<>();
     private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT);
 
@@ -21,6 +22,12 @@ public class ProductOrder
     public ProductOrder(long producerId)
     {
         this.producerId = producerId;
+    }
+
+    public ProductOrder(long producerId, boolean shopLabelsOnly)
+    {
+        this.producerId = producerId;
+        this.shopLabelsOnly = shopLabelsOnly;
     }
 
     public long getId()
@@ -100,5 +107,20 @@ public class ProductOrder
     public String getProductOrderDate()
     {
         return formatter.format(new Date(timestamp));
+    }
+
+    public List<Product> getProducts()
+    {
+        List<Product> products = new ArrayList<>();
+        for(ProductOrderItem item : orderItems.values())
+        {
+            products.add(item.getProduct());
+        }
+        return products;
+    }
+
+    public boolean getShopLabelsOnly()
+    {
+        return shopLabelsOnly;
     }
 }

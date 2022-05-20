@@ -7,15 +7,15 @@
     <form method="POST" action="/login/">
     <table style="width:30%;margin-left:auto;margin-right:auto;" align="center" border="0" cellpadding="2" cellspacing="4">
         <tr>
-            <td>Name:</td>
+            <td>${messages.get("LOGIN_FORM_FIELD_NAME")}:</td>
             <td><input type="text" id="userid" name="userid" size="20" maxlength="20" value="$!{user.name}"></td>
         </tr>
         <tr>
-            <td>Passwort:</td>
+            <td>${messages.get("LOGIN_FORM_FIELD_PASSWORD")}:</td>
             <td><input type="password" name="password" size="20" maxlength="128"></td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><input type="submit" value="Login" name="submit"></td>
+            <td colspan="2" align="center"><input type="submit" value="${messages.get("LOGIN_FORM_BUTTON_LOGIN")}" name="submit"></td>
         </tr>
     </table>
     </form>

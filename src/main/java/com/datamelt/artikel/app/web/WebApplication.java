@@ -60,6 +60,7 @@ public class WebApplication
 
         get(Path.Web.PRODUCTS, productController.serveAllProductsPage);
         get(Path.Web.GENERATE_LABELS, productController.createLabels);
+        get(Path.Web.GENERATE_SHOP_LABELS, productController.createShopLabels);
         get(Path.Web.PRODUCT, productController.serveProductPage);
         post(Path.Web.PRODUCT, productController.serveUpdateProductPage);
         get(Path.Web.PRODUCT_DELETE, productController.serveDeleteProductPage);

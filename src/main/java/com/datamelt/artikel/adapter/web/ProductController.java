@@ -31,24 +31,26 @@ public class ProductController implements ProductApiInterface
 
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts(producerId));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
 
     public Route serveProductPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
         model.put("fields", ProductFormField.class);
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         Optional<Product> product = Optional.ofNullable(getProductById(Long.parseLong(request.params(":id"))));
         if(product.isPresent())
         {
@@ -64,11 +66,11 @@ public class ProductController implements ProductApiInterface
         model.put("containers", getAllProductContainers());
         model.put("origins", getAllProductOrigins());
         return ViewUtility.render(request,model,Path.Template.PRODUCT);
-
     };
 
     public Route serveShopProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
@@ -76,17 +78,18 @@ public class ProductController implements ProductApiInterface
         if(order.isPresent())
         {
             model.put("productorderitems", getShopProductOrderItems(order.get()));
+            model.put("shoplabelsonly", order.get().getShopLabelsOnly());
         }
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
-
     };
 
     public Route shopProduct = (Request request, Response response) -> {
         long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
@@ -119,7 +122,7 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts(producerId));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
@@ -127,6 +130,7 @@ public class ProductController implements ProductApiInterface
     public Route shopProductLabels = (Request request, Response response) -> {
         long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
@@ -136,7 +140,7 @@ public class ProductController implements ProductApiInterface
             ProductOrderItem item = new ProductOrderItem();
             item.setProduct(getProductById(productId));
             item.setAmount(1);
-            ProductOrder newOrder = new ProductOrder(producerId);
+            ProductOrder newOrder = new ProductOrder(producerId, true);
             newOrder.addOrderItem(item);
             orderCollection.add(newOrder);
         }
@@ -154,7 +158,7 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts(producerId));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
@@ -163,6 +167,7 @@ public class ProductController implements ProductApiInterface
 
         long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder order = orderCollection.get(producerId);
@@ -173,7 +178,7 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -182,6 +187,7 @@ public class ProductController implements ProductApiInterface
     public Route shopProductDecrease = (Request request, Response response) -> {
         long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder order = orderCollection.get(producerId);
@@ -192,7 +198,7 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -200,6 +206,7 @@ public class ProductController implements ProductApiInterface
     public Route shopProductRemove = (Request request, Response response) -> {
         long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder  order = orderCollection.get(producerId);
@@ -211,13 +218,13 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
-
     };
 
     public Route shopProductComplete = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder order = orderCollection.get(producerId);
@@ -229,23 +236,26 @@ public class ProductController implements ProductApiInterface
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
     };
 
     public Route serveDeleteProductPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_DELETE"));
         Product product = getProductById(Long.parseLong(request.params(":id")));
         model.put("product", product);
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCT_DELETE);
     };
 
     public Route deleteProduct = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
@@ -256,14 +266,15 @@ public class ProductController implements ProductApiInterface
             deleteProduct(Long.parseLong(request.params(":id")));
         }
         model.put("products", getAllProducts(producerId));
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
     };
 
     public Route createLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
         byte[] pdfOutputFile = getLabelsOutputFile(producerId);
-        String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producerId + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+        String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
         response.type(Constants.LABELS_FILE_CONTENT_TYPE);
         response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
@@ -273,12 +284,33 @@ public class ProductController implements ProductApiInterface
         return null;
     };
 
+    public Route createShopLabels = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrder order = orderCollection.get(producerId);
+        if(order!=null)
+        {
+            byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
+            orderCollection.remove(producerId);
+            String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+            response.type(Constants.LABELS_FILE_CONTENT_TYPE);
+            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+            response.raw().getOutputStream().write(pdfOutputFile);
+            response.raw().getOutputStream().flush();
+            response.raw().getOutputStream().close();
+        }
+        return null;
+    };
+
     public Route serveUpdateProductPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
-        model.put("producerid", producerId);
+        model.put("producer", producer);
         String cancelled = request.queryParams("submit");
 
         if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
@@ -415,6 +447,18 @@ public class ProductController implements ProductApiInterface
         }
         return service.getLabelsOutputFile(labels);
     }
+    @Override
+    public byte[] getLabelsOutputFile(long producerId, ProductOrder order) throws Exception
+    {
+        List<Product> products = order.getProducts();
+        List<ProductLabel> labels = new ArrayList<>();
+        for(Product product : products)
+        {
+            labels.add(new ProductLabel(product));
+        }
+        return service.getLabelsOutputFile(labels);
+    }
+
 
     @Override
     public Product getProductById(long id) throws Exception
@@ -453,6 +497,10 @@ public class ProductController implements ProductApiInterface
 
     }
 
-
+    @Override
+    public Producer getProducerById(long producerId) throws Exception
+    {
+        return service.getProducerById(producerId);
+    }
 
 }
