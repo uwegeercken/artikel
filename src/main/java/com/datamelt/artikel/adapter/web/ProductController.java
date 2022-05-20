@@ -124,6 +124,41 @@ public class ProductController implements ProductApiInterface
 
     };
 
+    public Route shopProductLabels = (Request request, Response response) -> {
+        long productId = Long.parseLong(request.params(":id"));
+        long producerId = Long.parseLong(request.params(":producerid"));
+
+        Map<String, Object> model = new HashMap<>();
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
+        if(!order.isPresent())
+        {
+            ProductOrderItem item = new ProductOrderItem();
+            item.setProduct(getProductById(productId));
+            item.setAmount(1);
+            ProductOrder newOrder = new ProductOrder(producerId);
+            newOrder.addOrderItem(item);
+            orderCollection.add(newOrder);
+        }
+        else
+        {
+            if(!order.get().getOrderItems().containsKey(productId))
+            {
+                ProductOrderItem item = new ProductOrderItem();
+                item.setProduct(getProductById(productId));
+                item.setAmount(1);
+                order.get().addOrderItem(item);
+            }
+        }
+
+        model.put("messages", messages);
+        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
+        model.put("products", getAllProducts(producerId));
+        model.put("producerid", producerId);
+        return ViewUtility.render(request,model,Path.Template.PRODUCTS);
+
+    };
+
     public Route shopProductIncrease = (Request request, Response response) -> {
 
         long productId = Long.parseLong(request.params(":id"));

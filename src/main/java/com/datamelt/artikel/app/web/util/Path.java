@@ -18,6 +18,7 @@ public class Path
         public static final String PRODUCTCONTAINERS = "/productcontainers/";
         public static final String PRODUCTORIGINS = "/productorigins/";
         public static final String PRODUCT_SHOP = "/product/shop/:id/producer/:producerid/" ;
+        public static final String PRODUCT_SHOP_LABELS = "/product/labels/:id/producer/:producerid/" ;
         public static final String PRODUCT_SHOP_INCREASE = "/product/shop/increase/:id/producer/:producerid/" ;
         public static final String PRODUCT_SHOP_DECREASE = "/product/shop/decrease/:id/producer/:producerid/" ;
         public static final String PRODUCT_SHOP_REMOVE = "/product/shop/remove/:id/producer/:producerid/" ;

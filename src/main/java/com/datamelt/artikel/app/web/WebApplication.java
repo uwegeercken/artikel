@@ -65,6 +65,7 @@ public class WebApplication
         get(Path.Web.PRODUCT_DELETE, productController.serveDeleteProductPage);
         post(Path.Web.PRODUCT_DELETE, productController.deleteProduct);
         get(Path.Web.PRODUCT_SHOP, productController.shopProduct);
+        get(Path.Web.PRODUCT_SHOP_LABELS, productController.shopProductLabels);
         get(Path.Web.SHOPPRODUCTS, productController.serveShopProductsPage);
         get(Path.Web.PRODUCT_SHOP_INCREASE, productController.shopProductIncrease);
         get(Path.Web.PRODUCT_SHOP_DECREASE, productController.shopProductDecrease);
