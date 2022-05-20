@@ -2,11 +2,11 @@
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_MARKET_LIST")} ($markets.size())</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add">
-    <img class="add_external" height="40px" width="40px" src="/img/general_add.png" title="${messages.get("IMAGE_MARKET_ADD")}"></a></p>
+    <img class="add_external" height="40px" width="40px" src="/img/market_add.png" title="${messages.get("IMAGE_MARKET_ADD")}"></a></p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_MARKET_LIST")}</p>
         <p>${messages.get("HELP1_MARKET_LIST")}</p>
-        <p><img height="22" width="22" src="/img/general_add.png">&nbsp;${messages.get("IMAGE_MARKET_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_MARKET_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_MARKET_DELETE")}</p>
+        <p><img height="22" width="22" src="/img/market_add.png">&nbsp;${messages.get("IMAGE_MARKET_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_MARKET_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_MARKET_DELETE")}</p>
     </div>
     <div id="filter">
         <p>Filter: <input id="search" searchtype="markets" type="text""></p>

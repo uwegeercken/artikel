@@ -5,7 +5,9 @@
         #if($shoplabelsonly)
             <a href="/products/shoplabels/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/labels.png" title="${messages.get("IMAGE_GENERATE_SHOP_LABELS")}"></a>
         #else
-            <a href="/shopcomplete/producer/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
+            #if($productorderitems.size()>0)
+                <a href="/shopcomplete/producer/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/order.png" title="${messages.get("IMAGE_COMPLETE_ORDER")}"></a>
+            #end
         #end
     </p>
     <div id="help">
