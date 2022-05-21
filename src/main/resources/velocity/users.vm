@@ -1,0 +1,26 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <p class="heading">${messages.get("PAGETITLE_PRODUCTORDERS_LIST")} ($orders.size())</p>
+    <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"></p>
+    <div id="help">
+        <p class="helptitle">${messages.get("PAGETITLE_PRODUCTORDERS_LIST")}</p>
+        <p>${messages.get("HELP1_ORDERS_LIST")}</p>
+        <p>${messages.get("HELP2_ORDERS_LIST")}</p>
+        <p><img height="22" width="22" src="/img/order.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS")}</p>
+    </div>
+    <div id="filter">
+        <p>Filter: <input id="search" searchtype="products" type="text""></p>
+    </div>
+    #foreach($order in $orders)
+        <div class="unit" tag="$!order.number.toLowerCase()">
+            <a href="/orderitems/${order.id}/"><img class="edit" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
+            <div class="grouptop">
+                <p class="small">${messages.get("TYPE_ORDER")} #$!order.number</p>
+                <p class="big">${messages.get("PRODUCT_ORDER_NUMBER_OF_PRODUCTS")}: $!order.orderItems.size()</p>
+                <p class="normal">${messages.get("PRODUCT_ORDER_NUMBER_OF_ITEMS")}: $!order.totalProductOrderItemAmount</p>
+                <p class="normal">${messages.get("PRODUCT_ORDER_ORDER_DATE")}: $!order.productOrderDate</p>
+            </div>
+        </div>
+    #end
+#end
+
