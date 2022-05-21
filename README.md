@@ -20,6 +20,10 @@ The Web application allows for the maintenance of products, producers, markets, 
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
 at the defined location, the database will be created (if possible) and the database table structure will be setup.
 
+The labels section specifies settings for output of product labels (for printing) using the glabels application. The tempFolder is used to output generated label pdf files.
+
+The application language is German. But one could easily copy the German resource file and translate it to a different language.
+
 ### Configuration file content:
 
     database:
@@ -28,6 +32,11 @@ at the defined location, the database will be created (if possible) and the data
       name: /home/tester/products.db
     sparkJava:
       staticfilesExpiretime: 60
+      locale: de
+    labels:
+      glabelsBinary: /usr/bin/glabels-3-batch
+      glabelsFile: /home/tester/labels-01.glabels
+      tempFolder: /tmp
 
 ### Run the Web application
 provide the path and name of the configuration file and run:
@@ -59,4 +68,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-05-07
+Copyright Uwe Geercken, 2022. Last update: 2022-05-21
