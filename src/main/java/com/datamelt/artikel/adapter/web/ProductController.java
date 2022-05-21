@@ -153,6 +153,12 @@ public class ProductController implements ProductApiInterface
                 item.setAmount(1);
                 order.get().addOrderItem(item);
             }
+            else
+            {
+                ProductOrderItem item = new ProductOrderItem();
+                item.setProduct(getProductById(productId));
+                order.get().removeOrderItem(item);
+            }
         }
 
         model.put("messages", messages);

@@ -12,7 +12,12 @@
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_LIST")}</p>
         <p>${messages.get("HELP1_PRODUCT_LIST")}</p>
         <p>${messages.get("HELP2_PRODUCT_LIST")}</p>
-        <p><img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}</p>
+        <p>
+            <img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;
+            <img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}&nbsp;
+            <img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;
+            <img height="22" width="22" src="/img/shopping_cart_0.png">&nbsp;${messages.get("IMAGE_SHOPPING_CART")}
+        </p>
     </div>
     <div id="filter">
         <p>Filter: <input id="search" searchtype="products_${producer.id}" type="text""></p>
@@ -23,9 +28,9 @@
         <div class="unit" tag="$!product.name.toLowerCase()">
             #if($product.id>1)<a href="/product/delete/${product.id}/producer/${product.producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
             #if($product.id>1 && $product.producer.noOrdering==0)
-                <a href="/product/shop/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/shopping_cart_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>
+                <a href="/product/shop/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/cart_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>
             #else
-                <a href="/product/labels/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/shopping_cart_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT_FOR_LABEL")}"></a>
+                <a href="/product/labels/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/checkmark_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT_FOR_LABEL")}"></a>
             #end
             #if($product.id>1)<a href="/product/${product.id}/producer/${product.producer.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCT_EDIT")}"></a>#end
             <div class="grouptop">
