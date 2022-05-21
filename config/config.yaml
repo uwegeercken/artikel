@@ -9,7 +9,7 @@ sparkJava:
 
 labels:
   glabelsBinary: /usr/bin/glabels-3-batch
-  glabelsFile: /home/uwe/development/mogk-etiketten-01.glabels
+  glabelsFile: /home/uwe/development/etiketten-01.glabels
   tempFolder: /tmp
 
 csvInput:
