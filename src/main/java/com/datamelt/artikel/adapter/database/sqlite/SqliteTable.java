@@ -27,7 +27,8 @@ public class SqliteTable
             "\"id\"INTEGER NOT NULL," +
             "\"number\"TEXT NOT NULL UNIQUE," +
             "\"name\"TEXT NOT NULL," +
-            "\"description\"TEXT," +
+            "\"title\"TEXT," +
+            "\"subtitle\"TEXT," +
             "\"quantity\"INTEGER NOT NULL DEFAULT 1," +
             "\"weight\"NUMERIC NOT NULL DEFAULT 0," +
             "\"price\"NUMERIC NOT NULL DEFAULT 0," +
