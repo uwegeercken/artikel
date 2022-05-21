@@ -139,7 +139,7 @@
                                     <directory>config</directory>
                                     <includes>
                                         <include>config.yaml</include>
-                                        <include>etiketten-01.glabels.yaml</include>
+                                        <include>etiketten-01.glabels</include>
                                     </includes>
                                 </resource>
                             </resources>
