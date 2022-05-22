@@ -45,7 +45,7 @@ public class ProductLabel
         }
         else
         {
-            this.unit = product.getQuantity() + messages.get("LABELS_UNIT_TYPE_PIECE");
+            this.unit = product.getQuantity() + " " + messages.get("LABELS_UNIT_TYPE_PIECE");
         }
     }
 
