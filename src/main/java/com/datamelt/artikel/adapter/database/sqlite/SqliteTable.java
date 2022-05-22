@@ -71,6 +71,7 @@ private static final String CREATE_TABLE_USER = "CREATE TABLE if not exists \"us
             "\"name\"\tTEXT NOT NULL UNIQUE," +
             "\"password\"\tTEXT," +
             "\"full_name\"\tTEXT," +
+            "\"type\"\tTEXT," +
             "PRIMARY KEY(\"id\")" +
             ")";
 

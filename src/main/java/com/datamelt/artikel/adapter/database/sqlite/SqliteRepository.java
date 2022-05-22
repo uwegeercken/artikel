@@ -365,4 +365,10 @@ public class SqliteRepository implements RepositoryInterface
     {
         return ProductOrderSearch.getOrderById(connection, id);
     }
+
+    @Override
+    public List<User> getAllUsers() throws Exception
+    {
+        return CollectionHandler.getAllUsers(connection);
+    }
 }

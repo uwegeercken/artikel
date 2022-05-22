@@ -2,11 +2,8 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
-import com.datamelt.artikel.model.Market;
-import com.datamelt.artikel.port.MarketApiInterface;
-import com.datamelt.artikel.port.MessageBundleInterface;
-import com.datamelt.artikel.port.WebServiceInterface;
-import com.datamelt.artikel.service.WebService;
+import com.datamelt.artikel.model.User;
+import com.datamelt.artikel.port.*;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -15,29 +12,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MarketController implements MarketApiInterface
+public class UserController implements UserApiInterface
 {
     private static WebServiceInterface service;
     private MessageBundleInterface messages;
 
-    public MarketController(WebServiceInterface service, MessageBundleInterface messages)
+    public UserController(WebServiceInterface service, MessageBundleInterface messages)
     {
         this.service = service;
         this.messages = messages;
     }
 
-    public Route serveAllMarketsPage = (Request request, Response response) -> {
+    public Route serveAllUsersPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_MARKET_LIST"));
-        model.put("markets", getAllMarkets());
-        return ViewUtility.render(request,model,Path.Template.MARKETS);
+        model.put("pagetitle", messages.get("PAGETITLE_USER_LIST"));
+        model.put("users", getAllUsers());
+        return ViewUtility.render(request,model,Path.Template.USERS);
 
     };
 
     @Override
-    public List<Market> getAllMarkets() throws Exception
+    public List<User> getAllUsers() throws Exception
     {
-        return service.getAllMarkets();
+        return service.getAllUsers();
     }
 }

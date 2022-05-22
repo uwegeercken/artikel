@@ -7,7 +7,7 @@ import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.MessageBundleInterface;
-import com.datamelt.artikel.port.UserApiInterface;
+import com.datamelt.artikel.port.LoginApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import spark.Request;
 import spark.Response;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class LoginController implements UserApiInterface
+public class LoginController implements LoginApiInterface
 {
     private WebServiceInterface service;
     private MessageBundleInterface messages;

@@ -293,21 +293,33 @@ public class ProductController implements ProductApiInterface
     public Route createShopLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
+        Map<String, Object> model = new HashMap<>();
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder order = orderCollection.get(producerId);
-        if(order!=null)
+        byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
+        if(pdfOutputFile!=null)
         {
-            byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
             orderCollection.remove(producerId);
             String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
             response.type(Constants.LABELS_FILE_CONTENT_TYPE);
-            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY, Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
             response.raw().getOutputStream().write(pdfOutputFile);
             response.raw().getOutputStream().flush();
             response.raw().getOutputStream().close();
+            return null;
         }
-        return null;
+        else
+        {
+            model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("ERROR_CREATING_LABELS")));
+
+            model.put("productorderitems", getShopProductOrderItems(order));
+            model.put("shoplabelsonly", order.getShopLabelsOnly());
+            model.put("messages", messages);
+            model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
+            model.put("producer", producer);
+            return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
+        }
     };
 
     public Route serveUpdateProductPage = (Request request, Response response) -> {
@@ -449,7 +461,7 @@ public class ProductController implements ProductApiInterface
         List<ProductLabel> labels = new ArrayList<>();
         for(Product product : products)
         {
-            labels.add(new ProductLabel(product));
+            labels.add(new ProductLabel(product, messages));
         }
         return service.getLabelsOutputFile(labels);
     }
@@ -460,7 +472,7 @@ public class ProductController implements ProductApiInterface
         List<ProductLabel> labels = new ArrayList<>();
         for(Product product : products)
         {
-            labels.add(new ProductLabel(product));
+            labels.add(new ProductLabel(product, messages));
         }
         return service.getLabelsOutputFile(labels);
     }

@@ -178,6 +178,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public List<User> getAllUsers() throws Exception
+    {
+        return repository.getAllUsers();
+    }
+
+    @Override
     public Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception
     {
         return order.getOrderItems();

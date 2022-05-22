@@ -344,6 +344,12 @@ div.connector {
 	clear: both;
 }
 
+div.error {
+	margin-left: 0px;
+	padding: 10px;
+	clear: both;
+}
+
 div.horizontaldevider {
 	margin: 6px;
 	padding: 6px;

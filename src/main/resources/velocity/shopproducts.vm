@@ -1,3 +1,4 @@
+#parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_SHOP_LIST")} (#if($productorderitems)$productorderitems.size() #else 0#end)</p>
@@ -19,6 +20,11 @@
     <div id="filter">
         <p>Filter: <input id="search" searchtype="productorderitems" type="text""></p>
     </div>
+    <div class="error">
+         #if (${result})
+            <p>#insert_message($result)</p>
+         #end
+     </div>
     #foreach($item in $productorderitems)
         <div class="unit" tag="$!item.product.name.toLowerCase()">
             #if($item.product.id>1)<a href="/product/shop/remove/${item.product.id}/producer/${producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_SHOP_PRODUCT_REMOVE")}"></a>#end
@@ -36,4 +42,6 @@
             </div>
         </div>
     #end
+
+
 #end

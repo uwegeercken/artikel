@@ -17,6 +17,7 @@ class CollectionHandler
     public static final String SQL_QUERY_ORIGINS = "select * from productorigin";
     public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp desc";
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
+    public static final String SQL_QUERY_USERS = "select * from user";
 
     public static List<Product> getAllProducts(Connection connection, long producerId) throws Exception
     {
@@ -156,5 +157,23 @@ class CollectionHandler
         resultset.close();
         statement.close();
         return items;
+    }
+
+    public static List<User> getAllUsers(Connection connection) throws Exception
+    {
+        List<User> users = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_USERS);
+        ResultSet resultset = statement.executeQuery();
+        while(resultset.next())
+        {
+            User user = new User(resultset.getString("name"));
+            user.setId(resultset.getLong("id"));
+            user.setFullName(resultset.getString("full_name"));
+            user.setType(resultset.getString("type"));
+            users.add(user);
+        }
+        resultset.close();
+        statement.close();
+        return users;
     }
 }

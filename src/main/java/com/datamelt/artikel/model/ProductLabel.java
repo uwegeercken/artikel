@@ -1,5 +1,8 @@
 package com.datamelt.artikel.model;
 
+import com.datamelt.artikel.adapter.web.MessageBundle;
+import com.datamelt.artikel.port.MessageBundleInterface;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -15,8 +18,11 @@ public class ProductLabel
     private static final DecimalFormat formatPrice = new DecimalFormat("#.00");
     private static final DecimalFormat formatWeight = new DecimalFormat("#");
 
-    public ProductLabel(Product product)
+    private MessageBundleInterface messages;
+
+    public ProductLabel(Product product, MessageBundleInterface messages)
     {
+        this.messages = messages;
         mapProductToLabel(product);
     }
 
@@ -30,16 +36,16 @@ public class ProductLabel
         {
             if(product.getWeight()<1)
             {
-                this.unit = formatWeight.format(product.getWeight() * 1000) + " g";
+                this.unit = formatWeight.format(product.getWeight() * 1000) + " " + messages.get("LABELS_UNIT_TYPE_WEIGHT_SMALL");
             }
             else
             {
-                this.unit = formatWeight.format(product.getWeight()) + " Kg";
+                this.unit = formatWeight.format(product.getWeight()) + " " + messages.get("LABELS_UNIT_TYPE_WEIGHT_LARGE");
             }
         }
         else
         {
-            this.unit = product.getQuantity() + " " + product.getContainer().getName();
+            this.unit = product.getQuantity() + messages.get("LABELS_UNIT_TYPE_PIECE");
         }
     }
 

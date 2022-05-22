@@ -26,6 +26,11 @@
 
             #end
         </ul>
+        #if($user.isAdmin())
+        <ul>
+        	<li><a href="/users/">${messages.get("MENU_ENTRY_USERS")}</a></li>
+        </ul>
+        #end
 		<ul>
 			<li><a href="/about/">${messages.get("MENU_ENTRY_ABOUT")}</a></li>
 		</ul>

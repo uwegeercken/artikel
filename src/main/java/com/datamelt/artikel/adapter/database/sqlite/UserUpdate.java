@@ -9,8 +9,8 @@ import java.sql.SQLException;
 
 class UserUpdate
 {
-    private static final String SQL_INSERT = "insert into user (name, full_name, password) values(?,?,?)";
-    private static final String SQL_UPDATE = "update user set name=?, full_name=?, password=? where id=?";
+    private static final String SQL_INSERT = "insert into user (name, full_name, password, type) values(?,?,?,?)";
+    private static final String SQL_UPDATE = "update user set name=?, full_name=?, password=?, type=? where id=?";
     private static final String SQL_DELETE = "delete from user where id=?";
 
     private Connection connection;
@@ -28,6 +28,7 @@ class UserUpdate
             statement.setString(1, user.getName());
             statement.setString(2, user.getFullName());
             statement.setString(3, user.getPassword());
+            statement.setString(4, user.getType());
             statement.executeUpdate();
             statement.clearParameters();
 
@@ -52,7 +53,8 @@ class UserUpdate
             statement.setString(1, user.getName());
             statement.setString(2, user.getFullName());
             statement.setString(3, user.getPassword());
-            statement.setLong(4, user.getId());
+            statement.setString(4, user.getType());
+            statement.setLong(5, user.getId());
             statement.executeUpdate();
             statement.clearParameters();
 

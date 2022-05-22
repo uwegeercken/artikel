@@ -35,6 +35,7 @@ public interface WebServiceInterface
     void createDatabaseTables() throws Exception;
 
     User getUserByName(String name) throws Exception;
+    List<User> getAllUsers() throws Exception;
 
     Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception;
     void addProductOrder(ProductOrder order);

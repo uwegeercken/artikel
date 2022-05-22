@@ -43,6 +43,7 @@ public class WebApplication
         WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration.getLabels()));
         IndexController indexController = new IndexController(service, messages);
         LoginController loginController = new LoginController(service, messages);
+        UserController userController = new UserController(service, messages);
         ProductController productController = new ProductController(service, messages);
         ProducerController producerController = new ProducerController(service, messages);
         MarketController marketController = new MarketController(service, messages);
@@ -57,6 +58,8 @@ public class WebApplication
         get(Path.Web.LOGIN, loginController.serveLoginPage);
         get(Path.Web.LOGOUT, loginController.logoutUser);
         post(Path.Web.LOGIN, loginController.authenticateUser);
+
+        get(Path.Web.USERS, userController.serveAllUsersPage);
 
         get(Path.Web.PRODUCTS, productController.serveAllProductsPage);
         get(Path.Web.GENERATE_LABELS, productController.createLabels);

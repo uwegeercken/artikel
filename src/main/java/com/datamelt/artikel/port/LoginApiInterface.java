@@ -6,7 +6,7 @@ import com.datamelt.artikel.model.User;
 
 import java.util.List;
 
-public interface UserApiInterface
+public interface LoginApiInterface
 {
     User getUserByName(String name) throws Exception;
     List<Producer> getAllProducers() throws Exception;
