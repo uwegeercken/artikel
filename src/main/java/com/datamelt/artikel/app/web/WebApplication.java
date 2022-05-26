@@ -71,8 +71,7 @@ public class WebApplication
         get(Path.Web.PRODUCT_SHOP, productController.shopProduct);
         get(Path.Web.PRODUCT_SHOP_LABELS, productController.shopProductLabels);
         get(Path.Web.SHOPPRODUCTS, productController.serveShopProductsPage);
-        get(Path.Web.PRODUCT_SHOP_INCREASE, productController.shopProductIncrease);
-        get(Path.Web.PRODUCT_SHOP_DECREASE, productController.shopProductDecrease);
+        get(Path.Web.PRODUCT_SHOP_AMOUNT, productController.shopProductAmount);
         get(Path.Web.PRODUCT_SHOP_REMOVE, productController.shopProductRemove);
         get(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);

@@ -205,6 +205,10 @@ a {
 	clear: both;
 }
 
+.productamount {
+    margin-left: 238px;
+}
+
 img.delete {
 	position: absolute;
 	margin-top: 6px;

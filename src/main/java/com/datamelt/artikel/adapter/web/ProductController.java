@@ -91,6 +91,15 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
+        int value=0;
+        try
+        {
+            value = Integer.parseInt(request.queryParams("productamount"));
+        }
+        catch(Exception ex)
+        {
+        }
+
         Map<String, Object> model = new HashMap<>();
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
@@ -98,7 +107,7 @@ public class ProductController implements ProductApiInterface
         {
             ProductOrderItem item = new ProductOrderItem();
             item.setProduct(getProductById(productId));
-            item.setAmount(1);
+            item.setAmount(value);
             ProductOrder newOrder = new ProductOrder(producerId);
             newOrder.addOrderItem(item);
             orderCollection.add(newOrder);
@@ -108,13 +117,14 @@ public class ProductController implements ProductApiInterface
             if(order.get().getOrderItems().containsKey(productId))
             {
                 ProductOrderItem shopItem = order.get().getOrderItem(productId);
-                shopItem.increaseAmount();
+                shopItem.setAmount(value);
+                //shopItem.increaseAmount();
             }
             else
             {
                 ProductOrderItem item = new ProductOrderItem();
                 item.setProduct(getProductById(productId));
-                item.setAmount(1);
+                item.setAmount(value);
                 order.get().addOrderItem(item);
             }
         }
@@ -169,36 +179,25 @@ public class ProductController implements ProductApiInterface
 
     };
 
-    public Route shopProductIncrease = (Request request, Response response) -> {
+    public Route shopProductAmount = (Request request, Response response) -> {
 
         long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
-        ProductOrder order = orderCollection.get(producerId);
-        ProductOrderItem shopItem = order.getOrderItem(productId);
-        shopItem.increaseAmount();
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
-        model.put("productorderitems", getShopProductOrderItems(order));
-        model.put("producer", producer);
-        return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
-
-    };
-
-
-    public Route shopProductDecrease = (Request request, Response response) -> {
-        long productId = Long.parseLong(request.params(":id"));
-        long producerId = Long.parseLong(request.params(":producerid"));
-        Producer producer = getProducerById(producerId);
+        int value=0;
+        try
+        {
+            value = Integer.parseInt(request.queryParams("productamount"));
+        }
+        catch(Exception ex)
+        {
+        }
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder order = orderCollection.get(producerId);
         ProductOrderItem shopItem = order.getOrderItem(productId);
-        shopItem.decreaseAmount();
+        shopItem.setAmount(value);
 
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
@@ -239,11 +238,8 @@ public class ProductController implements ProductApiInterface
             addProductOrder(order);
             orderCollection.remove(producerId);
         }
-        Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
-        model.put("producer", producer);
-        return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
+        response.redirect(Path.Web.ORDERS);
+        return null;
     };
 
     public Route serveDeleteProductPage = (Request request, Response response) -> {
