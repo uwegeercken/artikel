@@ -6,6 +6,6 @@
         <p class="big">${messages.get("PAGE_INDEX_WELCOME_BACK")} ${user.name}</p>
     #end
     <p>${messages.get("PAGE_INDEX_INFO")}</p>
-    <p align="center"><img height="306" width="544" src="/img/anhaenger_mogk.jpeg"></p>
+    <p align="center"><img height="75%" width="75%" src="/img/anhaenger_mogk.jpeg"></p>
     <br>
 #end
