@@ -1,7 +1,7 @@
 #parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">Login Page</p>
+    <p class="heading">${messages.get("PAGETITLE_LOGIN")}</p>
     <p>${messages.get("PAGE_HEADIND_LOGIN")}</p>
     <div class="formbox">
     <form method="POST" action="/login/">
