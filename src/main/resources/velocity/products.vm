@@ -21,7 +21,7 @@
         </p>
     </div>
     <div id="filter">
-        <p>Filter: <input id="search" searchtype="products_${producer.id}" type="text""></p>
+        <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="products_${producer.id}" type="text""></p>
     </div>
     <div class="error">
         #if (${result})
@@ -31,7 +31,7 @@
     #foreach($product in $products)
         #set($amount=0)
         #if($order && ${order.getOrderItem($product.id)}) #if(${order.getOrderItem($product.id).amount}>5) #set($amount=9999) #else #set($amount=${order.getOrderItem($product.id).amount}) #end #end
-        <div class="unit" tag="$!product.name.toLowerCase()">
+        <div class="unit" tag="$!product.number.toLowerCase() + $!product.name.toLowerCase()">
             #if($product.id>1)<a href="/product/delete/${product.id}/producer/${product.producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
             #if($product.id>1 && $product.producer.noOrdering==0)
                 <a href="/product/shop/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/cart_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT")}"></a>

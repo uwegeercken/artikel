@@ -9,7 +9,7 @@
         <p><img height="22" width="22" src="/img/market_add.png">&nbsp;${messages.get("IMAGE_MARKET_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_MARKET_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_MARKET_DELETE")}</p>
     </div>
     <div id="filter">
-        <p>Filter: <input id="search" searchtype="markets" type="text""></p>
+        <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="markets" type="text""></p>
     </div>
     #foreach($market in $markets)
         <div class="unit" tag="$!market.name.toLowerCase()">

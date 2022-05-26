@@ -9,10 +9,10 @@
         <p><img height="22" width="22" src="/img/order.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS")}</p>
     </div>
     <div id="filter">
-        <p>Filter: <input id="search" searchtype="users" type="text""></p>
+        <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="users" type="text""></p>
     </div>
     #foreach($user in $users)
-        <div class="unit" tag="$!order.number.toLowerCase()">
+        <div class="unit" tag="$!user.fullName.toLowerCase()">
             #if($user.id>0)<a href="/users/delete/${user.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
             #if($user.id>0)<a href="/users/${user.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
             <div class="grouptop">

@@ -9,7 +9,7 @@
         <p><img height="22" width="22" src="/img/order.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS")}</p>
     </div>
     <div id="filter">
-        <p>Filter: <input id="search" searchtype="orders" type="text""></p>
+        <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="orders" type="text""></p>
     </div>
     #foreach($order in $orders)
         <div class="unit" tag="$!order.number.toLowerCase()">
