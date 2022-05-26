@@ -159,7 +159,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/artikel/lib</outputDirectory>
+                            <outputDirectory>${project.build.directory}/artikel/application-${version}/lib</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -182,7 +182,7 @@
                             <Class-Path>.</Class-Path>
                         </manifestEntries>
                     </archive>
-                    <finalName>artikel/artikel</finalName>
+                    <finalName>artikel//application-${version}/${artifactId}</finalName>
                 </configuration>
             </plugin>
         </plugins>
