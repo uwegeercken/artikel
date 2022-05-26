@@ -19,8 +19,8 @@ public class WebApplication
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
-    public static final String APPLCATION_VERSION = "v0.4";
-    public static final String APPLCATION_LAST_UPDATE = "07.05.2022";
+    public static final String APPLCATION_VERSION = "v0.5";
+    public static final String APPLCATION_LAST_UPDATE = "26.05.2022";
 
     public static void main(String[] args) throws Exception
     {
