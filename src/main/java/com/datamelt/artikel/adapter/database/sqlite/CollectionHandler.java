@@ -9,8 +9,7 @@ import java.util.*;
 
 class CollectionHandler
 {
-    public static final String SQL_QUERY_PRODUCTS = "select * from product";
-    public static final String SQL_QUERY_PRODUVER_PRODUCTS = "select * from product where producer_id=?";
+    public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=?";
     public static final String SQL_QUERY_PRODUCERS = "select * from producer";
     public static final String SQL_QUERY_MARKETS = "select * from market";
     public static final String SQL_QUERY_CONTAINERS = "select * from productcontainer";
@@ -22,7 +21,7 @@ class CollectionHandler
     public static List<Product> getAllProducts(Connection connection, long producerId) throws Exception
     {
         List<Product> products = new ArrayList<>();
-        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUVER_PRODUCTS);
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCER_PRODUCTS);
         statement.setLong(1, producerId);
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())

@@ -4,8 +4,6 @@ import com.datamelt.artikel.adapter.web.MessageBundle;
 import com.datamelt.artikel.port.MessageBundleInterface;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 
 public class ProductLabel
 {

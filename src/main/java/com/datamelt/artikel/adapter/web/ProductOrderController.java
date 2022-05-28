@@ -60,9 +60,10 @@ public class ProductOrderController implements ProductOrderApiInterface
         {
             Producer producer = getProducerById(order.get().getProducerId());
             byte[] pdfOutputFile = getOrderDocument(producer, order.get());
+            String pdfFilename = getOrderDocumentFilename(producer, order.get());
 
             response.type(Constants.ORDER_FILE_CONTENT_TYPE);
-            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + "order_" + order.get().getProducerId());
+            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
             response.raw().getOutputStream().write(pdfOutputFile);
             response.raw().getOutputStream().flush();
             response.raw().getOutputStream().close();
@@ -93,5 +94,11 @@ public class ProductOrderController implements ProductOrderApiInterface
     public byte[] getOrderDocument(Producer producer, ProductOrder order) throws Exception
     {
         return service.getOrderDocument(producer, order);
+    }
+
+    @Override
+    public String getOrderDocumentFilename(Producer producer, ProductOrder order)
+    {
+        return service.getOrderDocumentFilename(producer, order);
     }
 }

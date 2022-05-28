@@ -221,4 +221,10 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         return orderDocumentGenerator.getOrderDocument(producer,order);
     }
+
+    @Override
+    public String getOrderDocumentFilename(Producer producer, ProductOrder order)
+    {
+        return orderDocumentGenerator.getOrderDocumentFilename(producer, order);
+    }
 }

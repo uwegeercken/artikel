@@ -44,4 +44,5 @@ public interface WebServiceInterface
 
     byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
     byte [] getOrderDocument(Producer producer, ProductOrder order) throws Exception;
+    String getOrderDocumentFilename(Producer producer, ProductOrder order);
 }

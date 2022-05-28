@@ -5,4 +5,5 @@ import com.datamelt.artikel.model.*;
 public interface OrderDocumentInterface
 {
     byte [] getOrderDocument(Producer producer, ProductOrder order);
+    String getOrderDocumentFilename(Producer producer, ProductOrder order);
 }
