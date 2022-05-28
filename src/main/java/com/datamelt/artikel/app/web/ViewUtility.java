@@ -42,4 +42,9 @@ public class ViewUtility
         }
         return new VelocityTemplateEngine().render(new ModelAndView(model, template));
     }
+
+    public static String renderPdf (Request request, Map<String, Object> model, String template)
+    {
+        return new VelocityTemplateEngine().render(new ModelAndView(model, template));
+    }
 }

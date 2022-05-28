@@ -12,4 +12,6 @@ public class Constants
     public static final String LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2 = ".pdf";
     public static final String LABELS_FILE_CONTENT_TYPE = "application/pdf;charset=UTF-8";
 
+    public static final String ORDER_FILE_CONTENT_TYPE = "application/pdf;charset=UTF-8";
+
 }

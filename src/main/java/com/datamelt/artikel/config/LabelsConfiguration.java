@@ -6,16 +6,10 @@ public class LabelsConfiguration
 {
     private String glabelsBinary;
     private String glabelsFile;
-    private String tempFolder;
 
     public String getGlabelsFile()
     {
         return glabelsFile;
-    }
-
-    public String getTempFolder()
-    {
-        return tempFolder;
     }
 
     public String getGlabelsBinary()
@@ -27,12 +21,6 @@ public class LabelsConfiguration
     {
         File labelsFile = new File(glabelsFile);
         return labelsFile.exists() && labelsFile.canRead();
-    }
-
-    public boolean existTempFolder()
-    {
-        File folder = new File(tempFolder);
-        return folder.exists() && folder.isDirectory() && folder.canWrite();
     }
 
     public boolean existBinary()

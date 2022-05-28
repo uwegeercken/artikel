@@ -2,6 +2,7 @@ package com.datamelt.artikel.app.web;
 
 import com.datamelt.artikel.adapter.csv.CsvLabelFileWriter;
 import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
+import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
 import com.datamelt.artikel.adapter.web.*;
 import com.datamelt.artikel.app.ConfigurationLoader;
 import com.datamelt.artikel.app.web.util.Filters;
@@ -40,7 +41,7 @@ public class WebApplication
         staticFiles.location("/public");
         staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());
 
-        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration.getLabels()));
+        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration));
         IndexController indexController = new IndexController(service, messages);
         LoginController loginController = new LoginController(service, messages);
         UserController userController = new UserController(service, messages);
@@ -49,7 +50,7 @@ public class WebApplication
         MarketController marketController = new MarketController(service, messages);
         ProductContainerController containerController = new ProductContainerController(service, messages);
         ProductOriginController originController = new ProductOriginController(service, messages);
-        ProductOrderController orderController = new ProductOrderController(service,messages);
+        ProductOrderController orderController = new ProductOrderController(service,messages, configuration.getAsciidoc());
 
         before("*", Filters.redirectToLogin);
 
@@ -76,6 +77,7 @@ public class WebApplication
         get(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
         get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
+        get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);

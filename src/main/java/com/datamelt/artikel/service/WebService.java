@@ -1,5 +1,6 @@
 package com.datamelt.artikel.service;
 
+import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
 import com.datamelt.artikel.adapter.web.form.ProducerForm;
 import com.datamelt.artikel.adapter.web.form.ProducerFormField;
 import com.datamelt.artikel.adapter.web.form.ProductForm;
@@ -18,11 +19,13 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     private static final Logger logger =  LoggerFactory.getLogger(WebService.class);
     private final RepositoryInterface repository;
     private final CsvWriterInterface csvLabelWriter;
+    private OrderDocumentGenerator orderDocumentGenerator;
 
-    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter)
+    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentGenerator orderDocumentGenerator)
     {
         this.repository = respository;
         this.csvLabelWriter = csvLabelWriter;
+        this.orderDocumentGenerator = orderDocumentGenerator;
     }
 
     @Override
@@ -211,5 +214,11 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
     {
         return csvLabelWriter.getLabelsOutputFile(productLabels);
+    }
+
+    @Override
+    public byte[] getOrderDocument(Producer producer, ProductOrder order) throws Exception
+    {
+        return orderDocumentGenerator.getOrderDocument(producer,order);
     }
 }

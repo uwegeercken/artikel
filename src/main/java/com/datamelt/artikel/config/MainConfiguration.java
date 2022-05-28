@@ -6,6 +6,7 @@ public class MainConfiguration
     private SparkJava sparkJava;
     private CsvInput csvInput;
     private LabelsConfiguration labels;
+    private AsciidocConfiguration asciidoc;
 
     public DatabaseConfiguration getDatabase()
     {
@@ -20,4 +21,6 @@ public class MainConfiguration
     public SparkJava getSparkJava() { return sparkJava; }
 
     public LabelsConfiguration getLabels() { return labels; }
+
+    public AsciidocConfiguration getAsciidoc() { return asciidoc; }
 }

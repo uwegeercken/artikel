@@ -1,0 +1,31 @@
+:author:        Uwe Geercken
+:email:         uwe.geercken@web.de
+:description:   Bestellung beim Händler
+:keywords:      Bestellung, Geflügel, Mogk
+:revnumber:     1.0
+:revdate:       2022-05-27
+:revremark:     Production version
+:toc: 		      left
+:icons:         font
+:company:       Geflügel Mogk, Hohn
+:imagesdir:     images
+:sourcesdir:    sources
+:pba:           Bestellung
+
+<<<
+
+*Bestelldatum*: *${orderdate}*
+
+[width="100%", cols="25,50,25",options="header"]
+|===
+|Nummer
+|Beschreibung
+|Menge
+
+#foreach($item in $productorderitems)
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+|Cell in column 3, row 1
+#end
+
+|===

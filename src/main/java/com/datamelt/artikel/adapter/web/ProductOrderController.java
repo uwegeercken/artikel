@@ -2,10 +2,14 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.config.AsciidocConfiguration;
+import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.ProductOrder;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductOrderApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.util.Constants;
+
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -16,11 +20,13 @@ public class ProductOrderController implements ProductOrderApiInterface
 {
     private static WebServiceInterface service;
     private MessageBundleInterface messages;
+    private AsciidocConfiguration configuration;
 
-    public ProductOrderController(WebServiceInterface service, MessageBundleInterface messages)
+    public ProductOrderController(WebServiceInterface service, MessageBundleInterface messages, AsciidocConfiguration configuration)
     {
         this.service = service;
         this.messages = messages;
+        this.configuration = configuration;
     }
 
     public Route serveAllOrdersPage = (Request request, Response response) -> {
@@ -45,6 +51,26 @@ public class ProductOrderController implements ProductOrderApiInterface
         return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
     };
 
+    public Route generateOrderPdf = (Request request, Response response) -> {
+
+        Optional<ProductOrder> order = Optional.ofNullable(getProductOrderById(Long.parseLong(request.params(":id"))));
+        Map<String, Object> model = new HashMap<>();
+
+        if(order.isPresent())
+        {
+            Producer producer = getProducerById(order.get().getProducerId());
+            byte[] pdfOutputFile = getOrderDocument(producer, order.get());
+
+            response.type(Constants.ORDER_FILE_CONTENT_TYPE);
+            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + "order_" + order.get().getProducerId());
+            response.raw().getOutputStream().write(pdfOutputFile);
+            response.raw().getOutputStream().flush();
+            response.raw().getOutputStream().close();
+        }
+
+        return null;
+    };
+
     @Override
     public List<ProductOrder> getAllProductOrders() throws Exception
     {
@@ -55,5 +81,17 @@ public class ProductOrderController implements ProductOrderApiInterface
     public ProductOrder getProductOrderById(long id) throws Exception
     {
         return service.getProductOrderById(id);
+    }
+
+    @Override
+    public Producer getProducerById(long producerId) throws Exception
+    {
+        return service.getProducerById(producerId);
+    }
+
+    @Override
+    public byte[] getOrderDocument(Producer producer, ProductOrder order) throws Exception
+    {
+        return service.getOrderDocument(producer, order);
     }
 }

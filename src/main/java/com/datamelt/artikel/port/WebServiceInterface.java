@@ -43,4 +43,5 @@ public interface WebServiceInterface
     ProductOrder getProductOrderById(long id) throws Exception;
 
     byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
+    byte [] getOrderDocument(Producer producer, ProductOrder order) throws Exception;
 }

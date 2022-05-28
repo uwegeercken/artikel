@@ -1,6 +1,7 @@
 package com.datamelt.artikel.adapter.csv;
 
 import com.datamelt.artikel.config.LabelsConfiguration;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.ProductLabel;
 import com.datamelt.artikel.port.CsvWriterInterface;
 import com.datamelt.artikel.util.Constants;
@@ -19,9 +20,9 @@ import java.util.concurrent.TimeUnit;
 public class CsvLabelFileWriter implements CsvWriterInterface
 {
     private static final Logger logger = LoggerFactory.getLogger(CsvLabelFileWriter.class);
-    private final LabelsConfiguration configuration;
+    private final MainConfiguration configuration;
 
-    public CsvLabelFileWriter(LabelsConfiguration configuration)
+    public CsvLabelFileWriter(MainConfiguration configuration)
     {
         this.configuration = configuration;
     }
@@ -29,7 +30,7 @@ public class CsvLabelFileWriter implements CsvWriterInterface
     @Override
     public byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
     {
-        File csvOutputFile = new File(configuration.getTempFolder() + "/" + Constants.LABELS_CSV_FILENAME);
+        File csvOutputFile = new File(configuration.getSparkJava().getTempFolder() + "/" + Constants.LABELS_CSV_FILENAME);
 
         CsvSchema schema = CsvSchema.builder().setUseHeader(false)
             .addColumn("title")
@@ -49,12 +50,12 @@ public class CsvLabelFileWriter implements CsvWriterInterface
 
     private byte[] writeLabelsOutputFile(File csvOutputFile) throws Exception
     {
-        if(configuration.existBinary() && configuration.existTempFolder() && configuration.existGlabelsFile())
+        if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existGlabelsFile())
         {
-            String inputFilename = configuration.getTempFolder() + "/" + Constants.LABELS_CSV_FILENAME;
-            String outputFilename = configuration.getTempFolder() + "/" + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+            String inputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.LABELS_CSV_FILENAME;
+            String outputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
-            String command = configuration.getGlabelsBinary() + " -i " + inputFilename + " -o " + outputFilename + " " + configuration.getGlabelsFile();
+            String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -o " + outputFilename + " " + configuration.getLabels().getGlabelsFile();
             Process process = Runtime.getRuntime().exec(command);
             process.waitFor(15, TimeUnit.SECONDS);
             File file = new File(outputFilename);
@@ -63,17 +64,17 @@ public class CsvLabelFileWriter implements CsvWriterInterface
         }
         else
         {
-            if(!configuration.existBinary())
+            if(!configuration.getLabels().existBinary())
             {
-                logger.error("configuration item: glabelsFile [{}] does not exist or can not be executed", configuration.getGlabelsBinary());
+                logger.error("configuration item: glabelsFile [{}] does not exist or can not be executed", configuration.getLabels().getGlabelsBinary());
             }
-            else if(!configuration.existTempFolder())
+            else if(!configuration.getSparkJava().existTempFolder())
             {
-                logger.error("configuration item: tempFolder [{}] does not exist or can not be accessed", configuration.getTempFolder());
+                logger.error("configuration item: tempFolder [{}] does not exist or can not be accessed", configuration.getSparkJava().getTempFolder());
             }
-            else if(!configuration.existGlabelsFile())
+            else if(!configuration.getLabels().existGlabelsFile())
             {
-                logger.error("configuration item: glabelsFile [{}] does not exist or can not be read", configuration.existGlabelsFile());
+                logger.error("configuration item: glabelsFile [{}] does not exist or can not be read", configuration.getLabels().existGlabelsFile());
             }
             return null;
         }

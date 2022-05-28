@@ -6,11 +6,14 @@ database:
 sparkJava:
   staticfilesExpiretime: 10
   locale: de
+  tempFolder: /tmp
 
 labels:
   glabelsBinary: /usr/bin/glabels-3-batch
   glabelsFile: /home/uwe/development/etiketten-01.glabels
-  tempFolder: /tmp
+
+asciidoc:
+  documentsFolder: /home/uwe/development
 
 csvInput:
   filesFolder: /home/uwe/development/csv
