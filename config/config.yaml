@@ -14,6 +14,7 @@ labels:
 
 asciidoc:
   documentsFolder: /home/uwe/development
+  themeFile: asciidoc-theme-1.yml
 
 csvInput:
   filesFolder: /home/uwe/development/csv

@@ -12,6 +12,8 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
 import org.asciidoctor.Asciidoctor;
+import org.asciidoctor.Attributes;
+import org.asciidoctor.AttributesBuilder;
 import org.asciidoctor.SafeMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,9 +98,16 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
 
         String pdfFilename = FileUtility.getFullFilename(configuration.getSparkJava().getTempFolder(), getOrderDocumentFilename(producer, order));
 
+        Attributes attributes = AttributesBuilder.attributes()
+                .attribute("pdf-theme",  FileUtility.getFullFilename(configuration.getAsciidoc().getDocumentsFolder(),configuration.getAsciidoc().getThemeFile()))
+                //.attribute("pdf-fontsdir", "path_to_fonts")
+                //.icons("font")
+                .get();
+
         Map<String, Object> options = options()
                 .inPlace(true)
                 .safe(SafeMode.UNSAFE)
+                .attributes(attributes)
                 .toFile(new File( pdfFilename))
                 .backend("pdf")
                 .asMap();

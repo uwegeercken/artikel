@@ -24,6 +24,14 @@ The labels section specifies settings for output of product labels (for printing
 
 The application language is German. But one could easily copy the German resource file and translate it to a different language.
 
+To produce a PDF file for an order AsciiDoc is used. Asciidoc files are read from the variable "documentsFolder" and have following naming convention:
+
+    order_<producer id>.adoc
+
+Additionally an Asciidoc theme file is used, where the formatting can be adjusted to individual needs. The filename of theme is:
+
+    asciidoc-theme-1.yml
+
 ### Configuration file content:
 
     database:
@@ -33,10 +41,13 @@ The application language is German. But one could easily copy the German resourc
     sparkJava:
       staticfilesExpiretime: 60
       locale: de
+      tempFolder: /tmp
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
       glabelsFile: /home/tester/labels-01.glabels
-      tempFolder: /tmp
+    asciidoc:
+      documentsFolder: /home/tester
+
 
 ### Run the Web application
 provide the path and name of the configuration file and run:
