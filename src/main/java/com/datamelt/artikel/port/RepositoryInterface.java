@@ -32,6 +32,7 @@ public interface RepositoryInterface
     ProductContainer getProductContainerByName(String name) throws Exception;
     boolean getExistProductContainer(String name) throws Exception;
     List<ProductContainer> getAllProductContainers() throws Exception;
+    boolean getIsUniqueProductContainer(long id, String name) throws Exception;
 
     void addProductOrigin(ProductOrigin origin);
     void updateProductOrigin(ProductOrigin origin);

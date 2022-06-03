@@ -1,0 +1,22 @@
+page:
+  layout: portrait
+  margin: [2cm, 2cm, 2cm, 2cm]
+  size: A4
+base:
+  font_color: #333333
+  font_family: Helvetica
+  font_size: 10
+  line_height_length: 17
+  line_height: 1.2
+  padding: 4mm
+heading:
+  font_size: 14
+  font_style: bold
+  line_height: 1.2
+  margin-bottom: 0.4cm
+table:
+  font_family: Helvetica
+  font_size: 10
+  cell:
+    padding: 3
+

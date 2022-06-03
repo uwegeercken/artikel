@@ -1,10 +1,7 @@
 package com.datamelt.artikel.service;
 
 import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
-import com.datamelt.artikel.adapter.web.form.ProducerForm;
-import com.datamelt.artikel.adapter.web.form.ProducerFormField;
-import com.datamelt.artikel.adapter.web.form.ProductForm;
-import com.datamelt.artikel.adapter.web.form.ProductFormField;
+import com.datamelt.artikel.adapter.web.form.*;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.CsvWriterInterface;
 import com.datamelt.artikel.port.RepositoryInterface;
@@ -137,6 +134,47 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public ProductContainer updateProductContainer(long id, ProductContainerForm form) throws Exception
+    {
+        ProductContainer productContainer = new ProductContainer(form.get(ProductContainerFormField.NAME));
+        productContainer.setId(id);
+        try
+        {
+            logger.debug("updating product container - name: [{}]", productContainer.getName());
+            repository.updateProductContainer(productContainer);
+        }
+        catch (Exception ex)
+        {
+
+            logger.error("error adding product container: [{}]", ex.getMessage());
+        }
+        return productContainer;
+    }
+
+    @Override
+    public ProductContainer addProductContainer(ProductContainerForm form) throws Exception
+    {
+        ProductContainer productContainer = new ProductContainer(form.get(ProductContainerFormField.NAME));
+        productContainer.setName(form.get(ProductContainerFormField.NAME.NAME));
+        try
+        {
+            logger.debug("adding producer - name: [{}]", productContainer.getName());
+            repository.addProductContainer(productContainer);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error adding producer: [{}]", ex.getMessage());
+        }
+        return productContainer;
+    }
+
+    @Override
+    public boolean getIsUniqueProductContainer(long id, String name) throws Exception
+    {
+        return repository.getIsUniqueProductContainer(id, name);
+    }
+
+    @Override
     public Producer getProducerById(long id) throws Exception { return repository.getProducerById(id); }
     @Override
     public boolean getExistProduct(String number) throws Exception { return repository.getExistProduct(number); }
@@ -158,6 +196,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public boolean getIsUniqueProduct(long id, String number) throws Exception { return repository.getIsUniqueProduct(id, number); }
     @Override
     public boolean getIsUniqueProducer(long id, String name) throws Exception { return repository.getIsUniqueProducer(id, name); }
+
 
     @Override
     public void createDatabaseTables() throws Exception { repository.createDatabaseTables(); }

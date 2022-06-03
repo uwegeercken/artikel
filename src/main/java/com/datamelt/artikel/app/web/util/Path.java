@@ -18,6 +18,7 @@ public class Path
         public static final String PRODUCER_DELETE = "/producer/delete/:id/";
         public static final String MARKETS = "/markets/";
         public static final String PRODUCTCONTAINERS = "/productcontainers/";
+        public static final String PRODUCTCONTAINER = "/productcontainer/:id/";
         public static final String PRODUCTORIGINS = "/productorigins/";
         public static final String PRODUCT_SHOP = "/product/shop/:id/producer/:producerid/" ;
         public static final String PRODUCT_SHOP_LABELS = "/product/labels/:id/producer/:producerid/" ;
@@ -44,6 +45,7 @@ public class Path
         public static final String PRODUCER_DELETE = "/velocity/deleteproducer.vm";
         public static final String MARKETS = "/velocity/markets.vm";
         public static final String PRODUCTCONTAINERS = "/velocity/productcontainers.vm";
+        public static final String PRODUCTCONTAINER = "/velocity/editproductcontainer.vm";
         public static final String PRODUCTORIGINS = "/velocity/productorigins.vm";
         public static final String ORDERS = "/velocity/orders.vm";
         public static final String ORDERITEMS = "/velocity/orderitems.vm";

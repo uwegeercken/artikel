@@ -1,0 +1,42 @@
+#parse("/velocity/macros.vm")
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+    <p class="heading">#if($!{form.id}>0)${messages.get("PAGETITLE_PRODUCTCONTAINER_CHANGE")}: $!{form.get($fields.valueOf("NAME"))}#else ${messages.get("PAGETITLE_PRODUCT_CONTAINER_ADD")}#end</p>
+    <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="show help" onclick="switchHelp()"></p>
+    <div id="help">
+        <p class="helptitle">Selektierten Hersteller ändern</p>
+        <p>Ergänze alle Felder</p>
+        <p></p>
+    </div>
+
+    <div class="formbox">
+    #if($!{form.id}>0)
+        <form method="POST" action="/productcontainer/${form.id}/">
+    #else
+        <form method="POST" action="/productcontainer/0/">
+    #end
+    <input name="$fields.valueOf("ID")" type="hidden" value="${form.id}">
+    <table align="center" width="95%" border="0">
+        <tr>
+            <td>${messages.get("PRODUCT_CONTAINER_FORM_FIELD_NAME=Name
+")}:</td>
+            <td>
+                <input name="$fields.valueOf("NAME")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("NAME"))}">
+            </td>
+
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><br />
+                <input type="submit" value="${messages.get("FORM_BUTTON_OK")}" name="submit">
+                <input type="submit" value="${messages.get("FORM_BUTTON_CANCEL")}" name="submit">
+            </td>
+        </tr>
+    </table>
+    </form>
+    </div>
+    #if (${result})
+       <p align="center">#insert_message($result)</p>
+    #end
+#end
+

@@ -86,7 +86,11 @@ public class WebApplication
         post(Path.Web.PRODUCER_DELETE, producerController.deleteProducer);
 
         get(Path.Web.MARKETS, marketController.serveAllMarketsPage);
+
         get(Path.Web.PRODUCTCONTAINERS, containerController.serveAllProductContainersPage);
+        get(Path.Web.PRODUCTCONTAINER, containerController.serveProductContainerPage);
+        post(Path.Web.PRODUCTCONTAINER, containerController.serveUpdateProductContainerPage);
+
         get(Path.Web.PRODUCTORIGINS, originController.serveAllProductOriginsPage);
 
         get("*", indexController.serveNotFoundPage);
