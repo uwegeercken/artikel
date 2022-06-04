@@ -1,7 +1,5 @@
 package com.datamelt.artikel.adapter.order;
 
-import com.datamelt.artikel.config.AsciidocConfiguration;
-import com.datamelt.artikel.config.LabelsConfiguration;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.ProductOrder;
@@ -32,7 +30,7 @@ import static org.asciidoctor.OptionsBuilder.options;
 public class OrderDocumentGenerator implements OrderDocumentInterface
 {
     private static final Logger logger = LoggerFactory.getLogger(OrderDocumentGenerator.class);
-    private MainConfiguration configuration;
+    private final MainConfiguration configuration;
 
     private static final String YEAR_MONTH_DAY_FORMAT = "yyyyMMdd";
     public static final String ORDER_DATE_FORMAT = "dd.MM.yyyy";
@@ -41,10 +39,10 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     private static final String ASCIIDOC_FILENAME_EXTENSION = ".adoc";
     private static final String PDF_FILENAME_EXTENSION = ".pdf";
 
-    private SimpleDateFormat orderDocumentFilenameDateFormat = new SimpleDateFormat(YEAR_MONTH_DAY_FORMAT);
-    private SimpleDateFormat orderDocumentDateFormat = new SimpleDateFormat(ORDER_DATE_FORMAT);
+    private final SimpleDateFormat orderDocumentFilenameDateFormat = new SimpleDateFormat(YEAR_MONTH_DAY_FORMAT);
+    private final SimpleDateFormat orderDocumentDateFormat = new SimpleDateFormat(ORDER_DATE_FORMAT);
 
-    private Date creationDate;
+    private final Date creationDate;
 
     public OrderDocumentGenerator(MainConfiguration configuration)
     {
