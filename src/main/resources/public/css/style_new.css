@@ -136,7 +136,7 @@ a {
 	border: 1px solid #3a3a3a;
 	border-radius: 4px;
 	margin: 6px;
-	width: 280px;
+	width: 320px;
 	height: 180px;
 	float: left;
 	-moz-box-shadow: 3px 3px 5px 6px #ccc;
@@ -149,7 +149,7 @@ a {
 	border-radius: 4px;
 	background-color: #f2edd5;
 	margin: 6px;
-	width: 280px;
+	width: 320px;
 	height: 180px;
 	float: left;
 	-moz-box-shadow: 3px 3px 5px 6px #ccc;
@@ -161,7 +161,7 @@ a {
 	border: 1px solid #3a3a3a;
 	border-radius: 4px;
 	margin: 6px;
-	width: 280px;
+	width: 320px;
 	height: 120px;
 	float: left;
 	-moz-box-shadow: 3px 3px 5px 6px #ccc;
@@ -189,7 +189,7 @@ a {
 }
 
 .grouptop>p.big, .grouptop2>p.big, .grouptopaction>p.big {
-	font: normal 14pt/1.4 verdana, sans-serif;
+	font: normal 12pt/1.4 verdana, sans-serif;
 	float: left;
 	color: black;
 }
@@ -206,55 +206,48 @@ a {
 }
 
 .productamount {
-    margin-left: 238px;
+    margin-left: 278px;
 }
 
 img.delete {
 	position: absolute;
 	margin-top: 6px;
-	margin-left: 255px;
+	margin-left: 295px;
 	border: none;
 }
 
 img.edit {
 	position: absolute;
 	margin-top: 6px;
-    margin-left: 230px;
+    margin-left: 270px;
 	border: none;
 }
 
 img.shop {
 	position: absolute;
 	margin-top: 140px;
-	margin-left: 240px;
+	margin-left: 280px;
 	border: none;
 }
 
 img.plus {
 	position: absolute;
 	margin-top: 140px;
-	margin-left: 255px;
+	margin-left: 295px;
 	border: none;
 }
 
 img.minus {
 	position: absolute;
 	margin-top: 140px;
-	margin-left: 232px;
+	margin-left: 272px;
 	border: none;
 }
 
 img.copy {
 	position: absolute;
 	margin-top: 150px;
-	margin-left: 230px;
-	border: none;
-}
-
-img.copyproject {
-	position: absolute;
-	margin-top: 150px;
-	margin-left: 230px;
+	margin-left: 270px;
 	border: none;
 }
 
@@ -339,7 +332,7 @@ div.data {
 	position: absolute;
 	margin-top: 0px;
 	margin-left: 170px;
-	width: 80%;
+	width: 90%;
 }
 
 div.connector {
