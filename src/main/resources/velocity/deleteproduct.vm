@@ -8,9 +8,9 @@
             <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>
             <p class="big">$!product.name</p>
             <p class="normal">$!product.description </p>
-            <p class="normal">${messages.get("PRODUCT_FORM_FIELD_CONTAINER")}: $!{product.container.name} - ${messages.get("PRODUCT_FORM_FIELD_ORIGIN")}: $!{product.origin.name}</p>
-            <p class="normal">${messages.get("PRODUCT_FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("PRODUCT_FORM_FIELD_WEIGHT")}: $!{product.weight} kg</p>
-            <p class="normal">${messages.get("PRODUCT_FORM_FIELD_PRICE")}: € $!{product.price}</p>
+            <p class="normal">${messages.get("FORM_FIELD_CONTAINER")}: $!{product.container.name} - ${messages.get("FORM_FIELD_ORIGIN")}: $!{product.origin.name}</p>
+            <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $!{product.weight} kg</p>
+            <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $!{product.price}</p>
 
         </div>
     </div>

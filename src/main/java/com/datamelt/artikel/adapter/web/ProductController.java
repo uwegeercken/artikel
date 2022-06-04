@@ -1,10 +1,10 @@
 package com.datamelt.artikel.adapter.web;
 
-import com.datamelt.artikel.adapter.web.form.ProductForm;
-import com.datamelt.artikel.adapter.web.form.ProductFormConverter;
-import com.datamelt.artikel.adapter.web.form.ProductFormField;
+import com.datamelt.artikel.adapter.web.form.Form;
+import com.datamelt.artikel.adapter.web.form.FormConverter;
+import com.datamelt.artikel.adapter.web.form.FormField;
+import com.datamelt.artikel.adapter.web.form.FormValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
-import com.datamelt.artikel.adapter.web.form.ProductFormValidator;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.*;
@@ -49,17 +49,20 @@ public class ProductController implements ProductApiInterface
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
-        model.put("fields", ProductFormField.class);
+        model.put("fields", FormField.class);
         model.put("producer", producer);
         Optional<Product> product = Optional.ofNullable(getProductById(Long.parseLong(request.params(":id"))));
         if(product.isPresent())
         {
-            model.put("form", ProductFormConverter.convertProduct(product.get()));
+            model.put("form", FormConverter.convertToForm(product.get()));
         }
         else
         {
-            ProductForm form = new ProductForm();
-            form.put(ProductFormField.ID,"0");
+            Form form = new Form();
+            form.put(FormField.ID,"0");
+            form.put(FormField.QUANTITY,"1");
+            form.put(FormField.PRICE,"0");
+            form.put(FormField.WEIGHT,"0");
             model.put("form", form);
         }
         model.put("producers", getAllProducers());
@@ -308,7 +311,6 @@ public class ProductController implements ProductApiInterface
         else
         {
             model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("ERROR_CREATING_LABELS")));
-
             model.put("productorderitems", getShopProductOrderItems(order));
             model.put("shoplabelsonly", order.getShopLabelsOnly());
             model.put("messages", messages);
@@ -329,20 +331,23 @@ public class ProductController implements ProductApiInterface
 
         if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
         {
-            ProductForm form = new ProductForm();
-            for (ProductFormField field : ProductFormField.values())
+            Form form = new Form();
+            for(String parameter : request.queryParams())
             {
-                String value = request.queryParams(field.toString());
-                form.put(field,value );
+                if(FormField.exists(parameter))
+                {
+                    form.put(FormField.valueOf(parameter), request.queryParams(parameter));
+                }
             }
             model.put("form", form);
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
-            model.put("fields",ProductFormField.class);
+            model.put("fields",FormField.class);
             model.put("producers", getAllProducers());
             model.put("containers", getAllProductContainers());
             model.put("origins", getAllProductOrigins());
 
-            ValidatorResult result = validateProduct(form);
+            boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
+            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProduct);
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProduct(model, form);
@@ -361,44 +366,14 @@ public class ProductController implements ProductApiInterface
         }
     };
 
-    private ValidatorResult validateProduct(ProductForm form)
+    private void addOrUpdateProduct(Map<String, Object> model, Form form)
     {
-        ValidatorResult validateNotEmpty = ProductFormValidator.validateNotEMpty(form, messages);
-        if(validateNotEmpty.getResultType() == ValidatorResult.RESULT_TYPE_OK)
-        {
-            ValidatorResult validateValues = ProductFormValidator.validate(form, messages);
-            if(validateValues.getResultType() == ValidatorResult.RESULT_TYPE_OK)
-            {
-                try
-                {
-                    ValidatorResult validateUnique = ProductFormValidator.validateUniqueness(form, messages, getIsUniqueProduct(Long.parseLong(form.get(ProductFormField.ID)), form.get(ProductFormField.NUMBER)));
-                    return validateUnique;
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-            else
-            {
-                return validateValues;
-            }
-        }
-        else
-        {
-            return validateNotEmpty;
-        }
-    }
-
-    private void addOrUpdateProduct(Map<String, Object> model, ProductForm form)
-    {
-        if (Long.parseLong(form.get(ProductFormField.ID)) > 0)
+        if (Long.parseLong(form.get(FormField.ID)) > 0)
         {
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
             try
             {
-                updateProduct(Long.parseLong(form.get(ProductFormField.ID)), form);
+                updateProduct(Long.parseLong(form.get(FormField.ID)), form);
                 model.put("result", new ValidatorResult(messages.get("PRODUCT_FORM_CHANGED")));
             }
             catch (Exception ex)
@@ -481,13 +456,13 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public void updateProduct(long id, ProductForm form) throws Exception
+    public void updateProduct(long id, Form form) throws Exception
     {
         service.updateProduct(id, form);
     }
 
     @Override
-    public void addProduct(ProductForm form) throws Exception
+    public void addProduct(Form form) throws Exception
     {
         service.addProduct(form);
     }

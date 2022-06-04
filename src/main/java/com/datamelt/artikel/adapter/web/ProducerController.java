@@ -74,7 +74,8 @@ public class ProducerController implements ProducerApiInterface
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
             model.put("fields",FormField.class);
 
-            ValidatorResult result = validateProducer(form);
+            boolean isUniqueProducer = getIsUniqueProducer(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
+            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProducer);
             if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProducer(model, form);
@@ -118,35 +119,6 @@ public class ProducerController implements ProducerApiInterface
         request.session().attribute("producers", producers);
         return ViewUtility.render(request,model,Path.Template.PRODUCERS);
     };
-    private ValidatorResult validateProducer(Form form)
-    {
-        ValidatorResult validateNotEmpty = FormValidator.validateNotEMpty(form, messages);
-        if(validateNotEmpty.getResultType() == ValidatorResult.RESULT_TYPE_OK)
-        {
-            ValidatorResult validateValues = FormValidator.validate(form, messages);
-            if(validateValues.getResultType() == ValidatorResult.RESULT_TYPE_OK)
-            {
-                try
-                {
-                    ValidatorResult validateUnique = FormValidator.validateUniqueness(form, messages, getIsUniqueProducer(Long.parseLong(form.get(FormField.ID)), form.get(FormField.NAME)));
-                    return validateUnique;
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-            else
-            {
-                return validateValues;
-            }
-        }
-        else
-        {
-            return validateNotEmpty;
-        }
-    }
 
     private void addOrUpdateProducer(Map<String, Object> model, Form form)
     {

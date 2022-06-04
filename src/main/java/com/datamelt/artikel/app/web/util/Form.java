@@ -1,7 +1,5 @@
 package com.datamelt.artikel.app.web.util;
 
-import java.util.Map;
-
 public class Form
 {
     public static class Product

@@ -130,7 +130,7 @@ class ProductSearch
         boolean isUnique = false;
         if(resultset.next())
         {
-            isUnique = resultset.getLong("counter") == 1;
+            isUnique = resultset.getLong("counter") == 0;
         }
         statement.clearParameters();
         resultset.close();

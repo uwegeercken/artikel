@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class FormValidator
 {
-    public static ValidatorResult validate(Form form, MessageBundleInterface messages)
+    private static ValidatorResult validateValues(Form form, MessageBundleInterface messages)
     {
         for (final Map.Entry<FormField, String> entry : form.getFields().entrySet())
         {
@@ -19,6 +19,13 @@ public class FormValidator
                     if(!longOk)
                     {
                         return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR,messages.get("FORM_FIELD_ERROR") + ": " + messages.get("FORM_FIELD_" + entry.getKey()) + " - " + messages.get("FORM_FIELD_ERROR_LONG"));
+                    }
+                    break;
+                case "double":
+                    boolean doubleOk = FormFieldValidator.validateDouble(entry.getValue());
+                    if(!doubleOk)
+                    {
+                        return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("FORM_FIELD_ERROR") + ": " + messages.get("FORM_FIELD_" + entry.getKey()) + " - " + messages.get("FORM_FIELD_ERROR_DOUBLE"));
                     }
                     break;
                 case "int":
@@ -33,7 +40,7 @@ public class FormValidator
         return new ValidatorResult(messages.get("FORM_FIELD_NO_ERROR"));
     }
 
-    public static ValidatorResult validateNotEMpty(Form form, MessageBundleInterface messages)
+    private static ValidatorResult validateNotEmpty(Form form, MessageBundleInterface messages)
     {
         for (final Map.Entry<FormField, String> entry : form.getFields().entrySet())
         {
@@ -48,7 +55,7 @@ public class FormValidator
         return new ValidatorResult(messages.get("FORM_FIELD_NO_ERROR"));
     }
 
-    public static ValidatorResult validateUniqueness(Form form, MessageBundleInterface messages, boolean exists)
+    private static ValidatorResult validateUniqueness(Form form, MessageBundleInterface messages, boolean isUnique)
     {
         FormField uniqueField = null;
         for(final Map.Entry<FormField, String> entry : form.getFields().entrySet())
@@ -59,10 +66,40 @@ public class FormValidator
                 break;
             }
         }
-        if (exists)
+        if (!isUnique)
         {
-            return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR,messages.get("FORM_FIELD_ERROR") + ": " + messages.get("FORM_FIELD_" + uniqueField) + " - " + messages.get("FORM_FIELD_UNIQUE_NUMBER_ERROR"));
+            return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR,messages.get("FORM_FIELD_ERROR") + ": " + messages.get("FORM_FIELD_" + uniqueField) + " - " + messages.get("FORM_FIELD_UNIQUE_ERROR"));
         }
         return new ValidatorResult(messages.get("FORM_FIELD_NO_ERROR"));
+    }
+
+    public static ValidatorResult validate(Form form, MessageBundleInterface messages, boolean isUnique)
+    {
+        ValidatorResult validateNotEmpty = validateNotEmpty(form, messages);
+        if(validateNotEmpty.getResultType() == ValidatorResult.RESULT_TYPE_OK)
+        {
+            ValidatorResult validateValues = validateValues(form, messages);
+            if(validateValues.getResultType() == ValidatorResult.RESULT_TYPE_OK)
+            {
+                try
+                {
+                    ValidatorResult validateUnique = validateUniqueness(form, messages, isUnique);
+                    return validateUnique;
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                    return null;
+                }
+            }
+            else
+            {
+                return validateValues;
+            }
+        }
+        else
+        {
+            return validateNotEmpty;
+        }
     }
 }

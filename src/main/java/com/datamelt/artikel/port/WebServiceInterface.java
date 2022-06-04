@@ -1,7 +1,6 @@
 package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.adapter.web.form.Form;
-import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.model.*;
 
 import java.util.List;
@@ -11,8 +10,8 @@ public interface WebServiceInterface
 {
     List<Product> getAllProducts(long producerId) throws Exception;
     Product getProductById(long id) throws Exception;
-    Product updateProduct(long id, ProductForm form) throws Exception;
-    Product addProduct(ProductForm form) throws Exception;
+    Product updateProduct(long id, Form form) throws Exception;
+    Product addProduct(Form form) throws Exception;
     void deleteProduct(long id) throws Exception;
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;

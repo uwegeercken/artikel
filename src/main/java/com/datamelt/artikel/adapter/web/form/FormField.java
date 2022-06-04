@@ -4,7 +4,17 @@ public enum FormField
 {
     ID("id", "long", false,false),
     NAME("name", "string", true, false),
-    NO_ORDERING("no_ordering", "int", false, false);
+    NO_ORDERING("no_ordering", "int", false, false),
+    PRODUCT_NAME("product_name", "string", false, false),
+    TITLE("title", "string", false, true),
+    SUBTITLE("subtitle", "string", false, true),
+    NUMBER("number", "string", true, false),
+    QUANTITY("quantity", "int", false, true),
+    WEIGHT("weight","double", false, true),
+    PRICE("price", "double", false, true),
+    PRODUCER_ID("producer_id", "long", false, false),
+    CONTAINER_ID("container_id", "long", false, false),
+    ORIGIN_ID("origin_id", "long", false, false);
 
     private String fieldName;
     private String type;

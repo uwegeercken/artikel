@@ -48,7 +48,7 @@ public class ProductContainerController implements ProductContainerApiInterface
         Optional<ProductContainer> productContainer = Optional.ofNullable(getProductContainerById(Long.parseLong(request.params(":id"))));
         if(productContainer.isPresent())
         {
-            model.put("form", FormConverter.convertProductContainer(productContainer.get()));
+            model.put("form", FormConverter.convertToForm(productContainer.get()));
         }
         else
         {
@@ -80,7 +80,8 @@ public class ProductContainerController implements ProductContainerApiInterface
             model.put("fields",FormField.class);
             model.put("containers", getAllProductContainers());
 
-            ValidatorResult result = validateProductContainer(form);
+            boolean isUniqueProductContainer = getIsUniqueProductContainer(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
+            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProductContainer);
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProductContainer(model, form);
@@ -155,36 +156,6 @@ public class ProductContainerController implements ProductContainerApiInterface
             {
                 model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("PRODUCT_CONTAINER_FORM_ADD_ERROR")));
             }
-        }
-    }
-
-    private ValidatorResult validateProductContainer(Form form)
-    {
-        ValidatorResult validateNotEmpty = FormValidator.validateNotEMpty(form, messages);
-        if(validateNotEmpty.getResultType() == ValidatorResult.RESULT_TYPE_OK)
-        {
-            ValidatorResult validateValues = FormValidator.validate(form, messages);
-            if(validateValues.getResultType() == ValidatorResult.RESULT_TYPE_OK)
-            {
-                try
-                {
-                    ValidatorResult validateUnique = FormValidator.validateUniqueness(form, messages, getIsUniqueProductContainer(Long.parseLong(form.get(FormField.ID)), form.get(FormField.NAME)));
-                    return validateUnique;
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-            else
-            {
-                return validateValues;
-            }
-        }
-        else
-        {
-            return validateNotEmpty;
         }
     }
 
