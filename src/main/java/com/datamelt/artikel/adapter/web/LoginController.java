@@ -76,12 +76,10 @@ public class LoginController implements LoginApiInterface
         }
         else
         {
-            //request.session().attribute("authenticated", false);
             model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
             model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_UNKNOWN_USER")));
             return ViewUtility.render(request, model, Path.Template.LOGIN);
         }
-
     };
 
     @Override

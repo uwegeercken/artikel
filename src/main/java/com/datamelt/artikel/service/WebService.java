@@ -97,11 +97,11 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public Producer updateProducer(long id, ProducerForm form) throws Exception
+    public Producer updateProducer(long id, Form form) throws Exception
     {
-        Producer producer = new Producer(form.get(ProducerFormField.NAME));
+        Producer producer = new Producer(form.get(FormField.NAME));
         producer.setId(id);
-        producer.setNoOrdering(Integer.parseInt(form.get(ProducerFormField.NO_ORDERING)));
+        producer.setNoOrdering(Integer.parseInt(form.get(FormField.NO_ORDERING)));
         try
         {
             logger.debug("updating producer - name: [{}]", producer.getName());
@@ -116,11 +116,11 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public Producer addProducer(ProducerForm form) throws Exception
+    public Producer addProducer(Form form) throws Exception
     {
-        Producer producer = new Producer(form.get(ProducerFormField.NAME));
-        producer.setName(form.get(ProducerFormField.NAME));
-        producer.setNoOrdering(Integer.parseInt(form.get(ProducerFormField.NO_ORDERING)));
+        Producer producer = new Producer(form.get(FormField.NAME));
+        producer.setName(form.get(FormField.NAME));
+        producer.setNoOrdering(Integer.parseInt(form.get(FormField.NO_ORDERING)));
         try
         {
             logger.debug("adding producer - name: [{}]", producer.getName());
@@ -134,9 +134,9 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public ProductContainer updateProductContainer(long id, ProductContainerForm form) throws Exception
+    public ProductContainer updateProductContainer(long id, Form form) throws Exception
     {
-        ProductContainer productContainer = new ProductContainer(form.get(ProductContainerFormField.NAME));
+        ProductContainer productContainer = new ProductContainer(form.get(FormField.NAME));
         productContainer.setId(id);
         try
         {
@@ -152,10 +152,10 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public ProductContainer addProductContainer(ProductContainerForm form) throws Exception
+    public ProductContainer addProductContainer(Form form) throws Exception
     {
-        ProductContainer productContainer = new ProductContainer(form.get(ProductContainerFormField.NAME));
-        productContainer.setName(form.get(ProductContainerFormField.NAME.NAME));
+        ProductContainer productContainer = new ProductContainer(form.get(FormField.NAME));
+        productContainer.setName(form.get(FormField.NAME.NAME));
         try
         {
             logger.debug("adding producer - name: [{}]", productContainer.getName());

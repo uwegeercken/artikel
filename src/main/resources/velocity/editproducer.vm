@@ -19,14 +19,14 @@
     <input name="$fields.valueOf("ID")" type="hidden" value="${form.id}">
     <table align="center" width="95%" border="0">
         <tr>
-            <td>${messages.get("PRODUCER_FORM_FIELD_NAME")}:</td>
+            <td>${messages.get("FORM_FIELD_NAME")}:</td>
             <td>
                 <input name="$fields.valueOf("NAME")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("NAME"))}">
             </td>
 
         </tr>
         <tr>
-            <td>${messages.get("PRODUCER_FORM_FIELD_NO_ORDERING")}:</td>
+            <td>${messages.get("FORM_FIELD_NO_ORDERING")}:</td>
             <td>
                 <select name="$fields.valueOf("NO_ORDERING")" size="1">
                 #if($!{form.get($fields.valueOf("NO_ORDERING"))}==0)

@@ -1,16 +1,17 @@
 package com.datamelt.artikel.adapter.web.form;
 
-public enum ProductContainerFormField
+public enum FormField
 {
     ID("id", "long", false,false),
-    NAME("name", "string", true, false);
+    NAME("name", "string", true, false),
+    NO_ORDERING("no_ordering", "int", false, false);
 
     private String fieldName;
     private String type;
     private boolean unique;
     private boolean canBeEmpty;
 
-    ProductContainerFormField(String fieldName, String type, boolean unique, boolean canBeEmpty)
+    FormField(String fieldName, String type, boolean unique, boolean canBeEmpty)
     {
         this.fieldName = fieldName;
         this.type = type;
@@ -29,15 +30,14 @@ public enum ProductContainerFormField
 
     public boolean canBeEmpty() { return canBeEmpty; }
 
-    public static ProductContainerFormField getUniqueField()
-    {
-        for(ProductContainerFormField field : ProductContainerFormField.values())
-        {
-            if(field.unique())
-            {
-                return field;
+    public static boolean exists(String fieldname) {
+        boolean exists = false;
+        for (FormField field : values()) {
+            if (field.fieldName().equalsIgnoreCase(fieldname)) {
+                exists = true;
+                break;
             }
         }
-        return null;
+        return exists;
     }
 }

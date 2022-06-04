@@ -44,16 +44,16 @@ public class ProductContainerController implements ProductContainerApiInterface
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCTCONTAINER_CHANGE"));
-        model.put("fields", ProductContainerFormField.class);
+        model.put("fields", FormField.class);
         Optional<ProductContainer> productContainer = Optional.ofNullable(getProductContainerById(Long.parseLong(request.params(":id"))));
         if(productContainer.isPresent())
         {
-            model.put("form", ProductContainerFormConverter.convertProductContainer(productContainer.get()));
+            model.put("form", FormConverter.convertProductContainer(productContainer.get()));
         }
         else
         {
-            ProductContainerForm form = new ProductContainerForm();
-            form.put(ProductContainerFormField.ID,"0");
+            Form form = new Form();
+            form.put(FormField.ID,"0");
             model.put("form", form);
         }
         return ViewUtility.render(request,model,Path.Template.PRODUCTCONTAINER);
@@ -67,15 +67,17 @@ public class ProductContainerController implements ProductContainerApiInterface
 
         if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
         {
-            ProductContainerForm form = new ProductContainerForm();
-            for (ProductContainerFormField field : ProductContainerFormField.values())
+            Form form = new Form();
+            for(String parameter : request.queryParams())
             {
-                String value = request.queryParams(field.toString());
-                form.put(field,value );
+                if(FormField.exists(parameter))
+                {
+                    form.put(FormField.valueOf(parameter), request.queryParams(parameter));
+                }
             }
             model.put("form", form);
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
-            model.put("fields",ProductContainerFormField.class);
+            model.put("fields",FormField.class);
             model.put("containers", getAllProductContainers());
 
             ValidatorResult result = validateProductContainer(form);
@@ -110,13 +112,13 @@ public class ProductContainerController implements ProductContainerApiInterface
     }
 
     @Override
-    public void updateProductContainer(long id, ProductContainerForm form) throws Exception
+    public void updateProductContainer(long id, Form form) throws Exception
     {
         service.updateProductContainer(id, form);
     }
 
     @Override
-    public void addProductContainer(ProductContainerForm form) throws Exception
+    public void addProductContainer(Form form) throws Exception
     {
         service.addProductContainer(form);
     }
@@ -127,14 +129,14 @@ public class ProductContainerController implements ProductContainerApiInterface
         return service.getIsUniqueProductContainer(id, name);
     }
 
-    private void addOrUpdateProductContainer(Map<String, Object> model, ProductContainerForm form)
+    private void addOrUpdateProductContainer(Map<String, Object> model, Form form)
     {
-        if (Long.parseLong(form.get(ProductContainerFormField.ID)) > 0)
+        if (Long.parseLong(form.get(FormField.ID)) > 0)
         {
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCTCONTAINER_CHANGE"));
             try
             {
-                updateProductContainer(Long.parseLong(form.get(ProductContainerFormField.ID)), form);
+                updateProductContainer(Long.parseLong(form.get(FormField.ID)), form);
                 model.put("result", new ValidatorResult(messages.get("PRODUCT_CONTAINER_FORM_CHANGED")));
             }
             catch (Exception ex)
@@ -156,17 +158,17 @@ public class ProductContainerController implements ProductContainerApiInterface
         }
     }
 
-    private ValidatorResult validateProductContainer(ProductContainerForm form)
+    private ValidatorResult validateProductContainer(Form form)
     {
-        ValidatorResult validateNotEmpty = ProductContainerFormValidator.validateNotEMpty(form, messages);
+        ValidatorResult validateNotEmpty = FormValidator.validateNotEMpty(form, messages);
         if(validateNotEmpty.getResultType() == ValidatorResult.RESULT_TYPE_OK)
         {
-            ValidatorResult validateValues = ProductContainerFormValidator.validate(form, messages);
+            ValidatorResult validateValues = FormValidator.validate(form, messages);
             if(validateValues.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 try
                 {
-                    ValidatorResult validateUnique = ProductContainerFormValidator.validateUniqueness(form, messages, getIsUniqueProductContainer(Long.parseLong(form.get(ProductContainerFormField.ID)), form.get(ProductContainerFormField.NAME)));
+                    ValidatorResult validateUnique = FormValidator.validateUniqueness(form, messages, getIsUniqueProductContainer(Long.parseLong(form.get(FormField.ID)), form.get(FormField.NAME)));
                     return validateUnique;
                 }
                 catch (Exception ex)

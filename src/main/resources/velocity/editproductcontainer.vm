@@ -5,7 +5,7 @@
     <p class="heading">#if($!{form.id}>0)${messages.get("PAGETITLE_PRODUCTCONTAINER_CHANGE")}: $!{form.get($fields.valueOf("NAME"))}#else ${messages.get("PAGETITLE_PRODUCT_CONTAINER_ADD")}#end</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="show help" onclick="switchHelp()"></p>
     <div id="help">
-        <p class="helptitle">Selektierten Hersteller ändern</p>
+        <p class="helptitle">Behälter ändern</p>
         <p>Ergänze alle Felder</p>
         <p></p>
     </div>
@@ -19,8 +19,7 @@
     <input name="$fields.valueOf("ID")" type="hidden" value="${form.id}">
     <table align="center" width="95%" border="0">
         <tr>
-            <td>${messages.get("PRODUCT_CONTAINER_FORM_FIELD_NAME=Name
-")}:</td>
+            <td>${messages.get("FORM_FIELD_NAME")}:</td>
             <td>
                 <input name="$fields.valueOf("NAME")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("NAME"))}">
             </td>

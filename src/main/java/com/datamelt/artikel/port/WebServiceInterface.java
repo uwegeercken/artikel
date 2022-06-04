@@ -1,7 +1,6 @@
 package com.datamelt.artikel.port;
 
-import com.datamelt.artikel.adapter.web.form.ProducerForm;
-import com.datamelt.artikel.adapter.web.form.ProductContainerForm;
+import com.datamelt.artikel.adapter.web.form.Form;
 import com.datamelt.artikel.adapter.web.form.ProductForm;
 import com.datamelt.artikel.model.*;
 
@@ -18,8 +17,8 @@ public interface WebServiceInterface
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
 
-    Producer updateProducer(long id, ProducerForm form) throws Exception;
-    Producer addProducer(ProducerForm form) throws Exception;
+    Producer updateProducer(long id, Form form) throws Exception;
+    Producer addProducer(Form form) throws Exception;
     Producer getProducerById(long id) throws Exception;
     List<Producer> getAllProducers() throws Exception;
     boolean getIsUniqueProducer(long id, String name) throws Exception;
@@ -32,8 +31,8 @@ public interface WebServiceInterface
 
     List<ProductContainer> getAllProductContainers() throws Exception;
     ProductContainer getProductContainerById(long id) throws Exception;
-    ProductContainer updateProductContainer(long id, ProductContainerForm form) throws Exception;
-    ProductContainer addProductContainer(ProductContainerForm form) throws Exception;
+    ProductContainer updateProductContainer(long id, Form form) throws Exception;
+    ProductContainer addProductContainer(Form form) throws Exception;
     boolean getIsUniqueProductContainer(long id, String name) throws Exception;
 
     void createDatabaseTables() throws Exception;

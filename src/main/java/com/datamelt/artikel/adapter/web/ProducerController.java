@@ -8,7 +8,6 @@ import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProducerApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
-import com.datamelt.artikel.service.WebService;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -41,16 +40,16 @@ public class ProducerController implements ProducerApiInterface
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
-        model.put("fields", ProducerFormField.class);
+        model.put("fields", FormField.class);
         Optional<Producer> producer = Optional.ofNullable(getProducerById(Long.parseLong(request.params(":id"))));
         if(producer.isPresent())
         {
-            model.put("form", ProducerFormConverter.convertProducer(producer.get()));
+            model.put("form", FormConverter.convertToForm(producer.get()));
         }
         else
         {
-            ProducerForm form = new ProducerForm();
-            form.put(ProducerFormField.ID,"0");
+            Form form = new Form();
+            form.put(FormField.ID,"0");
             model.put("form", form);
         }
         return ViewUtility.render(request,model,Path.Template.PRODUCER);
@@ -63,15 +62,17 @@ public class ProducerController implements ProducerApiInterface
         String cancelled = request.queryParams("submit");
         if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
         {
-            ProducerForm form = new ProducerForm();
-            for (ProducerFormField field : ProducerFormField.values())
+            Form form = new Form();
+            for(String parameter : request.queryParams())
             {
-                String value = request.queryParams(field.toString());
-                form.put(field,value );
+                if(FormField.exists(parameter))
+                {
+                    form.put(FormField.valueOf(parameter), request.queryParams(parameter));
+                }
             }
             model.put("form", form);
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
-            model.put("fields",ProducerFormField.class);
+            model.put("fields",FormField.class);
 
             ValidatorResult result = validateProducer(form);
             if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
@@ -117,17 +118,17 @@ public class ProducerController implements ProducerApiInterface
         request.session().attribute("producers", producers);
         return ViewUtility.render(request,model,Path.Template.PRODUCERS);
     };
-    private ValidatorResult validateProducer(ProducerForm form)
+    private ValidatorResult validateProducer(Form form)
     {
-        ValidatorResult validateNotEmpty = ProducerFormValidator.validateNotEMpty(form, messages);
+        ValidatorResult validateNotEmpty = FormValidator.validateNotEMpty(form, messages);
         if(validateNotEmpty.getResultType() == ValidatorResult.RESULT_TYPE_OK)
         {
-            ValidatorResult validateValues = ProducerFormValidator.validate(form, messages);
+            ValidatorResult validateValues = FormValidator.validate(form, messages);
             if(validateValues.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 try
                 {
-                    ValidatorResult validateUnique = ProducerFormValidator.validateUniqueness(form, messages, getIsUniqueProducer(Long.parseLong(form.get(ProducerFormField.ID)), form.get(ProducerFormField.NAME)));
+                    ValidatorResult validateUnique = FormValidator.validateUniqueness(form, messages, getIsUniqueProducer(Long.parseLong(form.get(FormField.ID)), form.get(FormField.NAME)));
                     return validateUnique;
                 }
                 catch (Exception ex)
@@ -147,14 +148,14 @@ public class ProducerController implements ProducerApiInterface
         }
     }
 
-    private void addOrUpdateProducer(Map<String, Object> model, ProducerForm form)
+    private void addOrUpdateProducer(Map<String, Object> model, Form form)
     {
-        if (Long.parseLong(form.get(ProducerFormField.ID)) > 0)
+        if (Long.parseLong(form.get(FormField.ID)) > 0)
         {
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
             try
             {
-                updateProducer(Long.parseLong(form.get(ProducerFormField.ID)), form);
+                updateProducer(Long.parseLong(form.get(FormField.ID)), form);
                 model.put("result", new ValidatorResult(messages.get("PRODUCER_FORM_CHANGED")));
             }
             catch (Exception ex)
@@ -189,13 +190,13 @@ public class ProducerController implements ProducerApiInterface
     }
 
     @Override
-    public void updateProducer(long id, ProducerForm form) throws Exception
+    public void updateProducer(long id, Form form) throws Exception
     {
         service.updateProducer(id, form);
     }
 
     @Override
-    public void addProducer(ProducerForm form) throws Exception
+    public void addProducer(Form form) throws Exception
     {
         service.addProducer(form);
     }
