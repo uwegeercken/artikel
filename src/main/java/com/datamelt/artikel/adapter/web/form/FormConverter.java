@@ -3,6 +3,7 @@ package com.datamelt.artikel.adapter.web.form;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.ProductContainer;
+import com.datamelt.artikel.model.ProductOrigin;
 
 public class FormConverter
 {
@@ -20,6 +21,14 @@ public class FormConverter
         Form form = new Form();
         form.put(FormField.ID, String.valueOf(container.getId()));
         form.put(FormField.NAME, container.getName());
+        return form;
+    }
+
+    public static Form convertToForm(ProductOrigin origin)
+    {
+        Form form = new Form();
+        form.put(FormField.ID, String.valueOf(origin.getId()));
+        form.put(FormField.NAME, origin.getName());
         return form;
     }
 

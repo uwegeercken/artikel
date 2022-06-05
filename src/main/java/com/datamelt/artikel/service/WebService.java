@@ -158,12 +158,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         productContainer.setName(form.get(FormField.NAME.NAME));
         try
         {
-            logger.debug("adding producer - name: [{}]", productContainer.getName());
+            logger.debug("adding product container - name: [{}]", productContainer.getName());
             repository.addProductContainer(productContainer);
         }
         catch (Exception ex)
         {
-            logger.error("error adding producer: [{}]", ex.getMessage());
+            logger.error("error adding product container: [{}]", ex.getMessage());
         }
         return productContainer;
     }
@@ -191,6 +191,47 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public ProductContainer getProductContainerById(long id) throws Exception { return repository.getProductContainerById(id); }
     @Override
     public ProductOrigin getProductOriginById(long id) throws Exception { return repository.getProductOriginById(id); }
+
+    @Override
+    public ProductOrigin updateProductOrigin(long id, Form form) throws Exception
+    {
+        ProductOrigin productOrigin = new ProductOrigin(form.get(FormField.NAME));
+        productOrigin.setId(id);
+        try
+        {
+            logger.debug("updating product origin - name: [{}]", productOrigin.getName());
+            repository.updateProductOrigin(productOrigin);
+        }
+        catch (Exception ex)
+        {
+
+            logger.error("error adding product origin: [{}]", ex.getMessage());
+        }
+        return productOrigin;
+    }
+
+    @Override
+    public ProductOrigin addProductOrigin(Form form) throws Exception
+    {
+        ProductOrigin productOrigin = new ProductOrigin(form.get(FormField.NAME));
+        productOrigin.setName(form.get(FormField.NAME.NAME));
+        try
+        {
+            logger.debug("adding product origin - name: [{}]", productOrigin.getName());
+            repository.addProductOrigin(productOrigin);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error adding producer: [{}]", ex.getMessage());
+        }
+        return productOrigin;
+    }
+
+    @Override
+    public boolean getIsUniqueProductOrigin(long id, String name) throws Exception
+    {
+        return repository.getIsUniqueProductOrigin(id, name);
+    }
 
     @Override
     public boolean getIsUniqueProduct(long id, String number) throws Exception { return repository.getIsUniqueProduct(id, number); }

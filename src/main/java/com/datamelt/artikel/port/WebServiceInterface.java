@@ -23,8 +23,12 @@ public interface WebServiceInterface
     boolean getIsUniqueProducer(long id, String name) throws Exception;
     void deleteProducer(long id) throws Exception;
 
-    ProductOrigin getProductOriginById(long id) throws Exception;
+
     List<ProductOrigin> getAllProductOrigins() throws Exception;
+    ProductOrigin getProductOriginById(long id) throws Exception;
+    ProductOrigin updateProductOrigin(long id, Form form) throws Exception;
+    ProductOrigin addProductOrigin(Form form) throws Exception;
+    boolean getIsUniqueProductOrigin(long id, String name) throws Exception;
 
     List<Market> getAllMarkets() throws Exception;
 

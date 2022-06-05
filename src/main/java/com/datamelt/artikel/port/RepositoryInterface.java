@@ -24,6 +24,7 @@ public interface RepositoryInterface
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
     List<Product> getAllProducts(long producerId) throws Exception;
+    void deleteProduct(long id) throws Exception;
 
     void addProductContainer(ProductContainer container);
     void updateProductContainer(ProductContainer container);
@@ -41,7 +42,7 @@ public interface RepositoryInterface
     ProductOrigin getProductOriginByName(String name) throws Exception;
     boolean getExistProductOrigin(String name) throws Exception;
     List<ProductOrigin> getAllProductOrigins() throws Exception;
-    void deleteProduct(long id) throws Exception;
+    boolean getIsUniqueProductOrigin(long id, String name) throws Exception;
 
     void addMarket(Market market);
     void updateMarket(Market market);

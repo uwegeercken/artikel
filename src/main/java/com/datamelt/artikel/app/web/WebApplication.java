@@ -92,6 +92,8 @@ public class WebApplication
         post(Path.Web.PRODUCTCONTAINER, containerController.serveUpdateProductContainerPage);
 
         get(Path.Web.PRODUCTORIGINS, originController.serveAllProductOriginsPage);
+        get(Path.Web.PRODUCTORIGIN, originController.serveProductOriginPage);
+        post(Path.Web.PRODUCTORIGIN, originController.serveUpdateProductOriginPage);
 
         get("*", indexController.serveNotFoundPage);
 

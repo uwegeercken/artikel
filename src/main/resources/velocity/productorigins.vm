@@ -1,7 +1,7 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_PRODUCTORIGIN_LIST")} ($origins.size())</p>
-    <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add">
+    <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"><a href="/productorigin/0/">
     <img class="add_external" height="40px" width="40px" src="/img/origin_add.png" title="${messages.get("IMAGE_PRODUCTORIGIN_ADD")}"></a></p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCTORIGIN_LIST")}</p>
@@ -13,8 +13,8 @@
     </div>
     #foreach($origin in $origins)
         <div class="unit" tag="$!origin.name.toLowerCase()">
-            #if($origin.id>0)<a href="/origin/delete/${origin.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCTORIGIN_DELETE")}"></a>#end
-            #if($origin.id>0)<a href="/origin/${origin.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCTORIGIN_EDIT")}"></a>#end
+            #if($origin.id>0)<a href="/productorigin/delete/${origin.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCTORIGIN_DELETE")}"></a>#end
+            #if($origin.id>0)<a href="/productorigin/${origin.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCTORIGIN_EDIT")}"></a>#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCTORIGIN")}</p>
                 <p class="big">$!origin.name</a></p>
