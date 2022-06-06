@@ -12,14 +12,14 @@ import java.util.*;
 
 class CollectionHandler
 {
-    public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=?";
-    public static final String SQL_QUERY_PRODUCERS = "select * from producer";
-    public static final String SQL_QUERY_MARKETS = "select * from market";
-    public static final String SQL_QUERY_CONTAINERS = "select * from productcontainer";
-    public static final String SQL_QUERY_ORIGINS = "select * from productorigin";
+    public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? order by id";
+    public static final String SQL_QUERY_PRODUCERS = "select * from producer order by name";
+    public static final String SQL_QUERY_MARKETS = "select * from market order by name";
+    public static final String SQL_QUERY_CONTAINERS = "select * from productcontainer order by name";
+    public static final String SQL_QUERY_ORIGINS = "select * from productorigin order by name";
     public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp desc";
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
-    public static final String SQL_QUERY_USERS = "select * from user";
+    public static final String SQL_QUERY_USERS = "select * from user order by name";
 
     private static final Logger logger = LoggerFactory.getLogger(CollectionHandler.class);
 
@@ -182,7 +182,7 @@ class CollectionHandler
             }
             else
             {
-                logger.error("the requested product could not be found. id [{}]", resultset.getLong("product_id"));
+                logger.error("the requested product could not be found. product order id [{}], product id [{}]", order.getId(), resultset.getLong("product_id"));
             }
         }
         resultset.close();
