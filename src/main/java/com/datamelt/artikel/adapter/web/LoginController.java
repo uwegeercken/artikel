@@ -9,6 +9,8 @@ import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.LoginApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -23,6 +25,8 @@ public class LoginController implements LoginApiInterface
     private WebServiceInterface service;
     private MessageBundleInterface messages;
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     public LoginController(WebServiceInterface service, MessageBundleInterface messages)
     {
         this.service = service;
@@ -34,7 +38,6 @@ public class LoginController implements LoginApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
         return ViewUtility.render(request,model,Path.Template.LOGIN);
-
     };
 
     public Route logoutUser = (Request request, Response response) -> {
@@ -64,6 +67,7 @@ public class LoginController implements LoginApiInterface
                 request.session().attribute("user", loginUser.get());
                 model.put("pagetitle", messages.get("PAGETITLE_INDEX"));
                 request.session().attribute("producers",getAllProducers());
+                logger.info("user login successful. user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.INDEX);
             } else
             {
@@ -71,6 +75,7 @@ public class LoginController implements LoginApiInterface
                 request.session().attribute("user", loginUser.get());
                 model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
                 model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_WRONG_PASSWORD")));
+                logger.error("user login failed. wrong password for user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.LOGIN);
             }
         }
@@ -78,6 +83,7 @@ public class LoginController implements LoginApiInterface
         {
             model.put("pagetitle", messages.get("PAGETITLE_LOGIN"));
             model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_UNKNOWN_USER")));
+            logger.error("user login failed. user not existing [{}]", username);
             return ViewUtility.render(request, model, Path.Template.LOGIN);
         }
     };
