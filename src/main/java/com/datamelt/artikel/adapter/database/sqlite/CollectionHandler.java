@@ -1,6 +1,9 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.*;
+import com.datamelt.artikel.util.FileUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +20,8 @@ class CollectionHandler
     public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp desc";
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
     public static final String SQL_QUERY_USERS = "select * from user";
+
+    private static final Logger logger = LoggerFactory.getLogger(CollectionHandler.class);
 
     public static List<Product> getAllProducts(Connection connection, long producerId) throws Exception
     {
@@ -38,9 +43,30 @@ class CollectionHandler
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
-            product.setContainer(container);
-            product.setProducer(producer);
-            product.setOrigin(origin);
+            if(container!=null)
+            {
+                product.setContainer(container);
+            }
+            else
+            {
+                logger.error("the requested container could not be found. id [{}]", resultset.getLong("productcontainer_id"));
+            }
+            if(producer!=null)
+            {
+                product.setProducer(producer);
+            }
+            else
+            {
+                logger.error("the requested producer could not be found. id [{}]", resultset.getLong("producer_id"));
+            }
+            if(origin!=null)
+            {
+                product.setOrigin(origin);
+            }
+            else
+            {
+                logger.error("the requested product origin could not be found. id [{}]", resultset.getLong("productorigin_id"));
+            }
             product.setTimestamp(resultset.getLong("timestamp"));
 
             products.add(product);
@@ -146,12 +172,18 @@ class CollectionHandler
         {
             ProductOrderItem item = new ProductOrderItem();
             Product product = ProductSearch.getProductById(connection, resultset.getLong("product_id"));
-            item.setProduct(product);
-            item.setId(resultset.getLong("id"));
-            item.setAmount(resultset.getInt("amount"));
-            item.setTimestamp(resultset.getLong("timestamp"));
-
-            items.put(item.getProduct().getId(), item);
+            if(product!=null)
+            {
+                item.setProduct(product);
+                item.setId(resultset.getLong("id"));
+                item.setAmount(resultset.getInt("amount"));
+                item.setTimestamp(resultset.getLong("timestamp"));
+                items.put(item.getProduct().getId(), item);
+            }
+            else
+            {
+                logger.error("the requested product could not be found. id [{}]", resultset.getLong("product_id"));
+            }
         }
         resultset.close();
         statement.close();
