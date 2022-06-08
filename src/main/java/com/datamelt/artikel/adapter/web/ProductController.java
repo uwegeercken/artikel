@@ -68,6 +68,7 @@ public class ProductController implements ProductApiInterface
             form.put(FormField.QUANTITY,"1");
             form.put(FormField.PRICE,"0");
             form.put(FormField.WEIGHT,"0");
+            form.put(FormField.PRODUCER_ID,String.valueOf(producerId));
             model.put("form", form);
         }
         model.put("producers", getAllProducers());

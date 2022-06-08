@@ -52,7 +52,7 @@ public class WebApplication
         MarketController marketController = new MarketController(service, messages);
         ProductContainerController containerController = new ProductContainerController(service, messages, numberFormatter);
         ProductOriginController originController = new ProductOriginController(service, messages, numberFormatter);
-        ProductOrderController orderController = new ProductOrderController(service,messages, configuration.getAsciidoc());
+        ProductOrderController orderController = new ProductOrderController(service, messages, numberFormatter, configuration.getAsciidoc());
 
         before("*", Filters.redirectToLogin);
 

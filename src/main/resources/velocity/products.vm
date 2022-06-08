@@ -43,8 +43,8 @@
                 <p class="small">$!{product.title}&nbsp;</p>
                 <p class="big">$!{product.name}</p>
                 <p class="normal">$!{product.subtitle}&nbsp;</p>
-                <p class="normal">${messages.get("FORM_FIELD_CONTAINER")}: $!{product.container.name} - ${messages.get("FORM_FIELD_ORIGIN")}: $!{product.origin.name}</p>
-                <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertToLocale($!{product.weight}) kg</p>
+                <p class="normal">#if($!{product.origin.id}!=1) ${messages.get("FORM_FIELD_ORIGIN")}: $!{product.origin.name} #end &nbsp;</p>
+                <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertToLocale($!{product.weight}) kg #if($!{product.container.id}!=1)- ${messages.get("FORM_FIELD_CONTAINER")}: $!{product.container.name}#end</p>
                 <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $numberFormatter.convertToLocale($!{product.price})</p>
             </div>
             #if($product.producer.noOrdering==0)

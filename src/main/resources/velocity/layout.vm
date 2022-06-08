@@ -87,31 +87,13 @@ $(document).ready(function() {
 </script>
 <script>
 	$(function() {
-		$( "#datepicker1" ).datepicker({
-				dateFormat: "yy-mm-dd",
+		$( "#datepicker" ).datepicker({
+				dateFormat: "dd.mm.yy",
 				changeMonth: true,
 				changeYear: true,
 				firstDay: 1
 		});
 	});
-	$(function() {
-		$( "#datepicker2" ).datepicker({
-				dateFormat: "yy-mm-dd",
-				changeMonth: true,
-				changeYear: true,
-				firstDay: 1
-		});
-	});
-	$(function() {
-		$( ".datepicker" ).datepicker({
-				dateFormat: "yy-mm-dd ",
-				constrainInput: false,
-				changeMonth: true,
-				changeYear: true,
-				firstDay: 1
-		});
-	});
-
 </script>
 </head>
 <body>
