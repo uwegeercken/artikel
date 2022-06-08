@@ -6,6 +6,7 @@ import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
 import com.datamelt.artikel.adapter.web.*;
 import com.datamelt.artikel.app.ConfigurationLoader;
 import com.datamelt.artikel.app.web.util.Filters;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
@@ -37,6 +38,7 @@ public class WebApplication
             throw new Exception("a configuration yaml file is required");
         }
         MessageBundleInterface messages = new MessageBundle(configuration.getSparkJava().getLocale());
+        NumberFormatter numberFormatter = new NumberFormatter(configuration.getSparkJava().getLocale());
 
         staticFiles.location("/public");
         staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());
@@ -45,11 +47,11 @@ public class WebApplication
         IndexController indexController = new IndexController(service, messages);
         LoginController loginController = new LoginController(service, messages);
         UserController userController = new UserController(service, messages);
-        ProductController productController = new ProductController(service, messages);
-        ProducerController producerController = new ProducerController(service, messages);
+        ProductController productController = new ProductController(service, messages, numberFormatter);
+        ProducerController producerController = new ProducerController(service, messages, numberFormatter);
         MarketController marketController = new MarketController(service, messages);
-        ProductContainerController containerController = new ProductContainerController(service, messages);
-        ProductOriginController originController = new ProductOriginController(service, messages);
+        ProductContainerController containerController = new ProductContainerController(service, messages, numberFormatter);
+        ProductOriginController originController = new ProductOriginController(service, messages, numberFormatter);
         ProductOrderController orderController = new ProductOrderController(service,messages, configuration.getAsciidoc());
 
         before("*", Filters.redirectToLogin);

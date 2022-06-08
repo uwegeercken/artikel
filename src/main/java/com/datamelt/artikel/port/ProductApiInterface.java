@@ -1,6 +1,7 @@
 package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.adapter.web.form.Form;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.model.*;
 
 import java.util.List;
@@ -10,8 +11,8 @@ public interface ProductApiInterface
 {
     List<Product> getAllProducts(long producerId) throws Exception;
     Product getProductById(long id) throws Exception;
-    void updateProduct(long id, Form form) throws Exception;
-    void addProduct(Form form) throws Exception;
+    void updateProduct(long id, Form form, NumberFormatter numberFormatter) throws Exception;
+    void addProduct(Form form, NumberFormatter numberFormatter) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
     void deleteProduct(long id) throws Exception;
     void addProductOrder(ProductOrder order) throws Exception;

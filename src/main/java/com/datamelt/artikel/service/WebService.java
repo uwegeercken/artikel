@@ -2,6 +2,7 @@ package com.datamelt.artikel.service;
 
 import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
 import com.datamelt.artikel.adapter.web.form.*;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.CsvWriterInterface;
 import com.datamelt.artikel.port.RepositoryInterface;
@@ -35,20 +36,14 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public Product updateProduct(long id, Form form) throws Exception
+    public Product updateProduct(long id, Form form, NumberFormatter numberFormatter) throws Exception
     {
         Producer producer = getProducerById(Long.parseLong(form.get(FormField.PRODUCER_ID)));
         ProductContainer container = getProductContainerById(Long.parseLong(form.get(FormField.CONTAINER_ID)));
         ProductOrigin origin = getProductOriginById(Long.parseLong(form.get(FormField.ORIGIN_ID)));
 
-        Product product = new Product(form.get(FormField.NUMBER));
+        Product product = FormConverter.convertToProduct(form,numberFormatter);
         product.setId(id);
-        product.setName(form.get(FormField.PRODUCT_NAME));
-        product.setTitle(form.get(FormField.TITLE));
-        product.setSubtitle(form.get(FormField.SUBTITLE));
-        product.setQuantity(Integer.parseInt(form.get(FormField.QUANTITY)));
-        product.setWeight(Double.parseDouble(form.get(FormField.WEIGHT)));
-        product.setPrice(Double.parseDouble(form.get(FormField.PRICE)));
         product.setContainer(container);
         product.setProducer(producer);
         product.setOrigin(origin);
@@ -67,19 +62,13 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public Product addProduct(Form form) throws Exception
+    public Product addProduct(Form form, NumberFormatter numberFormatter) throws Exception
     {
         Producer producer = getProducerById(Long.parseLong(form.get(FormField.PRODUCER_ID)));
         ProductContainer container = getProductContainerById(Long.parseLong(form.get(FormField.CONTAINER_ID)));
         ProductOrigin origin = getProductOriginById(Long.parseLong(form.get(FormField.ORIGIN_ID)));
 
-        Product product = new Product(form.get(FormField.NUMBER));
-        product.setName(form.get(FormField.PRODUCT_NAME));
-        product.setTitle(form.get(FormField.TITLE));
-        product.setSubtitle(form.get(FormField.SUBTITLE));
-        product.setQuantity(Integer.parseInt(form.get(FormField.QUANTITY)));
-        product.setWeight(Double.parseDouble(form.get(FormField.WEIGHT)));
-        product.setPrice(Double.parseDouble(form.get(FormField.PRICE)));
+        Product product = FormConverter.convertToProduct(form,numberFormatter);
         product.setContainer(container);
         product.setProducer(producer);
         product.setOrigin(origin);

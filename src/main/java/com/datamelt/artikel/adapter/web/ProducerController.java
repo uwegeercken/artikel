@@ -3,6 +3,7 @@ package com.datamelt.artikel.adapter.web;
 import com.datamelt.artikel.adapter.web.form.*;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.port.MessageBundleInterface;
@@ -21,11 +22,13 @@ public class ProducerController implements ProducerApiInterface
 {
     private WebServiceInterface service;
     private MessageBundleInterface messages;
+    private NumberFormatter numberFormatter;
 
-    public ProducerController(WebServiceInterface service, MessageBundleInterface messages)
+    public ProducerController(WebServiceInterface service, MessageBundleInterface messages, NumberFormatter numberFormatter)
     {
         this.service = service;
         this.messages = messages;
+        this.numberFormatter = numberFormatter;
     }
 
     public Route serveAllProducersPage = (Request request, Response response) -> {
@@ -33,7 +36,7 @@ public class ProducerController implements ProducerApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_LIST"));
         model.put("producers", getAllProducers());
-        return ViewUtility.render(request,model,Path.Template.PRODUCERS);
+        return ViewUtility.render(request,model, Path.Template.PRODUCERS);
     };
 
     public Route serveProducerPage = (Request request, Response response) -> {
@@ -75,7 +78,7 @@ public class ProducerController implements ProducerApiInterface
             model.put("fields",FormField.class);
 
             boolean isUniqueProducer = getIsUniqueProducer(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
-            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProducer);
+            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProducer, numberFormatter);
             if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProducer(model, form);

@@ -1,6 +1,7 @@
 package com.datamelt.artikel.app.web;
 
 import com.datamelt.artikel.adapter.web.MessageBundle;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.app.web.util.Timestamp;
 import com.datamelt.artikel.model.Producer;

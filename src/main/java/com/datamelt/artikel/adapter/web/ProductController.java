@@ -6,6 +6,7 @@ import com.datamelt.artikel.adapter.web.form.FormField;
 import com.datamelt.artikel.adapter.web.form.FormValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.MessageBundleInterface;
@@ -22,11 +23,13 @@ public class ProductController implements ProductApiInterface
 {
     private WebServiceInterface service;
     private MessageBundleInterface messages;
+    private NumberFormatter numberFormatter;
 
-    public ProductController(WebServiceInterface service, MessageBundleInterface messages)
+    public ProductController(WebServiceInterface service, MessageBundleInterface messages, NumberFormatter numberFormatter)
     {
         this.service = service;
         this.messages = messages;
+        this.numberFormatter = numberFormatter;
     }
 
     public Route serveAllProductsPage = (Request request, Response response) -> {
@@ -38,6 +41,7 @@ public class ProductController implements ProductApiInterface
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts(producerId));
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
@@ -51,10 +55,11 @@ public class ProductController implements ProductApiInterface
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
         model.put("fields", FormField.class);
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         Optional<Product> product = Optional.ofNullable(getProductById(Long.parseLong(request.params(":id"))));
         if(product.isPresent())
         {
-            model.put("form", FormConverter.convertToForm(product.get()));
+            model.put("form", FormConverter.convertToForm(product.get(), numberFormatter));
         }
         else
         {
@@ -86,6 +91,7 @@ public class ProductController implements ProductApiInterface
         model.put("messages", messages);
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
     };
 
@@ -136,6 +142,7 @@ public class ProductController implements ProductApiInterface
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts(producerId));
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
@@ -178,6 +185,7 @@ public class ProductController implements ProductApiInterface
         model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         model.put("products", getAllProducts(producerId));
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
 
     };
@@ -207,6 +215,7 @@ public class ProductController implements ProductApiInterface
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -227,6 +236,7 @@ public class ProductController implements ProductApiInterface
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
     };
 
@@ -255,6 +265,7 @@ public class ProductController implements ProductApiInterface
         Product product = getProductById(Long.parseLong(request.params(":id")));
         model.put("product", product);
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.PRODUCT_DELETE);
     };
 
@@ -272,6 +283,7 @@ public class ProductController implements ProductApiInterface
         }
         model.put("products", getAllProducts(producerId));
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.PRODUCTS);
     };
 
@@ -316,6 +328,7 @@ public class ProductController implements ProductApiInterface
             model.put("messages", messages);
             model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
             model.put("producer", producer);
+            model.put("numberFormatter", numberFormatter);
             return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
         }
     };
@@ -327,6 +340,7 @@ public class ProductController implements ProductApiInterface
         Map<String, Object> model = new HashMap<>();
         model.put("messages", messages);
         model.put("producer", producer);
+        model.put("numberFormatter", numberFormatter);
         String cancelled = request.queryParams("submit");
 
         if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
@@ -347,7 +361,7 @@ public class ProductController implements ProductApiInterface
             model.put("origins", getAllProductOrigins());
 
             boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
-            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProduct);
+            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProduct, numberFormatter);
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProduct(model, form);
@@ -371,9 +385,10 @@ public class ProductController implements ProductApiInterface
         if (Long.parseLong(form.get(FormField.ID)) > 0)
         {
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
+            model.put("numberFormatter", numberFormatter);
             try
             {
-                updateProduct(Long.parseLong(form.get(FormField.ID)), form);
+                updateProduct(Long.parseLong(form.get(FormField.ID)), form, numberFormatter);
                 model.put("result", new ValidatorResult(messages.get("PRODUCT_FORM_CHANGED")));
             }
             catch (Exception ex)
@@ -385,7 +400,7 @@ public class ProductController implements ProductApiInterface
             model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_ADD"));
             try
             {
-                addProduct(form);
+                addProduct(form, numberFormatter);
                 model.put("result", new ValidatorResult(messages.get("PRODUCT_FORM_ADDED")));
             }
             catch (Exception ex)
@@ -456,15 +471,15 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public void updateProduct(long id, Form form) throws Exception
+    public void updateProduct(long id, Form form, NumberFormatter numberFormatter) throws Exception
     {
-        service.updateProduct(id, form);
+        service.updateProduct(id, form, numberFormatter);
     }
 
     @Override
-    public void addProduct(Form form) throws Exception
+    public void addProduct(Form form, NumberFormatter numberFormatter) throws Exception
     {
-        service.addProduct(form);
+        service.addProduct(form, numberFormatter);
     }
 
     @Override

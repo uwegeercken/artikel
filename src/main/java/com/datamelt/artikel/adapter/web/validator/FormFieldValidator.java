@@ -1,5 +1,7 @@
 package com.datamelt.artikel.adapter.web.validator;
 
+import com.datamelt.artikel.app.web.util.NumberFormatter;
+
 import java.util.Map;
 
 public class FormFieldValidator
@@ -30,11 +32,11 @@ public class FormFieldValidator
         }
     }
 
-    public static boolean validateDouble(String value)
+    public static boolean validateDouble(String value, NumberFormatter numberformatter)
     {
         try
         {
-            Double.parseDouble(value);
+            numberformatter.convertToDouble(value);
             return true;
         }
         catch(Exception ex)

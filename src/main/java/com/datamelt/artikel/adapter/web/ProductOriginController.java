@@ -6,6 +6,7 @@ import com.datamelt.artikel.adapter.web.form.FormField;
 import com.datamelt.artikel.adapter.web.form.FormValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.ProductOrigin;
 import com.datamelt.artikel.port.MessageBundleInterface;
@@ -25,11 +26,13 @@ public class ProductOriginController implements ProductOriginApiInterface
 {
     private WebServiceInterface service;
     private MessageBundleInterface messages;
+    private NumberFormatter numberFormatter;
 
-    public ProductOriginController(WebServiceInterface service, MessageBundleInterface messages)
+    public ProductOriginController(WebServiceInterface service, MessageBundleInterface messages, NumberFormatter numberFormatter)
     {
         this.service = service;
         this.messages = messages;
+        this.numberFormatter = numberFormatter;
     }
 
     public Route serveAllProductOriginsPage = (Request request, Response response) -> {
@@ -82,7 +85,7 @@ public class ProductOriginController implements ProductOriginApiInterface
             model.put("origins", getAllProductOrigins());
 
             boolean isUniqueProductOrigin = getIsUniqueProductOrigin(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
-            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProductOrigin);
+            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProductOrigin, numberFormatter);
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProductOrigin(model, form);

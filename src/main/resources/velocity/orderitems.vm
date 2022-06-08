@@ -21,7 +21,7 @@
                 <p class="big">${item.amount} - $!item.product.name</p>
                 <p class="normal">$!item.product.description </p>
                 <p class="normal">${messages.get("FORM_FIELD_CONTAINER")}: $!{item.product.container.name} - ${messages.get("FORM_FIELD_ORIGIN")}: $!{item.product.origin.name}</p>
-                <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{item.product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $!{item.product.weight} kg</p>
+                <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $numberFormatter.convertToLocale($!{item.product.quantity}) - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertToLocale($!{item.product.weight}) kg</p>
                 <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $!{item.product.price}</p>
             </div>
         </div>

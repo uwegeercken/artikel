@@ -3,6 +3,7 @@ package com.datamelt.artikel.adapter.web;
 import com.datamelt.artikel.adapter.web.form.*;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
+import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
@@ -24,11 +25,13 @@ public class ProductContainerController implements ProductContainerApiInterface
 {
     private WebServiceInterface service;
     private MessageBundleInterface messages;
+    private NumberFormatter numberFormatter;
 
-    public ProductContainerController(WebServiceInterface service, MessageBundleInterface messages)
+    public ProductContainerController(WebServiceInterface service, MessageBundleInterface messages, NumberFormatter numberFormatter)
     {
         this.service = service;
         this.messages = messages;
+        this.numberFormatter = numberFormatter;
     }
 
     public Route serveAllProductContainersPage = (Request request, Response response) -> {
@@ -81,7 +84,7 @@ public class ProductContainerController implements ProductContainerApiInterface
             model.put("containers", getAllProductContainers());
 
             boolean isUniqueProductContainer = getIsUniqueProductContainer(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
-            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProductContainer);
+            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProductContainer, numberFormatter);
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProductContainer(model, form);
