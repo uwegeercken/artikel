@@ -286,9 +286,9 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public byte[] getOrderDocument(Producer producer, ProductOrder order) throws Exception
+    public byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception
     {
-        return orderDocumentGenerator.getOrderDocument(producer,order);
+        return orderDocumentGenerator.getOrderDocument(producer,order, products);
     }
 
     @Override

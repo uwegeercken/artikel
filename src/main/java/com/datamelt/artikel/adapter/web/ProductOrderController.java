@@ -5,6 +5,7 @@ import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.config.AsciidocConfiguration;
 import com.datamelt.artikel.model.Producer;
+import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.ProductOrder;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductOrderApiInterface;
@@ -60,11 +61,11 @@ public class ProductOrderController implements ProductOrderApiInterface
 
         Optional<ProductOrder> order = Optional.ofNullable(getProductOrderById(Long.parseLong(request.params(":id"))));
         Map<String, Object> model = new HashMap<>();
-
         if(order.isPresent())
         {
             Producer producer = getProducerById(order.get().getProducerId());
-            byte[] pdfOutputFile = getOrderDocument(producer, order.get());
+            List<Product> products = getAllProducts(producer.getId());
+            byte[] pdfOutputFile = getOrderDocument(producer, order.get(), products);
             String pdfFilename = getOrderDocumentFilename(producer, order.get());
 
             response.type(Constants.ORDER_FILE_CONTENT_TYPE);
@@ -84,6 +85,12 @@ public class ProductOrderController implements ProductOrderApiInterface
     }
 
     @Override
+    public List<Product> getAllProducts(long producerId) throws Exception
+    {
+        return service.getAllProducts(producerId);
+    }
+
+    @Override
     public ProductOrder getProductOrderById(long id) throws Exception
     {
         return service.getProductOrderById(id);
@@ -96,9 +103,9 @@ public class ProductOrderController implements ProductOrderApiInterface
     }
 
     @Override
-    public byte[] getOrderDocument(Producer producer, ProductOrder order) throws Exception
+    public byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception
     {
-        return service.getOrderDocument(producer, order);
+        return service.getOrderDocument(producer, order, products);
     }
 
     @Override

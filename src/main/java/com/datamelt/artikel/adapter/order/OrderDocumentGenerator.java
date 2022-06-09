@@ -2,7 +2,9 @@ package com.datamelt.artikel.adapter.order;
 
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.Producer;
+import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.ProductOrder;
+import com.datamelt.artikel.model.ProductOrderItem;
 import com.datamelt.artikel.port.OrderDocumentInterface;
 import com.datamelt.artikel.util.FileUtility;
 import org.apache.commons.lang.CharEncoding;
@@ -21,9 +23,7 @@ import java.io.FileInputStream;
 import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import static org.asciidoctor.OptionsBuilder.options;
 
@@ -51,10 +51,10 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     }
 
     @Override
-    public byte[] getOrderDocument(Producer producer, ProductOrder order)
+    public byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products)
     {
         String templateFilename = ORDER_FILENAME_PREFIX + order.getProducerId() + ASCIIDOC_FILENAME_EXTENSION;
-        String asciiDocument = getOrderTemplate(configuration.getAsciidoc().getDocumentsFolder(), templateFilename, order);
+        String asciiDocument = getOrderTemplate(configuration.getAsciidoc().getDocumentsFolder(), templateFilename, order, products);
 
         generateDocument(producer, order, asciiDocument);
         return getDocument(producer, order);
@@ -66,14 +66,30 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
         return ORDER_FILENAME_PREFIX + formatOrderNumber.format(order.getId()) + "_" + producer.getName() + orderDocumentFilenameDateFormat.format(creationDate) + "_" + PDF_FILENAME_EXTENSION;
     }
 
-    private String getOrderTemplate(String folder, String filename, ProductOrder order)
+    private String getOrderTemplate(String folder, String filename, ProductOrder order, List<Product> products)
     {
+        List<ProductOrderItem> allProductsOrderItems = new ArrayList<>();
+        for(Product product : products)
+        {
+            ProductOrderItem item = new ProductOrderItem();
+            item.setProduct(product);
+
+            for(Map.Entry<Long,ProductOrderItem> entry : order.getOrderItems().entrySet())
+            {
+                if(entry.getValue().getProduct().getId() == product.getId())
+                {
+                    item.setAmount(entry.getValue().getAmount());
+                }
+            }
+            allProductsOrderItems.add(item);
+        }
+
         Properties velocityProperties = new Properties();
         velocityProperties.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
         velocityProperties.put("file.resource.loader.path", folder);
         VelocityEngine engine = new VelocityEngine(velocityProperties);
         Context context = new VelocityContext();
-        context.put("productorderitems", order.getOrderItems());
+        context.put("productorderitems", allProductsOrderItems);
         context.put("createddate", orderDocumentDateFormat.format(creationDate));
         StringWriter writer = new StringWriter();
 
