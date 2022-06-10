@@ -12,6 +12,7 @@ import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
+import org.asciidoctor.Asciidoctor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

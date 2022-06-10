@@ -11,10 +11,7 @@ import org.apache.commons.lang.CharEncoding;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
-import org.asciidoctor.Asciidoctor;
-import org.asciidoctor.Attributes;
-import org.asciidoctor.AttributesBuilder;
-import org.asciidoctor.SafeMode;
+import org.asciidoctor.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +22,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.asciidoctor.OptionsBuilder.options;
+
 
 public class OrderDocumentGenerator implements OrderDocumentInterface
 {
@@ -108,25 +105,28 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     {
         System.setProperty("jruby.compat.version", "RUBY1_9");
         System.setProperty("jruby.compile.mode", "OFF");
-        final Asciidoctor asciidoctor = Asciidoctor.Factory.create();
+
 
         String pdfFilename = FileUtility.getFullFilename(configuration.getSparkJava().getTempFolder(), getOrderDocumentFilename(producer, order));
 
-        Attributes attributes = AttributesBuilder.attributes()
+         Attributes attributes = Attributes.builder()
                 .attribute("pdf-theme",  FileUtility.getFullFilename(configuration.getAsciidoc().getDocumentsFolder(),configuration.getAsciidoc().getThemeFile()))
                 //.attribute("pdf-fontsdir", "path_to_fonts")
                 //.icons("font")
-                .get();
+                .build();
 
-        Map<String, Object> options = options()
-                .inPlace(true)
-                .safe(SafeMode.UNSAFE)
-                .attributes(attributes)
-                .toFile(new File( pdfFilename))
-                .backend("pdf")
-                .asMap();
+        Options options = Options.builder()
+            .inPlace(true)
+            .safe(SafeMode.UNSAFE)
+            .attributes(attributes)
+            .toFile(new File( pdfFilename))
+            .backend("pdf")
+            .build();
 
-        asciidoctor.convert(asciiDocument,options);
+        try (Asciidoctor asciidoctor = Asciidoctor.Factory.create())
+        {
+            asciidoctor.convert(asciiDocument, options);
+        }
     }
 
     private byte[] getDocument(Producer producer, ProductOrder order)
