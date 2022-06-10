@@ -51,7 +51,6 @@ public class Path
         public static final String PRODUCTORIGIN = "/velocity/editproductorigin.vm";
         public static final String ORDERS = "/velocity/orders.vm";
         public static final String ORDERITEMS = "/velocity/orderitems.vm";
-        public static final String ORDERITEMS_PDF = "/velocity/orderitemspdf.vm";
 
         public static final String NOTFOUND = "/velocity/notfound.vm";
     }
