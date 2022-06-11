@@ -346,7 +346,7 @@ public class CsvLoader implements FileInterface
                     Producer producer = getProducerByName(fields[1]);
                     ProductOrder order = new ProductOrder(producer.getId());
                     order.setNumber(fields[0]);
-                    order.setTimestamp(timestamp);
+                    order.setTimestampCreatedDate(timestamp);
                     boolean exists = getExistOrder(fields[0]);
                     if(!exists)
                     {

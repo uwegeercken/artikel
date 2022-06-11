@@ -11,8 +11,8 @@ import java.util.Date;
 
 class ProductOrderUpdate
 {
-    private static final String SQL_INSERT = "insert into productorder (number, producer_id, timestamp) values(?,?,?)";
-    private static final String SQL_UPDATE = "update productorder set number=?, producer_id=?, timestamp=? where id=?";
+    private static final String SQL_INSERT = "insert into productorder (number, producer_id, timestamp_order_date, timestamp_created_date) values(?,?,?,?)";
+    private static final String SQL_UPDATE = "update productorder set number=?, producer_id=?, timestamp_order_date=?, timestamp_created_date=? where id=?";
     private static final String SQL_DELETE = "delete from productorder where id=?";
 
     private static final String PRODUCT_ORDER_NUMBER_DATE_FORMAT = "yyyyMMddhhmmss";
@@ -32,7 +32,8 @@ class ProductOrderUpdate
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, getGeneratedNumber(order.getProducerId()));
             statement.setLong(2, order.getProducerId());
-            statement.setLong(3, new Date().getTime());
+            statement.setLong(3, 0);
+            statement.setLong(4, new Date().getTime());
             statement.executeUpdate();
 
             ResultSet resultset = statement.getGeneratedKeys();
@@ -55,8 +56,9 @@ class ProductOrderUpdate
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
             statement.setString(1, order.getNumber());
             statement.setLong(2, order.getProducerId());
-            statement.setLong(2, order.getTimestamp());
-            statement.setLong(3, order.getId());
+            statement.setLong(3, order.getTimestampOrderDate());
+            statement.setLong(4, order.getTimestampCreatedDate());
+            statement.setLong(5, order.getId());
             statement.executeUpdate();
             statement.clearParameters();
 

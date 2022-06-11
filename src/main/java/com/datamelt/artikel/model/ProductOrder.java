@@ -10,7 +10,8 @@ public class ProductOrder
     private long id;
     private String number;
     private long producerId;
-    private long timestamp;
+    private long timestampCreatedDate;
+    private long timestampOrderDate;
     private boolean shopLabelsOnly = false;
     private Map<Long, ProductOrderItem> orderItems = new HashMap<>();
     private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT);
@@ -60,15 +61,13 @@ public class ProductOrder
         this.producerId = producerId;
     }
 
-    public long getTimestamp()
-    {
-        return timestamp;
-    }
+    public long getTimestampCreatedDate() { return timestampCreatedDate; }
 
-    public void setTimestamp(long timestamp)
-    {
-        this.timestamp = timestamp;
-    }
+    public void setTimestampCreatedDate(long timestampCreatedDate) { this.timestampCreatedDate = timestampCreatedDate; }
+
+    public long getTimestampOrderDate() { return timestampOrderDate; }
+
+    public void setTimestampOrderDate(long timestampOrderDate) { this.timestampOrderDate = timestampOrderDate; }
 
     public Map<Long, ProductOrderItem> getOrderItems()
     {
@@ -104,9 +103,14 @@ public class ProductOrder
         }
         return totalAmount;
     }
+    public String getProductCreatedDate()
+    {
+        return formatter.format(new Date(timestampCreatedDate));
+    }
+
     public String getProductOrderDate()
     {
-        return formatter.format(new Date(timestamp));
+        return formatter.format(new Date(timestampOrderDate));
     }
 
     public List<Product> getProducts()

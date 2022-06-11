@@ -17,7 +17,7 @@ class CollectionHandler
     public static final String SQL_QUERY_MARKETS = "select * from market order by id";
     public static final String SQL_QUERY_CONTAINERS = "select * from productcontainer order by id";
     public static final String SQL_QUERY_ORIGINS = "select * from productorigin order by id";
-    public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp desc";
+    public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp_created_date desc";
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
     public static final String SQL_QUERY_USERS = "select * from user order by name";
 
@@ -152,7 +152,8 @@ class CollectionHandler
             ProductOrder order = new ProductOrder();
             order.setNumber(resultset.getString("number"));
             order.setProducerId(resultset.getLong("producer_id"));
-            order.setTimestamp(resultset.getLong("timestamp"));
+            order.setTimestampCreatedDate(resultset.getLong("timestamp_created_date"));
+            order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
             order.setId(resultset.getLong("id"));
             order.setOrderItems(getAllProductOrderItems(connection, order));
             orders.add(order);

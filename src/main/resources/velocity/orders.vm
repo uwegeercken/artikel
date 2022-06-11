@@ -13,12 +13,13 @@
     </div>
     #foreach($order in $orders)
         <div class="unit" tag="$!order.number.toLowerCase()">
-            <a href="/orderitems/${order.id}/"><img class="edit" height="22px" width="22px" src="/img/order.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
-            <a href="/orderitemspdf/${order.id}/"><img class="delete" height="22px" width="22px" src="/img/help_black.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
+            <a href="/orderitems/${order.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
+            <a href="/orderitemspdf/${order.id}/"><img class="delete" height="22px" width="22px" src="/img/order_document.png" title="${messages.get("IMAGE_ORDER_DOCUMENT")}"></a>
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_ORDER")} #$!order.number</p>
                 <p class="big">${messages.get("PRODUCT_ORDER_NUMBER_OF_PRODUCTS")}: $!order.orderItems.size()</p>
                 <p class="normal">${messages.get("PRODUCT_ORDER_NUMBER_OF_ITEMS")}: $!order.totalProductOrderItemAmount</p>
+                <p class="normal">${messages.get("PRODUCT_ORDER_ORDER_CREATED")}: $!order.productCreatedDate</p>
                 <p class="normal">${messages.get("PRODUCT_ORDER_ORDER_DATE")}: $!order.productOrderDate</p>
             </div>
         </div>
