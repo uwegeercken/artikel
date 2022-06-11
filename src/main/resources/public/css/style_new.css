@@ -309,6 +309,19 @@ a:active {
 	clear: both;
 }
 
+.formbox2>form>table {
+	border: 1px solid #3a3a3a;
+	border-radius: 4px;
+	margin: 8px;
+	width: 50%;
+	padding: 10px;
+	padding-top: 10px;
+	-moz-box-shadow: 3px 3px 5px 6px #ccc;
+	-webkit-box-shadow: 3px 3px 5px 6px #ccc;
+	box-shadow: 3px 3px 5px 6px #ccc;
+	clear: both;
+}
+
 tr.light>td {
 	background: #f06343;
 	color: #d8d8d8;

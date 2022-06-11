@@ -40,6 +40,7 @@ public class Path
         public static final String PRODUCTS = "/velocity/products.vm";
         public static final String PRODUCT = "/velocity/editproduct.vm";
         public static final String SHOPPRODUCTS = "/velocity/shopproducts.vm";
+        public static final String SHOPPRODUCTS_NO_ORDERING = "/velocity/shopproducts_noordering.vm";
         public static final String PRODUCT_DELETE = "/velocity/deleteproduct.vm";
         public static final String PRODUCERS = "/velocity/producers.vm";
         public static final String PRODUCER = "/velocity/editproducer.vm";

@@ -17,6 +17,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ProductController implements ProductApiInterface
@@ -93,7 +94,14 @@ public class ProductController implements ProductApiInterface
         model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("producer", producer);
         model.put("numberFormatter", numberFormatter);
-        return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
+        if(producer.getNoOrdering()==1)
+        {
+            return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS_NO_ORDERING);
+        }
+        else
+        {
+            return ViewUtility.render(request, model, Path.Template.SHOPPRODUCTS);
+        }
     };
 
     public Route shopProduct = (Request request, Response response) -> {
@@ -247,13 +255,36 @@ public class ProductController implements ProductApiInterface
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder order = orderCollection.get(producerId);
-        if(order!=null)
+
+        SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_ONLY_FORMAT);
+        String orderDateString = request.queryParams("order_date");
+        if(order!=null && orderDateString!=null && !orderDateString.trim().equals(""))
         {
+            Date orderDate = formatter.parse(orderDateString);
+            order.setTimestampOrderDate(orderDate.getTime());
+
             addProductOrder(order);
             orderCollection.remove(producerId);
+
+            List<Product> products = getAllProducts(producer.getId());
+            byte[] pdfOutputFile = getOrderDocument(producer, order, products);
+            String pdfFilename = getOrderDocumentFilename(producer, order);
+            response.type(Constants.ORDER_FILE_CONTENT_TYPE);
+            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY, Constants.ORDER_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
+            response.raw().setContentLength(pdfOutputFile.length);
+            response.raw().getOutputStream().write(pdfOutputFile);
+            response.raw().getOutputStream().flush();
+            response.raw().getOutputStream().close();
+            //response.status(200);
+            return response.raw();
         }
-        response.redirect(Path.Web.ORDERS);
-        return null;
+        else
+        {
+
+            //model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_WRONG_PASSWORD")));
+            response.redirect("/shopproducts/producer/" + producerId + "/");
+            return null;
+        }
     };
 
     public Route serveDeleteProductPage = (Request request, Response response) -> {
@@ -508,4 +539,15 @@ public class ProductController implements ProductApiInterface
         return service.getProducerById(producerId);
     }
 
+    @Override
+    public byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception
+    {
+        return service.getOrderDocument(producer, order, products);
+    }
+
+    @Override
+    public String getOrderDocumentFilename(Producer producer, ProductOrder order)
+    {
+        return service.getOrderDocumentFilename(producer, order);
+    }
 }

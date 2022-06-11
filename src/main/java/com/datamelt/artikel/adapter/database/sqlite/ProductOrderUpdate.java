@@ -15,7 +15,7 @@ class ProductOrderUpdate
     private static final String SQL_UPDATE = "update productorder set number=?, producer_id=?, timestamp_order_date=?, timestamp_created_date=? where id=?";
     private static final String SQL_DELETE = "delete from productorder where id=?";
 
-    private static final String PRODUCT_ORDER_NUMBER_DATE_FORMAT = "yyyyMMddhhmmss";
+    private static final String PRODUCT_ORDER_NUMBER_DATE_FORMAT = "yyyyMMddHHmmss";
 
     private Connection connection;
     private SimpleDateFormat sdf = new SimpleDateFormat(PRODUCT_ORDER_NUMBER_DATE_FORMAT);

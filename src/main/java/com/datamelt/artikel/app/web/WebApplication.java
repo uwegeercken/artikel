@@ -77,7 +77,12 @@ public class WebApplication
         get(Path.Web.SHOPPRODUCTS, productController.serveShopProductsPage);
         get(Path.Web.PRODUCT_SHOP_AMOUNT, productController.shopProductAmount);
         get(Path.Web.PRODUCT_SHOP_REMOVE, productController.shopProductRemove);
-        get(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
+        //get(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
+        post(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
+        //post(Path.Web.SHOP_COMPLETE,(request,response) -> productController.shopProductComplete(request,response));
+
+
+
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
         get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
         get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
@@ -100,5 +105,6 @@ public class WebApplication
 
         get("*", indexController.serveNotFoundPage);
 
+        //after(Path.Web.SHOP_COMPLETE, Filters.redirectToOrders);
     }
 }
