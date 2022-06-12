@@ -152,6 +152,7 @@ class CollectionHandler
             ProductOrder order = new ProductOrder();
             order.setNumber(resultset.getString("number"));
             order.setProducerId(resultset.getLong("producer_id"));
+
             order.setTimestampCreatedDate(resultset.getLong("timestamp_created_date"));
             order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
             order.setId(resultset.getLong("id"));

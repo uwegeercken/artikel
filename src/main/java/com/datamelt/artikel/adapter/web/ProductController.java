@@ -266,21 +266,11 @@ public class ProductController implements ProductApiInterface
             addProductOrder(order);
             orderCollection.remove(producerId);
 
-            List<Product> products = getAllProducts(producer.getId());
-            byte[] pdfOutputFile = getOrderDocument(producer, order, products);
-            String pdfFilename = getOrderDocumentFilename(producer, order);
-            response.type(Constants.ORDER_FILE_CONTENT_TYPE);
-            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY, Constants.ORDER_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
-            response.raw().setContentLength(pdfOutputFile.length);
-            response.raw().getOutputStream().write(pdfOutputFile);
-            response.raw().getOutputStream().flush();
-            response.raw().getOutputStream().close();
-            //response.status(200);
-            return response.raw();
+            response.redirect(Path.Web.ORDERS);
+            return null;
         }
         else
         {
-
             //model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_WRONG_PASSWORD")));
             response.redirect("/shopproducts/producer/" + producerId + "/");
             return null;
@@ -325,8 +315,9 @@ public class ProductController implements ProductApiInterface
         byte[] pdfOutputFile = getLabelsOutputFile(producerId);
         String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
-        response.type(Constants.LABELS_FILE_CONTENT_TYPE);
-        response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+        response.type(Constants.FILE_CONTENT_TYPE_PDF);
+        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+        response.raw().setContentLength(pdfOutputFile.length);
         response.raw().getOutputStream().write(pdfOutputFile);
         response.raw().getOutputStream().flush();
         response.raw().getOutputStream().close();
@@ -345,8 +336,9 @@ public class ProductController implements ProductApiInterface
         {
             orderCollection.remove(producerId);
             String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
-            response.type(Constants.LABELS_FILE_CONTENT_TYPE);
-            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY, Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+            response.type(Constants.FILE_CONTENT_TYPE_PDF);
+            response.header(Constants.CONTENT_DISPOSITION_KEY, Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+            response.raw().setContentLength(pdfOutputFile.length);
             response.raw().getOutputStream().write(pdfOutputFile);
             response.raw().getOutputStream().flush();
             response.raw().getOutputStream().close();

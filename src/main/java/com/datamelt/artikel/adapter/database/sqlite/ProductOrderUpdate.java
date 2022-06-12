@@ -32,7 +32,7 @@ class ProductOrderUpdate
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, getGeneratedNumber(order.getProducerId()));
             statement.setLong(2, order.getProducerId());
-            statement.setLong(3, 0);
+            statement.setLong(3, order.getTimestampOrderDate());
             statement.setLong(4, new Date().getTime());
             statement.executeUpdate();
 

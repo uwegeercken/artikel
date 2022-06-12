@@ -68,8 +68,8 @@ public class ProductOrderController implements ProductOrderApiInterface
             byte[] pdfOutputFile = getOrderDocument(producer, order.get(), products);
             String pdfFilename = getOrderDocumentFilename(producer, order.get());
 
-            response.type(Constants.ORDER_FILE_CONTENT_TYPE);
-            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
+            response.type(Constants.FILE_CONTENT_TYPE_PDF);
+            response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
             response.raw().getOutputStream().write(pdfOutputFile);
             response.raw().getOutputStream().flush();
             response.raw().getOutputStream().close();
