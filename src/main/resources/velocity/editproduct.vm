@@ -28,12 +28,6 @@
             </td>
         </tr>
         <tr>
-                        <td>Valid from:</td>
-                        <td>
-                                <input id="datepicker" name="valid_from" type="text" size="20" maxlength="8" value="$!{rulegroup.validFrom}">
-                        </td>
-                </tr>
-        <tr>
             <td>${messages.get("FORM_FIELD_PRODUCT_NAME")}:</td>
             <td>
                 <input name="$fields.valueOf("PRODUCT_NAME")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("PRODUCT_NAME"))}">
