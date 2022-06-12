@@ -87,7 +87,8 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
         VelocityEngine engine = new VelocityEngine(velocityProperties);
         Context context = new VelocityContext();
         context.put("productorderitems", allProductsOrderItems);
-        context.put("createddate", orderDocumentDateFormat.format(creationDate));
+        context.put("createddate", orderDocumentDateFormat.format(order.getTimestampCreatedDate()));
+        context.put("orderdate", orderDocumentDateFormat.format(order.getTimestampOrderDate()));
         StringWriter writer = new StringWriter();
 
         boolean success = engine.mergeTemplate(filename, CharEncoding.UTF_8, context, writer );
@@ -105,7 +106,6 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     {
         System.setProperty("jruby.compat.version", "RUBY1_9");
         System.setProperty("jruby.compile.mode", "OFF");
-
 
         String pdfFilename = FileUtility.getFullFilename(configuration.getSparkJava().getTempFolder(), getOrderDocumentFilename(producer, order));
 

@@ -10,6 +10,7 @@ public class ProductOrder
     private long id;
     private String number;
     private long producerId;
+    private Producer producer;
     private long timestampCreatedDate;
     private long timestampOrderDate;
     private boolean shopLabelsOnly = false;
@@ -69,6 +70,10 @@ public class ProductOrder
 
     public void setTimestampOrderDate(long timestampOrderDate) { this.timestampOrderDate = timestampOrderDate; }
 
+    public Producer getProducer() { return producer; }
+
+    public void setProducer(Producer producer) { this.producer = producer; }
+
     public Map<Long, ProductOrderItem> getOrderItems()
     {
         return orderItems;
@@ -127,4 +132,6 @@ public class ProductOrder
     {
         return shopLabelsOnly;
     }
+
+
 }
