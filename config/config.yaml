@@ -10,11 +10,13 @@ sparkJava:
 
 labels:
   glabelsBinary: /usr/bin/glabels-3-batch
-  glabelsFile: /home/uwe/development/etiketten-01.glabels
+  glabelsFile: /home/uwe/development/artikel/glabels/etiketten-01.glabels
+  pdfOutputFolder: /home/uwe/development/artikel/glabels/pdf
 
 asciidoc:
-  templateFileFolder: /home/uwe/development
-  themeFile: /home/uwe/development/asciidoc-theme-1.yml
+  templateFileFolder: /home/uwe/development/artikel/asciidoc
+  pdfOutputFolder: /home/uwe/development/artikel/asciidoc/pdf
+  themeFile: /home/uwe/development/artikel/asciidoc/asciidoc-theme-1.yml
 
 csvInput:
   filesFolder: /home/uwe/development/csv

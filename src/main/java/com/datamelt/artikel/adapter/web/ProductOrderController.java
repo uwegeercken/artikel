@@ -12,10 +12,13 @@ import com.datamelt.artikel.port.ProductOrderApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.Constants;
 
+import com.datamelt.artikel.util.FileUtility;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.*;
 
 public class ProductOrderController implements ProductOrderApiInterface
@@ -64,13 +67,24 @@ public class ProductOrderController implements ProductOrderApiInterface
         if(order.isPresent())
         {
             Producer producer = getProducerById(order.get().getProducerId());
-            List<Product> products = getAllProducts(producer.getId());
-            byte[] pdfOutputFile = getOrderDocument(producer, order.get(), products);
             String pdfFilename = getOrderDocumentFilename(producer, order.get());
+            File pdfFile = new File(FileUtility.getFullFilename(configuration.getPdfOutputFolder(), pdfFilename));
+            byte[] pdfFileBytes;
+            if(pdfFile.exists())
+            {
+                FileInputStream inputStream = new FileInputStream(pdfFile);
+                pdfFileBytes = inputStream.readAllBytes();
+                inputStream.close();
+            }
+            else
+            {
+                List<Product> products = getAllProducts(producer.getId());
+                pdfFileBytes = getOrderDocument(producer, order.get(), products);
+            }
 
             response.type(Constants.ORDER_FILE_CONTENT_TYPE);
-            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
-            response.raw().getOutputStream().write(pdfOutputFile);
+            response.header(Constants.LABELS_FILE_CONTENT_DISPOSITION_KEY, Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
+            response.raw().getOutputStream().write(pdfFileBytes);
             response.raw().getOutputStream().flush();
             response.raw().getOutputStream().close();
         }

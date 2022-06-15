@@ -6,6 +6,7 @@ public class LabelsConfiguration
 {
     private String glabelsBinary;
     private String glabelsFile;
+    private String pdfOutputFolder;
 
     public String getGlabelsFile()
     {
@@ -29,5 +30,8 @@ public class LabelsConfiguration
         return binary.exists() && binary.canExecute();
     }
 
-
+    public String getPdfOutputFolder()
+    {
+        return pdfOutputFolder;
+    }
 }

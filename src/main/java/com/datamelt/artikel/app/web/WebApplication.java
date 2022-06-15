@@ -12,6 +12,7 @@ import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.util.FileUtility;
 import org.asciidoctor.Asciidoctor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,11 @@ public class WebApplication
         {
             throw new Exception("a configuration yaml file is required");
         }
+        if(!configurationFilesAndFoldersOk(configuration))
+        {
+            System.exit(1);
+        }
+
         MessageBundleInterface messages = new MessageBundle(configuration.getSparkJava().getLocale());
         NumberFormatter numberFormatter = new NumberFormatter(configuration.getSparkJava().getLocale());
 
@@ -107,4 +113,48 @@ public class WebApplication
 
         //after(Path.Web.SHOP_COMPLETE, Filters.redirectToOrders);
     }
+
+    private static boolean configurationFilesAndFoldersOk(MainConfiguration configuration)
+    {
+        boolean allOk = true;
+
+        boolean sparkTempFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getSparkJava().getTempFolder());
+        if(!sparkTempFolderOk)
+        {
+            allOk = false;
+        }
+
+        boolean glabelsFileOk = FileUtility.checkReadAccessFile(configuration.getLabels().getGlabelsFile());
+        if(!glabelsFileOk)
+        {
+            allOk = false;
+        }
+
+        boolean glablesPdfOutputFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getLabels().getPdfOutputFolder());
+        if(!glablesPdfOutputFolderOk)
+        {
+            allOk = false;
+        }
+
+        boolean glabelsBinaryOk = FileUtility.checkExecuteAccessFile(configuration.getLabels().getGlabelsBinary());
+        if(!glabelsBinaryOk)
+        {
+            allOk = false;
+        }
+
+        boolean asciidocTemplateFileFolderOk = FileUtility.checkReadAccessFolder(configuration.getAsciidoc().getTemplateFileFolder());
+        if(!asciidocTemplateFileFolderOk)
+        {
+            allOk = false;
+        }
+
+        boolean asciidocPdfOutputFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getAsciidoc().getPdfOutputFolder());
+        if(!asciidocPdfOutputFolderOk)
+        {
+            allOk = false;
+        }
+        return allOk;
+    }
+
+
 }

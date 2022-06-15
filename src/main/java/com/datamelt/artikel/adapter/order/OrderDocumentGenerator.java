@@ -29,16 +29,14 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     private static final Logger logger = LoggerFactory.getLogger(OrderDocumentGenerator.class);
     private final MainConfiguration configuration;
 
-    private static final String YEAR_MONTH_DAY_FORMAT = "yyyyMMdd";
+    private static final String DATE_TIME_FORMAT = "yyyyMMddHHmmss";
     public static final String ORDER_DATE_FORMAT = "dd.MM.yyyy";
     private static final DecimalFormat formatOrderNumber = new DecimalFormat("0000");
     private static final String ORDER_FILENAME_PREFIX = "order_";
     private static final String ASCIIDOC_FILENAME_EXTENSION = ".adoc";
     private static final String PDF_FILENAME_EXTENSION = ".pdf";
 
-    private final SimpleDateFormat orderDocumentFilenameDateFormat = new SimpleDateFormat(YEAR_MONTH_DAY_FORMAT);
     private final SimpleDateFormat orderDocumentDateFormat = new SimpleDateFormat(ORDER_DATE_FORMAT);
-
     private final Date creationDate;
 
     public OrderDocumentGenerator(MainConfiguration configuration)
@@ -60,7 +58,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     @Override
     public String getOrderDocumentFilename(Producer producer, ProductOrder order)
     {
-        return ORDER_FILENAME_PREFIX + formatOrderNumber.format(order.getId()) + "_" + producer.getName() + orderDocumentFilenameDateFormat.format(creationDate) + "_" + PDF_FILENAME_EXTENSION;
+        return ORDER_FILENAME_PREFIX + formatOrderNumber.format(order.getId()) + PDF_FILENAME_EXTENSION;
     }
 
     private String getOrderTemplate(String folder, String filename, ProductOrder order, List<Product> products)
@@ -106,8 +104,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
         System.setProperty("jruby.compat.version", "RUBY1_9");
         System.setProperty("jruby.compile.mode", "OFF");
 
-
-        String pdfFilename = FileUtility.getFullFilename(configuration.getSparkJava().getTempFolder(), getOrderDocumentFilename(producer, order));
+        String pdfFilename = FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), getOrderDocumentFilename(producer, order));
 
          Attributes attributes = Attributes.builder()
                 .attribute("pdf-theme", configuration.getAsciidoc().getThemeFile())
@@ -119,7 +116,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
             .inPlace(true)
             .safe(SafeMode.UNSAFE)
             .attributes(attributes)
-            .toFile(new File( pdfFilename))
+            .toFile(new File(pdfFilename))
             .backend("pdf")
             .build();
 
@@ -134,7 +131,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
         byte[] output =null;
         try
         {
-            File file = new File(FileUtility.getFullFilename(configuration.getSparkJava().getTempFolder(), getOrderDocumentFilename(producer, order)));
+            File file = new File(FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), getOrderDocumentFilename(producer, order)));
             FileInputStream stream = new FileInputStream(file);
             output = stream.readAllBytes();
         }

@@ -53,7 +53,7 @@ public class CsvLabelFileWriter implements CsvWriterInterface
         if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existGlabelsFile())
         {
             String inputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.LABELS_CSV_FILENAME;
-            String outputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+            String outputFilename = configuration.getLabels().getPdfOutputFolder() + "/" + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
             String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -o " + outputFilename + " " + configuration.getLabels().getGlabelsFile();
             Process process = Runtime.getRuntime().exec(command);
