@@ -11,7 +11,7 @@ public class Constants
 
     public static final String LABELS_CSV_FILENAME = "labels.csv";
 
-    public static final String LABELS_FILE_CONTENT_DISPOSITION_VALUE = "inline; filename=";
+    public static final String CONTENT_DISPOSITION_VALUE = "inline; filename=";
     public static final String LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 = "etiketten";
     public static final String LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2 = ".pdf";
 

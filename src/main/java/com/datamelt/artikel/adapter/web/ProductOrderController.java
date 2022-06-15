@@ -83,7 +83,7 @@ public class ProductOrderController implements ProductOrderApiInterface
             }
 
             response.type(Constants.FILE_CONTENT_TYPE_PDF);
-            response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + pdfFilename);
+            response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + pdfFilename);
             response.raw().getOutputStream().write(pdfFileBytes);
             response.raw().getOutputStream().flush();
             response.raw().getOutputStream().close();

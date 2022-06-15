@@ -316,7 +316,7 @@ public class ProductController implements ProductApiInterface
         String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
         response.type(Constants.FILE_CONTENT_TYPE_PDF);
-        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
         response.raw().setContentLength(pdfOutputFile.length);
         response.raw().getOutputStream().write(pdfOutputFile);
         response.raw().getOutputStream().flush();
@@ -337,7 +337,7 @@ public class ProductController implements ProductApiInterface
             orderCollection.remove(producerId);
             String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
             response.type(Constants.FILE_CONTENT_TYPE_PDF);
-            response.header(Constants.CONTENT_DISPOSITION_KEY, Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE + fullFilename);
+            response.header(Constants.CONTENT_DISPOSITION_KEY, Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
             response.raw().setContentLength(pdfOutputFile.length);
             response.raw().getOutputStream().write(pdfOutputFile);
             response.raw().getOutputStream().flush();
