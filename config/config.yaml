@@ -13,8 +13,8 @@ labels:
   glabelsFile: /home/uwe/development/etiketten-01.glabels
 
 asciidoc:
-  documentsFolder: /home/uwe/development
-  themeFile: asciidoc-theme-1.yml
+  templateFileFolder: /home/uwe/development
+  themeFile: /home/uwe/development/asciidoc-theme-1.yml
 
 csvInput:
   filesFolder: /home/uwe/development/csv

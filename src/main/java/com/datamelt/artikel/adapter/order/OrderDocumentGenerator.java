@@ -51,7 +51,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     public byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products)
     {
         String templateFilename = ORDER_FILENAME_PREFIX + order.getProducerId() + ASCIIDOC_FILENAME_EXTENSION;
-        String asciiDocument = getOrderTemplate(configuration.getAsciidoc().getDocumentsFolder(), templateFilename, order, products);
+        String asciiDocument = getOrderTemplate(configuration.getAsciidoc().getTemplateFileFolder(), templateFilename, order, products);
 
         generateDocument(producer, order, asciiDocument);
         return getDocument(producer, order);
@@ -110,7 +110,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
         String pdfFilename = FileUtility.getFullFilename(configuration.getSparkJava().getTempFolder(), getOrderDocumentFilename(producer, order));
 
          Attributes attributes = Attributes.builder()
-                .attribute("pdf-theme",  FileUtility.getFullFilename(configuration.getAsciidoc().getDocumentsFolder(),configuration.getAsciidoc().getThemeFile()))
+                .attribute("pdf-theme", configuration.getAsciidoc().getThemeFile())
                 //.attribute("pdf-fontsdir", "path_to_fonts")
                 //.icons("font")
                 .build();
