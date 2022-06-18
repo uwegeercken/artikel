@@ -8,6 +8,7 @@ import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.ProductContainer;
 import com.datamelt.artikel.port.ProductContainerApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.util.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -53,7 +54,7 @@ public class ProductContainerController implements ProductContainerApiInterface
 
     public Route serveUpdateProductContainerPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        String cancelled = request.queryParams("submit");
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
 
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {

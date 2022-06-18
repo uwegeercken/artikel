@@ -274,7 +274,7 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        String cancelled = request.queryParams("submit");
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             deleteProduct(Long.parseLong(request.params(":id")));
@@ -333,7 +333,7 @@ public class ProductController implements ProductApiInterface
         Producer producer = getProducerById(producerId);
 
         Map<String, Object> model =  shopProductsLabelModel(producer);
-        String cancelled = request.queryParams("submit");
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             Form form = new Form();

@@ -8,6 +8,7 @@ import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.port.ProducerApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.util.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -52,7 +53,7 @@ public class ProducerController implements ProducerApiInterface
 
     public Route serveUpdateProducerPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        String cancelled = request.queryParams("submit");
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             Form form = new Form();
@@ -96,7 +97,7 @@ public class ProducerController implements ProducerApiInterface
 
     public Route deleteProducer = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        String cancelled = request.queryParams("submit");
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             deleteProducer(Long.parseLong(request.params(":id")));

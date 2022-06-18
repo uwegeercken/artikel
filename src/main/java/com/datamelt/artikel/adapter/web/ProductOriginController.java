@@ -12,6 +12,7 @@ import com.datamelt.artikel.model.ProductOrigin;
 import com.datamelt.artikel.port.ProductOriginApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 
+import com.datamelt.artikel.util.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -57,7 +58,7 @@ public class ProductOriginController implements ProductOriginApiInterface
 
     public Route serveUpdateProductOriginPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        String cancelled = request.queryParams("submit");
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
 
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
