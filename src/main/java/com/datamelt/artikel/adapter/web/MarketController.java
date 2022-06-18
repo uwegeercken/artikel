@@ -5,6 +5,7 @@ import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Market;
 import com.datamelt.artikel.port.MarketApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.util.Constants;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -24,7 +25,7 @@ public class MarketController implements MarketApiInterface
 
     public Route serveAllMarketsPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("markets", getAllMarkets());
+        model.put(Constants.MODEL_MARKETS_KEY, getAllMarkets());
         return ViewUtility.render(request,model,Path.Template.MARKETS);
 
     };

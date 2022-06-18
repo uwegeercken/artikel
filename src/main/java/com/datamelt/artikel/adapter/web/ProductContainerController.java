@@ -29,24 +29,24 @@ public class ProductContainerController implements ProductContainerApiInterface
 
     public Route serveAllProductContainersPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("containers", getAllProductContainers());
+        model.put(Constants.MODEL_CONTAINERS_KEY, getAllProductContainers());
         return ViewUtility.render(request,model,Path.Template.PRODUCTCONTAINERS);
 
     };
 
     public Route serveProductContainerPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("fields", FormField.class);
+        model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
         Optional<ProductContainer> productContainer = Optional.ofNullable(getProductContainerById(Long.parseLong(request.params(":id"))));
         if(productContainer.isPresent())
         {
-            model.put("form", FormConverter.convertToForm(productContainer.get()));
+            model.put(Constants.MODEL_FORM_KEY, FormConverter.convertToForm(productContainer.get()));
         }
         else
         {
             Form form = new Form();
             form.put(FormField.ID,"0");
-            model.put("form", form);
+            model.put(Constants.MODEL_FORM_KEY, form);
         }
         return ViewUtility.render(request,model,Path.Template.PRODUCTCONTAINER);
 
@@ -66,9 +66,9 @@ public class ProductContainerController implements ProductContainerApiInterface
                     form.put(FormField.valueOf(parameter), request.queryParams(parameter));
                 }
             }
-            model.put("form", form);
-            model.put("fields",FormField.class);
-            model.put("containers", getAllProductContainers());
+            model.put(Constants.MODEL_FORM_KEY, form);
+            model.put(Constants.MODEL_FIELDS_KEY,FormField.class);
+            model.put(Constants.MODEL_CONTAINERS_KEY, getAllProductContainers());
 
             boolean isUniqueProductContainer = getIsUniqueProductContainer(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
             ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProductContainer, WebApplication.getNumberFormatter());
@@ -78,13 +78,13 @@ public class ProductContainerController implements ProductContainerApiInterface
             }
             else
             {
-                model.put("result", result);
+                model.put(Constants.MODEL_RESULT_KEY, result);
             }
             return ViewUtility.render(request,model,Path.Template.PRODUCTCONTAINER);
         }
         else
         {
-            model.put("containers", getAllProductContainers());
+            model.put(Constants.MODEL_CONTAINERS_KEY, getAllProductContainers());
             return ViewUtility.render(request,model,Path.Template.PRODUCTCONTAINERS);
         }
     };
@@ -126,22 +126,22 @@ public class ProductContainerController implements ProductContainerApiInterface
             try
             {
                 updateProductContainer(Long.parseLong(form.get(FormField.ID)), form);
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_CHANGED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_CHANGED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_CHANGE_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_CHANGE_ERROR")));
             }
         } else
         {
             try
             {
                 addProductContainer(form);
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_ADDED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_ADDED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_ADD_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_ADD_ERROR")));
             }
         }
     }

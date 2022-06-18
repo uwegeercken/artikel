@@ -23,17 +23,15 @@ public class Constants
     public static final String MODEL_FORM_KEY = "form";
     public static final String MODEL_FIELDS_KEY = "fields";
     public static final String MODEL_RESULT_KEY = "result";
-    public static final String MODEL_CONTAINS_KEY = "containers";
+    public static final String MODEL_CONTAINERS_KEY = "containers";
     public static final String MODEL_PRODUCERS_KEY = "producers";
     public static final String MODEL_PRODUCER_KEY = "producer";
     public static final String MODEL_PRODUCTS_KEY = "products";
     public static final String MODEL_PRODUCT_KEY = "product";
     public static final String MODEL_ORIGINS_KEY = "origins";
-    public static final String MODEL_ORIGIN_KEY = "origin";
     public static final String MODEL_MARKETS_KEY = "markets";
-    public static final String MODEL_MARKET_KEY = "market";
     public static final String MODEL_ORDERS_KEY = "orders";
-    public static final String MODEL_ORDER_KEY = "order";
+    public static final String MODEL_USERS_KEY = "users";
 
     public static final String MODEL_PRODUCTORDERITEMS_KEY = "productorderitems";
     public static final String MODEL_SHOPLABELSONLY_KEY = "shoplabelsonly";

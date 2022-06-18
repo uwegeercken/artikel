@@ -29,23 +29,23 @@ public class ProducerController implements ProducerApiInterface
 
     public Route serveAllProducersPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("producers", getAllProducers());
+        model.put(Constants.MODEL_PRODUCERS_KEY, getAllProducers());
         return ViewUtility.render(request,model, Path.Template.PRODUCERS);
     };
 
     public Route serveProducerPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("fields", FormField.class);
+        model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
         Optional<Producer> producer = Optional.ofNullable(getProducerById(Long.parseLong(request.params(":id"))));
         if(producer.isPresent())
         {
-            model.put("form", FormConverter.convertToForm(producer.get()));
+            model.put(Constants.MODEL_FORM_KEY, FormConverter.convertToForm(producer.get()));
         }
         else
         {
             Form form = new Form();
             form.put(FormField.ID,"0");
-            model.put("form", form);
+            model.put(Constants.MODEL_FORM_KEY, form);
         }
         return ViewUtility.render(request,model,Path.Template.PRODUCER);
 
@@ -64,8 +64,8 @@ public class ProducerController implements ProducerApiInterface
                     form.put(FormField.valueOf(parameter), request.queryParams(parameter));
                 }
             }
-            model.put("form", form);
-            model.put("fields",FormField.class);
+            model.put(Constants.MODEL_FORM_KEY, form);
+            model.put(Constants.MODEL_FIELDS_KEY,FormField.class);
 
             boolean isUniqueProducer = getIsUniqueProducer(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
             ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProducer, WebApplication.getNumberFormatter());
@@ -75,14 +75,14 @@ public class ProducerController implements ProducerApiInterface
             }
             else
             {
-                model.put("result", result);
+                model.put(Constants.MODEL_RESULT_KEY, result);
             }
             return ViewUtility.render(request,model,Path.Template.PRODUCER);
         }
         else
         {
             List<Producer> producers = getAllProducers();
-            model.put("producers", producers);
+            model.put(Constants.MODEL_PRODUCERS_KEY, producers);
             request.session().attribute("producers", producers);
             return ViewUtility.render(request,model,Path.Template.PRODUCERS);
         }
@@ -91,7 +91,7 @@ public class ProducerController implements ProducerApiInterface
     public Route serveDeleteProducerPage = (Request request, Response response) -> {
         Producer producer = getProducerById(Long.parseLong(request.params(":id")));
         Map<String, Object> model = new HashMap<>();
-        model.put("producer", producer);
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCER_DELETE);
     };
 
@@ -103,7 +103,7 @@ public class ProducerController implements ProducerApiInterface
             deleteProducer(Long.parseLong(request.params(":id")));
         }
         List<Producer> producers = getAllProducers();
-        model.put("producers", producers);
+        model.put(Constants.MODEL_PRODUCERS_KEY, producers);
         request.session().attribute("producers", producers);
         return ViewUtility.render(request,model,Path.Template.PRODUCERS);
     };
@@ -115,22 +115,22 @@ public class ProducerController implements ProducerApiInterface
             try
             {
                 updateProducer(Long.parseLong(form.get(FormField.ID)), form);
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCER_FORM_CHANGED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCER_FORM_CHANGED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_CHANGE_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_CHANGE_ERROR")));
             }
         } else
         {
             try
             {
                 addProducer(form);
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCER_FORM_ADDED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCER_FORM_ADDED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_ADD_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_ADD_ERROR")));
             }
         }
     }

@@ -33,24 +33,24 @@ public class ProductOriginController implements ProductOriginApiInterface
 
     public Route serveAllProductOriginsPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("origins", getAllProductOrigins());
+        model.put(Constants.MODEL_ORIGINS_KEY, getAllProductOrigins());
         return ViewUtility.render(request,model,Path.Template.PRODUCTORIGINS);
 
     };
 
     public Route serveProductOriginPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("fields", FormField.class);
+        model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
         Optional<ProductOrigin> productOrigin = Optional.ofNullable(getProductOriginById(Long.parseLong(request.params(":id"))));
         if(productOrigin.isPresent())
         {
-            model.put("form", FormConverter.convertToForm(productOrigin.get()));
+            model.put(Constants.MODEL_FORM_KEY, FormConverter.convertToForm(productOrigin.get()));
         }
         else
         {
             Form form = new Form();
             form.put(FormField.ID,"0");
-            model.put("form", form);
+            model.put(Constants.MODEL_FORM_KEY, form);
         }
         return ViewUtility.render(request,model,Path.Template.PRODUCTORIGIN);
 
@@ -70,9 +70,9 @@ public class ProductOriginController implements ProductOriginApiInterface
                     form.put(FormField.valueOf(parameter), request.queryParams(parameter));
                 }
             }
-            model.put("form", form);
-            model.put("fields",FormField.class);
-            model.put("origins", getAllProductOrigins());
+            model.put(Constants.MODEL_FORM_KEY, form);
+            model.put(Constants.MODEL_FIELDS_KEY,FormField.class);
+            model.put(Constants.MODEL_ORIGINS_KEY, getAllProductOrigins());
 
             boolean isUniqueProductOrigin = getIsUniqueProductOrigin(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
             ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProductOrigin, WebApplication.getNumberFormatter());
@@ -82,13 +82,13 @@ public class ProductOriginController implements ProductOriginApiInterface
             }
             else
             {
-                model.put("result", result);
+                model.put(Constants.MODEL_RESULT_KEY, result);
             }
             return ViewUtility.render(request,model,Path.Template.PRODUCTORIGIN);
         }
         else
         {
-            model.put("origins", getAllProductOrigins());
+            model.put(Constants.MODEL_ORIGINS_KEY, getAllProductOrigins());
             return ViewUtility.render(request,model,Path.Template.PRODUCTORIGINS);
         }
     };
@@ -131,22 +131,22 @@ public class ProductOriginController implements ProductOriginApiInterface
             try
             {
                 updateProductOrigin(Long.parseLong(form.get(FormField.ID)), form);
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_CHANGED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_CHANGED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_CHANGE_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_CHANGE_ERROR")));
             }
         } else
         {
             try
             {
                 addProductOrigin(form);
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_ADDED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_ADDED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_ADD_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_ADD_ERROR")));
             }
         }
     }

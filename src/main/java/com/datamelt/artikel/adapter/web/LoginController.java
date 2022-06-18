@@ -9,6 +9,7 @@ import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.LoginApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -64,14 +65,14 @@ public class LoginController implements LoginApiInterface
             {
                 loginUser.get().setAuthenticated(false);
                 request.session().attribute("user", loginUser.get());
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("ERROR_LOGIN_WRONG_PASSWORD")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("ERROR_LOGIN_WRONG_PASSWORD")));
                 logger.error("user login failed. wrong password for user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.LOGIN);
             }
         }
         else
         {
-            model.put("result", new ValidatorResult(WebApplication.getMessages().get("ERROR_LOGIN_UNKNOWN_USER")));
+            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("ERROR_LOGIN_UNKNOWN_USER")));
             logger.error("user login failed. user not existing [{}]", username);
             return ViewUtility.render(request, model, Path.Template.LOGIN);
         }

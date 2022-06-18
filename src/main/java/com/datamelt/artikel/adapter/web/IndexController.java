@@ -4,6 +4,7 @@ import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.util.Constants;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
@@ -29,8 +30,8 @@ public class IndexController
 
     public Route serveAboutPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("version", WebApplication.APPLCATION_VERSION);
-        model.put("lastupdate", WebApplication.APPLCATION_LAST_UPDATE);
+        model.put(Constants.MODEL_VERSION_KEY, WebApplication.APPLCATION_VERSION);
+        model.put(Constants.MODEL_LASTUPDATE_KEY, WebApplication.APPLCATION_LAST_UPDATE);
         return ViewUtility.render(request,model,Path.Template.ABOUT);
 
     };

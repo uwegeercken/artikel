@@ -32,7 +32,7 @@ public class ProductOrderController implements ProductOrderApiInterface
 
     public Route serveAllOrdersPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("orders", getAllProductOrders());
+        model.put(Constants.MODEL_ORDERS_KEY, getAllProductOrders());
         return ViewUtility.render(request,model,Path.Template.ORDERS);
 
     };
@@ -43,7 +43,7 @@ public class ProductOrderController implements ProductOrderApiInterface
         Map<String, Object> model = new HashMap<>();
         if(order.isPresent())
         {
-            model.put("productorderitems", order.get().getOrderItems());
+            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, order.get().getOrderItems());
         }
         return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
     };

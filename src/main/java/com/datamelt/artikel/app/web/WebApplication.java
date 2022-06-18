@@ -93,7 +93,7 @@ public class WebApplication
 
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
         get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
-        get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf,new Test1());
+        get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);

@@ -43,12 +43,12 @@ public class ProductController implements ProductApiInterface
         Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("fields", FormField.class);
-        model.put("producer", producer);
+        model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         Optional<Product> product = Optional.ofNullable(getProductById(Long.parseLong(request.params(":id"))));
         if(product.isPresent())
         {
-            model.put("form", FormConverter.convertToForm(product.get(), WebApplication.getNumberFormatter()));
+            model.put(Constants.MODEL_FORM_KEY, FormConverter.convertToForm(product.get(), WebApplication.getNumberFormatter()));
         }
         else
         {
@@ -58,11 +58,11 @@ public class ProductController implements ProductApiInterface
             form.put(FormField.PRICE,"0");
             form.put(FormField.WEIGHT,"0");
             form.put(FormField.PRODUCER_ID,String.valueOf(producerId));
-            model.put("form", form);
+            model.put(Constants.MODEL_FORM_KEY, form);
         }
-        model.put("producers", getAllProducers());
-        model.put("containers", getAllProductContainers());
-        model.put("origins", getAllProductOrigins());
+        model.put(Constants.MODEL_PRODUCERS_KEY, getAllProducers());
+        model.put(Constants.MODEL_CONTAINERS_KEY, getAllProductContainers());
+        model.put(Constants.MODEL_ORIGINS_KEY, getAllProductOrigins());
         return ViewUtility.render(request,model,Path.Template.PRODUCT);
     };
 
@@ -75,10 +75,10 @@ public class ProductController implements ProductApiInterface
         Map<String, Object> model = new HashMap<>();
         if(order.isPresent())
         {
-            model.put("productorderitems", getShopProductOrderItems(order.get()));
-            model.put("shoplabelsonly", order.get().getShopLabelsOnly());
+            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(order.get()));
+            model.put(Constants.MODEL_SHOPLABELSONLY_KEY, order.get().getShopLabelsOnly());
         }
-        model.put("producer", producer);
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         if(producer.getNoOrdering()==1)
         {
             return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS_NO_ORDERING);
@@ -175,13 +175,13 @@ public class ProductController implements ProductApiInterface
         Map<String, Object> model = new HashMap<>();
         try
         {
-            model.put("products", getAllProducts(producer.getId()));
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId()));
         }
         catch (Exception ex)
         {
             logger.error("error getting products for producerId [{}]", producer.getId());
         }
-        model.put("producer", producer);
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         return model;
     }
 
@@ -207,8 +207,8 @@ public class ProductController implements ProductApiInterface
         shopItem.setAmount(value);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("productorderitems", getShopProductOrderItems(order));
-        model.put("producer", producer);
+        model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(order));
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -225,8 +225,8 @@ public class ProductController implements ProductApiInterface
         order.removeOrderItem(shopItem);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("productorderitems", getShopProductOrderItems(order));
-        model.put("producer", producer);
+        model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(order));
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
     };
 
@@ -253,7 +253,7 @@ public class ProductController implements ProductApiInterface
         else
         {
             Map<String, Object> model = new HashMap<>();
-            model.put("result", new ValidatorResult(WebApplication.getMessages().get("ERROR_NO_ORDER_DATE")));
+            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("ERROR_NO_ORDER_DATE")));
             response.redirect("/shopproducts/producer/" + producerId + "/");
             return null;
         }
@@ -265,8 +265,8 @@ public class ProductController implements ProductApiInterface
 
         Map<String, Object> model = new HashMap<>();
         Product product = getProductById(Long.parseLong(request.params(":id")));
-        model.put("product", product);
-        model.put("producer", producer);
+        model.put(Constants.MODEL_PRODUCT_KEY, product);
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCT_DELETE);
     };
 
@@ -320,10 +320,10 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
-            model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_CREATING_LABELS")));
-            model.put("productorderitems", getShopProductOrderItems(order));
-            model.put("shoplabelsonly", order.getShopLabelsOnly());
-            model.put("producer", producer);
+            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_CREATING_LABELS")));
+            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(order));
+            model.put(Constants.MODEL_SHOPLABELSONLY_KEY, order.getShopLabelsOnly());
+            model.put(Constants.MODEL_PRODUCER_KEY, producer);
             return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
         }
     };
@@ -344,11 +344,11 @@ public class ProductController implements ProductApiInterface
                     form.put(FormField.valueOf(parameter), request.queryParams(parameter));
                 }
             }
-            model.put("form", form);
-            model.put("fields", FormField.class);
-            model.put("producers", getAllProducers());
-            model.put("containers", getAllProductContainers());
-            model.put("origins", getAllProductOrigins());
+            model.put(Constants.MODEL_FORM_KEY, form);
+            model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
+            model.put(Constants.MODEL_PRODUCERS_KEY, getAllProducers());
+            model.put(Constants.MODEL_CONTAINERS_KEY, getAllProductContainers());
+            model.put(Constants.MODEL_ORIGINS_KEY, getAllProductOrigins());
 
             boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
             ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProduct, WebApplication.getNumberFormatter());
@@ -358,7 +358,7 @@ public class ProductController implements ProductApiInterface
             }
             else
             {
-                model.put("result", result);
+                model.put(Constants.MODEL_RESULT_KEY, result);
             }
             return ViewUtility.render(request,model,Path.Template.PRODUCT);
         }
@@ -375,11 +375,11 @@ public class ProductController implements ProductApiInterface
             try
             {
                 updateProduct(Long.parseLong(form.get(FormField.ID)), form, WebApplication.getNumberFormatter());
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_FORM_CHANGED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCT_FORM_CHANGED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_CHANGE_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_CHANGE_ERROR")));
             }
         }
         else
@@ -387,11 +387,11 @@ public class ProductController implements ProductApiInterface
             try
             {
                 addProduct(form, WebApplication.getNumberFormatter());
-                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_FORM_ADDED")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("PRODUCT_FORM_ADDED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_ADD_ERROR")));
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_ADD_ERROR")));
             }
         }
     }
