@@ -21,12 +21,15 @@ public class ViewUtility
     {
         model.put("WebPath", Path.Web.class);
         model.put("Timestamp", Timestamp.class);
+        model.put("numberFormatter", WebApplication.getNumberFormatter());
+        model.put("messages", WebApplication.getMessages());
         model.put("producers", request.session().attribute("producers"));
         Optional<User> user = Optional.ofNullable(request.session().attribute("user"));
         if(user.isPresent())
         {
             model.put("user", user.get());
         }
+
         Optional<ProductOrderCollection> orderCollection = Optional.ofNullable(request.session().attribute("ordercollection"));
         if(!orderCollection.isPresent())
         {

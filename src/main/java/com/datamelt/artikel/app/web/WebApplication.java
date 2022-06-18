@@ -13,7 +13,6 @@ import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.util.FileUtility;
-import org.asciidoctor.Asciidoctor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,10 @@ public class WebApplication
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
     public static final String APPLCATION_VERSION = "v1.3";
-    public static final String APPLCATION_LAST_UPDATE = "12.06.2022";
+    public static final String APPLCATION_LAST_UPDATE = "18.06.2022";
+
+    private static MessageBundleInterface messages;
+    private static NumberFormatter numberFormatter;
 
     public static void main(String[] args) throws Exception
     {
@@ -44,22 +46,22 @@ public class WebApplication
             System.exit(1);
         }
 
-        MessageBundleInterface messages = new MessageBundle(configuration.getSparkJava().getLocale());
-        NumberFormatter numberFormatter = new NumberFormatter(configuration.getSparkJava().getLocale());
+        messages = new MessageBundle(configuration.getSparkJava().getLocale());
+        numberFormatter = new NumberFormatter(configuration.getSparkJava().getLocale());
 
         staticFiles.location("/public");
         staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());
 
         WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration));
-        IndexController indexController = new IndexController(service, messages);
-        LoginController loginController = new LoginController(service, messages);
-        UserController userController = new UserController(service, messages);
-        ProductController productController = new ProductController(service, messages, numberFormatter);
-        ProducerController producerController = new ProducerController(service, messages, numberFormatter);
-        MarketController marketController = new MarketController(service, messages);
-        ProductContainerController containerController = new ProductContainerController(service, messages, numberFormatter);
-        ProductOriginController originController = new ProductOriginController(service, messages, numberFormatter);
-        ProductOrderController orderController = new ProductOrderController(service, messages, numberFormatter, configuration.getAsciidoc());
+        IndexController indexController = new IndexController(service);
+        LoginController loginController = new LoginController(service);
+        UserController userController = new UserController(service);
+        ProductController productController = new ProductController(service);
+        ProducerController producerController = new ProducerController(service);
+        MarketController marketController = new MarketController(service);
+        ProductContainerController containerController = new ProductContainerController(service);
+        ProductOriginController originController = new ProductOriginController(service);
+        ProductOrderController orderController = new ProductOrderController(service, configuration.getAsciidoc());
 
         before("*", Filters.redirectToLogin);
 
@@ -91,7 +93,7 @@ public class WebApplication
 
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
         get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
-        get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
+        get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf,new Test1());
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);
@@ -111,7 +113,7 @@ public class WebApplication
 
         get("*", indexController.serveNotFoundPage);
 
-        //after(Path.Web.SHOP_COMPLETE, Filters.redirectToOrders);
+        after(Path.Web.SHOP_COMPLETE,  Filters.redirectToOrders);
     }
 
     private static boolean configurationFilesAndFoldersOk(MainConfiguration configuration)
@@ -156,5 +158,13 @@ public class WebApplication
         return allOk;
     }
 
+    public static MessageBundleInterface getMessages()
+    {
+        return messages;
+    }
 
+    public static NumberFormatter getNumberFormatter()
+    {
+        return numberFormatter;
+    }
 }

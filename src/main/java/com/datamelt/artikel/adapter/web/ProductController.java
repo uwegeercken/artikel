@@ -6,13 +6,15 @@ import com.datamelt.artikel.adapter.web.form.FormField;
 import com.datamelt.artikel.adapter.web.form.FormValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
+import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.*;
-import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProductApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -22,29 +24,18 @@ import java.util.*;
 
 public class ProductController implements ProductApiInterface
 {
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     private WebServiceInterface service;
-    private MessageBundleInterface messages;
-    private NumberFormatter numberFormatter;
 
-    public ProductController(WebServiceInterface service, MessageBundleInterface messages, NumberFormatter numberFormatter)
+    public ProductController(WebServiceInterface service)
     {
         this.service = service;
-        this.messages = messages;
-        this.numberFormatter = numberFormatter;
     }
 
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
-        model.put("products", getAllProducts(producerId));
-        model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
-        return ViewUtility.render(request,model,Path.Template.PRODUCTS);
-
+        return ViewUtility.render(request,shopProductsLabelModel(producer),Path.Template.PRODUCTS);
     };
 
     public Route serveProductPage = (Request request, Response response) -> {
@@ -52,15 +43,12 @@ public class ProductController implements ProductApiInterface
         Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
         model.put("fields", FormField.class);
         model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
         Optional<Product> product = Optional.ofNullable(getProductById(Long.parseLong(request.params(":id"))));
         if(product.isPresent())
         {
-            model.put("form", FormConverter.convertToForm(product.get(), numberFormatter));
+            model.put("form", FormConverter.convertToForm(product.get(), WebApplication.getNumberFormatter()));
         }
         else
         {
@@ -90,10 +78,7 @@ public class ProductController implements ProductApiInterface
             model.put("productorderitems", getShopProductOrderItems(order.get()));
             model.put("shoplabelsonly", order.get().getShopLabelsOnly());
         }
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
         if(producer.getNoOrdering()==1)
         {
             return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS_NO_ORDERING);
@@ -116,9 +101,8 @@ public class ProductController implements ProductApiInterface
         }
         catch(Exception ex)
         {
+            logger.error("error parsing amount from value [{}]. productId [{}], producerId ", request.queryParams("productamount"), productId, producerId);
         }
-
-        Map<String, Object> model = new HashMap<>();
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
         if(!order.isPresent())
@@ -146,13 +130,7 @@ public class ProductController implements ProductApiInterface
                 order.get().addOrderItem(item);
             }
         }
-
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
-        model.put("products", getAllProducts(producerId));
-        model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
-        return ViewUtility.render(request,model,Path.Template.PRODUCTS);
+        return ViewUtility.render(request,shopProductsLabelModel(producer),Path.Template.PRODUCTS);
 
     };
 
@@ -161,7 +139,6 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        Map<String, Object> model = new HashMap<>();
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
         if(!order.isPresent())
@@ -189,15 +166,24 @@ public class ProductController implements ProductApiInterface
                 order.get().removeOrderItem(item);
             }
         }
-
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
-        model.put("products", getAllProducts(producerId));
-        model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
-        return ViewUtility.render(request,model,Path.Template.PRODUCTS);
+        return ViewUtility.render(request, shopProductsLabelModel(producer), Path.Template.PRODUCTS);
 
     };
+
+    private Map<String, Object> shopProductsLabelModel(Producer producer)
+    {
+        Map<String, Object> model = new HashMap<>();
+        try
+        {
+            model.put("products", getAllProducts(producer.getId()));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
+        }
+        model.put("producer", producer);
+        return model;
+    }
 
     public Route shopProductAmount = (Request request, Response response) -> {
 
@@ -212,6 +198,7 @@ public class ProductController implements ProductApiInterface
         }
         catch(Exception ex)
         {
+            logger.error("error parsing amount from value [{}]. productId [{}], producerId ", request.queryParams("productamount"), productId, producerId);
         }
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
@@ -220,11 +207,8 @@ public class ProductController implements ProductApiInterface
         shopItem.setAmount(value);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
         model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
 
     };
@@ -241,11 +225,8 @@ public class ProductController implements ProductApiInterface
         order.removeOrderItem(shopItem);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
         model.put("productorderitems", getShopProductOrderItems(order));
         model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
     };
 
@@ -271,7 +252,8 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
-            //model.put("result", new ValidatorResult(messages.get("ERROR_LOGIN_WRONG_PASSWORD")));
+            Map<String, Object> model = new HashMap<>();
+            model.put("result", new ValidatorResult(WebApplication.getMessages().get("ERROR_NO_ORDER_DATE")));
             response.redirect("/shopproducts/producer/" + producerId + "/");
             return null;
         }
@@ -282,12 +264,9 @@ public class ProductController implements ProductApiInterface
         Producer producer = getProducerById(producerId);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_DELETE"));
         Product product = getProductById(Long.parseLong(request.params(":id")));
         model.put("product", product);
         model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
         return ViewUtility.render(request,model,Path.Template.PRODUCT_DELETE);
     };
 
@@ -295,18 +274,12 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_LIST"));
         String cancelled = request.queryParams("submit");
-        if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             deleteProduct(Long.parseLong(request.params(":id")));
         }
-        model.put("products", getAllProducts(producerId));
-        model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
-        return ViewUtility.render(request,model,Path.Template.PRODUCTS);
+        return ViewUtility.render(request, shopProductsLabelModel(producer) ,Path.Template.PRODUCTS);
     };
 
     public Route createLabels = (Request request, Response response) -> {
@@ -317,11 +290,12 @@ public class ProductController implements ProductApiInterface
 
         response.type(Constants.FILE_CONTENT_TYPE_PDF);
         response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
+        response.header(Constants.CONTENT_TYPE_KEY,Constants.CONTENT_TYPE_VALUE);
         response.raw().setContentLength(pdfOutputFile.length);
         response.raw().getOutputStream().write(pdfOutputFile);
         response.raw().getOutputStream().flush();
         response.raw().getOutputStream().close();
-        return null;
+        return response.raw();
     };
 
     public Route createShopLabels = (Request request, Response response) -> {
@@ -346,13 +320,10 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
-            model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("ERROR_CREATING_LABELS")));
+            model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_CREATING_LABELS")));
             model.put("productorderitems", getShopProductOrderItems(order));
             model.put("shoplabelsonly", order.getShopLabelsOnly());
-            model.put("messages", messages);
-            model.put("pagetitle", messages.get("PAGETITLE_SHOP_LIST"));
             model.put("producer", producer);
-            model.put("numberFormatter", numberFormatter);
             return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
         }
     };
@@ -361,13 +332,9 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("producer", producer);
-        model.put("numberFormatter", numberFormatter);
+        Map<String, Object> model =  shopProductsLabelModel(producer);
         String cancelled = request.queryParams("submit");
-
-        if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             Form form = new Form();
             for(String parameter : request.queryParams())
@@ -378,14 +345,13 @@ public class ProductController implements ProductApiInterface
                 }
             }
             model.put("form", form);
-            model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
-            model.put("fields",FormField.class);
+            model.put("fields", FormField.class);
             model.put("producers", getAllProducers());
             model.put("containers", getAllProductContainers());
             model.put("origins", getAllProductOrigins());
 
             boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
-            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProduct, numberFormatter);
+            ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProduct, WebApplication.getNumberFormatter());
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProduct(model, form);
@@ -398,9 +364,7 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
-            model.put("pagetitle", messages.get("FORM_BUTTON_CANCEL"));
-            model.put("products", getAllProducts(producerId));
-            return ViewUtility.render(request,model,Path.Template.PRODUCTS);
+            return ViewUtility.render(request, shopProductsLabelModel(producer), Path.Template.PRODUCTS);
         }
     };
 
@@ -408,28 +372,26 @@ public class ProductController implements ProductApiInterface
     {
         if (Long.parseLong(form.get(FormField.ID)) > 0)
         {
-            model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_CHANGE"));
-            model.put("numberFormatter", numberFormatter);
             try
             {
-                updateProduct(Long.parseLong(form.get(FormField.ID)), form, numberFormatter);
-                model.put("result", new ValidatorResult(messages.get("PRODUCT_FORM_CHANGED")));
+                updateProduct(Long.parseLong(form.get(FormField.ID)), form, WebApplication.getNumberFormatter());
+                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_FORM_CHANGED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("PRODUCT_FORM_CHANGE_ERROR")));
+                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_CHANGE_ERROR")));
             }
-        } else
+        }
+        else
         {
-            model.put("pagetitle", messages.get("PAGETITLE_PRODUCT_ADD"));
             try
             {
-                addProduct(form, numberFormatter);
-                model.put("result", new ValidatorResult(messages.get("PRODUCT_FORM_ADDED")));
+                addProduct(form, WebApplication.getNumberFormatter());
+                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCT_FORM_ADDED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("PRODUCT_FORM_ADD_ERROR")));
+                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_ADD_ERROR")));
             }
         }
     }
@@ -471,7 +433,7 @@ public class ProductController implements ProductApiInterface
         List<ProductLabel> labels = new ArrayList<>();
         for(Product product : products)
         {
-            labels.add(new ProductLabel(product, messages));
+            labels.add(new ProductLabel(product, WebApplication.getMessages()));
         }
         return service.getLabelsOutputFile(labels);
     }
@@ -482,7 +444,7 @@ public class ProductController implements ProductApiInterface
         List<ProductLabel> labels = new ArrayList<>();
         for(Product product : products)
         {
-            labels.add(new ProductLabel(product, messages));
+            labels.add(new ProductLabel(product, WebApplication.getMessages()));
         }
         return service.getLabelsOutputFile(labels);
     }

@@ -3,10 +3,9 @@ package com.datamelt.artikel.adapter.web;
 import com.datamelt.artikel.adapter.web.form.*;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
-import com.datamelt.artikel.app.web.util.NumberFormatter;
+import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.ProducerApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import spark.Request;
@@ -21,28 +20,20 @@ import java.util.Optional;
 public class ProducerController implements ProducerApiInterface
 {
     private WebServiceInterface service;
-    private MessageBundleInterface messages;
-    private NumberFormatter numberFormatter;
 
-    public ProducerController(WebServiceInterface service, MessageBundleInterface messages, NumberFormatter numberFormatter)
+    public ProducerController(WebServiceInterface service)
     {
         this.service = service;
-        this.messages = messages;
-        this.numberFormatter = numberFormatter;
     }
 
     public Route serveAllProducersPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_LIST"));
         model.put("producers", getAllProducers());
         return ViewUtility.render(request,model, Path.Template.PRODUCERS);
     };
 
     public Route serveProducerPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
         model.put("fields", FormField.class);
         Optional<Producer> producer = Optional.ofNullable(getProducerById(Long.parseLong(request.params(":id"))));
         if(producer.isPresent())
@@ -61,9 +52,8 @@ public class ProducerController implements ProducerApiInterface
 
     public Route serveUpdateProducerPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
         String cancelled = request.queryParams("submit");
-        if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             Form form = new Form();
             for(String parameter : request.queryParams())
@@ -74,11 +64,10 @@ public class ProducerController implements ProducerApiInterface
                 }
             }
             model.put("form", form);
-            model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
             model.put("fields",FormField.class);
 
             boolean isUniqueProducer = getIsUniqueProducer(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
-            ValidatorResult result = FormValidator.validate(form, messages, isUniqueProducer, numberFormatter);
+            ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProducer, WebApplication.getNumberFormatter());
             if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProducer(model, form);
@@ -91,7 +80,6 @@ public class ProducerController implements ProducerApiInterface
         }
         else
         {
-            model.put("pagetitle", messages.get("FORM_BUTTON_CANCEL"));
             List<Producer> producers = getAllProducers();
             model.put("producers", producers);
             request.session().attribute("producers", producers);
@@ -100,20 +88,16 @@ public class ProducerController implements ProducerApiInterface
     };
 
     public Route serveDeleteProducerPage = (Request request, Response response) -> {
-        Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_DELETE"));
         Producer producer = getProducerById(Long.parseLong(request.params(":id")));
+        Map<String, Object> model = new HashMap<>();
         model.put("producer", producer);
         return ViewUtility.render(request,model,Path.Template.PRODUCER_DELETE);
     };
 
     public Route deleteProducer = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put("messages", messages);
-        model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_LIST"));
         String cancelled = request.queryParams("submit");
-        if(!cancelled.equals(messages.get("FORM_BUTTON_CANCEL")))
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             deleteProducer(Long.parseLong(request.params(":id")));
         }
@@ -127,27 +111,25 @@ public class ProducerController implements ProducerApiInterface
     {
         if (Long.parseLong(form.get(FormField.ID)) > 0)
         {
-            model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_CHANGE"));
             try
             {
                 updateProducer(Long.parseLong(form.get(FormField.ID)), form);
-                model.put("result", new ValidatorResult(messages.get("PRODUCER_FORM_CHANGED")));
+                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCER_FORM_CHANGED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("PRODUCER_FORM_CHANGE_ERROR")));
+                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_CHANGE_ERROR")));
             }
         } else
         {
-            model.put("pagetitle", messages.get("PAGETITLE_PRODUCER_ADD"));
             try
             {
                 addProducer(form);
-                model.put("result", new ValidatorResult(messages.get("PRODUCER_FORM_ADDED")));
+                model.put("result", new ValidatorResult(WebApplication.getMessages().get("PRODUCER_FORM_ADDED")));
             }
             catch (Exception ex)
             {
-                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, messages.get("PRODUCER_FORM_ADD_ERROR")));
+                model.put("result", new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_ADD_ERROR")));
             }
         }
     }

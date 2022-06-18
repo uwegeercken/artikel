@@ -26,7 +26,7 @@ public class Filters
 
     public static Filter redirectToOrders = (Request request, Response response) ->
     {
-        //response.redirect(Path.Web.ORDERS);
+        response.redirect(Path.Web.ORDERS);
 
     };
 }
