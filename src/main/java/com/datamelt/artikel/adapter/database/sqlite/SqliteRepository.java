@@ -6,6 +6,7 @@ import com.datamelt.artikel.port.RepositoryInterface;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 public class SqliteRepository implements RepositoryInterface
 {
@@ -382,5 +383,17 @@ public class SqliteRepository implements RepositoryInterface
     public List<User> getAllUsers() throws Exception
     {
         return CollectionHandler.getAllUsers(connection);
+    }
+
+    @Override
+    public long getAllProductsCount() throws Exception
+    {
+        return CollectionHandler.getAllProductsCount(connection);
+    }
+
+    @Override
+    public Map<String,Long> getAllProducersProductsCount() throws Exception
+    {
+        return CollectionHandler.getAllProducersProductsCount(connection);
     }
 }

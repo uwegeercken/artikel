@@ -62,6 +62,13 @@ p.big {
 	font-weight: bold;
 }
 
+span.verybig {
+	margin: 3px;
+	padding: 3px;
+	font: normal 24pt/1.4 verdana, sans-serif;
+	font-weight: bold;
+}
+
 p.small {
 	margin: 3px;
 	padding: 3px;
@@ -339,6 +346,10 @@ td {
 
 td.title {
 	font: normal 12pt/1.6 verdana, sans-serif;
+}
+
+td.big {
+	font: normal 24pt/1.6 verdana, sans-serif;
 }
 
 div.data {

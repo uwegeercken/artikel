@@ -2,10 +2,23 @@
 #@mainLayout()
 
     <p class="heading">${messages.get("PAGE_HEADIND_INDEX")}</p>
+    <p>${messages.get("PAGE_INDEX_INFO")}</p>
     #if($user.isAuthenticated())
         <p class="big">${messages.get("PAGE_INDEX_WELCOME_BACK")} ${user.name}</p>
+        <table border="0" align="center" width="30%" border="0">
+                <tr>
+                    <td width="50%" align="right">${messages.get("PAGE_INDEX_TOTAL_PRODUCTS")}:</td>
+                    <td width="50%" align="left" class="big">$totalproductscount</td>
+                </tr>
+                #foreach($productcount in ${productcounts.keySet()})
+                    <tr colspan="2">
+                        <td width="50%" align="right">${productcount}:</td>
+                        <td width="50%" align="left" class="big">${productcounts.get($productcount)}</td>
+                    </tr>
+                #end
+        </table>
     #end
-    <p>${messages.get("PAGE_INDEX_INFO")}</p>
-    <p align="center"><img height="75%" width="75%" src="/img/anhaenger_mogk.jpeg"></p>
+
+    <p align="center"><img height="576px" width="1024px" src="/img/anhaenger_mogk.png"></p>
     <br>
 #end

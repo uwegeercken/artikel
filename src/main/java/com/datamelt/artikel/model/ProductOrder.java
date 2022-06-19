@@ -15,7 +15,7 @@ public class ProductOrder
     private long timestampOrderDate;
     private boolean shopLabelsOnly = false;
     private Map<Long, ProductOrderItem> orderItems = new HashMap<>();
-    private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT);
+    private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT_WITH_WEEKDAY);
 
     public ProductOrder()
     {

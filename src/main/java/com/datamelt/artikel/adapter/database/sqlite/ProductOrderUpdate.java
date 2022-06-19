@@ -1,5 +1,6 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
+import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.ProductOrder;
 
 import java.sql.Connection;
@@ -30,7 +31,7 @@ class ProductOrderUpdate
         try
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
-            statement.setString(1, getGeneratedNumber(order.getProducerId()));
+            statement.setString(1, getGeneratedNumber(order.getProducer()));
             statement.setLong(2, order.getProducerId());
             statement.setLong(3, order.getTimestampOrderDate());
             statement.setLong(4, new Date().getTime());
@@ -87,8 +88,8 @@ class ProductOrderUpdate
         }
     }
 
-    private String getGeneratedNumber(long producerId)
+    private String getGeneratedNumber(Producer producer)
     {
-        return producerId + "--" + sdf.format(new Date());
+        return producer.getId() + "--" + sdf.format(new Date());
     }
 }

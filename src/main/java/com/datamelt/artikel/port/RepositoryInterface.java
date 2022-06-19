@@ -3,6 +3,7 @@ package com.datamelt.artikel.port;
 import com.datamelt.artikel.model.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RepositoryInterface
 {
@@ -73,4 +74,7 @@ public interface RepositoryInterface
     ProductOrder getProductOrderById(long id) throws Exception;
 
     List<User> getAllUsers() throws Exception;
+
+    long getAllProductsCount() throws Exception;
+    Map<String,Long> getAllProducersProductsCount() throws Exception;
 }

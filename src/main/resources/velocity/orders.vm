@@ -6,20 +6,23 @@
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCTORDERS_LIST")}</p>
         <p>${messages.get("HELP1_ORDERS_LIST")}</p>
         <p>${messages.get("HELP2_ORDERS_LIST")}</p>
-        <p><img height="22" width="22" src="/img/order.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS")}</p>
+        <p>
+            <img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS")}
+            <img height="22px" width="22px" src="/img/order_document.png">&nbsp;${messages.get("IMAGE_ORDER_DOCUMENT")}
+        </p>
     </div>
     <div id="filter">
         <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="orders" type="text""></p>
     </div>
     #foreach($order in $orders)
-        <div class="unit" tag="$!order.number.toLowerCase()">
+        <div class="unit" tag="$order.producer.name.toLowerCase() + $!order.productCreatedDate.toLowerCase()">
             <a href="/orderitems/${order.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
             <a href="/orderitemspdf/${order.id}/"><img class="delete" height="22px" width="22px" src="/img/order_document.png" title="${messages.get("IMAGE_ORDER_DOCUMENT")}"></a>
             <div class="grouptop">
-                <p class="small">${messages.get("TYPE_ORDER")} #$!order.number</p>
-                <p class="big">$order.producer.name</p>
+                <p class="small">${messages.get("TYPE_ORDER")} - $order.producer.name</p>
+                <p class="small">&nbsp;</p>
+                <p class="big">$!order.productCreatedDate</p>
                 <p class="normal">${messages.get("PRODUCT_ORDER_NUMBER_OF_PRODUCTS")}: $!order.orderItems.size() - ${messages.get("PRODUCT_ORDER_NUMBER_OF_ITEMS")}: $!order.totalProductOrderItemAmount</p>
-                <p class="normal">${messages.get("PRODUCT_ORDER_ORDER_CREATED")}: $!order.productCreatedDate</p>
                 <p class="normal">${messages.get("PRODUCT_ORDER_ORDER_DATE")}: $!order.productOrderDate</p>
             </div>
         </div>

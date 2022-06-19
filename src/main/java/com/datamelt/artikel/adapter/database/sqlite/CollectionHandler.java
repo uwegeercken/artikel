@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 
 class CollectionHandler
@@ -21,7 +22,35 @@ class CollectionHandler
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
     public static final String SQL_QUERY_USERS = "select * from user order by name";
 
+    public static final String SQL_QUERY_PRODUCTS_COUNT = "select count(1) as counter from product";
+    public static final String SQL_QUERY_PRODUCERS_PRODUCTS_COUNT = "select producer.name as name, count(1) as counter from product,producer where producer.id=product.producer_id group by producer_id order by producer.name";
+
     private static final Logger logger = LoggerFactory.getLogger(CollectionHandler.class);
+
+    public static long getAllProductsCount(Connection connection) throws Exception
+    {
+        long numberOfProducts = 0;
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCTS_COUNT);
+
+        ResultSet resultset = statement.executeQuery();
+        if(resultset.next())
+        {
+            numberOfProducts = resultset.getLong("counter");
+        }
+        return numberOfProducts;
+    }
+
+    public static Map<String,Long> getAllProducersProductsCount(Connection connection) throws Exception
+    {
+        Map<String,Long> productCounts = new HashMap<>();
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCERS_PRODUCTS_COUNT);
+        ResultSet resultset = statement.executeQuery();
+        while(resultset.next())
+        {
+            productCounts.put(resultset.getString("name"), resultset.getLong("counter"));
+        }
+        return productCounts;
+    }
 
     public static List<Product> getAllProducts(Connection connection, long producerId) throws Exception
     {

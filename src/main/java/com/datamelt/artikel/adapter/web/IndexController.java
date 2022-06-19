@@ -2,6 +2,7 @@ package com.datamelt.artikel.adapter.web;
 
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
+import com.datamelt.artikel.port.IndexApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.util.Constants;
@@ -13,7 +14,7 @@ import spark.Route;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IndexController
+public class IndexController implements IndexApiInterface
 {
     private WebServiceInterface service;
 
@@ -25,7 +26,6 @@ public class IndexController
     public Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         return ViewUtility.render(request,model,Path.Template.INDEX);
-
     };
 
     public Route serveAboutPage = (Request request, Response response) -> {
@@ -41,4 +41,6 @@ public class IndexController
         response.status(HttpStatus.NOT_FOUND_404);
         return ViewUtility.render(request,model,Path.Template.NOTFOUND);
     };
+
+
 }

@@ -296,4 +296,16 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         return orderDocumentGenerator.getOrderDocumentFilename(producer, order);
     }
+
+    @Override
+    public long getAllProductsCount() throws Exception
+    {
+        return repository.getAllProductsCount();
+    }
+
+    @Override
+    public Map<String,Long> getAllProducersProductsCount() throws Exception
+    {
+        return repository.getAllProducersProductsCount();
+    }
 }

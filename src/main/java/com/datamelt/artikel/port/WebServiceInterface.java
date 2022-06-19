@@ -52,4 +52,7 @@ public interface WebServiceInterface
     byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
     byte [] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
     String getOrderDocumentFilename(Producer producer, ProductOrder order);
+
+    long getAllProductsCount() throws Exception;
+    Map<String,Long> getAllProducersProductsCount() throws Exception;
 }

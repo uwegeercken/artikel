@@ -112,6 +112,7 @@ public class ProductController implements ProductApiInterface
             item.setAmount(value);
             ProductOrder newOrder = new ProductOrder(producerId);
             newOrder.addOrderItem(item);
+            newOrder.setProducer(producer);
             orderCollection.add(newOrder);
         }
         else
@@ -120,7 +121,6 @@ public class ProductController implements ProductApiInterface
             {
                 ProductOrderItem shopItem = order.get().getOrderItem(productId);
                 shopItem.setAmount(value);
-                //shopItem.increaseAmount();
             }
             else
             {
@@ -148,6 +148,7 @@ public class ProductController implements ProductApiInterface
             item.setAmount(1);
             ProductOrder newOrder = new ProductOrder(producerId, true);
             newOrder.addOrderItem(item);
+            newOrder.setProducer(producer);
             orderCollection.add(newOrder);
         }
         else

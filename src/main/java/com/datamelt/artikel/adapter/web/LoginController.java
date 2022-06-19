@@ -59,6 +59,8 @@ public class LoginController implements LoginApiInterface
                 loginUser.get().setAuthenticated(true);
                 request.session().attribute("user", loginUser.get());
                 request.session().attribute("producers",getAllProducers());
+                model.put("totalproductscount", getAllProductsCount());
+                model.put("productcounts", getAllProducersProductsCount());
                 logger.info("user login successful. user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.INDEX);
             } else
@@ -94,5 +96,17 @@ public class LoginController implements LoginApiInterface
     {
         String loginHashedPassword = HashGenerator.generate(loginPassword);
         return loginHashedPassword.equals(user.getPassword());
+    }
+
+    @Override
+    public long getAllProductsCount() throws Exception
+    {
+        return service.getAllProductsCount();
+    }
+
+    @Override
+    public Map<String,Long> getAllProducersProductsCount() throws Exception
+    {
+        return service.getAllProducersProductsCount();
     }
 }
