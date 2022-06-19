@@ -56,14 +56,7 @@ public class ProducerController implements ProducerApiInterface
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
-            Form form = new Form();
-            for(String parameter : request.queryParams())
-            {
-                if(FormField.exists(parameter))
-                {
-                    form.put(FormField.valueOf(parameter), request.queryParams(parameter));
-                }
-            }
+            Form form = Form.createFormFromQueryParameters(request);
             model.put(Constants.MODEL_FORM_KEY, form);
             model.put(Constants.MODEL_FIELDS_KEY,FormField.class);
 

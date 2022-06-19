@@ -1,6 +1,9 @@
 package com.datamelt.artikel.adapter.web.form;
 
+import spark.Request;
+
 import java.util.EnumMap;
+import java.util.Set;
 
 public class Form
 {
@@ -21,5 +24,18 @@ public class Form
     public EnumMap<FormField,String> getFields()
     {
         return fields;
+    }
+
+    public static Form createFormFromQueryParameters(Request request)
+    {
+        Form form = new Form();
+        for(String parameter : request.queryParams())
+        {
+            if(FormField.exists(parameter))
+            {
+                form.put(FormField.valueOf(parameter), request.queryParams(parameter));
+            }
+        }
+        return form;
     }
 }
