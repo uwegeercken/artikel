@@ -13,6 +13,8 @@ import com.datamelt.artikel.port.ProductOriginApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 
 import com.datamelt.artikel.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -24,6 +26,7 @@ import java.util.Optional;
 
 public class ProductOriginController implements ProductOriginApiInterface
 {
+    private static final Logger logger = LoggerFactory.getLogger(ProductOriginController.class);
     private WebServiceInterface service;
 
     public ProductOriginController(WebServiceInterface service)
@@ -128,6 +131,7 @@ public class ProductOriginController implements ProductOriginApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error updating product origin with id [{}], error [{}]", form.get(FormField.ID), ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_CHANGE_ERROR")));
             }
         } else
@@ -139,6 +143,7 @@ public class ProductOriginController implements ProductOriginApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error updating product origin, error [{}]", ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_ORIGIN_FORM_ADD_ERROR")));
             }
         }

@@ -9,6 +9,8 @@ import com.datamelt.artikel.model.ProductContainer;
 import com.datamelt.artikel.port.ProductContainerApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 public class ProductContainerController implements ProductContainerApiInterface
 {
+    private static final Logger logger = LoggerFactory.getLogger(ProductContainerController.class);
     private WebServiceInterface service;
 
     public ProductContainerController(WebServiceInterface service)
@@ -123,9 +126,11 @@ public class ProductContainerController implements ProductContainerApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error updating product container with id [{}], error [{}]", form.get(FormField.ID), ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_CHANGE_ERROR")));
             }
-        } else
+        }
+        else
         {
             try
             {
@@ -134,6 +139,7 @@ public class ProductContainerController implements ProductContainerApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error adding product container, error [{}]", ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_CONTAINER_FORM_ADD_ERROR")));
             }
         }

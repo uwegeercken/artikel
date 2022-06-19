@@ -372,6 +372,7 @@ public class ProductController implements ProductApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error updating product with id [{}], error [{}]", form.get(FormField.ID), ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_CHANGE_ERROR")));
             }
         }
@@ -384,6 +385,7 @@ public class ProductController implements ProductApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error updating product, error [{}]", ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_ADD_ERROR")));
             }
         }

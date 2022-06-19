@@ -9,6 +9,8 @@ import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.port.ProducerApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -20,6 +22,7 @@ import java.util.Optional;
 
 public class ProducerController implements ProducerApiInterface
 {
+    private static final Logger logger = LoggerFactory.getLogger(ProducerController.class);
     private WebServiceInterface service;
 
     public ProducerController(WebServiceInterface service)
@@ -112,6 +115,7 @@ public class ProducerController implements ProducerApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error updating producer with id [{}], error [{}]", form.get(FormField.ID), ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_CHANGE_ERROR")));
             }
         } else
@@ -123,6 +127,7 @@ public class ProducerController implements ProducerApiInterface
             }
             catch (Exception ex)
             {
+                logger.error("error updating producer, error [{}]", ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_ADD_ERROR")));
             }
         }
