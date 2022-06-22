@@ -3,7 +3,7 @@
 Motivation for this code and application was to try to understand and implement the Hexagonal Architecture - also called Port and Adapter Architecture.
 Side motivation was to try SparkJava (https://sparkjava.com/) - a micro framework for creating web applications.
 
-The Web application allows for the maintenance of products, producers, markets, containers and orders.
+The Web application allows for the maintenance of products, producers, markets, containers and orders. The application offers a shop feature where labels make be printed and orders may be placed for products put in the shop.
 
 ### Implementation details:
 - the code in Hexagonal Architecture way
@@ -79,4 +79,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-05-21
+Copyright Uwe Geercken, 2022. Last update: 2022-06-21
