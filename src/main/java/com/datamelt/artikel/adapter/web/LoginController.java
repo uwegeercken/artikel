@@ -39,7 +39,9 @@ public class LoginController implements LoginApiInterface
 
     public Route logoutUser = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
+        User user = request.session().attribute("user");
         request.session().removeAttribute("user");
+        logger.info("user logout successful. user [{}]", user.getName());
         return ViewUtility.render(request,model,Path.Template.INDEX);
 
     };
