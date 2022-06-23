@@ -2,6 +2,7 @@ package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.adapter.web.form.Form;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 
 import java.util.List;
@@ -51,8 +52,10 @@ public interface WebServiceInterface
 
     byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
     byte [] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
-    String getOrderDocumentFilename(Producer producer, ProductOrder order);
+    String getOrderDocumentFilename(ProductOrder order);
 
     long getAllProductsCount() throws Exception;
     Map<String,Long> getAllProducersProductsCount() throws Exception;
+
+    boolean sendEmail(ProductOrder order, MainConfiguration configuration);
 }

@@ -1,8 +1,10 @@
 package com.datamelt.artikel.adapter.web;
 
+import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
+import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.Path;
-import com.datamelt.artikel.config.AsciidocConfiguration;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.ProductOrder;
@@ -22,9 +24,9 @@ import java.util.*;
 public class ProductOrderController implements ProductOrderApiInterface
 {
     private static WebServiceInterface service;
-    private AsciidocConfiguration configuration;
+    private MainConfiguration configuration;
 
-    public ProductOrderController(WebServiceInterface service, AsciidocConfiguration configuration)
+    public ProductOrderController(WebServiceInterface service, MainConfiguration configuration)
     {
         this.service = service;
         this.configuration = configuration;
@@ -43,6 +45,7 @@ public class ProductOrderController implements ProductOrderApiInterface
         Map<String, Object> model = new HashMap<>();
         if(order.isPresent())
         {
+            model.put(Constants.MODEL_ORDERID_KEY,order.get().getId());
             model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, order.get().getOrderItems());
         }
         return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
@@ -55,8 +58,8 @@ public class ProductOrderController implements ProductOrderApiInterface
         if(order.isPresent())
         {
             Producer producer = getProducerById(order.get().getProducerId());
-            String pdfFilename = getOrderDocumentFilename(producer, order.get());
-            File pdfFile = new File(FileUtility.getFullFilename(configuration.getPdfOutputFolder(), pdfFilename));
+            String pdfFilename = getOrderDocumentFilename(order.get());
+            File pdfFile = new File(pdfFilename);
             byte[] pdfFileBytes;
             if(pdfFile.exists())
             {
@@ -80,6 +83,42 @@ public class ProductOrderController implements ProductOrderApiInterface
 
         return response.raw();
     };
+
+    public Route generateOrderEmail = (Request request, Response response) -> {
+
+        Optional<ProductOrder> order = Optional.ofNullable(getProductOrderById(Long.parseLong(request.params(":id"))));
+        Map<String, Object> model = new HashMap<>();
+        if(order.isPresent())
+        {
+            Producer producer = getProducerById(order.get().getProducerId());
+            String pdfFilename = getOrderDocumentFilename(order.get());
+            File pdfFile = new File(pdfFilename);
+            if(!pdfFile.exists())
+            {
+                List<Product> products = getAllProducts(producer.getId());
+                byte[] pdfFileBytes = getOrderDocument(producer, order.get(), products);
+            }
+            boolean success = sendEmail(order.get(), configuration);
+            if(success)
+            {
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("INFO_EMAIL_SENT")));
+            }
+            else
+            {
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_EMAIL_SENT")));
+            }
+            model.put(Constants.MODEL_ORDERID_KEY, order.get().getId());
+            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, order.get().getOrderItems());
+        }
+
+        return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
+    };
+
+    private String getOrderDocumentPdfFilename(ProductOrder order)
+    {
+        String pdfFilename = getOrderDocumentFilename(order);
+        return FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), pdfFilename);
+    }
 
     @Override
     public List<ProductOrder> getAllProductOrders() throws Exception
@@ -112,8 +151,14 @@ public class ProductOrderController implements ProductOrderApiInterface
     }
 
     @Override
-    public String getOrderDocumentFilename(Producer producer, ProductOrder order)
+    public String getOrderDocumentFilename(ProductOrder order)
     {
-        return service.getOrderDocumentFilename(producer, order);
+        return FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), service.getOrderDocumentFilename(order));
+    }
+
+    @Override
+    public boolean sendEmail(ProductOrder order, MainConfiguration configuration)
+    {
+        return service.sendEmail(order,configuration);
     }
 }

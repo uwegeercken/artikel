@@ -27,5 +27,5 @@ public interface ProductApiInterface
     Producer getProducerById(long producerId) throws Exception;
 
     byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
-    String getOrderDocumentFilename(Producer producer, ProductOrder order);
+    String getOrderDocumentFilename(ProductOrder order);
 }

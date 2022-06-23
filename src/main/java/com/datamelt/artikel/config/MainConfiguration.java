@@ -7,6 +7,7 @@ public class MainConfiguration
     private CsvInput csvInput;
     private LabelsConfiguration labels;
     private AsciidocConfiguration asciidoc;
+    private EmailConfiguration email;
 
     public DatabaseConfiguration getDatabase()
     {
@@ -23,4 +24,6 @@ public class MainConfiguration
     public LabelsConfiguration getLabels() { return labels; }
 
     public AsciidocConfiguration getAsciidoc() { return asciidoc; }
+
+    public EmailConfiguration getEmail() { return email; }
 }

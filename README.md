@@ -32,6 +32,8 @@ Additionally an Asciidoc theme file is used, where the formatting can be adjuste
 
     asciidoc-theme-1.yml
 
+Product orders can be sent by email.
+
 ### Configuration file content:
 
     database:
@@ -46,7 +48,15 @@ Additionally an Asciidoc theme file is used, where the formatting can be adjuste
       glabelsBinary: /usr/bin/glabels-3-batch
       glabelsFile: /home/tester/labels-01.glabels
     asciidoc:
-      documentsFolder: /home/tester
+      templateFileFolder: /home/tester/asciidoc
+      pdfOutputFolder: /home/tester/asciidoc/pdf
+      themeFile: /home/tester/asciidoc/asciidoc-theme-1.yml
+    email:
+      templateFileFolder: /home/tester/email
+      emailTemplateFilename: email_template_01.vm
+      mailTransportProtocol: smtp
+      mailSmtpHost: smtp.web.de
+      mailSmtpPort: "587"
 
 
 ### Run the Web application

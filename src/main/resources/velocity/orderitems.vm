@@ -1,8 +1,10 @@
+#parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_PRODUCTORDER_ITEMS")} ($productorderitems.size())</p>
     <p>
         <img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
+        <a href="/orderitemsemail/${orderid}/"><img class="go_back" height="40px" width="40px" src="/img/email.png" title="${messages.get("IMAGE_ORDER_ITEMS_EMAIL_ORDER")}"></a>
         <a href="/orders/"><img class="go_back" height="40px" width="40px" src="/img/go_back.png" title="${messages.get("IMAGE_ORDER_ITEMS_GO_BACK")}"></a>
     </p>
     <div id="help">
@@ -13,6 +15,11 @@
     </div>
     <div id="filter">
         <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="productorderitems" type="text""></p>
+    </div>
+    <div class="error">
+            #if (${result})
+               <p>#insert_message($result)</p>
+            #end
     </div>
     #foreach($item in $productorderitems)
         <div class="unit" tag="$!item.product.number.toLowerCase() + $!item.product.name.toLowerCase()">

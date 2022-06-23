@@ -2,6 +2,7 @@ package com.datamelt.artikel.app.web;
 
 import com.datamelt.artikel.adapter.csv.CsvLabelFileWriter;
 import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
+import com.datamelt.artikel.adapter.email.EmailHandler;
 import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
 import com.datamelt.artikel.adapter.web.*;
 import com.datamelt.artikel.app.ConfigurationLoader;
@@ -52,7 +53,7 @@ public class WebApplication
         staticFiles.location("/public");
         staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());
 
-        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration));
+        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler());
         IndexController indexController = new IndexController(service);
         LoginController loginController = new LoginController(service);
         UserController userController = new UserController(service);
@@ -61,7 +62,7 @@ public class WebApplication
         MarketController marketController = new MarketController(service);
         ProductContainerController containerController = new ProductContainerController(service);
         ProductOriginController originController = new ProductOriginController(service);
-        ProductOrderController orderController = new ProductOrderController(service, configuration.getAsciidoc());
+        ProductOrderController orderController = new ProductOrderController(service, configuration);
 
         before("*", Filters.redirectToLogin);
 
@@ -94,6 +95,7 @@ public class WebApplication
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
         get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
         get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
+        get(Path.Web.ORDER_EMAIL, orderController.generateOrderEmail);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);

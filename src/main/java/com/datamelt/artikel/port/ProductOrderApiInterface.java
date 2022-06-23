@@ -1,5 +1,6 @@
 package com.datamelt.artikel.port;
 
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.Market;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.Product;
@@ -15,5 +16,6 @@ public interface ProductOrderApiInterface
     ProductOrder getProductOrderById(long id) throws Exception;
     Producer getProducerById(long producerId) throws Exception;
     byte [] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
-    String getOrderDocumentFilename(Producer producer, ProductOrder order);
+    String getOrderDocumentFilename(ProductOrder order);
+    boolean sendEmail(ProductOrder order, MainConfiguration configuration);
 }

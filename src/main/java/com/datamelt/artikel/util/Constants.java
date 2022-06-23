@@ -33,9 +33,14 @@ public class Constants
     public static final String MODEL_MARKETS_KEY = "markets";
     public static final String MODEL_ORDERS_KEY = "orders";
     public static final String MODEL_USERS_KEY = "users";
+    public static final String MODEL_ORDERID_KEY = "orderid";
 
     public static final String MODEL_PRODUCTORDERITEMS_KEY = "productorderitems";
     public static final String MODEL_SHOPLABELSONLY_KEY = "shoplabelsonly";
     public static final String MODEL_VERSION_KEY = "version";
     public static final String MODEL_LASTUPDATE_KEY = "lastupdate";
+
+    public static final String ORDER_FILENAME_PREFIX = "order_";
+    public static final String ASCIIDOC_FILENAME_EXTENSION = ".adoc";
+    public static final String PDF_FILENAME_EXTENSION = ".pdf";
 }

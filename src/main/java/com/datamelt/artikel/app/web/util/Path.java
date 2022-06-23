@@ -30,6 +30,7 @@ public class Path
         public static final String ORDERS = "/orders/";
         public static final String ORDERITEMS = "/orderitems/:id/";
         public static final String ORDERITEMS_PDF = "/orderitemspdf/:id/";
+        public static final String ORDER_EMAIL = "/orderitemsemail/:id/";
     }
 
     public static class Template {
