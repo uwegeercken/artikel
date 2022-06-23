@@ -4,7 +4,7 @@
     <p class="heading">${messages.get("PAGETITLE_PRODUCTORDER_ITEMS")} ($productorderitems.size())</p>
     <p>
         <img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/orderitemsemail/${orderid}/"><img class="go_back" height="40px" width="40px" src="/img/email.png" title="${messages.get("IMAGE_ORDER_ITEMS_EMAIL_ORDER")}"></a>
+        <a href="/selectorderemail/${orderid}/"><img class="go_back" height="40px" width="40px" src="/img/email.png" title="${messages.get("IMAGE_ORDER_ITEMS_EMAIL_ORDER")}"></a>
         <a href="/orders/"><img class="go_back" height="40px" width="40px" src="/img/go_back.png" title="${messages.get("IMAGE_ORDER_ITEMS_GO_BACK")}"></a>
     </p>
     <div id="help">

@@ -57,5 +57,5 @@ public interface WebServiceInterface
     long getAllProductsCount() throws Exception;
     Map<String,Long> getAllProducersProductsCount() throws Exception;
 
-    boolean sendEmail(ProductOrder order, MainConfiguration configuration);
+    boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration);
 }

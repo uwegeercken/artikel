@@ -24,7 +24,7 @@ public class WebApplication
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
     public static final String APPLCATION_VERSION = "v1.4";
-    public static final String APPLCATION_LAST_UPDATE = "18.06.2022";
+    public static final String APPLCATION_LAST_UPDATE = "23.06.2022";
 
     private static MessageBundleInterface messages;
     private static NumberFormatter numberFormatter;
@@ -86,16 +86,13 @@ public class WebApplication
         get(Path.Web.SHOPPRODUCTS, productController.serveShopProductsPage);
         get(Path.Web.PRODUCT_SHOP_AMOUNT, productController.shopProductAmount);
         get(Path.Web.PRODUCT_SHOP_REMOVE, productController.shopProductRemove);
-        //get(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
         post(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
-        //post(Path.Web.SHOP_COMPLETE,(request,response) -> productController.shopProductComplete(request,response));
-
-
 
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
         get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
         get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
-        get(Path.Web.ORDER_EMAIL, orderController.generateOrderEmail);
+        get(Path.Web.SELECT_ORDER_EMAIL, orderController.selectOrderEmailAddress);
+        post(Path.Web.ORDER_EMAIL, orderController.generateOrderEmail);
 
         get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
         get(Path.Web.PRODUCER, producerController.serveProducerPage);

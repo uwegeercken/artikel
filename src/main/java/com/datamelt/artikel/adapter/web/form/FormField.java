@@ -13,8 +13,10 @@ public enum FormField
     WEIGHT("weight","double", false, true),
     PRICE("price", "double", false, true),
     PRODUCER_ID("producer_id", "long", false, false),
+    EMAIL("email", "string", false, true),
     CONTAINER_ID("container_id", "long", false, false),
-    ORIGIN_ID("origin_id", "long", false, false);
+    ORIGIN_ID("origin_id", "long", false, false),
+    MARKET_ID("market_id", "long", false, false);
 
     private String fieldName;
     private String type;

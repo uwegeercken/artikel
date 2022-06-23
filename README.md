@@ -57,6 +57,7 @@ Product orders can be sent by email.
       mailTransportProtocol: smtp
       mailSmtpHost: smtp.web.de
       mailSmtpPort: "587"
+      mailSender: someuser@mymail.com
 
 
 ### Run the Web application

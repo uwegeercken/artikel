@@ -18,6 +18,7 @@
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCER")}</p>
                 <p class="big">$!producer.name</a></p>
+                <p class="normal">$!{producer.emailAddress}</p>
                 <p class="normal">#if($!{producer.noOrdering}==1)keine Bestellung #end </p>
             </div>
         </div>

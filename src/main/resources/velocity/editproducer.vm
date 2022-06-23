@@ -26,6 +26,13 @@
 
         </tr>
         <tr>
+            <td>${messages.get("FORM_FIELD_EMAIL")}:</td>
+            <td>
+                <input name="$fields.valueOf("EMAIL")" type="text" size="40" maxlength="80" value="$!{form.get($fields.valueOf("EMAIL"))}">
+            </td>
+
+        </tr>
+        <tr>
             <td>${messages.get("FORM_FIELD_NO_ORDERING")}:</td>
             <td>
                 <select name="$fields.valueOf("NO_ORDERING")" size="1">

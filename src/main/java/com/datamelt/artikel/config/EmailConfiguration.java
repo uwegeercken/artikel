@@ -7,6 +7,7 @@ public class EmailConfiguration
     private String mailTransportProtocol;
     private String mailSmtpHost;
     private String mailSmtpPort;
+    private String mailSender;
 
 
     public String getEmailTemplateFilename() { return emailTemplateFilename; }
@@ -14,4 +15,5 @@ public class EmailConfiguration
     public String getMailTransportProtocol() { return mailTransportProtocol; }
     public String getMailSmtpHost() { return mailSmtpHost; }
     public String getMailSmtpPort() { return mailSmtpPort; }
+    public String getMailSender() { return mailSender; }
 }

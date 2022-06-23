@@ -32,6 +32,7 @@ public class Constants
     public static final String MODEL_ORIGINS_KEY = "origins";
     public static final String MODEL_MARKETS_KEY = "markets";
     public static final String MODEL_ORDERS_KEY = "orders";
+    public static final String MODEL_ORDER_KEY = "order";
     public static final String MODEL_USERS_KEY = "users";
     public static final String MODEL_ORDERID_KEY = "orderid";
 

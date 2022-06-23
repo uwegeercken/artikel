@@ -5,5 +5,5 @@ import com.datamelt.artikel.model.ProductOrder;
 
 public interface EmailApiInterface
 {
-    boolean send(ProductOrder order, MainConfiguration configuration);
+    boolean send(ProductOrder order, String emailRecipient, MainConfiguration configuration);
 }

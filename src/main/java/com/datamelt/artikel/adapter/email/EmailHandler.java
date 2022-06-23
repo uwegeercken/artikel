@@ -36,11 +36,10 @@ public class EmailHandler implements EmailApiInterface
     private static final DecimalFormat formatOrderNumber = new DecimalFormat("0000");
 
     @Override
-    public boolean send(ProductOrder order, MainConfiguration configuration)
+    public boolean send(ProductOrder order, String emailRecipient, MainConfiguration configuration)
     {
-        String sender = "uwe.geercken@web.de";
         String password = "kafka4Me2";
-        String receiver = "uwe.geercken@web.de";
+        String receiver = "uwe.geercken@web.de"; // emailRecipient
 
         Properties properties = new Properties();
 
@@ -48,7 +47,7 @@ public class EmailHandler implements EmailApiInterface
         properties.put("mail.smtp.host", configuration.getEmail().getMailSmtpHost());
         properties.put("mail.smtp.port", configuration.getEmail().getMailSmtpPort());
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.user", sender);
+        properties.put("mail.smtp.user", configuration.getEmail().getMailSender());
         properties.put("mail.smtp.password", password);
         properties.put("mail.smtp.starttls.enable", "true");
 
@@ -67,7 +66,7 @@ public class EmailHandler implements EmailApiInterface
         {
             InternetAddress addressTo = new InternetAddress(receiver);
             message.setRecipient(Message.RecipientType.TO, addressTo);
-            message.setFrom(new InternetAddress(sender));
+            message.setFrom(new InternetAddress(configuration.getEmail().getMailSender()));
             message.setSubject("Borgmeier Bestellung aus der Artikelverwaltung");
 
             BodyPart messageBodyPart1 = new MimeBodyPart();

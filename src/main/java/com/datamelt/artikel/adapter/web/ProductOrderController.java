@@ -1,5 +1,7 @@
 package com.datamelt.artikel.adapter.web;
 
+import com.datamelt.artikel.adapter.web.form.Form;
+import com.datamelt.artikel.adapter.web.form.FormField;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
@@ -84,21 +86,41 @@ public class ProductOrderController implements ProductOrderApiInterface
         return response.raw();
     };
 
+    public Route selectOrderEmailAddress = (Request request, Response response) -> {
+
+        ProductOrder order = getProductOrderById(Long.parseLong(request.params(":id")));
+        Producer producer = getProducerById(order.getProducerId());
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
+        model.put(Constants.MODEL_PRODUCERS_KEY, getAllProducers());
+        model.put(Constants.MODEL_ORDER_KEY,order);
+
+        Form form = new Form();
+        form.put(FormField.ID, String.valueOf(producer.getId()));
+        form.put(FormField.EMAIL, producer.getEmailAddress());
+        model.put(Constants.MODEL_FORM_KEY, form);
+
+        return ViewUtility.render(request,model,Path.Template.SELECT_ORDER_EMAIL);
+
+    };
+
     public Route generateOrderEmail = (Request request, Response response) -> {
 
-        Optional<ProductOrder> order = Optional.ofNullable(getProductOrderById(Long.parseLong(request.params(":id"))));
+        ProductOrder order = getProductOrderById(Long.parseLong(request.params(":id")));
+        Form form = Form.createFormFromQueryParameters(request);
         Map<String, Object> model = new HashMap<>();
-        if(order.isPresent())
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
-            Producer producer = getProducerById(order.get().getProducerId());
-            String pdfFilename = getOrderDocumentFilename(order.get());
+            Producer producer = getProducerById(order.getProducerId());
+            String pdfFilename = getOrderDocumentFilename(order);
             File pdfFile = new File(pdfFilename);
             if(!pdfFile.exists())
             {
                 List<Product> products = getAllProducts(producer.getId());
-                byte[] pdfFileBytes = getOrderDocument(producer, order.get(), products);
+                byte[] pdfFileBytes = getOrderDocument(producer, order, products);
             }
-            boolean success = sendEmail(order.get(), configuration);
+            boolean success = sendEmail(order, form.get(FormField.EMAIL), configuration);
             if(success)
             {
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("INFO_EMAIL_SENT")));
@@ -107,10 +129,9 @@ public class ProductOrderController implements ProductOrderApiInterface
             {
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_EMAIL_SENT")));
             }
-            model.put(Constants.MODEL_ORDERID_KEY, order.get().getId());
-            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, order.get().getOrderItems());
         }
-
+        model.put(Constants.MODEL_ORDERID_KEY, order.getId());
+        model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, order.getOrderItems());
         return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
     };
 
@@ -130,6 +151,12 @@ public class ProductOrderController implements ProductOrderApiInterface
     public List<Product> getAllProducts(long producerId) throws Exception
     {
         return service.getAllProducts(producerId);
+    }
+
+    @Override
+    public List<Producer> getAllProducers() throws Exception
+    {
+        return service.getAllProducers();
     }
 
     @Override
@@ -157,8 +184,8 @@ public class ProductOrderController implements ProductOrderApiInterface
     }
 
     @Override
-    public boolean sendEmail(ProductOrder order, MainConfiguration configuration)
+    public boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration)
     {
-        return service.sendEmail(order,configuration);
+        return service.sendEmail(order, emailRecipient, configuration);
     }
 }

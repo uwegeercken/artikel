@@ -24,6 +24,7 @@ class ProducerSearch
         {
             producer = new Producer(resultset.getString("name"));
             producer.setId(resultset.getLong("id"));
+            producer.setEmailAddress(resultset.getString("email_address"));
             producer.setNoOrdering(resultset.getInt("no_ordering"));
         }
         statement.clearParameters();
@@ -42,6 +43,7 @@ class ProducerSearch
         {
             producer = new Producer(resultset.getString("name"));
             producer.setId(resultset.getLong("id"));
+            producer.setEmailAddress(resultset.getString("email_address"));
             producer.setNoOrdering(resultset.getInt("no_ordering"));
         }
         statement.clearParameters();

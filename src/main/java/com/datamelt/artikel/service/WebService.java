@@ -92,6 +92,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         Producer producer = new Producer(form.get(FormField.NAME));
         producer.setId(id);
+        producer.setEmailAddress(form.get(FormField.EMAIL));
         producer.setNoOrdering(Integer.parseInt(form.get(FormField.NO_ORDERING)));
         try
         {
@@ -111,6 +112,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         Producer producer = new Producer(form.get(FormField.NAME));
         producer.setName(form.get(FormField.NAME));
+        producer.setEmailAddress(form.get(FormField.EMAIL));
         producer.setNoOrdering(Integer.parseInt(form.get(FormField.NO_ORDERING)));
         try
         {
@@ -312,8 +314,8 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public boolean sendEmail(ProductOrder order, MainConfiguration configuration)
+    public boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration)
     {
-        return email.send(order, configuration);
+        return email.send(order, emailRecipient, configuration);
     }
 }
