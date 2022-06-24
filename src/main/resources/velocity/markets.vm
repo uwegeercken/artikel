@@ -6,6 +6,7 @@
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_MARKET_LIST")}</p>
         <p>${messages.get("HELP1_MARKET_LIST")}</p>
+        <p>${messages.get("HELP2_MARKET_LIST")}</p>
         <p><img height="22" width="22" src="/img/market_add.png">&nbsp;${messages.get("IMAGE_MARKET_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_MARKET_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_MARKET_DELETE")}</p>
     </div>
     <div id="filter">

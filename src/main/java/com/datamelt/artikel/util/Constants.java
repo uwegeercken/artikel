@@ -25,6 +25,7 @@ public class Constants
     public static final String MODEL_FIELDS_KEY = "fields";
     public static final String MODEL_RESULT_KEY = "result";
     public static final String MODEL_CONTAINERS_KEY = "containers";
+    public static final String MODEL_CONTAINER_KEY = "container";
     public static final String MODEL_PRODUCERS_KEY = "producers";
     public static final String MODEL_PRODUCER_KEY = "producer";
     public static final String MODEL_PRODUCTS_KEY = "products";

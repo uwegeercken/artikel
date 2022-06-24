@@ -5,8 +5,8 @@
     <p class="heading">#if($!{form.id}>0)${messages.get("PAGETITLE_PRODUCER_CHANGE")}: $!{form.get($fields.valueOf("NAME"))}#else ${messages.get("PAGETITLE_PRODUCER_ADD")}#end</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="show help" onclick="switchHelp()"></p>
     <div id="help">
-        <p class="helptitle">Selektierten Hersteller ändern</p>
-        <p>Ergänze alle Felder</p>
+        <p class="helptitle">#if($!{form.id}>0)${messages.get("PAGETITLE_PRODUCER_CHANGE")}: $!{form.get($fields.valueOf("NAME"))}#else ${messages.get("PAGETITLE_PRODUCER_ADD")}#end</p>
+        <p>${messages.get("HELP1_EDIT_PRODUCER")}</p>
         <p></p>
     </div>
 
@@ -37,11 +37,11 @@
             <td>
                 <select name="$fields.valueOf("NO_ORDERING")" size="1">
                 #if($!{form.get($fields.valueOf("NO_ORDERING"))}==0)
-                    <option selected value="0">möglich</option>
-                    <option value="1">nicht möglich</option>
+                    <option selected value="0">${messages.get("PRODUCER_ORDERING_POSSIBLE")}</option>
+                    <option value="1">${messages.get("PRODUCER_ORDERING_NOT_POSSIBLE")}</option>
                 #else
-                    <option value="0">möglich</option>
-                    <option selected value="1">nicht möglich</option>
+                    <option value="0">${messages.get("PRODUCER_ORDERING_POSSIBLE")}</option>
+                    <option selected value="1">${messages.get("PRODUCER_ORDERING_NOT_POSSIBLE")}</option>
                 #end
                 </select>
             </td>

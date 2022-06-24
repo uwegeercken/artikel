@@ -1,6 +1,6 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">${messages.get("PAGE_HEADIND_NOT_FOUND")}</p>
+    <p class="heading">${messages.get("PAGE_HEADING_NOT_FOUND")}</p>
     <div id="title">
     	<p>${messages.get("PAGE_NOT_FOUND_MESSAGE")}</p>
     </div>

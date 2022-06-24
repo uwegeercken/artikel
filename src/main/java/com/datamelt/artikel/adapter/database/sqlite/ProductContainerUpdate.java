@@ -60,7 +60,7 @@ class ProductContainerUpdate
         }
     }
 
-    void removeProductContainer(long id)
+    void deleteProductContainer(long id)
     {
         try
         {

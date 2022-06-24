@@ -8,8 +8,8 @@
         <a href="/product/0/producer/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
     </p>
     <div id="help">
-        <p class="helptitle">Selektiertes Produkt ändern</p>
-        <p>Ergänze alle Felder</p>
+        <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_CHANGE")}</p>
+        <p>${messages.get("HELP1_EDIT_PRODUCT")}</p>
         <p></p>
     </div>
 

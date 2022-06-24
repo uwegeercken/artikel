@@ -6,7 +6,7 @@
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="show help" onclick="switchHelp()"></p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_SEND_EMAIL")}</p>
-        <p>Wähle eine EMail Adresse aus</p>
+        <p>${messages.get("HELP1_SEND_EMAIL")}</p>
         <p></p>
     </div>
 

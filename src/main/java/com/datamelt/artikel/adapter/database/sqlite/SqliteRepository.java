@@ -147,10 +147,10 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void removeProductContainer(long id)
+    public void deleteProductContainer(long id)
     {
         ProductContainerUpdate p = new ProductContainerUpdate(connection);
-        p.removeProductContainer(id);
+        p.deleteProductContainer(id);
     }
 
     @Override

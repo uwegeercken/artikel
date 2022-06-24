@@ -1,18 +1,16 @@
 #parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">${messages.get("PAGETITLE_PRODUCER_DELETE")}</p>
-    <form method="POST" action="/producer/delete/${producer.id}/">
+    <p class="heading">${messages.get("PAGETITLE_PRODUCT_CONTAINER_DELETE")}</p>
+    <form method="POST" action="/productcontainer/delete/${container.id}/">
     <div class="unit">
         <div class="grouptop">
-            <p class="small">${messages.get("TYPE_PRODUCER")}</p>
-            <p class="big">$!producer.name</a></p>
-            <p class="normal">#if($!{producer.noOrdering}==1)${messages.get("PRODUCER_ORDERING_NOT_POSSIBLE")}#end </p>
-
+            <p class="small">${messages.get("TYPE_PRODUCTCONTAINER")}</p>
+            <p class="big">$!container.name</a></p>
         </div>
     </div>
     <div class="bottomtext">
-    <p>${messages.get("PRODUCER_DELETE_CONFIRMATION")}</p>
+    <p>${messages.get("PRODUCT_CONTAINER_DELETE_CONFIRMATION")}</p>
     <p>
         <input type="submit" value="${messages.get("FORM_BUTTON_DELETE")}" name="submit">
         <input type="submit" value="${messages.get("FORM_BUTTON_CANCEL")}" name="submit">

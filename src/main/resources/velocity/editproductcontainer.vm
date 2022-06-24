@@ -5,8 +5,8 @@
     <p class="heading">#if($!{form.id}>0)${messages.get("PAGETITLE_PRODUCTCONTAINER_CHANGE")}: $!{form.get($fields.valueOf("NAME"))}#else ${messages.get("PAGETITLE_PRODUCT_CONTAINER_ADD")}#end</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="show help" onclick="switchHelp()"></p>
     <div id="help">
-        <p class="helptitle">Behälter ändern</p>
-        <p>Ergänze alle Felder</p>
+        <p class="helptitle">#if($!{form.id}>0)${messages.get("PAGETITLE_PRODUCTCONTAINER_CHANGE")}: $!{form.get($fields.valueOf("NAME"))}#else ${messages.get("PAGETITLE_PRODUCT_CONTAINER_ADD")}#end</p>
+        <p>${messages.get("HELP1_EDIT_PRODUCT_CONTAINER")}</p>
         <p></p>
     </div>
 

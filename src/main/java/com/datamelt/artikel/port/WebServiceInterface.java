@@ -39,6 +39,7 @@ public interface WebServiceInterface
     ProductContainer updateProductContainer(long id, Form form) throws Exception;
     ProductContainer addProductContainer(Form form) throws Exception;
     boolean getIsUniqueProductContainer(long id, String name) throws Exception;
+    void deleteProductContainer(long id) throws Exception;
 
     void createDatabaseTables() throws Exception;
 

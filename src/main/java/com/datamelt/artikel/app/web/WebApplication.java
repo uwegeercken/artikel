@@ -105,6 +105,8 @@ public class WebApplication
         get(Path.Web.PRODUCTCONTAINERS, containerController.serveAllProductContainersPage);
         get(Path.Web.PRODUCTCONTAINER, containerController.serveProductContainerPage);
         post(Path.Web.PRODUCTCONTAINER, containerController.serveUpdateProductContainerPage);
+        get(Path.Web.PRODUCTCONTAINER_DELETE, containerController.serveDeleteProductContainerPage);
+        post(Path.Web.PRODUCTCONTAINER_DELETE, containerController.deleteProductContainer);
 
         get(Path.Web.PRODUCTORIGINS, originController.serveAllProductOriginsPage);
         get(Path.Web.PRODUCTORIGIN, originController.serveProductOriginPage);

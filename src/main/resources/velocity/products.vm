@@ -17,6 +17,7 @@
             <img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;
             <img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}&nbsp;
             <img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;
+            <img height="22" width="22" src="/img/labels.png">&nbsp;${messages.get("IMAGE_LABELS")}
             <img height="22" width="22" src="/img/shopping_cart_0.png">&nbsp;${messages.get("IMAGE_SHOPPING_CART")}
         </p>
     </div>

@@ -29,7 +29,7 @@ public interface RepositoryInterface
 
     void addProductContainer(ProductContainer container);
     void updateProductContainer(ProductContainer container);
-    void removeProductContainer(long id);
+    void deleteProductContainer(long id);
     ProductContainer getProductContainerById(long id) throws Exception;
     ProductContainer getProductContainerByName(String name) throws Exception;
     boolean getExistProductContainer(String name) throws Exception;
