@@ -5,6 +5,7 @@ import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.ProductContainer;
 import com.datamelt.artikel.port.ProductContainerApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
@@ -55,6 +56,25 @@ public class ProductContainerController implements ProductContainerApiInterface
 
     };
 
+    public Route serveDeleteProductContainerPage = (Request request, Response response) -> {
+        ProductContainer container = getProductContainerById(Long.parseLong(request.params(":id")));
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_CONTAINER_KEY, container);
+        return ViewUtility.render(request,model,Path.Template.PRODUCTCONTAINER_DELETE);
+    };
+
+    public Route deleteProductContainer = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
+        {
+            deleteProductContainer(Long.parseLong(request.params(":id")));
+        }
+        List<ProductContainer> productContainers = getAllProductContainers();
+        model.put(Constants.MODEL_CONTAINERS_KEY, productContainers);
+        return ViewUtility.render(request,model,Path.Template.PRODUCTCONTAINERS);
+    };
+
     public Route serveUpdateProductContainerPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
@@ -95,6 +115,12 @@ public class ProductContainerController implements ProductContainerApiInterface
     public ProductContainer getProductContainerById(long id) throws Exception
     {
         return service.getProductContainerById(id);
+    }
+
+    @Override
+    public void deleteProductContainer(long id) throws Exception
+    {
+        service.deleteProductContainer(id);
     }
 
     @Override

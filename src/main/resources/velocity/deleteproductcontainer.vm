@@ -1,0 +1,24 @@
+#parse("/velocity/macros.vm")
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <p class="heading">${messages.get("PAGETITLE_PRODUCT_CONTAINER_DELETE")}</p>
+    <form method="POST" action="/productcontainer/delete/${container.id}/">
+    <div class="unit">
+        <div class="grouptop">
+            <p class="small">${messages.get("TYPE_PRODUCTCONTAINER")}</p>
+            <p class="big">$!container.name</a></p>
+        </div>
+    </div>
+    <div class="bottomtext">
+    <p>${messages.get("PRODUCT_CONTAINER_DELETE_CONFIRMATION")}</p>
+    <p>
+        <input type="submit" value="${messages.get("FORM_BUTTON_DELETE")}" name="submit">
+        <input type="submit" value="${messages.get("FORM_BUTTON_CANCEL")}" name="submit">
+    </p>
+    </div>
+    </form>
+    <br>
+    <br>
+    <br>
+#end
+
