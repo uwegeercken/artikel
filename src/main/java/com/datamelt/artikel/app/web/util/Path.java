@@ -30,6 +30,8 @@ public class Path
         public static final String ORDERS = "/orders/";
         public static final String ORDERITEMS = "/orderitems/:id/";
         public static final String ORDERITEMS_PDF = "/orderitemspdf/:id/";
+        public static final String SELECT_ORDER_EMAIL = "/selectorderemail/:id/";
+        public static final String ORDER_EMAIL = "/orderitemsemail/:id/";
     }
 
     public static class Template {
@@ -52,6 +54,7 @@ public class Path
         public static final String PRODUCTORIGIN = "/velocity/editproductorigin.vm";
         public static final String ORDERS = "/velocity/orders.vm";
         public static final String ORDERITEMS = "/velocity/orderitems.vm";
+        public static final String SELECT_ORDER_EMAIL = "/velocity/sendemail.vm";
 
         public static final String NOTFOUND = "/velocity/notfound.vm";
     }

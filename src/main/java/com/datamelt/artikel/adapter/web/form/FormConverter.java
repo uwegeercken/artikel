@@ -19,6 +19,7 @@ public class FormConverter
         Form form = new Form();
         form.put(FormField.ID, String.valueOf(producer.getId()));
         form.put(FormField.NAME, producer.getName());
+        form.put(FormField.EMAIL, producer.getEmailAddress());
         form.put(FormField.NO_ORDERING, String.valueOf(producer.getNoOrdering()));
         return form;
     }

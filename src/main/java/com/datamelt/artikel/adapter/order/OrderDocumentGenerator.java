@@ -6,6 +6,7 @@ import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.ProductOrder;
 import com.datamelt.artikel.model.ProductOrderItem;
 import com.datamelt.artikel.port.OrderDocumentInterface;
+import com.datamelt.artikel.util.Constants;
 import com.datamelt.artikel.util.FileUtility;
 import org.apache.commons.lang.CharEncoding;
 import org.apache.velocity.VelocityContext;
@@ -28,15 +29,9 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
 {
     private static final Logger logger = LoggerFactory.getLogger(OrderDocumentGenerator.class);
     private final MainConfiguration configuration;
-
-    private static final String DATE_TIME_FORMAT = "yyyyMMddHHmmss";
     public static final String ORDER_DATE_FORMAT = "dd.MM.yyyy";
     private static final DecimalFormat formatOrderNumber = new DecimalFormat("0000");
-    private static final String ORDER_FILENAME_PREFIX = "order_";
-    private static final String ASCIIDOC_FILENAME_EXTENSION = ".adoc";
-    private static final String PDF_FILENAME_EXTENSION = ".pdf";
-
-    private final SimpleDateFormat orderDocumentDateFormat = new SimpleDateFormat(ORDER_DATE_FORMAT);
+    private static final SimpleDateFormat orderDocumentDateFormat = new SimpleDateFormat(ORDER_DATE_FORMAT);
     private final Date creationDate;
 
     public OrderDocumentGenerator(MainConfiguration configuration)
@@ -48,7 +43,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     @Override
     public byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products)
     {
-        String templateFilename = ORDER_FILENAME_PREFIX + order.getProducerId() + ASCIIDOC_FILENAME_EXTENSION;
+        String templateFilename = Constants.ORDER_FILENAME_PREFIX + order.getProducerId() + Constants.ASCIIDOC_FILENAME_EXTENSION;
         String asciiDocument = getOrderTemplate(configuration.getAsciidoc().getTemplateFileFolder(), templateFilename, order, products);
 
         generateDocument(producer, order, asciiDocument);
@@ -56,9 +51,9 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     }
 
     @Override
-    public String getOrderDocumentFilename(Producer producer, ProductOrder order)
+    public String getOrderDocumentFilename(ProductOrder order)
     {
-        return ORDER_FILENAME_PREFIX + formatOrderNumber.format(order.getId()) + PDF_FILENAME_EXTENSION;
+        return Constants.ORDER_FILENAME_PREFIX + formatOrderNumber.format(order.getId()) + Constants.PDF_FILENAME_EXTENSION;
     }
 
     private String getOrderTemplate(String folder, String filename, ProductOrder order, List<Product> products)
@@ -105,7 +100,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
         System.setProperty("jruby.compat.version", "RUBY1_9");
         System.setProperty("jruby.compile.mode", "OFF");
 
-        String pdfFilename = FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), getOrderDocumentFilename(producer, order));
+        String pdfFilename = FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), getOrderDocumentFilename(order));
 
          Attributes attributes = Attributes.builder()
                 .attribute("pdf-theme", configuration.getAsciidoc().getThemeFile())
@@ -132,7 +127,7 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
         byte[] output =null;
         try
         {
-            File file = new File(FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), getOrderDocumentFilename(producer, order)));
+            File file = new File(FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), getOrderDocumentFilename(order)));
             FileInputStream stream = new FileInputStream(file);
             output = stream.readAllBytes();
         }

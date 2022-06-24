@@ -3,10 +3,10 @@ package com.datamelt.artikel.service;
 import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
 import com.datamelt.artikel.adapter.web.form.*;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
+import com.datamelt.artikel.config.EmailConfiguration;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
-import com.datamelt.artikel.port.CsvWriterInterface;
-import com.datamelt.artikel.port.RepositoryInterface;
-import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.port.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,14 +16,16 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebService.class);
     private final RepositoryInterface repository;
+    private final EmailApiInterface email;
     private final CsvWriterInterface csvLabelWriter;
-    private OrderDocumentGenerator orderDocumentGenerator;
+    private OrderDocumentInterface orderDocumentGenerator;
 
-    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentGenerator orderDocumentGenerator)
+    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email)
     {
         this.repository = respository;
         this.csvLabelWriter = csvLabelWriter;
         this.orderDocumentGenerator = orderDocumentGenerator;
+        this.email = email;
     }
 
     @Override
@@ -90,6 +92,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         Producer producer = new Producer(form.get(FormField.NAME));
         producer.setId(id);
+        producer.setEmailAddress(form.get(FormField.EMAIL));
         producer.setNoOrdering(Integer.parseInt(form.get(FormField.NO_ORDERING)));
         try
         {
@@ -109,6 +112,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         Producer producer = new Producer(form.get(FormField.NAME));
         producer.setName(form.get(FormField.NAME));
+        producer.setEmailAddress(form.get(FormField.EMAIL));
         producer.setNoOrdering(Integer.parseInt(form.get(FormField.NO_ORDERING)));
         try
         {
@@ -292,9 +296,9 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public String getOrderDocumentFilename(Producer producer, ProductOrder order)
+    public String getOrderDocumentFilename(ProductOrder order)
     {
-        return orderDocumentGenerator.getOrderDocumentFilename(producer, order);
+        return orderDocumentGenerator.getOrderDocumentFilename(order);
     }
 
     @Override
@@ -307,5 +311,11 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public Map<String,Long> getAllProducersProductsCount() throws Exception
     {
         return repository.getAllProducersProductsCount();
+    }
+
+    @Override
+    public boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration)
+    {
+        return email.send(order, emailRecipient, configuration);
     }
 }

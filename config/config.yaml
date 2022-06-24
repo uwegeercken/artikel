@@ -8,6 +8,14 @@ sparkJava:
   locale: de
   tempFolder: /tmp
 
+email:
+  templateFileFolder: /home/uwe/development/artikel/email
+  emailTemplateFilename: email_template_01.vm
+  mailTransportProtocol: smtp
+  mailSmtpHost: smtp.web.de
+  mailSmtpPort: "587"
+  mailSender: uwe.geercken@web.de
+
 labels:
   glabelsBinary: /usr/bin/glabels-3-batch
   glabelsFile: /home/uwe/development/artikel/glabels/etiketten-01.glabels

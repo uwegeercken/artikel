@@ -496,8 +496,8 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public String getOrderDocumentFilename(Producer producer, ProductOrder order)
+    public String getOrderDocumentFilename(ProductOrder order)
     {
-        return service.getOrderDocumentFilename(producer, order);
+        return service.getOrderDocumentFilename(order);
     }
 }

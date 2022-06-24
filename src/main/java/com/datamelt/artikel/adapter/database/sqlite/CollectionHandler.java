@@ -115,6 +115,7 @@ class CollectionHandler
             Producer producer = new Producer(resultset.getString("name"));
             producer.setId(resultset.getLong("id"));
             producer.setNoOrdering(resultset.getInt("no_ordering"));
+            producer.setEmailAddress(resultset.getString("email_address"));
             producers.add(producer);
         }
         resultset.close();
