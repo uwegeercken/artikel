@@ -61,7 +61,8 @@ public class ProductOrderController implements ProductOrderApiInterface
         {
             Producer producer = getProducerById(order.get().getProducerId());
             String pdfFilename = getOrderDocumentFilename(order.get());
-            File pdfFile = new File(pdfFilename);
+            String pdfFullFilename = FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), pdfFilename);
+            File pdfFile = new File(pdfFullFilename);
             byte[] pdfFileBytes;
             if(pdfFile.exists())
             {
@@ -114,7 +115,8 @@ public class ProductOrderController implements ProductOrderApiInterface
         {
             Producer producer = getProducerById(order.getProducerId());
             String pdfFilename = getOrderDocumentFilename(order);
-            File pdfFile = new File(pdfFilename);
+            String pdfFullFilename = FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), pdfFilename);
+            File pdfFile = new File(pdfFullFilename);
             if(!pdfFile.exists())
             {
                 List<Product> products = getAllProducts(producer.getId());
@@ -180,7 +182,7 @@ public class ProductOrderController implements ProductOrderApiInterface
     @Override
     public String getOrderDocumentFilename(ProductOrder order)
     {
-        return FileUtility.getFullFilename(configuration.getAsciidoc().getPdfOutputFolder(), service.getOrderDocumentFilename(order));
+        return service.getOrderDocumentFilename(order);
     }
 
     @Override
