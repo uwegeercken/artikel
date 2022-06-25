@@ -300,10 +300,10 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public void removeOrder(long id)
+    public void deleteProductOrder(long id) throws Exception
     {
         ProductOrderUpdate p = new ProductOrderUpdate(connection);
-        p.removeOrder(id);
+        p.deleteProductOrder(id);
     }
 
     @Override

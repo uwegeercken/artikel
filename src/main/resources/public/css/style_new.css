@@ -230,6 +230,13 @@ img.edit {
 	border: none;
 }
 
+img.pdf {
+	position: absolute;
+	margin-top: 6px;
+    margin-left: 245px;
+	border: none;
+}
+
 img.shop {
 	position: absolute;
 	margin-top: 140px;
