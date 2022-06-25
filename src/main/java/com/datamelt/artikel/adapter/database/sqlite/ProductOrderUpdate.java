@@ -15,6 +15,7 @@ class ProductOrderUpdate
     private static final String SQL_INSERT = "insert into productorder (number, producer_id, timestamp_order_date, timestamp_created_date) values(?,?,?,?)";
     private static final String SQL_UPDATE = "update productorder set number=?, producer_id=?, timestamp_order_date=?, timestamp_created_date=? where id=?";
     private static final String SQL_DELETE = "delete from productorder where id=?";
+    private static final String SQL_DELETE_ORDER_ITEMS = "delete from productorder_item where productorder_id=?";
 
     private static final String PRODUCT_ORDER_NUMBER_DATE_FORMAT = "yyyyMMddHHmmss";
 
@@ -71,15 +72,20 @@ class ProductOrderUpdate
         }
     }
 
-    void removeOrder(long id)
+    void deleteProductOrder(long id) throws Exception
     {
         try
         {
+            PreparedStatement statementOrderItems = connection.prepareStatement(SQL_DELETE_ORDER_ITEMS);
+            statementOrderItems.setLong(1, id);
+            statementOrderItems.executeUpdate();
+            statementOrderItems.clearParameters();
+            statementOrderItems.close();
+
             PreparedStatement statement = connection.prepareStatement(SQL_DELETE);
             statement.setLong(1, id);
             statement.executeUpdate();
             statement.clearParameters();
-
             statement.close();
 
         } catch (SQLException ex)

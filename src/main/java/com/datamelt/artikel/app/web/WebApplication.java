@@ -91,6 +91,8 @@ public class WebApplication
         get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
         get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
         get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
+        get(Path.Web.ORDER_DELETE, orderController.serveDeleteProductOrderPage);
+        post(Path.Web.ORDER_DELETE, orderController.deleteProductOrder);
         get(Path.Web.SELECT_ORDER_EMAIL, orderController.selectOrderEmailAddress);
         post(Path.Web.ORDER_EMAIL, orderController.generateOrderEmail);
 
@@ -114,7 +116,7 @@ public class WebApplication
 
         get("*", indexController.serveNotFoundPage);
 
-        after(Path.Web.SHOP_COMPLETE,  Filters.redirectToOrders);
+        //after(Path.Web.SHOP_COMPLETE,  Filters.redirectToOrders);
     }
 
     private static boolean configurationFilesAndFoldersOk(MainConfiguration configuration)

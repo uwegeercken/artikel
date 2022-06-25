@@ -137,6 +137,31 @@ public class ProductOrderController implements ProductOrderApiInterface
         return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
     };
 
+    public Route serveDeleteProductOrderPage = (Request request, Response response) -> {
+        long orderId = Long.parseLong(request.params(":id"));
+        ProductOrder order = getProductOrderById(orderId);
+        order.setProducer(getProducerById(order.getProducerId()));
+
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_ORDER_KEY, order);
+        return ViewUtility.render(request,model,Path.Template.ORDER_DELETE);
+    };
+
+    public Route deleteProductOrder = (Request request, Response response) -> {
+        long orderId = Long.parseLong(request.params(":id"));
+        ProductOrder order = getProductOrderById(orderId);
+        order.setProducer(getProducerById(order.getProducerId()));
+
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
+        {
+            deleteProductOrder(Long.parseLong(request.params(":id")));
+        }
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_ORDERS_KEY, getAllProductOrders());
+        return ViewUtility.render(request,model,Path.Template.ORDERS);
+    };
+
     private String getOrderDocumentPdfFilename(ProductOrder order)
     {
         String pdfFilename = getOrderDocumentFilename(order);
@@ -189,5 +214,11 @@ public class ProductOrderController implements ProductOrderApiInterface
     public boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration)
     {
         return service.sendEmail(order, emailRecipient, configuration);
+    }
+
+    @Override
+    public void deleteProductOrder(long id) throws Exception
+    {
+        service.deleteProductOrder(id);
     }
 }
