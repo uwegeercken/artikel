@@ -5,11 +5,11 @@
     <form method="POST" action="/order/delete/${order.id}/">
     <div class="unit">
         <div class="grouptop">
-            <p class="small">${messages.get("TYPE_ORDER")}</p>
-            <p class="big">$!order.productCreatedDate</a></p>
-            <p class="normal">$!order.producer.name</a></p>
-            <p class="normal">#if($!{producer.noOrdering}==1)${messages.get("PRODUCER_ORDERING_NOT_POSSIBLE")}#end </p>
-
+            <p class="small">${messages.get("TYPE_ORDER")} - $order.producer.name</p>
+            <p class="small">&nbsp;</p>
+            <p class="big">$!order.productCreatedDate</p>
+            <p class="normal">${messages.get("PRODUCT_ORDER_NUMBER_OF_PRODUCTS")}: $!order.orderItems.size() - ${messages.get("PRODUCT_ORDER_NUMBER_OF_ITEMS")}: $!order.totalProductOrderItemAmount</p>
+            <p class="normal">${messages.get("PRODUCT_ORDER_ORDER_DATE")}: $!order.productOrderDate</p>
         </div>
     </div>
     <div class="bottomtext">

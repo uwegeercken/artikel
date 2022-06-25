@@ -5,6 +5,7 @@ public class Constants
     public static final String DEFAULT_DATE_FORMAT = "yyyy-dd-MM HH:mm:ss";
     public static final String GERMAN_DATE_FORMAT = "dd.MM.yyyy HH:mm";
     public static final String GERMAN_DATE_FORMAT_WITH_WEEKDAY = "EEE dd.MM.yyyy HH:mm";
+    public static final String GERMAN_DATE_FORMAT_WITH_WEEKDAY_NO_TIME = "EEE dd.MM.yyyy";
     public static final String GERMAN_DATE_ONLY_FORMAT = "dd.MM.yyyy";
 
     public static final String FORM_SUBMIT = "submit";

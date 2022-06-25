@@ -15,7 +15,8 @@ public class ProductOrder
     private long timestampOrderDate;
     private boolean shopLabelsOnly = false;
     private Map<Long, ProductOrderItem> orderItems = new HashMap<>();
-    private SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT_WITH_WEEKDAY);
+    private SimpleDateFormat formatterCreatedDate = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT_WITH_WEEKDAY);
+    private SimpleDateFormat formatterOrderDate = new SimpleDateFormat(Constants.GERMAN_DATE_FORMAT_WITH_WEEKDAY_NO_TIME);
 
     public ProductOrder()
     {
@@ -110,13 +111,10 @@ public class ProductOrder
     }
     public String getProductCreatedDate()
     {
-        return formatter.format(new Date(timestampCreatedDate));
+        return formatterCreatedDate.format(new Date(timestampCreatedDate));
     }
 
-    public String getProductOrderDate()
-    {
-        return formatter.format(new Date(timestampOrderDate));
-    }
+    public String getProductOrderDate() { return formatterOrderDate.format(new Date(timestampOrderDate)); }
 
     public List<Product> getProducts()
     {
