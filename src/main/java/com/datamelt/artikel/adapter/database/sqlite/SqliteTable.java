@@ -19,6 +19,7 @@ public class SqliteTable
     private static final String CREATE_TABLE_PRODUCER = "CREATE TABLE if not exists \"producer\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +
+            "\"email_address\"TEXT," +
             "\"no_ordering\"INTEGER DEFAULT 0," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
@@ -48,7 +49,9 @@ public class SqliteTable
     private static final String CREATE_TABLE_PRODUCTORDER = "CREATE TABLE if not exists \"productorder\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"number\"TEXT NOT NULL UNIQUE," +
-            "\"timestamp\"INTEGER NOT NULL," +
+            "\"producer_id\"INTEGER NOT NULL," +
+            "\"timestamp_order_date\"INTEGER NOT NULL," +
+            "\"timestamp_created_date\"INTEGER NOT NULL," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
@@ -69,14 +72,15 @@ public class SqliteTable
 private static final String CREATE_TABLE_USER = "CREATE TABLE if not exists \"user\" (" +
             "\"id\"INTEGER NOT NULL UNIQUE," +
             "\"name\"\tTEXT NOT NULL UNIQUE," +
-            "\"password\"\tTEXT," +
             "\"full_name\"\tTEXT," +
+            "\"password\"\tTEXT," +
             "\"type\"\tTEXT," +
             "PRIMARY KEY(\"id\")" +
             ")";
 
     public static void createTables(Connection connection) throws Exception
     {
+        connection.createStatement().execute(CREATE_TABLE_USER);
         connection.createStatement().execute(CREATE_TABLE_MARKET);
         connection.createStatement().execute(CREATE_TABLE_PRODUCER);
         connection.createStatement().execute(CREATE_TABLE_PRODUCTCONTAINER);

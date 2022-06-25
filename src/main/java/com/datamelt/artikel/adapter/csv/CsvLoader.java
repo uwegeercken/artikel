@@ -264,6 +264,7 @@ public class CsvLoader implements FileInterface
                 {
                     Producer producer = new Producer(fields[0]);
                     producer.setNoOrdering(Integer.parseInt(fields[1]));
+                    producer.setEmailAddress(fields[2]);
                     boolean exists = getExistProducer(fields[0]);
                     if(!exists)
                     {
