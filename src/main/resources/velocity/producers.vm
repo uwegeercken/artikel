@@ -1,10 +1,10 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">Herstellerliste ($producers.size())</p>
+    <p class="heading">${messages.get("PAGETITLE_PRODUCER_LIST")} ($producers.size())</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"><a href="/producer/0/">
     <img class="add_external" height="40px" width="40px" src="/img/producer_add.png" title="${messages.get("IMAGE_PRODUCER_ADD")}"></a></p>
     <div id="help">
-        <p class="helptitle">Produktliste</p>
+        <p class="helptitle">${messages.get("PAGETITLE_PRODUCER_LIST")}</p>
         <p>${messages.get("HELP1_PRODUCER_LIST")}</p>
         <p>${messages.get("HELP2_PRODUCER_LIST")}</p>
         <p><img height="22" width="22" src="/img/producer_add.png">&nbsp;${messages.get("IMAGE_PRODUCER_ADD")}&nbsp;<img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCER_EDIT")}&nbsp;<img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCER_DELETE")}</p>

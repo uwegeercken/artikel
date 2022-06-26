@@ -1,6 +1,6 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <p class="heading">${messages.get("PAGETITLE_USERS_LIST")} ($orders.size())</p>
+    <p class="heading">${messages.get("PAGETITLE_USERS_LIST")} ($users.size())</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"></p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_USERS_LIST")}</p>
