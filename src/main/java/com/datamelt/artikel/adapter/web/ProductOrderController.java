@@ -143,9 +143,8 @@ public class ProductOrderController implements ProductOrderApiInterface
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_EMAIL_SENT")));
             }
         }
-        model.put(Constants.MODEL_ORDERID_KEY, order.getId());
-        model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, order.getOrderItems());
-        return ViewUtility.render(request,model,Path.Template.ORDERITEMS);
+        model.put(Constants.MODEL_ORDERS_KEY, getAllProductOrders());
+        return ViewUtility.render(request,model,Path.Template.ORDERS);
     };
 
     public Route serveDeleteProductOrderPage = (Request request, Response response) -> {

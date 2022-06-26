@@ -10,9 +10,9 @@
 ## display a message
 #macro(insert_message $result)
 	#if($result.resultType==1)
-		<font color="red">$result.message</font>
+		<img height="22" width="22" src="/img/attention.png">&nbsp;<font color="red">$result.message</font>
 	#else
-		$result.message
+		<img height="22" width="22" src="/img/info.png">&nbsp;$result.message
 	#end
 #end
 

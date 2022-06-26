@@ -56,7 +56,11 @@
             #if($product.producer.noOrdering==0)
                 <div class="productamount">
                     <form method="get" action="/product/shop/${product.id}/producer/${product.producer.id}/">
-                        <input name="productamount" type="text" size="2" maxlength="2" value="${amount}">
+                        #if(${amount}>0)
+                            <input name="productamount" type="text" size="2" maxlength="2" value="${amount}">
+                        #else
+                            <input name="productamount" type="text" size="2" maxlength="2" value="">
+                        #end
                     </form>
                 </div>
             #end

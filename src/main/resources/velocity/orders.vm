@@ -1,3 +1,4 @@
+#parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_PRODUCTORDERS_LIST")} ($orders.size())</p>
@@ -15,6 +16,11 @@
     </div>
     <div id="filter">
         <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="orders" type="text""></p>
+    </div>
+    <div class="error">
+        #if (${result})
+           <p>#insert_message($result)</p>
+        #end
     </div>
     #foreach($order in $orders)
         <div class="unit" tag="$order.producer.name.toLowerCase() + $!order.productCreatedDate.toLowerCase()">
