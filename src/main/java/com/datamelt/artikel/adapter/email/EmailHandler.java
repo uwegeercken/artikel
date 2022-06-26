@@ -66,7 +66,7 @@ public class EmailHandler implements EmailApiInterface
         {
             InternetAddress addressTo = new InternetAddress(receiver);
             message.setRecipient(Message.RecipientType.TO, addressTo);
-            message.setFrom(new InternetAddress(configuration.getEmail().getMailSender()));
+            message.setFrom(new InternetAddress(configuration.getEmail().getMailFrom()));
             message.setSubject("Borgmeier Bestellung aus der Artikelverwaltung");
 
             BodyPart messageBodyPart1 = new MimeBodyPart();

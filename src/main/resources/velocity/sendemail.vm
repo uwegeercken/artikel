@@ -17,17 +17,21 @@
         <tr>
             <td>${messages.get("FORM_FIELD_EMAIL")}:</td>
             <td>
-                <select id="email" name="$fields.valueOf("EMAIL")" size="1">
-                #foreach($producer in $producers)
-                    #if($producer.emailAddress && $producer.emailAddress!="")
-                        #if($!{form.get($fields.valueOf("EMAIL"))}==${order.producer.emailAddress})
-                            <option selected value="${producer.emailAddress}">${producer.emailAddress}</option>
-                        #else
-                            <option value="${producer.emailAddress}">${producer.emailAddress}</option>
+                #if($numberofemails >0)
+                    <select id="email" name="$fields.valueOf("EMAIL")" size="1">
+                    #foreach($producer in $producers)
+                        #if($producer.emailAddress && $producer.emailAddress!="")
+                            #if($!{form.get($fields.valueOf("EMAIL"))}==${order.producer.emailAddress})
+                                <option selected value="${producer.emailAddress}">${producer.emailAddress}</option>
+                            #else
+                                <option value="${producer.emailAddress}">${producer.emailAddress}</option>
+                            #end
                         #end
                     #end
+                    </select>
+                #else
+                    ${messages.get("NO_EMAIL_ADDRESSES_AVAILABLE")}
                 #end
-                </select>
             </td>
         </tr>
         <tr>

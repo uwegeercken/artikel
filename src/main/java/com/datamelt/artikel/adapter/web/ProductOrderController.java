@@ -93,9 +93,20 @@ public class ProductOrderController implements ProductOrderApiInterface
         Producer producer = getProducerById(order.getProducerId());
         Map<String, Object> model = new HashMap<>();
         model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
-        model.put(Constants.MODEL_PRODUCERS_KEY, getAllProducers());
+
         model.put(Constants.MODEL_ORDER_KEY,order);
 
+        int emailCounter=0;
+        List<Producer> producers = getAllProducers();
+        for(Producer p : getAllProducers())
+        {
+            if(p.getEmailAddress()!=null && !p.getEmailAddress().trim().equals(""))
+            {
+               emailCounter++;
+            }
+        }
+        model.put(Constants.MODEL_TOTAL_NUMBER_OF_EMAIL_ADDRESSES, emailCounter);
+        model.put(Constants.MODEL_PRODUCERS_KEY, producers);
         Form form = new Form();
         form.put(FormField.ID, String.valueOf(producer.getId()));
         form.put(FormField.EMAIL, producer.getEmailAddress());

@@ -15,6 +15,7 @@ email:
   mailSmtpHost: smtp.web.de
   mailSmtpPort: "587"
   mailSender: uwe.geercken@web.de
+  mailFrom: mi.mogk@gmx.de
 
 labels:
   glabelsBinary: /usr/bin/glabels-3-batch
