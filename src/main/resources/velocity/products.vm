@@ -11,8 +11,13 @@
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_LIST")}</p>
-        <p>${messages.get("HELP1_PRODUCT_LIST")}</p>
-        <p>${messages.get("HELP2_PRODUCT_LIST")}</p>
+        #if($product.producer.noOrdering==0)
+            <p>${messages.get("HELP1_PRODUCT_LIST_NO_ORDERING")}</p>
+            <p>${messages.get("HELP2_PRODUCT_LIST_NO_ORDERING")}</p>
+        #else
+            <p>${messages.get("HELP1_PRODUCT_LIST")}</p>
+            <p>${messages.get("HELP2_PRODUCT_LIST")}</p>
+        #end
         <p>
             <img height="22" width="22" src="/img/product_add.png">&nbsp;${messages.get("IMAGE_PRODUCT_ADD")}&nbsp;
             <img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}&nbsp;

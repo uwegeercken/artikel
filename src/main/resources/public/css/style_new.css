@@ -237,6 +237,13 @@ img.pdf {
 	border: none;
 }
 
+img.email {
+	position: absolute;
+	margin-top: 6px;
+    margin-left: 220px;
+	border: none;
+}
+
 img.shop {
 	position: absolute;
 	margin-top: 140px;

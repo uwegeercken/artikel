@@ -10,6 +10,7 @@
             <img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS")}
             <img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_ORDER_DELETE")}&nbsp;
             <img height="22px" width="22px" src="/img/order_document.png">&nbsp;${messages.get("IMAGE_ORDER_DOCUMENT")}
+            <img height="22px" width="22px" src="/img/email.png">&nbsp;${messages.get("IMAGE_ORDER_ITEMS_EMAIL_ORDER")}
         </p>
     </div>
     <div id="filter">
@@ -20,6 +21,7 @@
             <a href="/order/delete/${order.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_ORDER_DELETE")}"></a>
             <a href="/orderitems/${order.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
             <a href="/orderitemspdf/${order.id}/"><img class="pdf" height="22px" width="22px" src="/img/order_document.png" title="${messages.get("IMAGE_ORDER_DOCUMENT")}"></a>
+            <a href="/selectorderemail/${orderid}/"><img class="email" height="22px" width="22px" src="/img/email.png" title="${messages.get("IMAGE_ORDER_ITEMS_EMAIL_ORDER")}"></a>
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_ORDER")} - $order.producer.name</p>
                 <p class="small">&nbsp;</p>
