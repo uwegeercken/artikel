@@ -38,7 +38,6 @@ public class EmailHandler implements EmailApiInterface
     @Override
     public boolean send(ProductOrder order, String emailRecipient, MainConfiguration configuration)
     {
-        String password = "kafka4Me2";
         String receiver = "uwe.geercken@web.de"; // emailRecipient
 
         Properties properties = new Properties();
@@ -48,7 +47,7 @@ public class EmailHandler implements EmailApiInterface
         properties.put("mail.smtp.port", configuration.getEmail().getMailSmtpPort());
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.user", configuration.getEmail().getMailSender());
-        properties.put("mail.smtp.password", password);
+        properties.put("mail.smtp.password", configuration.getEmail().getMailSenderPassword());
         properties.put("mail.smtp.starttls.enable", "true");
 
         Session mailSession = Session.getInstance(properties, new Authenticator()

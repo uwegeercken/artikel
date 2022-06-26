@@ -15,6 +15,7 @@ email:
   mailSmtpHost: smtp.web.de
   mailSmtpPort: "587"
   mailSender: uwe.geercken@web.de
+  mailSenderPassword: kafka4Me2
   mailFrom: mi.mogk@gmx.de
 
 labels:

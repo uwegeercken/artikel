@@ -8,8 +8,8 @@ public class EmailConfiguration
     private String mailSmtpHost;
     private String mailSmtpPort;
     private String mailSender;
+    public String mailSenderPassword;
     private String mailFrom;
-
 
     public String getEmailTemplateFilename() { return emailTemplateFilename; }
     public String getTemplateFileFolder() { return templateFileFolder; }
@@ -17,5 +17,6 @@ public class EmailConfiguration
     public String getMailSmtpHost() { return mailSmtpHost; }
     public String getMailSmtpPort() { return mailSmtpPort; }
     public String getMailSender() { return mailSender; }
+    public String getMailSenderPassword() { return mailSenderPassword; }
     public String getMailFrom() { return mailFrom; }
 }
