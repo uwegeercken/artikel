@@ -136,7 +136,6 @@ public class ProductOrderController implements ProductOrderApiInterface
             boolean success = sendEmail(order, form.get(FormField.EMAIL), configuration);
             if(success)
             {
-                order.setTimestampEmailSent(new Date().getTime());
                 updateOrderEmailSent(order);
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("INFO_EMAIL_SENT")));
             }
