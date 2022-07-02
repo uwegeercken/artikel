@@ -52,6 +52,7 @@ public class SqliteTable
             "\"producer_id\"INTEGER NOT NULL," +
             "\"timestamp_order_date\"INTEGER NOT NULL," +
             "\"timestamp_created_date\"INTEGER NOT NULL," +
+            "\"timestamp_email_sent\"INTEGER," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
