@@ -31,6 +31,7 @@ class ProductOrderSearch
             order.setProducerId(resultset.getLong("producer_id"));
             order.setTimestampCreatedDate(resultset.getLong("timestamp_created_date"));
             order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
+            order.setTimestampEmailSent(resultset.getLong("timestamp_email_sent"));
             order.setId(resultset.getLong("id"));
 
             Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);
@@ -55,6 +56,7 @@ class ProductOrderSearch
             order.setProducerId(resultset.getLong("producer_id"));
             order.setTimestampCreatedDate(resultset.getLong("timestamp_created_date"));
             order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
+            order.setTimestampEmailSent(resultset.getLong("timestamp_email_sent"));
             order.setId(resultset.getLong("id"));
 
             Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);

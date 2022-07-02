@@ -180,6 +180,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public void updateOrderEmailSent(ProductOrder order) throws Exception
+    {
+        repository.updateOrderEmailSent(order);
+    }
+
+    @Override
     public Producer getProducerById(long id) throws Exception { return repository.getProducerById(id); }
     @Override
     public boolean getExistProduct(String number) throws Exception { return repository.getExistProduct(number); }

@@ -19,6 +19,7 @@ public interface ProductOrderApiInterface
     byte [] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
     String getOrderDocumentFilename(ProductOrder order);
     boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration);
+    void updateOrderEmailSent(ProductOrder order) throws Exception;
     void deleteProductOrder(long id) throws Exception;
 
 }

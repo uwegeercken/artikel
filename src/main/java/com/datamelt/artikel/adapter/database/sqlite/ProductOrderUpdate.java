@@ -12,8 +12,9 @@ import java.util.Date;
 
 class ProductOrderUpdate
 {
-    private static final String SQL_INSERT = "insert into productorder (number, producer_id, timestamp_order_date, timestamp_created_date) values(?,?,?,?)";
-    private static final String SQL_UPDATE = "update productorder set number=?, producer_id=?, timestamp_order_date=?, timestamp_created_date=? where id=?";
+    private static final String SQL_INSERT = "insert into productorder (number, producer_id, timestamp_order_date, timestamp_created_date, timestamp_email_sent) values(?,?,?,?,?)";
+    private static final String SQL_UPDATE = "update productorder set number=?, producer_id=?, timestamp_order_date=?, timestamp_created_date=?, timestamp_email_sent=? where id=?";
+    private static final String SQL_UPDATE_EMAIL_SENT = "update productorder set timestamp_email_sent=? where id=?";
     private static final String SQL_DELETE = "delete from productorder where id=?";
     private static final String SQL_DELETE_ORDER_ITEMS = "delete from productorder_item where productorder_id=?";
 
@@ -35,7 +36,9 @@ class ProductOrderUpdate
             statement.setString(1, getGeneratedNumber(order.getProducer()));
             statement.setLong(2, order.getProducerId());
             statement.setLong(3, order.getTimestampOrderDate());
-            statement.setLong(4, new Date().getTime());
+            statement.setLong(4, order.getTimestampCreatedDate());
+            statement.setLong(5, order.getTimestampEmailSent());
+            statement.setLong(6, new Date().getTime());
             statement.executeUpdate();
 
             ResultSet resultset = statement.getGeneratedKeys();
@@ -60,7 +63,26 @@ class ProductOrderUpdate
             statement.setLong(2, order.getProducerId());
             statement.setLong(3, order.getTimestampOrderDate());
             statement.setLong(4, order.getTimestampCreatedDate());
-            statement.setLong(5, order.getId());
+            statement.setLong(5, order.getTimestampEmailSent());
+            statement.setLong(6, order.getId());
+            statement.executeUpdate();
+            statement.clearParameters();
+
+            statement.close();
+
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    void updateOrderEmailSent(ProductOrder order)
+    {
+        try
+        {
+            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
+            statement.setLong(1, order.getTimestampEmailSent());
+            statement.setLong(2, order.getId());
             statement.executeUpdate();
             statement.clearParameters();
 

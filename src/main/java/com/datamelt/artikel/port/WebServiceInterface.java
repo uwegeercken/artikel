@@ -41,6 +41,7 @@ public interface WebServiceInterface
     boolean getIsUniqueProductContainer(long id, String name) throws Exception;
     void deleteProductContainer(long id) throws Exception;
     void deleteProductOrder(long id) throws Exception;
+    void updateOrderEmailSent(ProductOrder order) throws Exception;
 
     void createDatabaseTables() throws Exception;
 

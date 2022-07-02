@@ -56,6 +56,7 @@ public interface RepositoryInterface
     void addProductOrder(ProductOrder order);
     void updateOrder(ProductOrder order);
     void deleteProductOrder(long id) throws Exception;
+    void updateOrderEmailSent(ProductOrder order) throws Exception;
     ProductOrder getOrderById(long id) throws Exception;
     ProductOrder getOrderByNumber(String number) throws Exception;
     boolean getExistOrder(String number) throws Exception;

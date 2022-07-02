@@ -34,6 +34,7 @@
                 <p class="big">$!order.productCreatedDate</p>
                 <p class="normal">${messages.get("PRODUCT_ORDER_NUMBER_OF_PRODUCTS")}: $!order.orderItems.size() - ${messages.get("PRODUCT_ORDER_NUMBER_OF_ITEMS")}: $!order.totalProductOrderItemAmount</p>
                 <p class="normal">${messages.get("PRODUCT_ORDER_ORDER_DATE")}: $!order.productOrderDate</p>
+                <p class="normal">${messages.get("PRODUCT_ORDER_EMAIL_DATE")}: $!order.productOrderEmailDate</p>
             </div>
         </div>
     #end

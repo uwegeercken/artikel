@@ -307,6 +307,13 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public void updateOrderEmailSent(ProductOrder order) throws Exception
+    {
+        ProductOrderUpdate p = new ProductOrderUpdate(connection);
+        p.updateOrderEmailSent(order);
+    }
+
+    @Override
     public ProductOrder getOrderById(long id) throws Exception
     {
         return ProductOrderSearch.getOrderById(connection,id);

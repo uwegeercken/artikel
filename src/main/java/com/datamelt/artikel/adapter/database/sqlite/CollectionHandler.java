@@ -185,6 +185,7 @@ class CollectionHandler
             order.setProducer(ProducerSearch.getProducerById(connection, resultset.getLong("producer_id")));
             order.setTimestampCreatedDate(resultset.getLong("timestamp_created_date"));
             order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
+            order.setTimestampEmailSent(resultset.getLong("timestamp_email_sent"));
             order.setId(resultset.getLong("id"));
             order.setOrderItems(getAllProductOrderItems(connection, order));
             orders.add(order);
