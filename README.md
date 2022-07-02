@@ -11,16 +11,20 @@ The Web application allows for the maintenance of products, producers, markets, 
 - Sqlite Database for persistence (https://sqlite.org)
 - a Web application using SparkJava and Apache Velocity technology (https://velocity.apache.org/)
 - a CSV loader to load data into the database
+- Asciidoc for order dokuments in PDF format
+- Emailing order documents
 
 ## Web Application
 ### Preparations for the Web application:
 - run mvn clean install to generate the application jar file. dependencies will be in the generated .lib folder
-- provide a yaml file with the configuration
+- provide a yaml file with the configuration (see required attributes below).
 
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
 at the defined location, the database will be created (if possible) and the database table structure will be setup.
 
 The labels section specifies settings for output of product labels (for printing) using the glabels application. The tempFolder is used to output generated label pdf files.
+
+The email section specifies parameters to access an email server to use when sending emails. An email template can be created which is used during generation of the email. The relevant order dokument in PDF format will be added as an attachment.
 
 The application language is German. But one could easily copy the German resource file and translate it to a different language.
 
