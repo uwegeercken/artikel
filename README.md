@@ -16,7 +16,7 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 ## Web Application
 ### Preparations for the Web application:
-- run mvn clean install to generate the application jar file. dependencies will be in the generated .lib folder
+- run mvn clean install to generate the application jar file. dependencies will be in the generated "lib" folder
 - provide a yaml file with the configuration (see required attributes below).
 
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
@@ -32,11 +32,11 @@ To produce a PDF file for an order AsciiDoc is used. Asciidoc files are read fro
 
     order_<producer id>.adoc
 
-Additionally an Asciidoc theme file is used, where the formatting can be adjusted to individual needs. The filename of theme is:
+Additionally an Asciidoc theme file is used, where the formatting of orders can be adjusted to individual needs. The filename of the theme is:
 
     asciidoc-theme-1.yml
 
-Product orders can be sent by email.
+Product orders can be sent by email. The email body can be configured in a template.
 
 ### Configuration file content:
 
