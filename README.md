@@ -8,9 +8,14 @@ The Web application allows for the maintenance of products, producers, markets, 
 ### Implementation details:
 - the code in Hexagonal Architecture way
 - CSS and jQuery for frontend styling and functionality
-- Sqlite Database for persistence (https://sqlite.org)
-- a Web application using SparkJava and Apache Velocity technology (https://velocity.apache.org/)
+- Sqlite database for persistence (https://sqlite.org)
+- a Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/)
+
+### Features:
+- add, update, delete products, markets, producers, orders and more
+- order products using a shop approach
 - a CSV loader to load data into the database
+- using glabels (on Linux) to generate product labels
 - Asciidoc for order dokuments in PDF format
 - Emailing order documents
 
