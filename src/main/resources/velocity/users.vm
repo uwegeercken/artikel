@@ -19,6 +19,7 @@
                 <p class="small">${messages.get("TYPE_USER")}</p>
                 <p class="big">$!user.name</a></p>
                 <p class="normal">$!user.fullName</p>
+                <p class="normal">${messages.get("USER_TYPE_${user.type.toUpperCase()}")}</p>
              </div>
         </div>
     #end

@@ -53,6 +53,7 @@ Product orders can be sent by email. The email body can be configured in a templ
       staticfilesExpiretime: 60
       locale: de
       tempFolder: /tmp
+      tokenExpiresMinutes: 1
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
       glabelsFile: /home/tester/labels-01.glabels

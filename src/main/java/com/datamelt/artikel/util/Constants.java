@@ -47,4 +47,7 @@ public class Constants
     public static final String ORDER_FILENAME_PREFIX = "order_";
     public static final String ASCIIDOC_FILENAME_EXTENSION = ".adoc";
     public static final String PDF_FILENAME_EXTENSION = ".pdf";
+
+    public static final String USERTOKEN_KEY = "usertoken";
+    public static final String USERTOKEN_ISSUER = "article application";
 }
