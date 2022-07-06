@@ -1,12 +1,7 @@
 package com.datamelt.artikel.app.web.util;
 
-import com.datamelt.artikel.adapter.web.LoginController;
-import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.util.Constants;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Filter;
@@ -26,6 +21,12 @@ public class Filters
                 {
                     Jws<Claims> token = Token.parseToken(request.session().attribute(Constants.USERTOKEN_KEY));
                     logger.info("received valid token for user [{}], expires [{}]", token.getBody().getSubject(), token.getBody().getExpiration());
+                }
+                catch(SecurityException ex)
+                {
+                    logger.error("error - the user token signature is invalid");
+                    request.session().removeAttribute(Constants.USERTOKEN_KEY);
+                    response.redirect(Path.Web.LOGIN);
                 }
                 catch (ExpiredJwtException ex)
                 {

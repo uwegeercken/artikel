@@ -17,6 +17,9 @@ import com.datamelt.artikel.util.FileUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
 import static spark.Spark.*;
 
 public class WebApplication
@@ -26,6 +29,7 @@ public class WebApplication
     public static final String APPLCATION_VERSION = "v1.6";
     public static final String APPLCATION_LAST_UPDATE = "02.07.2022";
 
+    private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
     private static NumberFormatter numberFormatter;
 
@@ -53,6 +57,16 @@ public class WebApplication
 
         staticFiles.location("/public");
         staticFiles.expireTime(configuration.getSparkJava().getStaticfilesExpiretime());
+
+        try
+        {
+            secretKey = KeyGenerator.getInstance("HmacSha256").generateKey();
+        }
+        catch (Exception ex)
+        {
+            logger.error("error generating secret key [{}]", ex.getMessage());
+            System.exit(1);
+        }
 
         WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler());
         IndexController indexController = new IndexController(service);
@@ -171,4 +185,6 @@ public class WebApplication
     {
         return numberFormatter;
     }
+
+    public static SecretKey getSecretKey() { return secretKey; }
 }

@@ -18,6 +18,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import javax.crypto.SecretKey;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,18 +56,18 @@ public class LoginController implements LoginApiInterface
 
         String username = request.queryParams("userid");
         String password = request.queryParams("password");
-        Optional<User> loginUser = Optional.ofNullable(getUserByName(username));
+        Optional<User> databaseUser = Optional.ofNullable(getUserByName(username));
 
-        if(loginUser.isPresent())
+        if(databaseUser.isPresent())
         {
-            boolean isAuthenticated = getUserIsAuthenticated(loginUser.get(), password);
+            boolean isAuthenticated = getUserIsAuthenticated(databaseUser.get(), password);
             if (isAuthenticated)
             {
-                String token = Token.generateToken(loginUser.get(),configuration.getSparkJava().getTokenExpiresMinutes());
+                String token = Token.generateToken(databaseUser.get(), configuration.getSparkJava().getTokenExpiresMinutes());
                 request.session().attribute(Constants.USERTOKEN_KEY, token);
 
-                loginUser.get().setAuthenticated(true);
-                request.session().attribute("user", loginUser.get());
+                databaseUser.get().setAuthenticated(true);
+                request.session().attribute("user", databaseUser.get());
                 request.session().attribute("producers",getAllProducers());
                 model.put("totalproductscount", getAllProductsCount());
                 model.put("productcounts", getAllProducersProductsCount());
@@ -74,8 +75,8 @@ public class LoginController implements LoginApiInterface
                 return ViewUtility.render(request, model, Path.Template.INDEX);
             } else
             {
-                loginUser.get().setAuthenticated(false);
-                request.session().attribute("user", loginUser.get());
+                databaseUser.get().setAuthenticated(false);
+                request.session().attribute("user", databaseUser.get());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("ERROR_LOGIN_WRONG_PASSWORD")));
                 logger.error("user login failed. wrong password for user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.LOGIN);
