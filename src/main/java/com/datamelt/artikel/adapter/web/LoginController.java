@@ -5,6 +5,8 @@ import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.app.web.util.Token;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.LoginApiInterface;
@@ -24,12 +26,14 @@ import java.util.Optional;
 public class LoginController implements LoginApiInterface
 {
     private WebServiceInterface service;
+    private MainConfiguration configuration;
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    public LoginController(WebServiceInterface service)
+    public LoginController(WebServiceInterface service, MainConfiguration configuration)
     {
         this.service = service;
+        this.configuration = configuration;
     }
 
     public Route serveLoginPage = (Request request, Response response) -> {
@@ -58,6 +62,9 @@ public class LoginController implements LoginApiInterface
             boolean isAuthenticated = getUserIsAuthenticated(loginUser.get(), password);
             if (isAuthenticated)
             {
+                String token = Token.generateToken(loginUser.get(),configuration.getSparkJava().getTokenExpiresMinutes());
+                request.session().attribute(Constants.USERTOKEN_KEY, token);
+
                 loginUser.get().setAuthenticated(true);
                 request.session().attribute("user", loginUser.get());
                 request.session().attribute("producers",getAllProducers());

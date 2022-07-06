@@ -7,6 +7,7 @@ public class SparkJava
     private long staticfilesExpiretime;
     private String locale;
     private String tempFolder;
+    private int tokenExpiresMinutes;
 
     public long getStaticfilesExpiretime()
     {
@@ -16,6 +17,8 @@ public class SparkJava
     public String getLocale() { return locale; }
 
     public String getTempFolder() { return tempFolder; }
+
+    public int getTokenExpiresMinutes() { return tokenExpiresMinutes; }
 
     public boolean existTempFolder()
     {

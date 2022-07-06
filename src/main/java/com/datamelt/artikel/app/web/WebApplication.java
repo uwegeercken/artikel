@@ -32,7 +32,7 @@ public class WebApplication
     public static void main(String[] args) throws Exception
     {
         logger.info("initializing web application");
-        MainConfiguration configuration;
+        MainConfiguration configuration=null;
         if(args!=null && args.length>0)
         {
             logger.info("loading configuration from file: [{}] ", args[0]);
@@ -40,7 +40,8 @@ public class WebApplication
         }
         else
         {
-            throw new Exception("a configuration yaml file is required");
+            logger.error("a configuration yaml file is required");
+            System.exit(1);
         }
         if(!configurationFilesAndFoldersOk(configuration))
         {
@@ -55,7 +56,7 @@ public class WebApplication
 
         WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler());
         IndexController indexController = new IndexController(service);
-        LoginController loginController = new LoginController(service);
+        LoginController loginController = new LoginController(service, configuration);
         UserController userController = new UserController(service);
         ProductController productController = new ProductController(service);
         ProducerController producerController = new ProducerController(service);
