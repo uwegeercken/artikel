@@ -38,7 +38,7 @@
         #set($amount=0)
         #if($order && ${order.getOrderItem($product.id)}) #set($amount=${order.getOrderItem($product.id).amount}) #else #set($amount=0) #end
         <div class="unit" tag="$!product.number.toLowerCase() + $!product.name.toLowerCase()">
-            #if($product.id>1)<a href="/product/delete/${product.id}/producer/${product.producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
+            #if($product.id>0)<a href="/product/delete/${product.id}/producer/${product.producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCT_DELETE")}"></a>#end
             #if($product.producer.noOrdering==1)
                 <a href="/product/labels/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/checkmark_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT_FOR_LABEL")}"></a>
             #end

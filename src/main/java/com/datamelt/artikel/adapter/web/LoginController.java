@@ -12,6 +12,8 @@ import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.LoginApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.Constants;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -44,11 +46,11 @@ public class LoginController implements LoginApiInterface
 
     public Route logoutUser = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        User user = request.session().attribute("user");
-        request.session().removeAttribute("user");
-        logger.info("user logout successful. user [{}]", user.getName());
+        String token = request.session().attribute(Constants.USERTOKEN_KEY);
+        Jws<Claims> jws = Token.parseToken(token);
+        request.session().removeAttribute(Constants.USERTOKEN_KEY);
+        logger.info("user logout successful. user [{}]", jws.getBody().getSubject());
         return ViewUtility.render(request,model,Path.Template.INDEX);
-
     };
 
     public Route authenticateUser = (Request request, Response response) -> {
@@ -60,23 +62,20 @@ public class LoginController implements LoginApiInterface
 
         if(databaseUser.isPresent())
         {
-            boolean isAuthenticated = getUserIsAuthenticated(databaseUser.get(), password);
-            if (isAuthenticated)
+            boolean passwordOk = getUserPasswordOk(databaseUser.get().getPassword(), password);
+            if (passwordOk)
             {
                 String token = Token.generateToken(databaseUser.get(), configuration.getSparkJava().getTokenExpiresMinutes());
                 request.session().attribute(Constants.USERTOKEN_KEY, token);
-
-                databaseUser.get().setAuthenticated(true);
-                request.session().attribute("user", databaseUser.get());
+                model.put(Constants.USERTOKEN_KEY, token);
                 request.session().attribute("producers",getAllProducers());
                 model.put("totalproductscount", getAllProductsCount());
                 model.put("productcounts", getAllProducersProductsCount());
                 logger.info("user login successful. user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.INDEX);
-            } else
+            }
+            else
             {
-                databaseUser.get().setAuthenticated(false);
-                request.session().attribute("user", databaseUser.get());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("ERROR_LOGIN_WRONG_PASSWORD")));
                 logger.error("user login failed. wrong password for user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.LOGIN);
@@ -102,10 +101,10 @@ public class LoginController implements LoginApiInterface
         return service.getAllProducers();
     }
 
-    private boolean getUserIsAuthenticated(User user, String loginPassword) throws Exception
+    private boolean getUserPasswordOk(String databasePassword, String loginPassword) throws Exception
     {
         String loginHashedPassword = HashGenerator.generate(loginPassword);
-        return loginHashedPassword.equals(user.getPassword());
+        return loginHashedPassword.equals(databasePassword);
     }
 
     @Override

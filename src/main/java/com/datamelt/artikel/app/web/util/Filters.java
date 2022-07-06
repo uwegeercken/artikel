@@ -20,7 +20,6 @@ public class Filters
                 try
                 {
                     Jws<Claims> token = Token.parseToken(request.session().attribute(Constants.USERTOKEN_KEY));
-                    logger.info("received valid token for user [{}], expires [{}]", token.getBody().getSubject(), token.getBody().getExpiration());
                 }
                 catch(SecurityException ex)
                 {
@@ -40,13 +39,11 @@ public class Filters
                     request.session().removeAttribute(Constants.USERTOKEN_KEY);
                     response.redirect(Path.Web.LOGIN);
                 }
-
             }
             else
             {
                 response.redirect(Path.Web.LOGIN);
             }
-
         }
     };
 

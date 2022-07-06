@@ -9,7 +9,6 @@ public class User
     private String fullName;
     private String password;
     private String type;
-    private boolean isAuthenticated;
 
     public User(String name)
     {
@@ -49,16 +48,6 @@ public class User
     public String getPassword()
     {
         return password;
-    }
-
-    public boolean isAuthenticated()
-    {
-        return isAuthenticated;
-    }
-
-    public void setAuthenticated(boolean authenticated)
-    {
-        isAuthenticated = authenticated;
     }
 
     public void setPassword(String password)
