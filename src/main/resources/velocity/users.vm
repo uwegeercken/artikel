@@ -1,3 +1,4 @@
+#parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_USERS_LIST")} ($users.size())</p>
@@ -13,8 +14,7 @@
     </div>
     #foreach($user in $users)
         <div class="unit" tag="$!user.fullName.toLowerCase()">
-            #if($user.id>0)<a href="/users/delete/${user.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="löschen"></a>#end
-            #if($user.id>0)<a href="/users/${user.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="bearbeiten"></a>#end
+            #if($user.id>0)#insert_readwrite_image("/users/${user.id}/" "edit" "/img/edit.png" "bearbeiten")#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_USER")}</p>
                 <p class="big">$!user.name</a></p>
