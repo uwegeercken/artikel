@@ -18,7 +18,9 @@
      </div>
     #foreach($item in $productorderitems)
         <div class="unit" tag="$!item.product.number.toLowerCase() + $!item.product.name.toLowerCase()">
-            #if($item.product.id>1)<a href="/product/shop/remove/${item.product.id}/producer/${producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_SHOP_PRODUCT_REMOVE")}"></a>#end
+            #if($item.product.id>1)
+                #insert_readwrite_image("/product/shop/remove/${item.product.id}/producer/${producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_SHOP_PRODUCT_REMOVE')}")
+            #end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!item.product.number - $!item.product.producer.name </p>
                 <p class="small">$!{item.product.title}&nbsp;</p>

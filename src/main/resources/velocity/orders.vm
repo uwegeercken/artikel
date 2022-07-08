@@ -24,8 +24,8 @@
     </div>
     #foreach($order in $orders)
         <div class="unit" tag="$order.producer.name.toLowerCase() + $!order.productCreatedDate.toLowerCase()">
-            <a href="/order/delete/${order.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_ORDER_DELETE")}"></a>
             <a href="/orderitems/${order.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
+            #insert_readwrite_image("/order/delete/${order.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_ORDER_DELETE')}")
             <a href="/orderitemspdf/${order.id}/"><img class="pdf" height="22px" width="22px" src="/img/order_document.png" title="${messages.get("IMAGE_ORDER_DOCUMENT")}"></a>
             <a href="/selectorderemail/${order.id}/"><img class="email" height="22px" width="22px" src="/img/email.png" title="${messages.get("IMAGE_ORDER_ITEMS_EMAIL_ORDER")}"></a>
             <div class="grouptop">

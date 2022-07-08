@@ -15,8 +15,13 @@
     </div>
     #foreach($producer in $producers)
         <div class="unit" tag="$!producer.name.toLowerCase()">
-            #if($producer.id>0)<a href="/producer/delete/${producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCER_DELETE")}"></a>#end
-            #if($producer.id>0)<a href="/producer/${producer.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_PRODUCER_EDIT")}"></a>#end
+            #if($producer.id>0)
+                #insert_readwrite_image("/producer/delete/${producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCER_DELETE')}")
+                <a href="/producer/delete/${producer.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_PRODUCER_DELETE")}"></a>
+            #end
+            #if($producer.id>0)
+                #insert_readwrite_image("/producer/${producer.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCER_EDIT')}")
+            #end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCER")}</p>
                 <p class="big">$!producer.name</a></p>
