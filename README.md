@@ -77,6 +77,8 @@ provide the path and name of the configuration file and run:
 
     java -jar artikel.jar config.yaml
 
+Note: On first run, the database and an administrative user will be created in the database. The administrator name and password is output to the log. Make sure you immediately change the password after you logged in. 
+
 ## CSV Loader
 ### Loading CSV Data from files
 Load basic data from CSV files into the database.
