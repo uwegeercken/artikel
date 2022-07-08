@@ -4,7 +4,7 @@
     <p class="heading">${messages.get("PAGE_HEADIND_INDEX")}</p>
     <p>${messages.get("PAGE_INDEX_INFO")}</p>
     #if($tokenpayload)
-        <p class="big">${messages.get("PAGE_INDEX_WELCOME_BACK")} ${tokenpayload.subject} - ${tokenpayload.typ}</p>
+        <p class="big">${messages.get("PAGE_INDEX_WELCOME_BACK")} ${tokenpayload.subject}</p>
         <table border="0" align="center" width="30%" border="0">
                 <tr>
                     <td width="50%" align="right">${messages.get("PAGE_INDEX_TOTAL_PRODUCTS")}:</td>
