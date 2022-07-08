@@ -6,7 +6,7 @@
 
     <groupId>com.datamelt</groupId>
     <artifactId>artikel</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.7-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -171,7 +171,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/artikel</outputDirectory>
+                            <outputDirectory>${basedir}/target/artikel/application-${project.version}/config</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>config</directory>
@@ -179,6 +179,7 @@
                                         <include>config.yaml</include>
                                         <include>etiketten-01.glabels</include>
                                         <include>asciidoc-theme-1.yml</include>
+                                        <include>email_template_01.vm</include>
                                     </includes>
                                 </resource>
                             </resources>
