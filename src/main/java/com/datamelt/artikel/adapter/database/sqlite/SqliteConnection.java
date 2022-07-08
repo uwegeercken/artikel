@@ -26,6 +26,7 @@ class SqliteConnection
             {
                 logger.warn("database not found - creating database and table structure: [{}]", configuration.getName());
                 SqliteTable.createTables(connection);
+                SqliteTable.createAdminUser(connection);
             }
         }
         catch (Exception ex)

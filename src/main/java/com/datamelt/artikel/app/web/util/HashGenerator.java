@@ -2,6 +2,7 @@ package com.datamelt.artikel.app.web.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class HashGenerator
 {
@@ -31,5 +32,17 @@ public class HashGenerator
             e.printStackTrace();
         }
         return hash.toString();
+    }
+
+    public static String generatePassword()
+    {
+        SecureRandom random = new SecureRandom();
+        final String CHAR_LOWERCASE = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789-_+#!=";
+        StringBuilder result = new StringBuilder(16);
+        for (int i = 0; i < 16; i++) {
+            int index = random.nextInt(CHAR_LOWERCASE.length());
+            result.append(CHAR_LOWERCASE.charAt(index));
+        }
+        return result.toString();
     }
 }
