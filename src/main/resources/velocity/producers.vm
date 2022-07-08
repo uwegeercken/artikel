@@ -1,3 +1,4 @@
+#parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_PRODUCER_LIST")} ($producers.size())</p>

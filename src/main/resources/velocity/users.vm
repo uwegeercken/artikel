@@ -14,7 +14,7 @@
     </div>
     #foreach($user in $users)
         <div class="unit" tag="$!user.fullName.toLowerCase()">
-            #if($user.id>0)#insert_readwrite_image("/users/${user.id}/" "edit" "/img/edit.png" "bearbeiten")#end
+            #if($user.id>0)#insert_readwrite_image("/users/${user.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_USER_EDIT')}")#end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_USER")}</p>
                 <p class="big">$!user.name</a></p>
