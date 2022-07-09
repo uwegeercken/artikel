@@ -179,6 +179,7 @@
                                         <include>etiketten-01.glabels</include>
                                         <include>asciidoc-theme-1.yml</include>
                                         <include>email_template_01.vm</include>
+                                        <include>order_[producer_id].adoc</include>
                                     </includes>
                                 </resource>
                             </resources>

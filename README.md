@@ -53,7 +53,7 @@ Product orders can be sent by email. The email body can be configured in a templ
       staticfilesExpiretime: 60
       locale: de
       tempFolder: /tmp
-      tokenExpiresMinutes: 1
+      tokenExpiresMinutes: 10
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
       glabelsFile: /home/tester/labels-01.glabels
@@ -104,4 +104,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-07-02
+Copyright Uwe Geercken, 2022. Last update: 2022-07-09
