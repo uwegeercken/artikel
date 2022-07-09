@@ -1,0 +1,41 @@
+= Bestellformular
+:author:        Henry Somebody
+:email:         henry.somebody@gmx.com
+:description:   Bestellung für MyCompany
+:keywords:      Bestellung
+:company:       MyCompany
+:blank: 		{empty} +
+
+
+[width="40%", cols="1"]
+|===
+	|*15636* +
+	*MyCompany* +
+	Bergweg 10 +
+	20000 Hamburg +
+|===
+
+{blank}
+{blank}
+
+Liefer- / Abholdatum: ${createddate}
+
+[width="100%", cols="6,15,65,8,5",options="header"]
+|===
+|Pos.
+|Artikel
+|Beschreibung
+|Menge
+|EH
+
+#set($counter=0)
+#foreach($item in $productorderitems)
+	#set($counter = $counter +1)
+	|$counter
+	|$item.product.number
+	|$item.product.name - $item.product.subtitle
+	^|#if($item.amount>0)$item.amount#end
+	|
+#end
+
+|===

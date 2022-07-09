@@ -1,0 +1,41 @@
+database:
+  jdbcClass: org.sqlite.JDBC
+  connection: jdbc:sqlite
+  name: /home/user1/artikel/products-mogk.db
+
+sparkJava:
+  staticfilesExpiretime: 10
+  locale: de
+  tempFolder: /tmp
+  tokenExpiresMinutes: 180
+
+email:
+  templateFileFolder: /home/user1/artikel/config
+  emailTemplateFilename: email_template_01.vm
+  mailTransportProtocol: smtp
+  mailSmtpHost: smtp.web.de
+  mailSmtpPort: "587"
+  mailSender: some.body@mymail.de
+  mailSenderPassword: mysecretpassword
+  mailFrom: some.body@mymail.de
+
+labels:
+  glabelsBinary: /usr/bin/glabels-3-batch
+  glabelsFile: /home/user1/artikel/config/etiketten-01.glabels
+  pdfOutputFolder: /home/user1/artikel/pdf
+
+asciidoc:
+  templateFileFolder: /home/user1/artikel/config
+  pdfOutputFolder: /home/user1/artikel/pdf
+  themeFile: /home/user1/artikel/config/asciidoc-theme-1.yml
+
+csvInput:
+  filesFolder: /home/user1/artikel/csv
+  productsFilename: products.csv
+  producersFilename: producers.csv
+  marketsFilename: markets.csv
+  ordersFilename: orders.csv
+  orderitemsFilename: orderitems.csv
+  productContainersFilename: containers.csv
+  productOriginsFilename: origins.csv
+  usersFilename: users.csv
