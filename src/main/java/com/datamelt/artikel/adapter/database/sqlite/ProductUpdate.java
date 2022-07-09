@@ -6,8 +6,8 @@ import java.util.Date;
 
 class ProductUpdate
 {
-    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, timestamp) values(?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "update product set name=?, title=?, subtitle=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, timestamp=? where id=?";
+    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, unavailable, timestamp) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "update product set name=?, title=?, subtitle=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, unavailable=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from product where id=?";
 
     private final Connection connection;
@@ -32,7 +32,8 @@ class ProductUpdate
             statement.setLong(8, product.getQuantity());
             statement.setDouble(9, product.getWeight());
             statement.setDouble(10, product.getPrice());
-            statement.setLong(11, product.getTimestamp());
+            statement.setInt(11,product.getUnavailable());
+            statement.setLong(12, product.getTimestamp());
 
             statement.executeUpdate();
             statement.clearParameters();
@@ -64,8 +65,9 @@ class ProductUpdate
         statement.setLong(8, product.getQuantity());
         statement.setDouble(9, product.getWeight());
         statement.setDouble(10, product.getPrice());
-        statement.setLong(11, product.getTimestamp());
-        statement.setLong(12, product.getId());
+        statement.setInt(11,product.getUnavailable());
+        statement.setLong(12, product.getTimestamp());
+        statement.setLong(13, product.getId());
         statement.executeUpdate();
         statement.clearParameters();
 

@@ -41,7 +41,7 @@
             #if($product.id>0)
                 #insert_readwrite_image("/product/delete/${product.id}/producer/${product.producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCT_DELETE')}")
             #end
-            #if($product.producer.noOrdering==1)
+            #if($product.producer.noOrdering==1 && $product.unavailable==0)
                 <a href="/product/labels/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/checkmark_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT_FOR_LABEL")}"></a>
             #end
             #if($product.id>1)
@@ -50,13 +50,18 @@
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>
                 <p class="small">$!{product.title}&nbsp;</p>
-                <p class="big">$!{product.name}</p>
+                #if($product.unavailable==1)
+                    <p class="bigstrikethrough">$!{product.name}</p>
+                #else
+                    <p class="big">$!{product.name}</p>
+                #end
                 <p class="normal">$!{product.subtitle}&nbsp;</p>
                 <p class="normal">#if($!{product.origin.id}!=1) ${messages.get("FORM_FIELD_ORIGIN")}: $!{product.origin.name} #end &nbsp;</p>
                 <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertToLocale($!{product.weight}) kg #if($!{product.container.id}!=1)- ${messages.get("FORM_FIELD_CONTAINER")}: $!{product.container.name}#end</p>
                 <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $numberFormatter.convertToLocale($!{product.price})</p>
             </div>
             #if($product.producer.noOrdering==0)
+                #if($product.unavailable==0)
                 <div class="productamount">
                     <form method="get" action="/product/shop/${product.id}/producer/${product.producer.id}/">
                         #if(${amount}>0)
@@ -66,6 +71,7 @@
                         #end
                     </form>
                 </div>
+                #end
             #end
         </div>
     #end

@@ -72,6 +72,7 @@ class CollectionHandler
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
+            product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {
                 product.setContainer(container);

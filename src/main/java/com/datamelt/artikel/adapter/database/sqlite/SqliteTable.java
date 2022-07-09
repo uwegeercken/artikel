@@ -38,6 +38,7 @@ public class SqliteTable
             "\"quantity\"INTEGER NOT NULL DEFAULT 1," +
             "\"weight\"NUMERIC NOT NULL DEFAULT 0," +
             "\"price\"NUMERIC NOT NULL DEFAULT 0," +
+            "\"unavailable\"INTEGER DEFAULT 0," +
             "\"producer_id\"INTEGER NOT NULL," +
             "\"productcontainer_id\"INTEGER," +
             "\"productorigin_id\"INTEGER," +

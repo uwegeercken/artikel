@@ -54,6 +54,7 @@ public class FormConverter
         form.put(FormField.PRODUCER_ID,String.valueOf(product.getProducer().getId()));
         form.put(FormField.CONTAINER_ID,String.valueOf(product.getContainer().getId()));
         form.put(FormField.ORIGIN_ID,String.valueOf(product.getOrigin().getId()));
+        form.put(FormField.UNAVAILABLE,String.valueOf(product.getUnavailable()));
         return form;
     }
 
@@ -66,6 +67,7 @@ public class FormConverter
         product.setQuantity(Integer.parseInt(form.get(FormField.QUANTITY)));
         product.setWeight(numberFormatter.convertToDouble(form.get(FormField.WEIGHT)));
         product.setPrice(numberFormatter.convertToDouble(form.get(FormField.PRICE)));
+        product.setUnavailable(Integer.parseInt(form.get(FormField.UNAVAILABLE)));
         return product;
     }
 }

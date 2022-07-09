@@ -106,6 +106,20 @@
 	    		</select>
 			</td>
 		</tr>
+		<tr>
+            <td>${messages.get("FORM_FIELD_AVAILABLE")}:</td>
+            <td>
+                <select id="unavailable" name="$fields.valueOf("UNAVAILABLE")" size="1">
+                    #if($!{form.get($fields.valueOf("UNAVAILABLE"))}==1)
+                        <option selected value="1">${messages.get("PRODUCT_FORM_UNAVAILABLE")}</option>
+                        <option value="0">${messages.get("PRODUCT_FORM_AVAILABLE")}</option>
+                    #else
+                        <option value="1">${messages.get("PRODUCT_FORM_UNAVAILABLE")}</option>
+                        <option selected value="0">${messages.get("PRODUCT_FORM_AVAILABLE")}</option>
+                    #end
+                </select>
+            </td>
+        </tr>
         <tr>
             <td colspan="2" align="center"><br />
                 <input type="submit" value="${messages.get("FORM_BUTTON_OK")}" name="submit">

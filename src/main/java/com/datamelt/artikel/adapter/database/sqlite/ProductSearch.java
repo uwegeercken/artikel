@@ -36,6 +36,7 @@ class ProductSearch
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
+            product.setUnavailable(resultset.getInt("unavailable"));
             product.setContainer(container);
             product.setProducer(producer);
             product.setOrigin(origin);
@@ -65,6 +66,7 @@ class ProductSearch
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
+            product.setUnavailable(resultset.getInt("unavailable"));
             product.setContainer(container);
             product.setProducer(producer);
             product.setOrigin(origin);
@@ -95,6 +97,7 @@ class ProductSearch
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
+            product.setUnavailable(resultset.getInt("unavailable"));
             product.setContainer(container);
             product.setProducer(producer);
             product.setOrigin(origin);

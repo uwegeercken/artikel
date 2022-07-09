@@ -62,6 +62,15 @@ p.big {
 	font-weight: bold;
 }
 
+p.bigstrikethrough {
+	margin: 3px;
+	padding: 3px;
+	font: normal 14pt/1.4 verdana, sans-serif;
+	font-weight: bold;
+	color: red;
+	text-decoration: line-through;
+}
+
 span.verybig {
 	margin: 3px;
 	padding: 3px;
@@ -199,6 +208,12 @@ a {
 	font: normal 12pt/1.4 verdana, sans-serif;
 	float: left;
 	color: black;
+}
+
+.grouptop>p.bigstrikethrough, .grouptop2>p.bigstrikethrough, .grouptopaction>p.bigstrikethrough {
+	font: normal 12pt/1.4 verdana, sans-serif;
+	float: left;
+	color: red;
 }
 
 .grouptop>p.big>a, .grouptop2>p.big>a, .grouptopaction>p.big>a {

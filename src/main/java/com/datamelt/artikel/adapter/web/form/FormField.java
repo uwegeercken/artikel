@@ -12,6 +12,7 @@ public enum FormField
     QUANTITY("quantity", "int", false, true),
     WEIGHT("weight","double", false, true),
     PRICE("price", "double", false, true),
+    UNAVAILABLE("unavailable", "int", false, true),
     PRODUCER_ID("producer_id", "long", false, false),
     EMAIL("email", "string", false, true),
     CONTAINER_ID("container_id", "long", false, false),

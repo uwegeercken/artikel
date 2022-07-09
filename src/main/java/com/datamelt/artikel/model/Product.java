@@ -10,6 +10,7 @@ public class Product
     private int quantity;
     private double weight;
     private double price;
+    private int unavailable;
     private Producer producer;
     private ProductContainer container;
     private ProductOrigin origin;
@@ -47,6 +48,10 @@ public class Product
     public ProductContainer getContainer() { return container; }
 
     public ProductOrigin getOrigin() { return origin; }
+
+    public int getUnavailable() { return unavailable; }
+
+    public void setUnavailable(int unavailable) { this.unavailable = unavailable; }
 
     public void setNumber(String number)
     {
