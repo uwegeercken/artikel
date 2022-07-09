@@ -12,7 +12,7 @@ import java.util.List;
 public interface ProductOrderApiInterface
 {
     List<ProductOrder> getAllProductOrders() throws Exception;
-    List<Product> getAllProducts(long producerId) throws Exception;
+    List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception;
     List<Producer> getAllProducers() throws Exception;
     ProductOrder getProductOrderById(long id) throws Exception;
     Producer getProducerById(long producerId) throws Exception;

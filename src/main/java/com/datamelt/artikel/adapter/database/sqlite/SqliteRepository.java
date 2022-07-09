@@ -127,9 +127,9 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId) throws Exception
+    public List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception
     {
-        return CollectionHandler.getAllProducts(connection, producerId);
+        return CollectionHandler.getAllProducts(connection, producerId, availableOnly);
     }
 
     @Override

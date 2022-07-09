@@ -72,7 +72,7 @@ public class ProductOrderController implements ProductOrderApiInterface
             }
             else
             {
-                List<Product> products = getAllProducts(producer.getId());
+                List<Product> products = getAllProducts(producer.getId(), true);
                 pdfFileBytes = getOrderDocument(producer, order.get(), products);
             }
 
@@ -130,7 +130,7 @@ public class ProductOrderController implements ProductOrderApiInterface
             File pdfFile = new File(pdfFullFilename);
             if(!pdfFile.exists())
             {
-                List<Product> products = getAllProducts(producer.getId());
+                List<Product> products = getAllProducts(producer.getId(), true);
                 byte[] pdfFileBytes = getOrderDocument(producer, order, products);
             }
             boolean success = sendEmail(order, form.get(FormField.EMAIL), configuration);
@@ -186,9 +186,9 @@ public class ProductOrderController implements ProductOrderApiInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId) throws Exception
+    public List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception
     {
-        return service.getAllProducts(producerId);
+        return service.getAllProducts(producerId, availableOnly);
     }
 
     @Override

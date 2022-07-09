@@ -24,7 +24,7 @@ public interface RepositoryInterface
     Product getProductByNumber(String number) throws Exception;
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
-    List<Product> getAllProducts(long producerId) throws Exception;
+    List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception;
     void deleteProduct(long id) throws Exception;
 
     void addProductContainer(ProductContainer container);

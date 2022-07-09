@@ -14,6 +14,7 @@ import java.util.*;
 class CollectionHandler
 {
     public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? order by cast(number as int)";
+    public static final String SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS = "select * from product where producer_id=? and unavailable=0 order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCERS = "select * from producer order by id";
     public static final String SQL_QUERY_MARKETS = "select * from market order by id";
     public static final String SQL_QUERY_CONTAINERS = "select * from productcontainer order by id";
@@ -52,11 +53,20 @@ class CollectionHandler
         return productCounts;
     }
 
-    public static List<Product> getAllProducts(Connection connection, long producerId) throws Exception
+    public static List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly) throws Exception
     {
         List<Product> products = new ArrayList<>();
-        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCER_PRODUCTS);
+        PreparedStatement statement;
+        if(availableOnly)
+        {
+            statement = connection.prepareStatement(SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS);
+        }
+        else
+        {
+            statement = connection.prepareStatement(SQL_QUERY_PRODUCER_PRODUCTS);
+        }
         statement.setLong(1, producerId);
+
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())
         {

@@ -176,7 +176,7 @@ public class ProductController implements ProductApiInterface
         Map<String, Object> model = new HashMap<>();
         try
         {
-            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId()));
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false));
         }
         catch (Exception ex)
         {
@@ -393,9 +393,9 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId) throws Exception
+    public List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception
     {
-        return service.getAllProducts(producerId);
+        return service.getAllProducts(producerId, availableOnly);
     }
 
     @Override
@@ -425,7 +425,7 @@ public class ProductController implements ProductApiInterface
     @Override
     public byte[] getLabelsOutputFile(long producerId) throws Exception
     {
-        List<Product> products = getAllProducts(producerId);
+        List<Product> products = getAllProducts(producerId, false);
         List<ProductLabel> labels = new ArrayList<>();
         for(Product product : products)
         {
