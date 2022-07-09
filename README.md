@@ -33,11 +33,11 @@ The email section specifies parameters to access an email server to use when sen
 
 The application language is German. But one could easily copy the German resource file and translate it to a different language.
 
-To produce a PDF file for an order AsciiDoc is used. Asciidoc files are read from the variable "documentsFolder" and have following naming convention:
+To produce a PDF file for an order AsciiDoc is used. Asciidoc files are read from the variable "templateFileFolder" and have following naming convention:
 
     order_<producer id>.adoc
 
-Additionally an Asciidoc theme file is used, where the formatting of orders can be adjusted to individual needs. The filename of the theme is:
+Although the filename ends with ".adoc", the file is first parsed using Apache Velocity and the products of the relevant order are inserted and then the PDF file is generated using Asciidoc. Additionally an Asciidoc theme file is used, where the formatting of orders can be adjusted to individual needs. The filename of the theme is:
 
     asciidoc-theme-1.yml
 
