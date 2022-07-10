@@ -218,7 +218,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/artikel/application-${project.version}/lib</outputDirectory>
+                            <outputDirectory>${project.build.directory}/artikel/artikel-${project.version}/lib</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
