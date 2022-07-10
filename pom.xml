@@ -241,7 +241,7 @@
                             <Class-Path>.</Class-Path>
                         </manifestEntries>
                     </archive>
-                    <finalName>artikel//application-${project.version}/${project.artifactId}</finalName>
+                    <finalName>artikel/artikel-${project.version}/${project.artifactId}</finalName>
                 </configuration>
             </plugin>
         </plugins>
