@@ -88,6 +88,8 @@ public class WebApplication
         post(Path.Web.LOGIN, loginController.authenticateUser);
 
         get(Path.Web.USERS, userController.serveAllUsersPage);
+        get(Path.Web.USERS_CHANGE_PASSWORD, userController.serveChangePasswordPage);
+        post(Path.Web.USERS_CHANGE_PASSWORD, userController.serveUpdatePasswordPage);
 
         get(Path.Web.PRODUCTS, productController.serveAllProductsPage);
         get(Path.Web.GENERATE_LABELS, productController.createLabels);

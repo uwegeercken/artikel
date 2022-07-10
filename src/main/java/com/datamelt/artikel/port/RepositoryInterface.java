@@ -2,6 +2,7 @@ package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.model.*;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +68,7 @@ public interface RepositoryInterface
     void removeAllOrderItems(long orderId);
 
     User getUserByName(String name) throws Exception;
+    User getUserById(long id) throws Exception;
     void addUser(User user);
     boolean getExistUser(String name) throws Exception;
 
@@ -75,6 +77,7 @@ public interface RepositoryInterface
     ProductOrder getProductOrderById(long id) throws Exception;
 
     List<User> getAllUsers() throws Exception;
+    void updateUser(User user) throws Exception;
 
     long getAllProductsCount() throws Exception;
     Map<String,Long> getAllProducersProductsCount() throws Exception;

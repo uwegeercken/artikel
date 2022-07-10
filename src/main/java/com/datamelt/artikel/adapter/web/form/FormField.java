@@ -17,7 +17,11 @@ public enum FormField
     EMAIL("email", "string", false, true),
     CONTAINER_ID("container_id", "long", false, false),
     ORIGIN_ID("origin_id", "long", false, false),
-    MARKET_ID("market_id", "long", false, false);
+    MARKET_ID("market_id", "long", false, false),
+    PASSWORD("password", "string", false, false),
+    PASSWORD_NEW("password_new", "string", false, false),
+    PASSWORD_NEW_REPEATED("password_new_repeated", "string", false, false);
+
 
     private String fieldName;
     private String type;

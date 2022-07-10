@@ -1,4 +1,3 @@
-
 <div id='cssmenu'>
 		<ul>
 			<li><a href="/index/">${messages.get("MENU_ENTRY_INDEX")}</a></li>
@@ -20,6 +19,7 @@
 		#end
 		<ul>
             #if($tokenpayload)
+                <li><a href="/users/changepassword/${tokenpayload.get("id")}/">Passwort ändern</a></li>
                 <li><a href="/logout/">Abmelden</a></li>
             #else
                 <li><a href="/login/">Anmelden</a></li>
