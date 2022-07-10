@@ -58,31 +58,12 @@ public class UserController implements UserApiInterface
             String passwordNew = request.queryParams(FormField.PASSWORD_NEW.toString());
             String passwordNewRepeated = request.queryParams(FormField.PASSWORD_NEW_REPEATED.toString());
 
-            if(!HashGenerator.generate(password).equals(user.getPassword()))
+            ValidatorResult result = checkPasswords(user.getPassword(), password, passwordNew , passwordNewRepeated);
+            if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
-                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_INCORRECT_PASSWORD")));
+                updateUser(user);
             }
-            else if(passwordNew.length()<8)
-            {
-                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_INCORRECT_PASSWORD_NEW_TOO_SHORT")));
-            }
-            else if(!passwordNew.equals(passwordNewRepeated))
-            {
-                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_PASSWORD_NEW_AND_REPEATED_DIFFER")));
-            }
-            else
-            {
-                user.setPassword(HashGenerator.generate(passwordNew));
-                try
-                {
-                    updateUser(user);
-                    model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("INFO_PASSWORD_CHANGED")));
-                }
-                catch (Exception ex)
-                {
-                    model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_PASSWORD_CHANGE")));
-                }
-            }
+            model.put(Constants.MODEL_RESULT_KEY, result);
             return ViewUtility.render(request,model,Path.Template.USERS_CHANGE_PASSWORD);
         }
         else
@@ -91,6 +72,40 @@ public class UserController implements UserApiInterface
             return ViewUtility.render(request,model,Path.Template.USERS);
         }
     };
+
+    private ValidatorResult checkPasswords(String existingPassword, String password, String passwordNew, String passwordNewRepeated)
+    {
+        int counter=0;
+        char[] character = passwordNew.toCharArray();
+        for(char oneChracter : character)
+        {
+            if(Character.isDigit(oneChracter))
+            {
+                counter++;
+            }
+        }
+
+        if(!HashGenerator.generate(password).equals(existingPassword))
+        {
+            return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_INCORRECT_PASSWORD"));
+        }
+        else if(passwordNew.length()<8)
+        {
+            return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_INCORRECT_PASSWORD_NEW_TOO_SHORT"));
+        }
+        else if(!passwordNew.equals(passwordNewRepeated))
+        {
+            return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_PASSWORD_NEW_AND_REPEATED_DIFFER"));
+        }
+        else if(counter==0)
+        {
+            return new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_INCORRECT_PASSWORD_NEW_NO_NUMBERS"));
+        }
+        else
+        {
+            return new ValidatorResult(WebApplication.getMessages().get("INFO_PASSWORD_CHANGED"));
+        }
+    }
 
     @Override
     public List<User> getAllUsers() throws Exception
