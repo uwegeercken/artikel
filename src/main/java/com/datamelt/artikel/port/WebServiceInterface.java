@@ -5,6 +5,7 @@ import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,9 @@ public interface WebServiceInterface
     void createDatabaseTables() throws Exception;
 
     User getUserByName(String name) throws Exception;
+    User getUserById(long id) throws Exception;
     List<User> getAllUsers() throws Exception;
+    void updateUser(User user) throws Exception;
 
     Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception;
     void addProductOrder(ProductOrder order);

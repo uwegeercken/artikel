@@ -10,6 +10,7 @@ import com.datamelt.artikel.port.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.util.*;
 
 public class WebService implements WebServiceInterface, CsvWriterInterface
@@ -272,9 +273,21 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public User getUserById(long id) throws Exception
+    {
+        return repository.getUserById(id);
+    }
+
+    @Override
     public List<User> getAllUsers() throws Exception
     {
         return repository.getAllUsers();
+    }
+
+    @Override
+    public void updateUser(User user) throws Exception
+    {
+        repository.updateUser(user);
     }
 
     @Override

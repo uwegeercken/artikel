@@ -9,6 +9,7 @@ public class Path
         public static final String LOGOUT = "/logout/";
         public static final String PRODUCTS = "/products/producer/:producerid/";
         public static final String USERS = "/users/";
+        public static final String USERS_CHANGE_PASSWORD = "/users/changepassword/:id/";
         public static final String GENERATE_LABELS = "/products/labels/:producerid/";
         public static final String GENERATE_SHOP_LABELS = "/products/shoplabels/:producerid/";
         public static final String PRODUCT = "/product/:id/producer/:producerid/";
@@ -41,6 +42,7 @@ public class Path
         public static final String ABOUT = "/velocity/about.vm";
         public static final String LOGIN = "/velocity/login.vm";
         public static final String USERS = "/velocity/users.vm";
+        public static final String USERS_CHANGE_PASSWORD = "/velocity/changepassword.vm";
         public static final String PRODUCTS = "/velocity/products.vm";
         public static final String PRODUCT = "/velocity/editproduct.vm";
         public static final String SHOPPRODUCTS = "/velocity/shopproducts.vm";

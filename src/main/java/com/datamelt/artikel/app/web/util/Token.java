@@ -21,6 +21,7 @@ public class Token
        return Jwts.builder()
                .setSubject(user.getName())
                .claim("typ", user.getType())
+               .claim("id", user.getId())
                .setIssuer(Constants.USERTOKEN_ISSUER)
                .setIssuedAt(Date.from(now))
                .setExpiration(Date.from(now.plus(tokenExpiresMinutes, ChronoUnit.MINUTES)))

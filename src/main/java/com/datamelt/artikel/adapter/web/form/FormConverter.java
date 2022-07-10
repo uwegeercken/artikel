@@ -1,10 +1,7 @@
 package com.datamelt.artikel.adapter.web.form;
 
 import com.datamelt.artikel.app.web.util.NumberFormatter;
-import com.datamelt.artikel.model.Producer;
-import com.datamelt.artikel.model.Product;
-import com.datamelt.artikel.model.ProductContainer;
-import com.datamelt.artikel.model.ProductOrigin;
+import com.datamelt.artikel.model.*;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -21,6 +18,13 @@ public class FormConverter
         form.put(FormField.NAME, producer.getName());
         form.put(FormField.EMAIL, producer.getEmailAddress());
         form.put(FormField.NO_ORDERING, String.valueOf(producer.getNoOrdering()));
+        return form;
+    }
+
+    public static Form convertToForm(User user)
+    {
+        Form form = new Form();
+        form.put(FormField.ID, String.valueOf(user.getId()));
         return form;
     }
 

@@ -36,6 +36,7 @@ public class Constants
     public static final String MODEL_ORDERS_KEY = "orders";
     public static final String MODEL_ORDER_KEY = "order";
     public static final String MODEL_USERS_KEY = "users";
+    public static final String MODEL_USER_KEY = "user";
     public static final String MODEL_ORDERID_KEY = "orderid";
     public static final String MODEL_TOTAL_NUMBER_OF_EMAIL_ADDRESSES="numberofemails";
 

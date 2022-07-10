@@ -364,6 +364,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public User getUserById(long id) throws Exception
+    {
+        return UserSearch.getUserById(connection, id);
+    }
+
+    @Override
     public void addUser(User user) {
         UserUpdate u = new UserUpdate(connection);
         u.addUser(user);
@@ -390,6 +396,13 @@ public class SqliteRepository implements RepositoryInterface
     public List<User> getAllUsers() throws Exception
     {
         return CollectionHandler.getAllUsers(connection);
+    }
+
+    @Override
+    public void updateUser(User user) throws Exception
+    {
+        UserUpdate u = new UserUpdate(connection);
+        u.updateUser(user);
     }
 
     @Override
