@@ -1,14 +1,12 @@
 package com.datamelt.artikel.model;
 
-import com.datamelt.artikel.app.web.util.HashGenerator;
-
 public class User
 {
     private long id;
     private String name;
     private String fullName;
     private String password;
-    private String type;
+    private String role;
 
     public User(String name)
     {
@@ -55,22 +53,19 @@ public class User
         this.password = password;
     }
 
-    public String getType() { return type; }
+    public String getRole() { return role; }
 
-    public void setType(String type) { this.type = type; }
+    public void setRole(String role) { this.role = role; }
 
-    public boolean isAdmin()
-    {
-        return type.equals(UserType.ADMIN.getDescription());
-    }
+    public boolean isAdmin() { return role.equals(UserRole.ADMIN.getDescription()); }
 
     public boolean isReadOnlyUser()
     {
-        return type.equals(UserType.READ_ONLY.getDescription());
+        return role.equals(UserRole.READ_ONLY.getDescription());
     }
 
     public boolean isReadWriteUser()
     {
-        return type.equals(UserType.READ_WRITE.getDescription());
+        return role.equals(UserRole.READ_WRITE.getDescription());
     }
 }

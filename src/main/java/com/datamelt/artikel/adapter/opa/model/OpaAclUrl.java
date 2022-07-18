@@ -4,17 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OpaAclUrl
 {
-    @JsonProperty
     String path;
-    @JsonProperty
     String method;
-    @JsonProperty
     String role;
-
-    public OpaAclUrl()
-    {
-
-    }
 
     public OpaAclUrl(String path, String method, String role)
     {

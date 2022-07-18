@@ -20,7 +20,8 @@ public class Token
 
        return Jwts.builder()
                .setSubject(user.getName())
-               .claim("typ", user.getType())
+               .claim("role", user.getRole())
+               .claim("name", user.getName())
                .claim("id", user.getId())
                .setIssuer(Constants.USERTOKEN_ISSUER)
                .setIssuedAt(Date.from(now))

@@ -1,6 +1,6 @@
 package com.datamelt.artikel.model;
 
-public enum UserType
+public enum UserRole
 {
     ADMIN("admin"),
     READ_ONLY("readonly"),
@@ -8,7 +8,7 @@ public enum UserType
 
     private String description;
 
-    UserType(String description)
+    UserRole(String description)
     {
         this.description = description;
     }

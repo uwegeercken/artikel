@@ -1,5 +1,7 @@
 package com.datamelt.artikel.adapter.web;
 
+import com.datamelt.artikel.adapter.opa.model.OpaInput;
+import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.adapter.web.form.Form;
 import com.datamelt.artikel.adapter.web.form.FormConverter;
 import com.datamelt.artikel.adapter.web.form.FormField;
@@ -39,6 +41,12 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route serveProductPage = (Request request, Response response) -> {
+
+        String path="/product";
+        String method = "post";
+        OpaInput opaInput = new OpaInput(path, method, request.session().attribute(Constants.USERTOKEN_KEY));
+        OpaValidationResult userHasAccess = service.validateUser(opaInput);
+
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 

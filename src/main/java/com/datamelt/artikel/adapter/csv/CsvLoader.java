@@ -228,7 +228,7 @@ public class CsvLoader implements FileInterface
                     {
                         user.setFullName(fields[1]);
                         user.setPassword(HashGenerator.generate(fields[2]));
-                        user.setType(fields[3]);
+                        user.setRole(fields[3]);
                         addUser(user);
                         counter++;
                     }

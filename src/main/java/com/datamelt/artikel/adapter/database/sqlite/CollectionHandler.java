@@ -244,7 +244,7 @@ class CollectionHandler
             User user = new User(resultset.getString("name"));
             user.setId(resultset.getLong("id"));
             user.setFullName(resultset.getString("full_name"));
-            user.setType(resultset.getString("type"));
+            user.setRole(resultset.getString("role"));
             users.add(user);
         }
         resultset.close();

@@ -76,19 +76,28 @@ public class SqliteTable
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
+    private static final String CREATE_TABLE_USERROLE = "CREATE TABLE if not exists \"user_role\" (" +
+            "\"id\"INTEGER NOT NULL," +
+            "\"role\"TEXT NOT NULL UNIQUE," +
+            "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
+            ")";
+
     private static final String CREATE_TABLE_USER = "CREATE TABLE if not exists \"user\" (" +
                 "\"id\"INTEGER NOT NULL UNIQUE," +
                 "\"name\"\tTEXT NOT NULL UNIQUE," +
                 "\"full_name\"\tTEXT," +
                 "\"password\"\tTEXT," +
-                "\"type\"\tTEXT," +
+                "\"role\"\tTEXT," +
                 "PRIMARY KEY(\"id\")" +
+                "FOREIGN KEY(\"role\") REFERENCES \"user_role\"(\"role\")" +
                 ")";
 
     private static final String CREATE_USER_ADMIN = "insert into user (name, full_name, password, type) values (?,?,?,?)";
 
     public static void createTables(Connection connection) throws Exception
     {
+        logger.info("creating table [user_role]");
+        connection.createStatement().execute(CREATE_TABLE_USERROLE);
         logger.info("creating table [user]");
         connection.createStatement().execute(CREATE_TABLE_USER);
         logger.info("creating table [market]");

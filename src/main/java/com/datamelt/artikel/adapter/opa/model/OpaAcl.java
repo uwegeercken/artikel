@@ -8,15 +8,8 @@ import java.util.List;
 
 public class OpaAcl
 {
-    @JsonProperty
     private List<String> users = new ArrayList<>();
-    @JsonProperty
     private List<OpaAclUrl> urls = new ArrayList<>();
-
-    public OpaAcl()
-    {
-
-    }
 
     public List<String> getUsers()
     {

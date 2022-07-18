@@ -28,7 +28,7 @@ class UserUpdate
             statement.setString(1, user.getName());
             statement.setString(2, user.getFullName());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getType());
+            statement.setString(4, user.getRole());
             statement.executeUpdate();
             statement.clearParameters();
 
@@ -53,7 +53,7 @@ class UserUpdate
             statement.setString(1, user.getName());
             statement.setString(2, user.getFullName());
             statement.setString(3, user.getPassword());
-            statement.setString(4, user.getType());
+            statement.setString(4, user.getRole());
             statement.setLong(5, user.getId());
             statement.executeUpdate();
             statement.clearParameters();

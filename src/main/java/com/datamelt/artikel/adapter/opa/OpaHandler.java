@@ -42,25 +42,36 @@ public class OpaHandler implements OpaApiInterface
     @Override
     public OpaValidationResult validateUser(OpaInput input)
     {
+        ObjectMapper mapper = new JsonMapper();
+        String json = null;
+        try
+        {
+            json = mapper.writeValueAsString(input);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error creating json from acl object");
+        }
+
         return webTarget
             .path(ENDPOINT_VALIDATE)
             .request()
-            .post(Entity.json(input))
+            .post(Entity.json(json))
             .readEntity(OpaValidationResult.class);
     }
 
     @Override
     public int sendAcl(OpaAcl acl)
     {
-        ObjectMapper xxx = new JsonMapper();
+        ObjectMapper mapper = new JsonMapper();
         String json = null;
         try
         {
-            json = xxx.writeValueAsString(acl);
+            json = mapper.writeValueAsString(acl);
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            logger.error("error creating json from acl object");
         }
 
         return webTarget

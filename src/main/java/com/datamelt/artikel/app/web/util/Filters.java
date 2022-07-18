@@ -1,5 +1,6 @@
 package com.datamelt.artikel.app.web.util;
 
+import com.datamelt.artikel.adapter.opa.model.OpaInput;
 import com.datamelt.artikel.util.Constants;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
