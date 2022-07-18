@@ -3,6 +3,7 @@ package com.datamelt.artikel.app.web;
 import com.datamelt.artikel.adapter.csv.CsvLabelFileWriter;
 import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
 import com.datamelt.artikel.adapter.email.EmailHandler;
+import com.datamelt.artikel.adapter.opa.OpaHandler;
 import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
 import com.datamelt.artikel.adapter.web.*;
 import com.datamelt.artikel.app.ConfigurationLoader;
@@ -14,6 +15,7 @@ import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.util.FileUtility;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +70,8 @@ public class WebApplication
             System.exit(1);
         }
 
-        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler());
+        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), new OpaHandler(configuration));
+
         IndexController indexController = new IndexController(service);
         LoginController loginController = new LoginController(service, configuration);
         UserController userController = new UserController(service);

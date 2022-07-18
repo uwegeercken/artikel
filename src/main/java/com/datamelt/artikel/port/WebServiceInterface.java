@@ -1,11 +1,13 @@
 package com.datamelt.artikel.port;
 
+import com.datamelt.artikel.adapter.opa.model.OpaAcl;
+import com.datamelt.artikel.adapter.opa.model.OpaInput;
+import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.adapter.web.form.Form;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -64,4 +66,8 @@ public interface WebServiceInterface
     Map<String,Long> getAllProducersProductsCount() throws Exception;
 
     boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration);
+
+    OpaValidationResult validateUser(OpaInput input);
+    int sendAcl();
+    int sendPolicies();
 }

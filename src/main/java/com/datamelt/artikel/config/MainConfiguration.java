@@ -8,6 +8,7 @@ public class MainConfiguration
     private LabelsConfiguration labels;
     private AsciidocConfiguration asciidoc;
     private EmailConfiguration email;
+    private OpaConfiguration opa;
 
     public DatabaseConfiguration getDatabase()
     {
@@ -26,4 +27,6 @@ public class MainConfiguration
     public AsciidocConfiguration getAsciidoc() { return asciidoc; }
 
     public EmailConfiguration getEmail() { return email; }
+
+    public OpaConfiguration getOpa() { return opa; }
 }

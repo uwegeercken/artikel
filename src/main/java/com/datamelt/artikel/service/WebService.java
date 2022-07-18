@@ -1,16 +1,23 @@
 package com.datamelt.artikel.service;
 
-import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
+import com.datamelt.artikel.adapter.opa.model.OpaAcl;
+import com.datamelt.artikel.adapter.opa.model.OpaAclUrl;
+import com.datamelt.artikel.adapter.opa.model.OpaInput;
+import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.adapter.web.form.*;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
-import com.datamelt.artikel.config.EmailConfiguration;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import jakarta.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class WebService implements WebServiceInterface, CsvWriterInterface
@@ -20,13 +27,21 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     private final EmailApiInterface email;
     private final CsvWriterInterface csvLabelWriter;
     private OrderDocumentInterface orderDocumentGenerator;
+    private OpaApiInterface opaClient;
 
-    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email)
+    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient)
     {
         this.repository = respository;
         this.csvLabelWriter = csvLabelWriter;
         this.orderDocumentGenerator = orderDocumentGenerator;
         this.email = email;
+        this.opaClient = opaClient;
+
+        int sendAclStatus = sendAcl();
+        logger.info("sent acl to open policy agent. status code [{}]", sendAclStatus);
+
+        int sendPoliciesStatus =  sendPolicies();
+        logger.info("sent policies to open policy agent. status code [{}]", sendPoliciesStatus);
     }
 
     @Override
@@ -288,6 +303,57 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public void updateUser(User user) throws Exception
     {
         repository.updateUser(user);
+    }
+
+    @Override
+    public OpaValidationResult validateUser(OpaInput input)
+    {
+        return opaClient.validateUser(input);
+    }
+
+    @Override
+    public int sendAcl()
+    {
+        OpaAcl acl = new OpaAcl();
+        try
+        {
+            for (User user : getAllUsers())
+            {
+                acl.addUser(user.getName());
+            }
+
+            acl.addUser("alice");
+            acl.addUser("bob");
+            acl.addUser("admin");
+
+            acl.addUrl(new OpaAclUrl("/product", "get", "read"));
+            acl.addUrl(new OpaAclUrl("/product", "post", "readwrite"));
+            acl.addUrl(new OpaAclUrl("/admin", "post", "admin"));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error retrieving users from database: [{}]", ex.getMessage());
+        }
+
+        int status = opaClient.sendAcl(acl);
+        return status;
+    }
+
+    @Override
+    public int sendPolicies()
+    {
+        String rego = null;
+        int status = 0;
+        try
+        {
+            rego = Files.readString(Paths.get("/home/uwe/development/artikel/users-policy.rego"));
+            status = opaClient.sendPolicies(rego);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error reading policy file: [{}]. error: [{}]","xxxx",ex.getMessage());
+        }
+        return status;
     }
 
     @Override
