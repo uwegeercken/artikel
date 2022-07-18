@@ -1,6 +1,8 @@
 package com.datamelt.artikel.app.web.util;
 
+import com.datamelt.artikel.adapter.opa.OpaHandler;
 import com.datamelt.artikel.adapter.opa.model.OpaInput;
+import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.util.Constants;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -12,6 +14,12 @@ import spark.Response;
 public class Filters
 {
     private static final Logger logger = LoggerFactory.getLogger(Filters.class);
+    private static OpaHandler handler;
+
+    public static void setOpaHandler(OpaHandler opaHandler)
+    {
+        handler = opaHandler;
+    }
 
     public static Filter redirectToLogin = (Request request, Response response) -> {
         if(!request.pathInfo().equals(Path.Web.LOGIN) && !request.pathInfo().equals(Path.Web.ABOUT) && !request.pathInfo().equals(Path.Web.INDEX))
@@ -45,6 +53,16 @@ public class Filters
             {
                 response.redirect(Path.Web.LOGIN);
             }
+        }
+    };
+
+    public static Filter validateUserHasAccess = (Request request, Response response) ->  {
+
+        OpaInput opaInput = new OpaInput(request.pathInfo(), request.requestMethod(), request.session().attribute(Constants.USERTOKEN_KEY));
+        OpaValidationResult userHasAccess = handler.validateUser(opaInput);
+        if(!userHasAccess.getResult())
+        {
+            response.redirect(Path.Web.LOGIN); //TODO Correct page
         }
     };
 
