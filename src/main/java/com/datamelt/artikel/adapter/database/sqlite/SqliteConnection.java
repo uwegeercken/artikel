@@ -15,23 +15,17 @@ class SqliteConnection
 
     static Connection getConnection(DatabaseConfiguration configuration) throws Exception {
         Connection connection = null;
-        try {
-            logger.info("using database file: [{}]",configuration.getName());
-            File databaseFile = new File(configuration.getName());
-            boolean existDatabase = databaseFile.exists();
-            Class.forName(configuration.getJdbcClass());
-            // if db does not exist, the file is created by the driver
-            connection = DriverManager.getConnection(configuration.getConnection() + ":" + configuration.getName());
-            if(!existDatabase)
-            {
-                logger.warn("database not found - creating database and table structure: [{}]", configuration.getName());
-                SqliteTable.createTables(connection);
-                SqliteTable.createAdminUser(connection);
-            }
-        }
-        catch (Exception ex)
+        logger.info("using database file: [{}]",configuration.getName());
+        File databaseFile = new File(configuration.getName());
+        boolean existDatabase = databaseFile.exists();
+        Class.forName(configuration.getJdbcClass());
+        // if db does not exist, the file is created by the driver
+        connection = DriverManager.getConnection(configuration.getConnection() + ":" + configuration.getName());
+        if(!existDatabase)
         {
-            logger.error("exception trying to connect to database: [{}]",ex.getMessage());
+            logger.warn("database not found - creating database and table structure: [{}]", configuration.getName());
+            SqliteTable.createTables(connection);
+            SqliteTable.createAdminUser(connection);
         }
         return connection;
     }

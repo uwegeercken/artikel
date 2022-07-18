@@ -57,15 +57,15 @@ public class User
 
     public void setRole(String role) { this.role = role; }
 
-    public boolean isAdmin() { return role.equals(UserRole.ADMIN.getDescription()); }
+    public boolean isAdmin() { return role.equals(UserRole.ADMIN.getRole()); }
 
     public boolean isReadOnlyUser()
     {
-        return role.equals(UserRole.READ_ONLY.getDescription());
+        return role.equals(UserRole.READ_ONLY.getRole());
     }
 
     public boolean isReadWriteUser()
     {
-        return role.equals(UserRole.READ_WRITE.getDescription());
+        return role.equals(UserRole.READ_WRITE.getRole());
     }
 }

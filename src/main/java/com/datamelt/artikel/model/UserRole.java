@@ -6,15 +6,15 @@ public enum UserRole
     READ_ONLY("readonly"),
     READ_WRITE("readwrite");
 
-    private String description;
+    private String role;
 
-    UserRole(String description)
+    UserRole(String role)
     {
-        this.description = description;
+        this.role = role;
     }
 
-    public String getDescription()
+    public String getRole()
     {
-        return description;
+        return role;
     }
 }
