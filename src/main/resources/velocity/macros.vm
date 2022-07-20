@@ -16,8 +16,14 @@
 	#end
 #end
 
-#macro(insert_readwrite_image $href $imgclass $imgsrc $title $tokenpayload)
-    #if(${tokenpayload.get("role")}=="admin" || ${tokenpayload.get("role")}=="readwrite")
+#macro(insert_readwrite_image $href $imgclass $imgsrc $title $role)
+    #if(${role}=="readwrite" || ${role}=="admin")
+        <a href="$href"><img class="$imgclass" height="22px" width="22px" src="$imgsrc" title="$title"></a>
+    #end
+#end
+
+#macro(insert_admin_image $href $imgclass $imgsrc $title $role)
+    #if(${role}=="admin")
         <a href="$href"><img class="$imgclass" height="22px" width="22px" src="$imgsrc" title="$title"></a>
     #end
 #end

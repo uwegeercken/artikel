@@ -38,14 +38,10 @@
         #set($amount=0)
         #if($order && ${order.getOrderItem($product.id)}) #set($amount=${order.getOrderItem($product.id).amount}) #else #set($amount=0) #end
         <div class="unit" tag="$!product.number.toLowerCase() + $!product.name.toLowerCase()">
-            #if($product.id>0)
-                #insert_readwrite_image("/product/delete/${product.id}/producer/${product.producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCT_DELETE')}")
-            #end
+            #insert_readwrite_image("/product/delete/${product.id}/producer/${product.producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCT_DELETE')}")
+            #insert_readwrite_image("/product/${product.id}/producer/${product.producer.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCT_EDIT')}")
             #if($product.producer.noOrdering==1 && $product.unavailable==0)
                 <a href="/product/labels/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/checkmark_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT_FOR_LABEL")}"></a>
-            #end
-            #if($product.id>1)
-                #insert_readwrite_image("/product/${product.id}/producer/${product.producer.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCT_EDIT')}")
             #end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>

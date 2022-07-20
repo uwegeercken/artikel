@@ -17,10 +17,8 @@
     </div>
     #foreach($user in $users)
         <div class="unit" tag="$!user.fullName.toLowerCase()">
-            #if($user.id>0)
-                #insert_readwrite_image("/user/${user.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_USER_EDIT')}")
-                <a href="/user/delete/${user.id}/"><img class="delete" height="22px" width="22px" src="/img/remove.png" title="${messages.get("IMAGE_USER_DELETE")}"></a>
-            #end
+                #insert_admin_image("/user/${user.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_USER_EDIT')}")
+                #insert_admin_image("/user/delete/${user.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_USER_DELETE')}")
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_USER")}</p>
                 <p class="big">$!user.name</a></p>
