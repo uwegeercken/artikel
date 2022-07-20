@@ -71,6 +71,7 @@ public interface RepositoryInterface
     User getUserById(long id) throws Exception;
     void addUser(User user);
     boolean getExistUser(String name) throws Exception;
+    boolean getIsUniqueUser(long id, String name) throws Exception;
 
     List<ProductOrder> getAllProductOrders() throws Exception;
 

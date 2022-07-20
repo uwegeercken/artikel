@@ -15,8 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class WebService implements WebServiceInterface, CsvWriterInterface
@@ -142,6 +140,44 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public User updateUser(long id, Form form) throws Exception
+    {
+        User user = new User(form.get(FormField.NAME));
+        user.setId(id);
+        user.setFullName(form.get(FormField.FULL_NAME));
+        user.setRole(form.get(FormField.USER_ROLE));
+        try
+        {
+            logger.debug("updating user - name: [{}]", user.getName());
+            repository.updateUser(user);
+        }
+        catch (Exception ex)
+        {
+
+            logger.error("error adding user: [{}]", ex.getMessage());
+        }
+        return user;
+    }
+
+    @Override
+    public User addUser(Form form) throws Exception
+    {
+        User user = new User(form.get(FormField.NAME));
+        user.setFullName(form.get(FormField.FULL_NAME));
+        user.setRole(form.get(FormField.USER_ROLE));
+        try
+        {
+            logger.debug("adding user - name: [{}]", user.getName());
+            repository.addUser(user);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error adding user: [{}]", ex.getMessage());
+        }
+        return user;
+    }
+
+    @Override
     public ProductContainer updateProductContainer(long id, Form form) throws Exception
     {
         ProductContainer productContainer = new ProductContainer(form.get(FormField.NAME));
@@ -180,6 +216,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public boolean getIsUniqueProductContainer(long id, String name) throws Exception
     {
         return repository.getIsUniqueProductContainer(id, name);
+    }
+
+    @Override
+    public boolean getIsUniqueUser(long id, String name) throws Exception
+    {
+        return repository.getIsUniqueUser(id, name);
     }
 
     @Override

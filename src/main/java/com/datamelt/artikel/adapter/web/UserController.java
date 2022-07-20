@@ -13,6 +13,8 @@ import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.*;
 import com.datamelt.artikel.util.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -21,9 +23,11 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UserController implements UserApiInterface
 {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private static WebServiceInterface service;
 
     public UserController(WebServiceInterface service)
@@ -36,6 +40,54 @@ public class UserController implements UserApiInterface
         model.put(Constants.MODEL_USERS_KEY, getAllUsers());
         return ViewUtility.render(request,model,Path.Template.USERS);
 
+    };
+
+    public Route serveUserPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
+        Optional<User> user = Optional.ofNullable(getUserById(Long.parseLong(request.params(":id"))));
+        if(user.isPresent())
+        {
+            model.put(Constants.MODEL_FORM_KEY, FormConverter.convertToForm(user.get()));
+        }
+        else
+        {
+            Form form = new Form();
+            form.put(FormField.ID,"0");
+            model.put(Constants.MODEL_FORM_KEY, form);
+        }
+        return ViewUtility.render(request,model,Path.Template.USER);
+
+    };
+
+    public Route serveUpdateUserPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        String cancelled = request.queryParams(Constants.FORM_SUBMIT);
+        if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
+        {
+            Form form = Form.createFormFromQueryParameters(request);
+            model.put(Constants.MODEL_FORM_KEY, form);
+            model.put(Constants.MODEL_FIELDS_KEY,FormField.class);
+
+            boolean isUniqueUser = getIsUniqueUser(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NAME));
+            ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueUser, WebApplication.getNumberFormatter());
+            if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
+            {
+                addOrUpdateUser(model, form);
+            }
+            else
+            {
+                model.put(Constants.MODEL_RESULT_KEY, result);
+            }
+            return ViewUtility.render(request,model,Path.Template.USER);
+        }
+        else
+        {
+            List<User> users = getAllUsers();
+            model.put(Constants.MODEL_USERS_KEY, users);
+            request.session().attribute("users", users);
+            return ViewUtility.render(request,model,Path.Template.USERS);
+        }
     };
 
     public Route serveChangePasswordPage = (Request request, Response response) -> {
@@ -107,6 +159,35 @@ public class UserController implements UserApiInterface
         }
     }
 
+    private void addOrUpdateUser(Map<String, Object> model, Form form)
+    {
+        if (Long.parseLong(form.get(FormField.ID)) > 0)
+        {
+            try
+            {
+                updateUser(Long.parseLong(form.get(FormField.ID)), form);
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("USER_FORM_CHANGED")));
+            }
+            catch (Exception ex)
+            {
+                logger.error("error updating user with id [{}], error [{}]", form.get(FormField.ID), ex.getMessage());
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("USER_FORM_CHANGE_ERROR")));
+            }
+        } else
+        {
+            try
+            {
+                addUser(form);
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("USER_FORM_ADDED")));
+            }
+            catch (Exception ex)
+            {
+                logger.error("error adding user, error [{}]", ex.getMessage());
+                model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("USER_FORM_ADD_ERROR")));
+            }
+        }
+    }
+
     @Override
     public List<User> getAllUsers() throws Exception
     {
@@ -123,5 +204,23 @@ public class UserController implements UserApiInterface
     public void updateUser(User user) throws Exception
     {
         service.updateUser(user);
+    }
+
+    @Override
+    public void updateUser(long id, Form form) throws Exception
+    {
+        service.updateUser(id, form);
+    }
+
+    @Override
+    public void addUser(Form form) throws Exception
+    {
+        service.addUser(form);
+    }
+
+    @Override
+    public boolean getIsUniqueUser(long id, String name) throws Exception
+    {
+        return service.getIsUniqueUser(id, name);
     }
 }

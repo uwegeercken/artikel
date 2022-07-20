@@ -76,6 +76,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public boolean getIsUniqueUser(long id, String name) throws Exception
+    {
+        return UserSearch.getIsUniqueUser(connection, id, name);
+    }
+
+    @Override
     public void addProduct(Product product)
     {
         ProductUpdate p = new ProductUpdate(connection);

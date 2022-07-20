@@ -104,6 +104,8 @@ public class WebApplication
         post(Endpoints.AUTHENTICATE.getPath(), loginController.authenticateUser);
 
         get(Endpoints.USERS.getPath(), userController.serveAllUsersPage);
+        get(Endpoints.USER_SELECT_UPDATE.getPath(), userController.serveUserPage);
+        post(Endpoints.USER_UPDATE.getPath(), userController.serveUpdateUserPage);
         get(Endpoints.USERS_SELECT_CHANGE_PASSWORD.getPath(), userController.serveChangePasswordPage);
         post(Endpoints.USERS_CHANGE_PASSWORD.getPath(), userController.serveUpdatePasswordPage);
 

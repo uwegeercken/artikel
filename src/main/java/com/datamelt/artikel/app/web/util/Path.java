@@ -7,6 +7,7 @@ public class Path
         public static final String ABOUT = "/velocity/about.vm";
         public static final String LOGIN = "/velocity/login.vm";
         public static final String USERS = "/velocity/users.vm";
+        public static final String USER = "/velocity/edituser.vm";
         public static final String USERS_CHANGE_PASSWORD = "/velocity/changepassword.vm";
         public static final String PRODUCTS = "/velocity/products.vm";
         public static final String PRODUCT = "/velocity/editproduct.vm";

@@ -5,9 +5,12 @@
 # replace the workingDir variable according to your setup.
 # replace the <version> tag below with the version you have.
 #
+#
+# Note: Make sure you have the Open Policy Agent server running, before you start the artikel application.
+#
 
-workingDir=/opt/artikel
-applicationDir=${workingDir}/artikel<version>
+baseFolder=/opt/artikel
+applicationFolder=${baseFolder}/artikel<version>
 
-java -jar ${applicationDir}/artikel.jar ${workingDir}/config.yaml
+java -jar ${applicationFolder}/artikel.jar ${baseFolder}/config/config.yaml
 

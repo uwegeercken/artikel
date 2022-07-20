@@ -9,6 +9,8 @@ public enum Endpoints
     LOGOUT("/logout/","read", "get"),
     PRODUCTS("/products/producer/:producerid/","read", "get"),
     USERS("/users/","admin", "get"),
+    USER_SELECT_UPDATE("/user/:id/","readwrite", "get"),
+    USER_UPDATE("/user/:id/","readwrite", "post"),
     USERS_SELECT_CHANGE_PASSWORD("/users/changepassword/:id/","readwrite", "get"),
     USERS_CHANGE_PASSWORD("/users/changepassword/:id/","readwrite", "post"),
     GENERATE_LABELS("/products/labels/:producerid/","readwrite", "get"),

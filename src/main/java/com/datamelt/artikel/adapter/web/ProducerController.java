@@ -127,7 +127,7 @@ public class ProducerController implements ProducerApiInterface
             }
             catch (Exception ex)
             {
-                logger.error("error updating producer, error [{}]", ex.getMessage());
+                logger.error("error adding producer, error [{}]", ex.getMessage());
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCER_FORM_ADD_ERROR")));
             }
         }

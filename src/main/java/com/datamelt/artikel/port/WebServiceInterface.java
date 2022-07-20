@@ -52,6 +52,9 @@ public interface WebServiceInterface
     User getUserById(long id) throws Exception;
     List<User> getAllUsers() throws Exception;
     void updateUser(User user) throws Exception;
+    User updateUser(long id, Form form) throws Exception;
+    User addUser(Form form) throws Exception;
+    boolean getIsUniqueUser(long id, String name) throws Exception;
 
     Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception;
     void addProductOrder(ProductOrder order);

@@ -20,7 +20,9 @@ public enum FormField
     MARKET_ID("market_id", "long", false, false),
     PASSWORD("password", "string", false, false),
     PASSWORD_NEW("password_new", "string", false, false),
-    PASSWORD_NEW_REPEATED("password_new_repeated", "string", false, false);
+    PASSWORD_NEW_REPEATED("password_new_repeated", "string", false, false),
+    USER_ROLE("user_role", "string", false, false),
+    FULL_NAME("full_name", "string", false, false);
 
 
     private String fieldName;

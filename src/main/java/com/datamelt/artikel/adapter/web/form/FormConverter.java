@@ -25,6 +25,9 @@ public class FormConverter
     {
         Form form = new Form();
         form.put(FormField.ID, String.valueOf(user.getId()));
+        form.put(FormField.NAME, String.valueOf(user.getName()));
+        form.put(FormField.FULL_NAME, String.valueOf(user.getFullName()));
+        form.put(FormField.USER_ROLE, String.valueOf(user.getRole()));
         return form;
     }
 
