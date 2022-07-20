@@ -9,7 +9,8 @@ The Web application allows for the maintenance of products, producers, markets, 
 - the code in Hexagonal Architecture way
 - CSS and jQuery for frontend styling and functionality
 - Sqlite database for persistence (https://sqlite.org)
-- a Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/)
+- Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/)
+- Access to the application functionality is secured using Open Policy Agent
 
 ### Features:
 - add, update, delete products, markets, producers, orders and more
@@ -73,9 +74,24 @@ Product orders can be sent by email. The email body can be configured in a templ
       mailSenderPassword: mypassword
       mailFrom: somebody@xyz.de
 
+### User Roles
+Users are categorized into three different roles:
+- Read User: This user has read access and cannot modify any data
+- Read and Write User: This user has read access and can execute create, update and delete operations. Additionally access to the shop, email and labels functionality is available.
+- Admin User: This user has access to special functionality, such as user management.
+
+Note: Access to the home page and the about page is available to anyone.
+
+### Run the Open Policy Agent server
+The application uses Open Policy Agent (https://www.openpolicyagent.org/) to secure the access to the different features.  
+If you do not already have an Open Policy Agent server running, download it from https://www.openpolicyagent.org/docs/latest/#running-opa and run it:
+
+    ./opa run --server
+
+Note: The Open Policy Agent server is configured from the application on startup - you do not need to provide anything to run the server.
 
 ### Run the Web application
-provide the path and name of the configuration file and run:
+Make sure the Open Policy Agent server is running. Then, provide the path and name of the configuration file and run:
 
     java -jar artikel.jar config.yaml
 
@@ -106,4 +122,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-07-10
+Copyright Uwe Geercken, 2022. Last update: 2022-07-20

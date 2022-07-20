@@ -103,8 +103,8 @@ $(document).ready(function() {
 		<tr>
 			<td width="88%">#parse("/velocity/logo.vm")</td>
 			<td>
-			    #if($user)
-                    <img width="40" height="40" src="/img/dummy_user.png" title="$!{user.fullName}" alt="$!{user.fullName}">
+			    #if($tokenpayload)
+                    <img width="40" height="40" src="/img/dummy_user.png" title="$!{tokenpayload.name}" alt="$!{tokenpayload.name}">
                 #end
             </td>
 		</tr>

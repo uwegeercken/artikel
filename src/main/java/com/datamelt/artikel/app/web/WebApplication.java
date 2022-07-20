@@ -28,8 +28,8 @@ public class WebApplication
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
-    public static final String APPLCATION_VERSION = "v1.8";
-    public static final String APPLCATION_LAST_UPDATE = "09.07.2022";
+    public static final String APPLCATION_VERSION = "v1.9";
+    public static final String APPLCATION_LAST_UPDATE = "20.07.2022";
 
     private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
