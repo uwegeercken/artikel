@@ -50,5 +50,6 @@ public class Constants
     public static final String PDF_FILENAME_EXTENSION = ".pdf";
 
     public static final String USERTOKEN_KEY = "usertoken";
+    public static final String REGO_FILENAME = "users-policy.rego";
     public static final String USERTOKEN_ISSUER = "article application";
 }

@@ -11,7 +11,6 @@ sparkJava:
 
 opa:
   host: http://localhost:8181
-  policyFile: /home/user1/artikel/users-policy.rego
 
 email:
   templateFileFolder: /home/user1/artikel/config

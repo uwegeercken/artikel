@@ -11,4 +11,6 @@ public class OpaInput
     {
         input = new OpaInputDetails(path, method, token);
     }
+
+
 }

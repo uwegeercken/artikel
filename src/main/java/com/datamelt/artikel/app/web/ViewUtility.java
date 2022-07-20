@@ -1,10 +1,7 @@
 package com.datamelt.artikel.app.web;
 
 import com.datamelt.artikel.adapter.web.MessageBundle;
-import com.datamelt.artikel.app.web.util.NumberFormatter;
-import com.datamelt.artikel.app.web.util.Path;
-import com.datamelt.artikel.app.web.util.Timestamp;
-import com.datamelt.artikel.app.web.util.Token;
+import com.datamelt.artikel.app.web.util.*;
 import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.ProductOrder;
 import com.datamelt.artikel.model.ProductOrderCollection;
@@ -23,7 +20,7 @@ public class ViewUtility
 {
     public static String render (Request request, Map<String, Object> model, String template)
     {
-        model.put("WebPath", Path.Web.class);
+        model.put("WebPath", Endpoints.class);
         model.put("Timestamp", Timestamp.class);
         model.put("numberFormatter", WebApplication.getNumberFormatter());
         model.put("messages", WebApplication.getMessages());

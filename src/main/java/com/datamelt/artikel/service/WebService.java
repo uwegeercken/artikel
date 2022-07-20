@@ -5,18 +5,17 @@ import com.datamelt.artikel.adapter.opa.model.OpaAclUrl;
 import com.datamelt.artikel.adapter.opa.model.OpaInput;
 import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.adapter.web.form.*;
+import com.datamelt.artikel.app.web.util.Endpoints;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import jakarta.ws.rs.core.Response;
+import com.datamelt.artikel.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -29,7 +28,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     private OrderDocumentInterface orderDocumentGenerator;
     private OpaApiInterface opaClient;
 
-    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient)
+    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient) throws Exception
     {
         this.repository = respository;
         this.csvLabelWriter = csvLabelWriter;
@@ -312,7 +311,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public int sendAcl()
+    public int sendAcl() throws Exception
     {
         OpaAcl acl = new OpaAcl();
         try
@@ -321,18 +320,16 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
             {
                 acl.addUser(user.getName());
             }
-
-            acl.addUser("alice");
-            acl.addUser("bob");
-            acl.addUser("admin");
-
-            acl.addUrl(new OpaAclUrl("/product", "get", "read"));
-            acl.addUrl(new OpaAclUrl("/product", "post", "readwrite"));
-            acl.addUrl(new OpaAclUrl("/admin", "post", "admin"));
         }
         catch (Exception ex)
         {
             logger.error("error retrieving users from database: [{}]", ex.getMessage());
+        }
+
+        for(Endpoints item : Endpoints.values())
+        {
+            String glob = item.getPath().replaceAll("\\/(:.\\w+?)\\/", "/*/");
+            acl.addUrl(new OpaAclUrl(glob, item.getMethod(), item.getRole()));
         }
 
         int status = opaClient.sendAcl(acl);
@@ -340,18 +337,19 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public int sendPolicies()
+    public int sendPolicies() throws Exception
     {
         String rego = null;
         int status = 0;
         try
         {
-            rego = Files.readString(Paths.get("/home/uwe/development/artikel/users-policy.rego"));
+            InputStream ioStream = this.getClass().getClassLoader().getResourceAsStream(Constants.REGO_FILENAME);
+            rego = new String(ioStream.readAllBytes());
             status = opaClient.sendPolicies(rego);
         }
         catch (Exception ex)
         {
-            logger.error("error reading policy file: [{}]. error: [{}]","xxxx",ex.getMessage());
+            logger.error("error reading policy file: [{}]. error: [{}]",Constants.REGO_FILENAME,ex.getMessage());
         }
         return status;
     }

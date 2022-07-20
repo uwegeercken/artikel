@@ -12,16 +12,16 @@ pathAccess := {
 
 allow {
   some user in acl.users
-  user == token.payload.Username
+  user == token.payload.name
 
   some url in acl.urls
   is_allowed_url(url)
 }
 
 is_allowed_url(url) {
-  url.path == input.path
+  glob.match(url.path, ["/"], input.path)
   url.method == input.method
-  url.role in pathAccess[token.payload.Role]
+  url.role in pathAccess[token.payload.role]
 }
 
 token = {"payload": payload} {

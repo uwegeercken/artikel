@@ -9,11 +9,11 @@ import com.datamelt.artikel.adapter.web.*;
 import com.datamelt.artikel.app.ConfigurationLoader;
 import com.datamelt.artikel.app.web.util.Filters;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
+import com.datamelt.artikel.app.web.util.Endpoints;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.port.MessageBundleInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.service.WebService;
-import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.util.FileUtility;
 
 import org.slf4j.Logger;
@@ -70,7 +70,18 @@ public class WebApplication
             System.exit(1);
         }
 
-        WebServiceInterface service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), new OpaHandler(configuration));
+        WebServiceInterface service = null;
+        try
+        {
+            service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), new OpaHandler(configuration));
+        }
+        catch(Exception ex)
+        {
+            logger.error("error initializing web service [{}]", ex.getMessage());
+            System.exit(1);
+        }
+
+        Filters.setOpaHandler(new OpaHandler(configuration));
 
         IndexController indexController = new IndexController(service);
         LoginController loginController = new LoginController(service, configuration);
@@ -83,60 +94,60 @@ public class WebApplication
         ProductOrderController orderController = new ProductOrderController(service, configuration);
 
         before("*", Filters.redirectToLogin);
+        //before("*", Filters.validateUserHasAccess);
 
-        get(Path.Web.INDEX, indexController.serveIndexPage);
-        get(Path.Web.ABOUT, indexController.serveAboutPage);
-        get(Path.Web.LOGIN, loginController.serveLoginPage);
-        get(Path.Web.LOGOUT, loginController.logoutUser);
-        post(Path.Web.LOGIN, loginController.authenticateUser);
+        get(Endpoints.INDEX.getPath(), indexController.serveIndexPage);
+        get(Endpoints.ABOUT.getPath(), indexController.serveAboutPage);
+        get(Endpoints.NOTAUTHORIZED.getPath(), indexController.serveNotAuthorizedPage);
+        get(Endpoints.LOGIN.getPath(), loginController.serveLoginPage);
+        get(Endpoints.LOGOUT.getPath(), loginController.logoutUser);
+        post(Endpoints.AUTHENTICATE.getPath(), loginController.authenticateUser);
 
-        get(Path.Web.USERS, userController.serveAllUsersPage);
-        get(Path.Web.USERS_CHANGE_PASSWORD, userController.serveChangePasswordPage);
-        post(Path.Web.USERS_CHANGE_PASSWORD, userController.serveUpdatePasswordPage);
+        get(Endpoints.USERS.getPath(), userController.serveAllUsersPage);
+        get(Endpoints.USERS_SELECT_CHANGE_PASSWORD.getPath(), userController.serveChangePasswordPage);
+        post(Endpoints.USERS_CHANGE_PASSWORD.getPath(), userController.serveUpdatePasswordPage);
 
-        get(Path.Web.PRODUCTS, productController.serveAllProductsPage);
-        get(Path.Web.GENERATE_LABELS, productController.createLabels);
-        get(Path.Web.GENERATE_SHOP_LABELS, productController.createShopLabels);
-        get(Path.Web.PRODUCT, productController.serveProductPage);
-        post(Path.Web.PRODUCT, productController.serveUpdateProductPage);
-        get(Path.Web.PRODUCT_DELETE, productController.serveDeleteProductPage);
-        post(Path.Web.PRODUCT_DELETE, productController.deleteProduct);
-        get(Path.Web.PRODUCT_SHOP, productController.shopProduct);
-        get(Path.Web.PRODUCT_SHOP_LABELS, productController.shopProductLabels);
-        get(Path.Web.SHOPPRODUCTS, productController.serveShopProductsPage);
-        get(Path.Web.PRODUCT_SHOP_AMOUNT, productController.shopProductAmount);
-        get(Path.Web.PRODUCT_SHOP_REMOVE, productController.shopProductRemove);
-        post(Path.Web.SHOP_COMPLETE, productController.shopProductComplete);
+        get(Endpoints.PRODUCTS.getPath(), productController.serveAllProductsPage);
+        get(Endpoints.GENERATE_LABELS.getPath(), productController.createLabels);
+        get(Endpoints.GENERATE_SHOP_LABELS.getPath(), productController.createShopLabels);
+        get(Endpoints.PRODUCT_SELECT_UPDATE.getPath(), productController.serveProductPage);
+        post(Endpoints.PRODUCT_UPDATE.getPath(), productController.serveUpdateProductPage);
+        get(Endpoints.PRODUCT_DELETE.getPath(), productController.serveDeleteProductPage);
+        post(Endpoints.PRODUCT_DELETE.getPath(), productController.deleteProduct);
+        get(Endpoints.PRODUCT_SHOP.getPath(), productController.shopProduct);
+        get(Endpoints.PRODUCT_SHOP_LABELS.getPath(), productController.shopProductLabels);
+        get(Endpoints.SHOPPRODUCTS.getPath(), productController.serveShopProductsPage);
+        get(Endpoints.PRODUCT_SHOP_AMOUNT.getPath(), productController.shopProductAmount);
+        get(Endpoints.PRODUCT_SHOP_REMOVE.getPath(), productController.shopProductRemove);
+        post(Endpoints.SHOP_COMPLETE.getPath(), productController.shopProductComplete);
 
-        get(Path.Web.ORDERS, orderController.serveAllOrdersPage);
-        get(Path.Web.ORDERITEMS, orderController.serveOrderItemsPage);
-        get(Path.Web.ORDERITEMS_PDF, orderController.generateOrderPdf);
-        get(Path.Web.ORDER_DELETE, orderController.serveDeleteProductOrderPage);
-        post(Path.Web.ORDER_DELETE, orderController.deleteProductOrder);
-        get(Path.Web.SELECT_ORDER_EMAIL, orderController.selectOrderEmailAddress);
-        post(Path.Web.ORDER_EMAIL, orderController.generateOrderEmail);
+        get(Endpoints.ORDERS.getPath(), orderController.serveAllOrdersPage);
+        get(Endpoints.ORDERITEMS.getPath(), orderController.serveOrderItemsPage);
+        get(Endpoints.ORDERITEMS_PDF.getPath(), orderController.generateOrderPdf);
+        get(Endpoints.ORDER_SELECT_DELETE.getPath(), orderController.serveDeleteProductOrderPage);
+        post(Endpoints.ORDER_DELETE.getPath(), orderController.deleteProductOrder);
+        get(Endpoints.SELECT_ORDER_EMAIL.getPath(), orderController.selectOrderEmailAddress);
+        post(Endpoints.ORDER_EMAIL.getPath(), orderController.generateOrderEmail);
 
-        get(Path.Web.PRODUCERS, producerController.serveAllProducersPage);
-        get(Path.Web.PRODUCER, producerController.serveProducerPage);
-        post(Path.Web.PRODUCER, producerController.serveUpdateProducerPage);
-        get(Path.Web.PRODUCER_DELETE, producerController.serveDeleteProducerPage);
-        post(Path.Web.PRODUCER_DELETE, producerController.deleteProducer);
+        get(Endpoints.PRODUCERS.getPath(), producerController.serveAllProducersPage);
+        get(Endpoints.PRODUCER_SELECT_UPDATE.getPath(), producerController.serveProducerPage);
+        post(Endpoints.PRODUCER_UPDATE.getPath(), producerController.serveUpdateProducerPage);
+        get(Endpoints.PRODUCER_SELECT_DELETE.getPath(), producerController.serveDeleteProducerPage);
+        post(Endpoints.PRODUCER_DELETE.getPath(), producerController.deleteProducer);
 
-        get(Path.Web.MARKETS, marketController.serveAllMarketsPage);
+        get(Endpoints.MARKETS.getPath(), marketController.serveAllMarketsPage);
 
-        get(Path.Web.PRODUCTCONTAINERS, containerController.serveAllProductContainersPage);
-        get(Path.Web.PRODUCTCONTAINER, containerController.serveProductContainerPage);
-        post(Path.Web.PRODUCTCONTAINER, containerController.serveUpdateProductContainerPage);
-        get(Path.Web.PRODUCTCONTAINER_DELETE, containerController.serveDeleteProductContainerPage);
-        post(Path.Web.PRODUCTCONTAINER_DELETE, containerController.deleteProductContainer);
+        get(Endpoints.PRODUCTCONTAINERS.getPath(), containerController.serveAllProductContainersPage);
+        get(Endpoints.PRODUCTCONTAINER_SELECT_UPDATE.getPath(), containerController.serveProductContainerPage);
+        post(Endpoints.PRODUCTCONTAINER_UPDATE.getPath(), containerController.serveUpdateProductContainerPage);
+        get(Endpoints.PRODUCTCONTAINER_SELECT_DELETE.getPath(), containerController.serveDeleteProductContainerPage);
+        post(Endpoints.PRODUCTCONTAINER_DELETE.getPath(), containerController.deleteProductContainer);
 
-        get(Path.Web.PRODUCTORIGINS, originController.serveAllProductOriginsPage);
-        get(Path.Web.PRODUCTORIGIN, originController.serveProductOriginPage);
-        post(Path.Web.PRODUCTORIGIN, originController.serveUpdateProductOriginPage);
+        get(Endpoints.PRODUCTORIGINS.getPath(), originController.serveAllProductOriginsPage);
+        get(Endpoints.PRODUCTORIGIN_SELECT_UPDATE.getPath(), originController.serveProductOriginPage);
+        post(Endpoints.PRODUCTORIGIN_UPDATE.getPath(), originController.serveUpdateProductOriginPage);
 
         get("*", indexController.serveNotFoundPage);
-
-        //after(Path.Web.SHOP_COMPLETE,  Filters.redirectToOrders);
     }
 
     private static boolean configurationFilesAndFoldersOk(MainConfiguration configuration)

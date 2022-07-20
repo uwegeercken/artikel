@@ -1,0 +1,7 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <p class="heading">${messages.get("PAGE_HEADING_NOT_AUTHORIZED")}</p>
+    <div id="title">
+    	<p>${messages.get("PAGE_NOT_AUTHORIZED_MESSAGE")}</p>
+    </div>
+#end

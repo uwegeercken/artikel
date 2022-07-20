@@ -68,6 +68,6 @@ public interface WebServiceInterface
     boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration);
 
     OpaValidationResult validateUser(OpaInput input);
-    int sendAcl();
-    int sendPolicies();
+    int sendAcl() throws Exception;
+    int sendPolicies() throws Exception;
 }

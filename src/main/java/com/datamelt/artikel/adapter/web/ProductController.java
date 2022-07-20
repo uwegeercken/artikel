@@ -9,6 +9,7 @@ import com.datamelt.artikel.adapter.web.form.FormValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
+import com.datamelt.artikel.app.web.util.Endpoints;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.*;
@@ -256,7 +257,7 @@ public class ProductController implements ProductApiInterface
             addProductOrder(order);
             orderCollection.remove(producerId);
 
-            response.redirect(Path.Web.ORDERS);
+            response.redirect(Endpoints.ORDERS.getPath());
             return null;
         }
         else

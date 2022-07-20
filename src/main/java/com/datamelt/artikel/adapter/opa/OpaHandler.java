@@ -25,8 +25,10 @@ public class OpaHandler implements OpaApiInterface
     private static final String ENDPOINT_POLICIES = "/v1/policies/artikel";
 
     private final WebTarget webTarget;
+    private final MainConfiguration configuration;
 
     public OpaHandler(MainConfiguration configuration) {
+        this.configuration = configuration;
         ClientConfig clientConfig = new ClientConfig()
                 .property(ClientProperties.READ_TIMEOUT, 30000)
                 .property(ClientProperties.CONNECT_TIMEOUT, 5000);
@@ -50,18 +52,31 @@ public class OpaHandler implements OpaApiInterface
         }
         catch (Exception ex)
         {
-            logger.error("error creating json from acl object");
+            logger.error("error creating json from opa input object");
         }
 
-        return webTarget
-            .path(ENDPOINT_VALIDATE)
-            .request()
-            .post(Entity.json(json))
-            .readEntity(OpaValidationResult.class);
+        OpaValidationResult opaValidationResult = null;
+        String result = null;
+        try
+        {
+            result = webTarget
+                .path(ENDPOINT_VALIDATE)
+                .request()
+                .post(Entity.json(json))
+                .readEntity(String.class);
+
+            opaValidationResult = mapper.readValue(result, OpaValidationResult.class);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error opa validation for given input [{}]", input);
+        }
+
+        return opaValidationResult;
     }
 
     @Override
-    public int sendAcl(OpaAcl acl)
+    public int sendAcl(OpaAcl acl) throws Exception
     {
         ObjectMapper mapper = new JsonMapper();
         String json = null;
@@ -71,24 +86,41 @@ public class OpaHandler implements OpaApiInterface
         }
         catch (Exception ex)
         {
-            logger.error("error creating json from acl object");
+            logger.error("error creating json from opa acl object");
         }
 
-        return webTarget
-                .path(ENDPOINT_ACL)
-                .request()
-                .put(Entity.json(json))
-                .getStatus();
+        int status = 0;
+        try
+        {
+            status = webTarget
+                    .path(ENDPOINT_ACL)
+                    .request()
+                    .put(Entity.json(json))
+                    .getStatus();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("error sending acl to opa host: " + configuration.getOpa().getHost()) ;
+        }
+        return status;
     }
 
     @Override
-    public int sendPolicies(String rego)
+    public int sendPolicies(String rego) throws Exception
     {
-        return webTarget
+        int status = 0;
+        try
+        {
+            status = webTarget
                 .path(ENDPOINT_POLICIES)
                 .request()
                 .put(Entity.json(rego))
                 .getStatus();
-
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("error sending policies to opa host: " + configuration.getOpa().getHost()) ;
+        }
+        return status;
     }
 }

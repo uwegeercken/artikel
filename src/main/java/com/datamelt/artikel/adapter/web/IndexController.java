@@ -43,6 +43,12 @@ public class IndexController implements IndexApiInterface
         return ViewUtility.render(request,model,Path.Template.NOTFOUND);
     };
 
+    public Route serveNotAuthorizedPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        response.status(HttpStatus.METHOD_NOT_ALLOWED_405);
+        return ViewUtility.render(request,model,Path.Template.NOTAUTHORIZED);
+    };
+
 
     @Override
     public long getAllProductsCount() throws Exception

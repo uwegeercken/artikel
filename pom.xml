@@ -129,6 +129,11 @@
             <artifactId>jersey-media-moxy</artifactId>
             <version>3.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>3.0.3</version>
+        </dependency>
     </dependencies>
     <distributionManagement>
         <repository>

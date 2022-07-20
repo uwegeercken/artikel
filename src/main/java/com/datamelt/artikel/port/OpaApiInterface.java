@@ -7,6 +7,6 @@ import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 public interface OpaApiInterface
 {
     OpaValidationResult validateUser(OpaInput input);
-    int sendAcl(OpaAcl acl);
-    int sendPolicies(String rego);
+    int sendAcl(OpaAcl acl) throws Exception;
+    int sendPolicies(String rego) throws Exception;
 }
