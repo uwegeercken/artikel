@@ -95,7 +95,7 @@ Make sure the Open Policy Agent server is running. Then, provide the path and na
 
     java -jar artikel.jar config.yaml
 
-Note: On first run, the database and an administrative user will be created in the database. The administrator name and password is output to the log. Make sure you immediately change the password after you logged in. 
+Note: On first run, the database and an administrative user will be created in the database. The administrator name and password is output to the log. Make sure you change the password after you logged in. 
 
 ## CSV Loader
 ### Loading CSV Data from files

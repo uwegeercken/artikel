@@ -92,7 +92,7 @@ public class SqliteTable
                 "FOREIGN KEY(\"role\") REFERENCES \"user_role\"(\"role\")" +
                 ")";
 
-    private static final String CREATE_USER_ADMIN = "insert into user (name, full_name, password, type) values (?,?,?,?)";
+    private static final String CREATE_USER_ADMIN = "insert into user (name, full_name, password, role) values (?,?,?,?)";
 
     public static void createTables(Connection connection) throws Exception
     {
