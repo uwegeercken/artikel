@@ -36,7 +36,7 @@ public class Filters
                     OpaValidationResult userHasAccess = handler.validateUser(opaInput);
                     if (!userHasAccess.getResult())
                     {
-                        response.redirect(Endpoints.NOTAUTHORIZED.getPath()); //TODO Correct page
+                        response.redirect(Endpoints.NOTAUTHORIZED.getPath());
                     }
                 }
                 catch(SecurityException ex)
