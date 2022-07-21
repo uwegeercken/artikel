@@ -189,7 +189,6 @@
                                 <resource>
                                     <directory>config</directory>
                                     <includes>
-                                        <include>config.yaml</include>
                                         <include>etiketten-01.glabels</include>
                                         <include>asciidoc-theme-1.yml</include>
                                         <include>email_template_01.vm</include>
@@ -200,7 +199,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>copy-runscript</id>
+                        <id>copy-runscript-and-config</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -211,6 +210,7 @@
                                 <resource>
                                     <directory>config</directory>
                                     <includes>
+                                        <include>config.yaml</include>
                                         <include>run-artikel-app.sh</include>
                                     </includes>
                                 </resource>

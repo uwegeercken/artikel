@@ -6,11 +6,11 @@
 # replace the <version> tag below with the version you have.
 #
 #
-# Note: Make sure you have the Open Policy Agent server running, before you start the artikel application.
+# Note: Make sure you have the Open Policy Agent server running, before you start the application.
 #
 
 baseFolder=/opt/artikel
-applicationFolder=${baseFolder}/artikel<version>
+applicationFolder=${baseFolder}/artikel-<version>
 
-java -jar ${applicationFolder}/artikel.jar ${baseFolder}/config/config.yaml
+java -jar ${applicationFolder}/artikel.jar ${baseFolder}/config.yaml
 
