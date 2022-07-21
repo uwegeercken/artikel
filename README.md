@@ -38,11 +38,13 @@ To produce a PDF file for an order AsciiDoc is used. Asciidoc files are read fro
 
     order_<producer id>.adoc
 
-Although the filename ends with ".adoc", the file is first parsed using Apache Velocity and the products of the relevant order are inserted and then the PDF file is generated using Asciidoc. Additionally an Asciidoc theme file is used, where the formatting of orders can be adjusted to individual needs. The filename of the theme is:
+Although the filename ends with ".adoc", the file is first parsed using Apache Velocity and the products of the relevant order are inserted and then the PDF file is generated using Asciidoc. The example in the config folder can be used as a blueprint. 
+
+Additionally an Asciidoc theme file is used, where the formatting of orders can be adjusted to individual needs. The filename of the theme is:
 
     asciidoc-theme-1.yml
 
-Product orders can be sent by email. The email body can be configured in a template.
+Product orders can be sent by email. The email body can be configured in the template: email_template_01.vm.
 
 ### Configuration file content:
 
@@ -122,4 +124,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-07-20
+Copyright Uwe Geercken, 2022. Last update: 2022-07-21
