@@ -17,7 +17,7 @@ The Web application allows for the maintenance of products, producers, markets, 
 - order products using a shop approach
 - a CSV loader to load data into the database
 - using glabels (on Linux) to generate product labels
-- Asciidoc for order dokuments in PDF format
+- Asciidoc for order dokcments in PDF format
 - Emailing order documents
 
 ## Web Application

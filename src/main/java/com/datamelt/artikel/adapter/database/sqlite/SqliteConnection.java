@@ -2,6 +2,7 @@ package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.config.DatabaseConfiguration;
+import com.datamelt.artikel.model.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,9 @@ class SqliteConnection
         {
             logger.warn("database not found - creating database and table structure: [{}]", configuration.getName());
             SqliteTable.createTables(connection);
+            SqliteTable.createUserRole(connection, UserRole.READ_ONLY.getRole());
+            SqliteTable.createUserRole(connection, UserRole.READ_WRITE.getRole());
+            SqliteTable.createUserRole(connection, UserRole.ADMIN.getRole());
             SqliteTable.createAdminUser(connection);
         }
         return connection;

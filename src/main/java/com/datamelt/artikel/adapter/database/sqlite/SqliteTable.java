@@ -92,7 +92,8 @@ public class SqliteTable
                 "FOREIGN KEY(\"role\") REFERENCES \"user_role\"(\"role\")" +
                 ")";
 
-    private static final String CREATE_USER_ADMIN = "insert into user (name, full_name, password, role) values (?,?,?,?)";
+    private static final String CREATE_USER = "insert into user (name, full_name, password, role) values (?,?,?,?)";
+    private static final String CREATE_USERROLE = "insert into user_role (role) values (?)";
 
     public static void createTables(Connection connection) throws Exception
     {
@@ -125,7 +126,7 @@ public class SqliteTable
         logger.info("administrative user password [{}]", password);
         try
         {
-            PreparedStatement statement = connection.prepareStatement(CREATE_USER_ADMIN);
+            PreparedStatement statement = connection.prepareStatement(CREATE_USER);
             statement.setString(1, "admin");
             statement.setString(2, "Administrator");
             statement.setString(3, hash);
@@ -136,6 +137,22 @@ public class SqliteTable
         catch(Exception ex)
         {
             logger.error("error creating admin user [{}]", ex.getMessage());
+        }
+    }
+
+    public static void createUserRole(Connection connection, String role)
+    {
+        logger.info("creating user role [{}]", role);
+        try
+        {
+            PreparedStatement statement = connection.prepareStatement(CREATE_USERROLE);
+            statement.setString(1, role);
+            statement.executeUpdate();
+            statement.clearParameters();
+        }
+        catch(Exception ex)
+        {
+            logger.error("error creating user role [{}]", ex.getMessage());
         }
     }
 }
