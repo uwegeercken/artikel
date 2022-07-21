@@ -34,7 +34,7 @@ public class HashGenerator
         return hash.toString();
     }
 
-    public static String generatePassword()
+    public static String generateRandomPassword()
     {
         SecureRandom random = new SecureRandom();
         final String CHAR_LOWERCASE = "aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ0123456789-_+#!=";

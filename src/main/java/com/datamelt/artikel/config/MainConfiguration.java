@@ -1,5 +1,9 @@
 package com.datamelt.artikel.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Optional;
+
 public class MainConfiguration
 {
     private DatabaseConfiguration database;
@@ -15,10 +19,7 @@ public class MainConfiguration
         return database;
     }
 
-    public CsvInput getCsvInput()
-    {
-        return csvInput;
-    }
+    public CsvInput getCsvInput() { return csvInput; }
 
     public SparkJava getSparkJava() { return sparkJava; }
 

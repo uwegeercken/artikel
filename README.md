@@ -104,7 +104,7 @@ Note: On first run, the database and an administrative user will be created in t
 Load basic data from CSV files into the database.
 
 ### Configuration file content:
-The configuration yaml file needs to contain - additionally to the configuration from above - the path where the csv files are
+The configuration yaml file needs to contain - if you want to load data from csv files - the path where the csv files are
 located and a list of filenames for the different files:
 
     csvInput:

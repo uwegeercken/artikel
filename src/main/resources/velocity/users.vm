@@ -4,7 +4,7 @@
     <p class="heading">${messages.get("PAGETITLE_USERS_LIST")} ($users.size())</p>
     <p>
         <img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/user/0/"><img class="add_external" height="40px" width="40px" src="/img/producer_add.png" title="${messages.get("IMAGE_USER_ADD")}"></a>
+        <a href="/user/0/"><img class="add_external" height="40px" width="40px" src="/img/user_add.png" title="${messages.get("IMAGE_USER_ADD")}"></a>
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_USERS_LIST")}</p>
@@ -17,8 +17,8 @@
     </div>
     #foreach($user in $users)
         <div class="unit" tag="$!user.fullName.toLowerCase()">
-                #insert_admin_image("/user/${user.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_USER_EDIT')}")
-                #insert_admin_image("/user/delete/${user.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_USER_DELETE')}")
+                #insert_admin_image("/user/${user.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_USER_EDIT')}" "${tokenpayload.role}")
+                #insert_admin_image("/user/delete/${user.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_USER_DELETE')}" "${tokenpayload.role}")
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_USER")}</p>
                 <p class="big">$!user.name</a></p>

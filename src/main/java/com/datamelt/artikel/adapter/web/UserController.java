@@ -113,6 +113,7 @@ public class UserController implements UserApiInterface
             ValidatorResult result = checkPasswords(user.getPassword(), password, passwordNew , passwordNewRepeated);
             if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
+                user.setPassword(HashGenerator.generate(passwordNew));
                 updateUser(user);
             }
             model.put(Constants.MODEL_RESULT_KEY, result);

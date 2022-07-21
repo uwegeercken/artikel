@@ -30,17 +30,23 @@ public class CsvLoaderApplication
         logger.info("start loading CSV data");
 
         LoaderService service = new LoaderService(new SqliteRepository(configuration.getDatabase()));
-        CsvLoader loader = new CsvLoader(service, configuration.getCsvInput());
-        loader.processFile(CsvFileType.CONTAINER);
-        loader.processFile(CsvFileType.PRODUCER);
-        loader.processFile(CsvFileType.PRODUCER);
-        loader.processFile(CsvFileType.MARKET);
-        loader.processFile(CsvFileType.ORIGIN);
-        loader.processFile(CsvFileType.PRODUCT);
-        loader.processFile(CsvFileType.ORDER);
-        loader.processFile(CsvFileType.ORDERITEMS);
-        loader.processFile(CsvFileType.USER);
-
-        logger.info("loading of CSV data complete ");
+        if(configuration.getCsvInput()!=null)
+        {
+            CsvLoader loader = new CsvLoader(service, configuration.getCsvInput());
+            loader.processFile(CsvFileType.CONTAINER);
+            loader.processFile(CsvFileType.PRODUCER);
+            loader.processFile(CsvFileType.PRODUCER);
+            loader.processFile(CsvFileType.MARKET);
+            loader.processFile(CsvFileType.ORIGIN);
+            loader.processFile(CsvFileType.PRODUCT);
+            loader.processFile(CsvFileType.ORDER);
+            loader.processFile(CsvFileType.ORDERITEMS);
+            loader.processFile(CsvFileType.USER);
+        }
+        else
+        {
+            logger.error("no csvInput configuration specified for csv loader");
+        }
+        logger.info("loading of CSV data complete");
     }
 }

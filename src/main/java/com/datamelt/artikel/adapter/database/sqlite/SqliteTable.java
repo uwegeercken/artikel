@@ -120,7 +120,7 @@ public class SqliteTable
     public static void createAdminUser(Connection connection)
     {
         logger.info("creating user [admin]");
-        String password = HashGenerator.generatePassword();
+        String password = HashGenerator.generateRandomPassword();
         String hash = HashGenerator.generate(password);
         logger.info("administrative user [{}]", "admin");
         logger.info("administrative user password [{}]", password);
