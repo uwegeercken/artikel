@@ -22,7 +22,11 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 ## Web Application
 ### Preparations for the Web application:
-- run mvn clean install to generate the application jar file. dependencies will be in the generated "lib" folder
+- to generate the application jar file - with dependencies in the generated "lib" folder - run:
+
+
+    mvn clean install
+
 - provide a yaml file with the configuration (see required attributes below). Samples for all configuration files are in the config folder.
 
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
@@ -80,7 +84,7 @@ Product orders can be sent by email. The email body can be configured in the tem
 Users are categorized into three different roles:
 - Read User: This user has read access and cannot modify any data
 - Read and Write User: This user has read access and can execute create, update and delete operations. Additionally access to the shop, email and labels functionality is available.
-- Admin User: This user has access to special functionality, such as user management.
+- Admin User: This user has all privileges of the read/write user plus access to special functionality, such as user management.
 
 Note: Access to the home page and the about page is available to anyone.
 
@@ -101,7 +105,7 @@ Note: On first run, the database and an administrative user will be created in t
 
 ## CSV Loader
 ### Loading CSV Data from files
-Load basic data from CSV files into the database.
+Load basic data from CSV files into the database. There are sample files available in this repository.
 
 ### Configuration file content:
 The configuration yaml file needs to contain - if you want to load data from csv files - the path where the csv files are
@@ -124,4 +128,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-07-21
+Copyright Uwe Geercken, 2022. Last update: 2022-07-31
