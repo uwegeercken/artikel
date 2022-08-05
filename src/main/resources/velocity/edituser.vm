@@ -32,6 +32,14 @@
             </td>
 
         </tr>
+        #if($!{form.id}==0)
+            <tr>
+                <td>${messages.get("FORM_FIELD_PASSWORD")}:</td>
+                <td>
+                    <input name="$fields.valueOf("PASSWORD")" type="password" size="40" maxlength="80" value="">
+                </td>
+            </tr>
+        #end
         <tr>
             <td>${messages.get("FORM_FIELD_USER_ROLE")}:</td>
             <td>

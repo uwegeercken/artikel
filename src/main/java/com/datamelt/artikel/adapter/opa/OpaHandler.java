@@ -3,7 +3,6 @@ package com.datamelt.artikel.adapter.opa;
 import com.datamelt.artikel.adapter.opa.model.OpaAcl;
 import com.datamelt.artikel.adapter.opa.model.OpaInput;
 import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
-import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.port.OpaApiInterface;
 import com.fasterxml.jackson.databind.ObjectMapper;

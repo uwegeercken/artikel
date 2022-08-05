@@ -6,6 +6,7 @@ import com.datamelt.artikel.adapter.opa.model.OpaInput;
 import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.adapter.web.form.*;
 import com.datamelt.artikel.app.web.util.Endpoints;
+import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
@@ -35,10 +36,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         this.opaClient = opaClient;
 
         int sendAclStatus = sendAcl();
-        logger.info("sent acl to open policy agent. status code [{}]", sendAclStatus);
-
         int sendPoliciesStatus =  sendPolicies();
-        logger.info("sent policies to open policy agent. status code [{}]", sendPoliciesStatus);
     }
 
     @Override
@@ -165,6 +163,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         User user = new User(form.get(FormField.NAME));
         user.setFullName(form.get(FormField.FULL_NAME));
         user.setRole(form.get(FormField.USER_ROLE));
+        user.setPassword(HashGenerator.generate(form.get(FormField.PASSWORD)));
         try
         {
             logger.debug("adding user - name: [{}]", user.getName());
@@ -375,6 +374,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         }
 
         int status = opaClient.sendAcl(acl);
+        logger.info("sent acl to open policy agent. status code [{}]", status);
         return status;
     }
 
@@ -388,6 +388,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
             InputStream ioStream = this.getClass().getClassLoader().getResourceAsStream(Constants.REGO_FILENAME);
             rego = new String(ioStream.readAllBytes());
             status = opaClient.sendPolicies(rego);
+            logger.info("sent policies to open policy agent. status code [{}]", status);
         }
         catch (Exception ex)
         {

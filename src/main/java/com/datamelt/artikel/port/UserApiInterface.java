@@ -15,4 +15,5 @@ public interface UserApiInterface
     void updateUser(long id, Form form) throws Exception;
     void addUser(Form form) throws Exception;
     boolean getIsUniqueUser(long id, String name) throws Exception;
+    int sendAcl() throws Exception;
 }

@@ -74,6 +74,7 @@ public class UserController implements UserApiInterface
             if(result.getResultType()== ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateUser(model, form);
+                sendAcl();
             }
             else
             {
@@ -223,5 +224,11 @@ public class UserController implements UserApiInterface
     public boolean getIsUniqueUser(long id, String name) throws Exception
     {
         return service.getIsUniqueUser(id, name);
+    }
+
+    @Override
+    public int sendAcl() throws Exception
+    {
+        return service.sendAcl();
     }
 }
