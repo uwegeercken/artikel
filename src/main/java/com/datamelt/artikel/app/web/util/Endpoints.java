@@ -52,7 +52,7 @@ public enum Endpoints
     private final String role;
     private final String method;
 
-    private Endpoints(String path, String role, String method)
+    Endpoints(String path, String role, String method)
     {
         this.path = path;
         this.role = role;
