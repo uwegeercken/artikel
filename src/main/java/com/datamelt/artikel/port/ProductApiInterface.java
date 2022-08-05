@@ -17,7 +17,7 @@ public interface ProductApiInterface
     void deleteProduct(long id) throws Exception;
     void addProductOrder(ProductOrder order) throws Exception;
     Map<Long, ProductOrderItem> getShopProductOrderItems(ProductOrder order) throws Exception;
-
+    List<ProductOrder> getAllProductOrders() throws Exception;
     List<Producer> getAllProducers() throws Exception;
     List<ProductContainer> getAllProductContainers() throws Exception;
     List<ProductOrigin> getAllProductOrigins() throws Exception;

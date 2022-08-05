@@ -244,6 +244,8 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
+        Map<String, Object> model = new HashMap<>();
+
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
         ProductOrder order = orderCollection.get(producerId);
 
@@ -257,12 +259,12 @@ public class ProductController implements ProductApiInterface
             addProductOrder(order);
             orderCollection.remove(producerId);
 
-            response.redirect(Endpoints.ORDERS.getPath());
-            return null;
+
+            model.put(Constants.MODEL_ORDERS_KEY, getAllProductOrders());
+            return ViewUtility.render(request,model,Path.Template.ORDERS);
         }
         else
         {
-            Map<String, Object> model = new HashMap<>();
             model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("ERROR_NO_ORDER_DATE")));
             response.redirect("/shopproducts/producer/" + producerId + "/");
             return null;
@@ -405,6 +407,12 @@ public class ProductController implements ProductApiInterface
     public List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception
     {
         return service.getAllProducts(producerId, availableOnly);
+    }
+
+    @Override
+    public List<ProductOrder> getAllProductOrders() throws Exception
+    {
+        return service.getAllProductOrders();
     }
 
     @Override

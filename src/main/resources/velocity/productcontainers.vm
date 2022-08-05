@@ -14,8 +14,8 @@
     </div>
     #foreach($container in $containers)
         <div class="unit" tag="$!container.name.toLowerCase()">
-            #insert_readwrite_image("/productcontainer/delete/${container.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCTCONTAINER_DELETE')}")
-            #insert_readwrite_image("/productcontainer/${container.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCTCONTAINER_EDIT')}")
+            #insert_readwrite_image("/productcontainer/delete/${container.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCTCONTAINER_DELETE')}" "${tokenpayload.role}")
+            #insert_readwrite_image("/productcontainer/${container.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCTCONTAINER_EDIT')}" "${tokenpayload.role}")
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCTCONTAINER")}</p>
                 <p class="big">$!container.name</a></p>

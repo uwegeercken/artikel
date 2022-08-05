@@ -121,7 +121,7 @@ public class WebApplication
         get(Endpoints.SHOPPRODUCTS.getPath(), productController.serveShopProductsPage);
         get(Endpoints.PRODUCT_SHOP_AMOUNT.getPath(), productController.shopProductAmount);
         get(Endpoints.PRODUCT_SHOP_REMOVE.getPath(), productController.shopProductRemove);
-        post(Endpoints.SHOP_COMPLETE.getPath(), productController.shopProductComplete);
+        post(Endpoints.SHOP_SELECT_COMPLETE.getPath(), productController.shopProductComplete);
 
         get(Endpoints.ORDERS.getPath(), orderController.serveAllOrdersPage);
         get(Endpoints.ORDERITEMS.getPath(), orderController.serveOrderItemsPage);

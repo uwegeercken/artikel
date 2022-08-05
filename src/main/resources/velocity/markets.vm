@@ -15,8 +15,8 @@
     </div>
     #foreach($market in $markets)
         <div class="unit" tag="$!market.name.toLowerCase()">
-            #insert_readwrite_image("/market/delete/${market.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_MARKET_DELETE')}")
-            #insert_readwrite_image("/market/${market.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_MARKET_EDIT')}")
+            #insert_readwrite_image("/market/delete/${market.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_MARKET_DELETE')}" "${tokenpayload.role}")
+            #insert_readwrite_image("/market/${market.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_MARKET_EDIT')}" "${tokenpayload.role}")
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_MARKET")}</p>
                 <p class="big">$!market.name</a></p>
