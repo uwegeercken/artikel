@@ -54,7 +54,7 @@ public class WebApplication
             System.exit(1);
         }
 
-        if(configuration.getSparkJava().getPort()!=null)
+        if(configuration.getSparkJava().getPort()>0)
         {
             port(configuration.getSparkJava().getPort());
         }
