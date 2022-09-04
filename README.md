@@ -57,6 +57,7 @@ Product orders can be sent by email. The email body can be configured in the tem
       connection: jdbc:sqlite
       name: /home/tester/products.db
     sparkJava:
+      port: 4567
       staticfilesExpiretime: 60
       locale: de
       tempFolder: /tmp
@@ -128,4 +129,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-08-05
+Copyright Uwe Geercken, 2022. Last update: 2022-09-04
