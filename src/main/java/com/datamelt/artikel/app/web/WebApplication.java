@@ -54,6 +54,11 @@ public class WebApplication
             System.exit(1);
         }
 
+        if(configuration.getSparkJava().getPort()!=null)
+        {
+            port(configuration.getSparkJava().getPort());
+        }
+
         messages = new MessageBundle(configuration.getSparkJava().getLocale());
         numberFormatter = new NumberFormatter(configuration.getSparkJava().getLocale());
 

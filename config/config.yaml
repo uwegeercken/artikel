@@ -4,6 +4,7 @@ database:
   name: /home/user1/artikel/products-mogk.db
 
 sparkJava:
+  port: 4567
   staticfilesExpiretime: 10
   locale: de
   tempFolder: /tmp
