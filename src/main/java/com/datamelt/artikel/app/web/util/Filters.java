@@ -36,6 +36,7 @@ public class Filters
                     OpaValidationResult userHasAccess = handler.validateUser(opaInput);
                     if (!userHasAccess.getResult())
                     {
+                        logger.warn("unauthorized request [{}] to url [{}] by user [{}]  ",request.requestMethod().toLowerCase(), request.pathInfo(), token.getBody().get(Token.CLAIM_NAME));
                         response.redirect(Endpoints.NOTAUTHORIZED.getPath());
                     }
                 }

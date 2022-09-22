@@ -28,8 +28,8 @@ public class WebApplication
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
-    public static final String APPLCATION_VERSION = "v2.0";
-    public static final String APPLCATION_LAST_UPDATE = "05.08.2022";
+    public static final String APPLCATION_VERSION = "v2.1";
+    public static final String APPLCATION_LAST_UPDATE = "22.09.2022";
 
     private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
@@ -76,9 +76,10 @@ public class WebApplication
         }
 
         WebServiceInterface service = null;
+        OpaHandler opaHandler = new OpaHandler(configuration);
         try
         {
-            service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), new OpaHandler(configuration));
+            service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), opaHandler);
         }
         catch(Exception ex)
         {
@@ -86,7 +87,7 @@ public class WebApplication
             System.exit(1);
         }
 
-        Filters.setOpaHandler(new OpaHandler(configuration));
+        Filters.setOpaHandler(opaHandler);
 
         IndexController indexController = new IndexController(service);
         LoginController loginController = new LoginController(service, configuration);
@@ -119,7 +120,7 @@ public class WebApplication
         get(Endpoints.GENERATE_SHOP_LABELS.getPath(), productController.createShopLabels);
         get(Endpoints.PRODUCT_SELECT_UPDATE.getPath(), productController.serveProductPage);
         post(Endpoints.PRODUCT_UPDATE.getPath(), productController.serveUpdateProductPage);
-        get(Endpoints.PRODUCT_DELETE.getPath(), productController.serveDeleteProductPage);
+        get(Endpoints.PRODUCT_SELECT_DELETE.getPath(), productController.serveDeleteProductPage);
         post(Endpoints.PRODUCT_DELETE.getPath(), productController.deleteProduct);
         get(Endpoints.PRODUCT_SHOP.getPath(), productController.shopProduct);
         get(Endpoints.PRODUCT_SHOP_LABELS.getPath(), productController.shopProductLabels);

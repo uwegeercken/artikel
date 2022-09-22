@@ -41,9 +41,9 @@
             #insert_readwrite_image("/product/delete/${product.id}/producer/${product.producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCT_DELETE')}" "${tokenpayload.role}")
             #insert_readwrite_image("/product/${product.id}/producer/${product.producer.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCT_EDIT')}" "${tokenpayload.role}")
             #if($product.producer.noOrdering==1 && $product.unavailable==0)
-                <a href="/product/labels/${product.id}/producer/${product.producer.id}/"><img class="shop" height="32px" width="32px" src="/img/checkmark_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT_FOR_LABEL")}"></a>
+                <a href="/product/labels/${product.id}/producer/${product.producer.id}/#${product.number}"><img class="shop" height="32px" width="32px" src="/img/checkmark_${amount}.png" title="${messages.get("PAGE_PRODUCTS_SHOP_PRODUCT_FOR_LABEL")}"></a>
             #end
-            <div class="grouptop">
+            <div class="grouptop" id="${product.number}">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>
                 <p class="small">$!{product.title}&nbsp;</p>
                 #if($product.unavailable==1)
@@ -59,7 +59,7 @@
             #if($product.producer.noOrdering==0)
                 #if($product.unavailable==0)
                 <div class="productamount">
-                    <form method="get" action="/product/shop/${product.id}/producer/${product.producer.id}/">
+                    <form method="get" action="/product/shop/${product.id}/producer/${product.producer.id}/#${product.number}">
                         #if(${amount}>0)
                             <input name="productamount" type="text" size="2" maxlength="2" value="${amount}">
                         #else

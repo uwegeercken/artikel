@@ -14,15 +14,19 @@ import java.util.Date;
 
 public class Token
 {
+    public static final String CLAIM_ROLE = "role";
+    public static final String CLAIM_NAME = "name";
+    public static final String CLAIM_ID = "id";
+
     public static String generateToken(User user, long tokenExpiresMinutes)
     {
        Instant now = Instant.now();
 
        return Jwts.builder()
                .setSubject(user.getName())
-               .claim("role", user.getRole())
-               .claim("name", user.getName())
-               .claim("id", user.getId())
+               .claim(CLAIM_ROLE, user.getRole())
+               .claim(CLAIM_NAME, user.getName())
+               .claim(CLAIM_ID, user.getId())
                .setIssuer(Constants.USERTOKEN_ISSUER)
                .setIssuedAt(Date.from(now))
                .setExpiration(Date.from(now.plus(tokenExpiresMinutes, ChronoUnit.MINUTES)))
