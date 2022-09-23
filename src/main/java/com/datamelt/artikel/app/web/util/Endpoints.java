@@ -34,7 +34,7 @@ public enum Endpoints
     PRODUCTORIGIN_SELECT_UPDATE("/productorigin/:id/","readwrite", "get"),
     PRODUCTORIGIN_UPDATE("/productorigin/:id/","readwrite", "post"),
     PRODUCT_SHOP("/product/shop/:id/producer/:producerid/*" ,"readwrite", "get"),
-    PRODUCT_SHOP_LABELS("/product/labels/:id/producer/:producerid/" ,"readwrite", "get"),
+    PRODUCT_SHOP_LABELS("/product/labels/:id/producer/:producerid/" ,"readwrite", "post"),
     PRODUCT_SHOP_AMOUNT("/product/shop/amount/:id/producer/:producerid/" ,"readwrite", "get"),
     PRODUCT_SHOP_REMOVE("/product/shop/remove/:id/producer/:producerid/" ,"readwrite", "get"),
     SHOP_SELECT_COMPLETE("/shopcomplete/producer/:producerid/" ,"readwrite", "get"),

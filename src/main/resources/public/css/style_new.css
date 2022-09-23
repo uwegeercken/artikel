@@ -228,7 +228,27 @@ a {
 }
 
 .productamount {
-    margin-left: 265px;
+    position: absolute;
+    margin-top: 130px;
+    margin-left: 270px;
+}
+
+.productamountBox {
+    height: 32px;
+    width: 32px;
+    font: normal 14pt/1.4 verdana, sans-serif;
+}
+
+
+.productcheck {
+    position: absolute;
+    margin-top: 130px;
+    margin-left: 270px;
+}
+
+.productcheckBox {
+    height: 32px;
+    width: 32px;
 }
 
 img.delete {

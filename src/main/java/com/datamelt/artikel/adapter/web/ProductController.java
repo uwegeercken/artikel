@@ -120,7 +120,10 @@ public class ProductController implements ProductApiInterface
             item.setProduct(getProductById(productId));
             item.setAmount(value);
             ProductOrder newOrder = new ProductOrder(producerId);
-            newOrder.addOrderItem(item);
+            if(value>0)
+            {
+                newOrder.addOrderItem(item);
+            }
             newOrder.setProducer(producer);
             orderCollection.add(newOrder);
         }
@@ -129,14 +132,24 @@ public class ProductController implements ProductApiInterface
             if(order.get().getOrderItems().containsKey(productId))
             {
                 ProductOrderItem shopItem = order.get().getOrderItem(productId);
-                shopItem.setAmount(value);
+                if(value>0)
+                {
+                    shopItem.setAmount(value);
+                }
+                else
+                {
+                    order.get().removeOrderItem(shopItem);
+                }
             }
             else
             {
                 ProductOrderItem item = new ProductOrderItem();
                 item.setProduct(getProductById(productId));
                 item.setAmount(value);
-                order.get().addOrderItem(item);
+                if(value>0)
+                {
+                    order.get().addOrderItem(item);
+                }
             }
         }
         return ViewUtility.render(request,shopProductsLabelModel(producer),Path.Template.PRODUCTS);

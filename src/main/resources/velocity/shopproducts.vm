@@ -19,6 +19,13 @@
     #foreach($item in $productorderitems)
         <div class="unit" tag="$!item.product.number.toLowerCase() + $!item.product.name.toLowerCase()">
             #insert_readwrite_image("/product/shop/remove/${item.product.id}/producer/${producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_SHOP_PRODUCT_REMOVE')}")
+            #if(!$shoplabelsonly)
+                <div class="productamount">
+                    <form method="get" action="/product/shop/amount/${item.product.id}/producer/${item.product.producer.id}/">
+                        <input class="productamountBox" name="productamount" type="text" size="2" maxlength="2" value="${item.amount}">
+                    </form>
+                </div>
+            #end
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_PRODUCT")} #$!item.product.number - $!item.product.producer.name </p>
                 <p class="small">$!{item.product.title}&nbsp;</p>
@@ -28,13 +35,7 @@
                 <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{item.product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertToLocale($!{item.product.weight}) kg #if($!{item.product.container.id}!=1)- ${messages.get("FORM_FIELD_CONTAINER")}: $!{item.product.container.name}#end</p>
                 <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $numberFormatter.convertToLocale($!{item.product.price})</p>
             </div>
-            #if(!$shoplabelsonly)
-            <div class="productamount">
-                <form method="get" action="/product/shop/amount/${item.product.id}/producer/${item.product.producer.id}/">
-                    <input name="productamount" type="text" size="2" maxlength="2" value="${item.amount}">
-                </form>
-            </div>
-            #end
+
         </div>
     #end
     </br>
