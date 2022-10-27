@@ -21,9 +21,7 @@
             #insert_readwrite_image("/product/shop/remove/${item.product.id}/producer/${producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_SHOP_PRODUCT_REMOVE')}")
             #if(!$shoplabelsonly)
                 <div class="productamount">
-                    <form method="get" action="/product/shop/amount/${item.product.id}/producer/${item.product.producer.id}/">
-                        <input class="productamountBox" name="productamount" type="text" size="2" maxlength="2" value="${item.amount}">
-                    </form>
+                        <input class="productamountBox" name="productamount" type="text" size="2" maxlength="2" value="${item.amount}" readonly>
                 </div>
             #end
             <div class="grouptop">

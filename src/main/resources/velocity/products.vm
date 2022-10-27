@@ -1,13 +1,27 @@
 #parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
+    #if($producer.noOrdering==0)
+        <form method="post" action="/shopproducts/producer/${producer.id}/">
+    #else
+        <form method="post" action="/productlabels/producer/${producer.id}/">
+    #end
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_LIST")} - ${producer.name} ($products.size())</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/product/0/producer/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
+        <a href="/product/producer/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
         <a href="/products/labels/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/labels.png" title="${messages.get("IMAGE_LABELS")}"></a>
 	    #set($productamount=0)
         #if($order && ${order.orderItems.size()}>5) #set($productamount=9999) #else #set($productamount=${order.orderItems.size()}) #end
-        <a href="/shopproducts/producer/${producer.id}/"><img width="40px" height="40px" src="/img/shopping_cart_${productamount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}"></a>
+        #if($producer.noOrdering==0)
+            <button type="submit" name="submit">
+                <img width="40px" height="40px" src="/img/shopping_cart_${productamount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}">
+            </button>
+        #else
+
+            <button type="submit" name="submit">
+                <img width="40px" height="40px" src="/img/labels.png" title="${messages.get("IMAGE_GENERATE_SHOP_LABELS")}">
+            </button>
+        #end
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_LIST")}</p>
@@ -34,32 +48,32 @@
            <p>#insert_message($result)</p>
         #end
     </div>
+
+
+
     #foreach($product in $products)
         #set($amount=0)
         #if($order && ${order.getOrderItem($product.id)}) #set($amount=${order.getOrderItem($product.id).amount}) #else #set($amount=0) #end
+
         <div class="unit" tag="$!product.number.toLowerCase() + $!product.name.toLowerCase()">
             #insert_readwrite_image("/product/delete/${product.id}/producer/${product.producer.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_PRODUCT_DELETE')}" "${tokenpayload.role}")
             #insert_readwrite_image("/product/${product.id}/producer/${product.producer.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCT_EDIT')}" "${tokenpayload.role}")
             #if($product.producer.noOrdering==1 && $product.unavailable==0)
                 <div class="productcheck">
-                    <form method="post" action="/product/labels/${product.id}/producer/${product.producer.id}/#${product.number}">
                         #if(${amount}>0)
-                            <input class="productcheckBox" type = "checkbox" onChange="this.form.submit()" checked>
+                            <input class="productcheckBox" name="productcheck-${product.id}" type="checkbox" checked>
                         #else
-                            <input class="productcheckBox" type = "checkbox" onChange="this.form.submit()">
+                            <input class="productcheckBox" name="productcheck-${product.id}" type="checkbox">
                         #end
-                    </form>
                 </div>
             #end
             #if($product.producer.noOrdering==0 && $product.unavailable==0)
                 <div class="productamount">
-                    <form method="get" action="/product/shop/${product.id}/producer/${product.producer.id}/#${product.number}">
                         #if(${amount}>0)
-                            <input class="productamountBox" name="productamount" type="text" size="2" maxlength="2" value="${amount}">
+                            <input class="productamountBox" name="productamount-${product.id}" type="text" size="2" maxlength="2" value="${amount}">
                         #else
-                            <input class="productamountBox" name="productamount" type="text" size="2" maxlength="2" value="">
+                            <input class="productamountBox" name="productamount-${product.id}" type="text" size="2" maxlength="2" value="">
                         #end
-                    </form>
                 </div>
             #end
             <div class="grouptop" id="${product.number}">
@@ -76,5 +90,7 @@
                 <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $numberFormatter.convertToLocale($!{product.price})</p>
             </div>
         </div>
-        #end
     #end
+#end
+
+

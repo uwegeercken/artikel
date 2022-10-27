@@ -401,6 +401,13 @@ td.big {
 	font: normal 24pt/1.6 verdana, sans-serif;
 }
 
+button {
+    border: none;
+    outline: none;
+    background: white;
+    cursor: pointer;
+}
+
 div.data {
 	position: absolute;
 	margin-top: 0px;

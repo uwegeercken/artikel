@@ -99,98 +99,111 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route shopProduct = (Request request, Response response) -> {
-        long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        int value=0;
-        try
+        Set<String> parameters = request.queryParams();
+        Map<Long, Integer> ids = new HashMap<>();
+        for(String parameter : parameters)
         {
-            value = Integer.parseInt(request.queryParams("productamount"));
+            if(parameter.startsWith("productamount-"))
+            {
+                String value = request.queryParamsValues(parameter)[0];
+                if(value!=null && !value.equals(""))
+                {
+                    String[] parts = parameter.split("-");
+                    ids.put(Long.parseLong(parts[1]), Integer.parseInt(value));
+                }
+            }
         }
-        catch(Exception ex)
-        {
-            logger.error("error parsing amount from value [{}]. productId [{}], producerId ", request.queryParams("productamount"), productId, producerId);
-        }
+
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
-        Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
-        if(!order.isPresent())
+        ProductOrder order = orderCollection.get(producerId);
+        if(order==null)
+        {
+            order = new ProductOrder(producerId);
+        }
+
+        order.setProducer(producer);
+        for(Map.Entry<Long,Integer> id : ids.entrySet())
         {
             ProductOrderItem item = new ProductOrderItem();
-            item.setProduct(getProductById(productId));
-            item.setAmount(value);
-            ProductOrder newOrder = new ProductOrder(producerId);
-            if(value>0)
+            item.setProduct(getProductById(id.getKey()));
+            if(id.getValue() > 0)
             {
-                newOrder.addOrderItem(item);
-            }
-            newOrder.setProducer(producer);
-            orderCollection.add(newOrder);
-        }
-        else
-        {
-            if(order.get().getOrderItems().containsKey(productId))
-            {
-                ProductOrderItem shopItem = order.get().getOrderItem(productId);
-                if(value>0)
-                {
-                    shopItem.setAmount(value);
-                }
-                else
-                {
-                    order.get().removeOrderItem(shopItem);
-                }
+                item.setAmount(id.getValue());
+                order.addOrderItem(item);
             }
             else
             {
-                ProductOrderItem item = new ProductOrderItem();
-                item.setProduct(getProductById(productId));
-                item.setAmount(value);
-                if(value>0)
-                {
-                    order.get().addOrderItem(item);
-                }
+                order.removeOrderItem(item);
             }
         }
-        return ViewUtility.render(request,shopProductsLabelModel(producer),Path.Template.PRODUCTS);
+        orderCollection.add(order);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(order));
+        model.put(Constants.MODEL_SHOPLABELSONLY_KEY, order.getShopLabelsOnly());
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
+        if(producer.getNoOrdering()==1)
+        {
+            return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS_NO_ORDERING);
+        }
+        else
+        {
+            return ViewUtility.render(request, model, Path.Template.SHOPPRODUCTS);
+        }
+
+        //return ViewUtility.render(request,shopProductsLabelModel(producer),Path.Template.PRODUCTS);
 
     };
 
     public Route shopProductLabels = (Request request, Response response) -> {
-        long productId = Long.parseLong(request.params(":id"));
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
-        Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
-        if(!order.isPresent())
+        Set<String> parameters = request.queryParams();
+        List<Long> ids = new ArrayList<>();
+        for(String parameter : parameters)
+        {
+            if(parameter.startsWith("productcheck-"))
+            {
+                String[] parts = parameter.split("-");
+                ids.add(Long.parseLong(parts[1]));
+            }
+        }
+
+        ProductOrder newOrder = new ProductOrder(producerId, true);
+        for(long id : ids)
         {
             ProductOrderItem item = new ProductOrderItem();
-            item.setProduct(getProductById(productId));
+            item.setProduct(getProductById(id));
             item.setAmount(1);
-            ProductOrder newOrder = new ProductOrder(producerId, true);
             newOrder.addOrderItem(item);
             newOrder.setProducer(producer);
-            orderCollection.add(newOrder);
+        }
+
+        byte[] pdfOutputFile = getLabelsOutputFile(producerId, newOrder);
+        if(pdfOutputFile!=null)
+        {
+            String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+            response.type(Constants.FILE_CONTENT_TYPE_PDF);
+            response.header(Constants.CONTENT_DISPOSITION_KEY, Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
+            response.raw().setContentLength(pdfOutputFile.length);
+            response.raw().getOutputStream().write(pdfOutputFile);
+            response.raw().getOutputStream().flush();
+            response.raw().getOutputStream().close();
+            return null;
         }
         else
         {
-            if(!order.get().getOrderItems().containsKey(productId))
-            {
-                ProductOrderItem item = new ProductOrderItem();
-                item.setProduct(getProductById(productId));
-                item.setAmount(1);
-                order.get().addOrderItem(item);
-            }
-            else
-            {
-                ProductOrderItem item = new ProductOrderItem();
-                item.setProduct(getProductById(productId));
-                order.get().removeOrderItem(item);
-            }
+            Map<String, Object> model = new HashMap<>();
+            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_CREATING_LABELS")));
+            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(newOrder));
+            model.put(Constants.MODEL_SHOPLABELSONLY_KEY, newOrder.getShopLabelsOnly());
+            model.put(Constants.MODEL_PRODUCER_KEY, producer);
+            return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
         }
-        return ViewUtility.render(request, shopProductsLabelModel(producer), Path.Template.PRODUCTS);
-
     };
 
     private Map<String, Object> shopProductsLabelModel(Producer producer)
@@ -323,6 +336,7 @@ public class ProductController implements ProductApiInterface
         return response.raw();
     };
 
+
     public Route createShopLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
@@ -353,6 +367,7 @@ public class ProductController implements ProductApiInterface
         }
     };
 
+
     public Route serveUpdateProductPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
@@ -368,7 +383,7 @@ public class ProductController implements ProductApiInterface
             model.put(Constants.MODEL_CONTAINERS_KEY, getAllProductContainers());
             model.put(Constants.MODEL_ORIGINS_KEY, getAllProductOrigins());
 
-            boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
+            /*boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
             ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProduct, WebApplication.getNumberFormatter());
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
@@ -378,6 +393,8 @@ public class ProductController implements ProductApiInterface
             {
                 model.put(Constants.MODEL_RESULT_KEY, result);
             }
+            */
+
             return ViewUtility.render(request,model,Path.Template.PRODUCT);
         }
         else
