@@ -111,8 +111,17 @@ public class ProductController implements ProductApiInterface
                 String value = request.queryParamsValues(parameter)[0];
                 if(value!=null && !value.equals(""))
                 {
+                    int integerValue;
                     String[] parts = parameter.split("-");
-                    ids.put(Long.parseLong(parts[1]), Integer.parseInt(value));
+                    try
+                    {
+                        integerValue = Integer.parseInt(value);
+                    }
+                    catch (Exception ex)
+                    {
+                        integerValue = 0;
+                    }
+                    ids.put(Long.parseLong(parts[1]), integerValue);
                 }
             }
         }

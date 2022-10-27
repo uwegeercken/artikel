@@ -14,7 +14,7 @@
         #if($order && ${order.orderItems.size()}>5) #set($productamount=9999) #else #set($productamount=${order.orderItems.size()}) #end
         #if($producer.noOrdering==0)
             <button type="submit" name="submit">
-                <img width="40px" height="40px" src="/img/shopping_cart_${productamount}.png" title="${messages.get("IMAGE_SHOPPING_CART")}">
+                <img width="40px" height="40px" src="/img/shopping_cart_0.png" title="${messages.get("IMAGE_SHOPPING_CART")}">
             </button>
         #else
 
