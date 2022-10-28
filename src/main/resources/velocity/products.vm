@@ -49,8 +49,6 @@
         #end
     </div>
 
-
-
     #foreach($product in $products)
         #set($amount=0)
         #if($order && ${order.getOrderItem($product.id)}) #set($amount=${order.getOrderItem($product.id).amount}) #else #set($amount=0) #end

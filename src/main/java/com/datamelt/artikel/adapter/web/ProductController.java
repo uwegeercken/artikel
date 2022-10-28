@@ -133,7 +133,6 @@ public class ProductController implements ProductApiInterface
             order = new ProductOrder(producerId);
         }
 
-        order.setProducer(producer);
         for(Map.Entry<Long,Integer> id : ids.entrySet())
         {
             ProductOrderItem item = new ProductOrderItem();
@@ -182,17 +181,22 @@ public class ProductController implements ProductApiInterface
             }
         }
 
-        ProductOrder newOrder = new ProductOrder(producerId, true);
+        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrder order = orderCollection.get(producerId);
+        if(order==null)
+        {
+            order = new ProductOrder(producerId, true);
+        }
         for(long id : ids)
         {
             ProductOrderItem item = new ProductOrderItem();
             item.setProduct(getProductById(id));
             item.setAmount(1);
-            newOrder.addOrderItem(item);
-            newOrder.setProducer(producer);
+            order.addOrderItem(item);
+            order.setProducer(producer);
         }
 
-        byte[] pdfOutputFile = getLabelsOutputFile(producerId, newOrder);
+        byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
         if(pdfOutputFile!=null)
         {
             String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
@@ -208,8 +212,8 @@ public class ProductController implements ProductApiInterface
         {
             Map<String, Object> model = new HashMap<>();
             model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("ERROR_CREATING_LABELS")));
-            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(newOrder));
-            model.put(Constants.MODEL_SHOPLABELSONLY_KEY, newOrder.getShopLabelsOnly());
+            model.put(Constants.MODEL_PRODUCTORDERITEMS_KEY, getShopProductOrderItems(order));
+            model.put(Constants.MODEL_SHOPLABELSONLY_KEY, order.getShopLabelsOnly());
             model.put(Constants.MODEL_PRODUCER_KEY, producer);
             return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS);
         }
@@ -243,7 +247,7 @@ public class ProductController implements ProductApiInterface
         }
         catch(Exception ex)
         {
-            logger.error("error parsing amount from value [{}]. productId [{}], producerId ", request.queryParams("productamount"), productId, producerId);
+            logger.error("error parsing amount from value [{}]. productId [{}], producerId [{}]", request.queryParams("productamount"), productId, producerId);
         }
 
         ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
@@ -392,7 +396,7 @@ public class ProductController implements ProductApiInterface
             model.put(Constants.MODEL_CONTAINERS_KEY, getAllProductContainers());
             model.put(Constants.MODEL_ORIGINS_KEY, getAllProductOrigins());
 
-            /*boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
+            boolean isUniqueProduct = getIsUniqueProduct(Long.parseLong(form.get(FormField.ID)),form.get(FormField.NUMBER));
             ValidatorResult result = FormValidator.validate(form, WebApplication.getMessages(), isUniqueProduct, WebApplication.getNumberFormatter());
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
@@ -402,7 +406,6 @@ public class ProductController implements ProductApiInterface
             {
                 model.put(Constants.MODEL_RESULT_KEY, result);
             }
-            */
 
             return ViewUtility.render(request,model,Path.Template.PRODUCT);
         }
