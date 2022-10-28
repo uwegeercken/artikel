@@ -19,7 +19,7 @@
         #else
 
             <button type="submit" name="submit">
-                <img width="40px" height="40px" src="/img/labels.png" title="${messages.get("IMAGE_GENERATE_SHOP_LABELS")}">
+                <img width="40px" height="40px" src="/img/labels_some.png" title="${messages.get("IMAGE_GENERATE_SHOP_LABELS")}">
             </button>
         #end
     </p>
