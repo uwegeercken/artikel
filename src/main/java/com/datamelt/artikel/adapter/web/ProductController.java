@@ -131,6 +131,7 @@ public class ProductController implements ProductApiInterface
         if(order==null)
         {
             order = new ProductOrder(producerId);
+            order.setProducer(producer);
         }
 
         for(Map.Entry<Long,Integer> id : ids.entrySet())
@@ -187,6 +188,7 @@ public class ProductController implements ProductApiInterface
         {
             order = new ProductOrder(producerId, true);
         }
+        order.setProducer(producer);
         for(long id : ids)
         {
             ProductOrderItem item = new ProductOrderItem();
