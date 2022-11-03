@@ -129,4 +129,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-09-22
+Copyright Uwe Geercken, 2022. Last update: 2022-11-03
