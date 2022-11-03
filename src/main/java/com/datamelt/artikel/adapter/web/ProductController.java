@@ -38,7 +38,7 @@ public class ProductController implements ProductApiInterface
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        return ViewUtility.render(request,shopProductsLabelModel(producer),Path.Template.PRODUCTS);
+        return ViewUtility.render(request, shopProductsLabelModel(producer), Path.Template.PRODUCTS);
     };
 
     public Route serveProductPage = (Request request, Response response) -> {

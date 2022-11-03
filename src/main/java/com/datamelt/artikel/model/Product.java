@@ -1,7 +1,12 @@
 package com.datamelt.artikel.model;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Product
 {
+    private static final long PRODUCT_CHANGED_MAX_TIME = 24*60*60*1000;
+
     private long id;
     private String number;
     private String name;
@@ -101,6 +106,20 @@ public class Product
     public void setTimestamp(long timestamp)
     {
         this.timestamp = timestamp;
+    }
+
+    public boolean recentlyChanged()
+    {
+        Date now = new Date();
+        Date lastChanged = new Date(timestamp);
+        if(now.getTime() - lastChanged.getTime() <= PRODUCT_CHANGED_MAX_TIME)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public String getTitle() { return title; }
