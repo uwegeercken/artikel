@@ -38,6 +38,7 @@ public class WebApplication
     public static void main(String[] args) throws Exception
     {
         logger.info("initializing web application");
+        logger.info("web application version [{}], last update [{}]", APPLCATION_VERSION, APPLCATION_LAST_UPDATE);
         MainConfiguration configuration=null;
         if(args!=null && args.length>0)
         {
