@@ -3,8 +3,11 @@ package com.datamelt.artikel.adapter.database.sqlite;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.config.DatabaseConfiguration;
 import com.datamelt.artikel.port.RepositoryInterface;
+import com.datamelt.artikel.util.Constants;
 
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -89,10 +92,39 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public void addProductHistory(Product product) throws Exception
+    {
+        ProductHistoryUpdate phu = new ProductHistoryUpdate(connection);
+        ProductHistory productHistory = new ProductHistory(product);
+        phu.addProductHistory(productHistory);
+    }
+
+    @Override
     public void updateProduct(Product product) throws Exception
     {
         ProductUpdate p = new ProductUpdate(connection);
         p.updateProduct(product);
+    }
+
+    @Override
+    public void updateProductHistory(Product product) throws Exception
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.DEFAULT_DATE_ONLY_FORMAT);
+        String todayDate = sdf.format(new Date());
+        boolean existHistory = ProductHistorySearch.getExistProductHistory(connection, product.getId(), todayDate);
+        ProductHistoryUpdate phu = new ProductHistoryUpdate(connection);
+        if(existHistory)
+        {
+            ProductHistory productHistory = ProductHistorySearch.getProductHistoryByProductId(connection, product.getId(), todayDate);
+            productHistory.setPrice(product.getPrice());
+            productHistory.setTimestamp(product.getTimestamp());
+            phu.updateProductHistory(productHistory);
+        }
+        else
+        {
+            ProductHistory productHistory = new ProductHistory(product);
+            phu.addProductHistory(productHistory);
+        }
     }
 
     @Override

@@ -20,6 +20,8 @@ public interface RepositoryInterface
 
     void addProduct(Product product);
     void updateProduct(Product product) throws Exception;
+    void addProductHistory(Product product) throws Exception;
+    void updateProductHistory(Product product) throws Exception;
     Product getProductById(long id) throws Exception;
     Product getProductByName(String name) throws Exception;
     Product getProductByNumber(String number) throws Exception;

@@ -45,7 +45,6 @@ class ProductUpdate
             resultset.close();
             statement.close();
 
-
         } catch (SQLException ex)
         {
             ex.printStackTrace();

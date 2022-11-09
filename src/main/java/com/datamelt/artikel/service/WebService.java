@@ -71,6 +71,16 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
 
             logger.error("error updating product: [{}]", ex.getMessage());
         }
+        try
+        {
+            logger.debug("updating product history - number: [{}]", product.getNumber());
+            repository.updateProductHistory(product);
+        }
+        catch (Exception ex)
+        {
+
+            logger.error("error updating product history: [{}]", ex.getMessage());
+        }
         return product;
     }
 
@@ -94,6 +104,16 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         catch (Exception ex)
         {
             logger.error("error adding product: [{}]", ex.getMessage());
+        }
+        try
+        {
+            logger.debug("adding product history - number: [{}]", product.getNumber());
+            repository.addProductHistory(product);
+        }
+        catch (Exception ex)
+        {
+
+            logger.error("error adding product history: [{}]", ex.getMessage());
         }
         return product;
     }

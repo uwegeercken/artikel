@@ -46,6 +46,14 @@ public class SqliteTable
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 
+    private static final String CREATE_TABLE_PRODUCT_HISTORY ="CREATE TABLE if not exists \"product_history\" (" +
+            "\"id\"INTEGER NOT NULL," +
+            "\"product_id\"INTEGER NOT NULL," +
+            "\"price\"NUMERIC NOT NULL DEFAULT 0," +
+            "\"timestamp\"INTEGER," +
+            "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
+            ")";
+
     private static final String CREATE_TABLE_PRODUCTCONTAINER = "CREATE TABLE if not exists \"productcontainer\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +
@@ -111,6 +119,8 @@ public class SqliteTable
         connection.createStatement().execute(CREATE_TABLE_PRODUCTORIGIN);
         logger.info("creating table [product]");
         connection.createStatement().execute(CREATE_TABLE_PRODUCT);
+        logger.info("creating table [product_history]");
+        connection.createStatement().execute(CREATE_TABLE_PRODUCT_HISTORY);
         logger.info("creating table [productorder]");
         connection.createStatement().execute(CREATE_TABLE_PRODUCTORDER);
         logger.info("creating table [productorder_item]");

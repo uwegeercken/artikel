@@ -58,7 +58,7 @@
             #insert_readwrite_image("/product/${product.id}/producer/${product.producer.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCT_EDIT')}" "${tokenpayload.role}")
             #if($product.producer.noOrdering==1 && $product.unavailable==0)
                 <div class="productcheck">
-                        #if(${amount}>0 || ${product.recentlyChanged()})
+                        #if(${product.recentlyChanged()})
                             <input class="productcheckBox" name="productcheck-${product.id}" type="checkbox" checked>
                         #else
                             <input class="productcheckBox" name="productcheck-${product.id}" type="checkbox">
