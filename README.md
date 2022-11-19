@@ -14,8 +14,8 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 ### Features:
 - add, update, delete products, markets, producers, orders and more
-- order products using a shop approach
-- a CSV loader to load data into the database
+- order products using a shop approach. history of orders.
+- CSV loader to load data into the database
 - using glabels (on Linux) to generate product labels
 - Asciidoc for order documents in PDF format
 - Emailing order documents
