@@ -5,6 +5,7 @@ public class Path
     public static class Template {
         public static final String INDEX = "/velocity/index.vm";
         public static final String ABOUT = "/velocity/about.vm";
+        public static final String DOCUMENTS = "/velocity/documents.vm";
         public static final String LOGIN = "/velocity/login.vm";
         public static final String USERS = "/velocity/users.vm";
         public static final String USER = "/velocity/edituser.vm";

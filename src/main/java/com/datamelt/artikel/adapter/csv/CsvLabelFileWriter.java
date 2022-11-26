@@ -1,6 +1,5 @@
 package com.datamelt.artikel.adapter.csv;
 
-import com.datamelt.artikel.config.LabelsConfiguration;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.ProductLabel;
 import com.datamelt.artikel.port.CsvWriterInterface;

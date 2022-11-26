@@ -4,6 +4,8 @@ public enum Endpoints
 {
     INDEX("/index/","read", "get"),
     ABOUT("/about/","read", "get"),
+    ALLDOCUMENTS("/alldocuments/*","read", "get"),
+    DOCUMENTS("/documents/*","read", "get"),
     LOGIN("/login/","read", "get"),
     AUTHENTICATE("/authenticate/","read", "post"),
     LOGOUT("/logout/","read", "get"),

@@ -90,7 +90,7 @@ public class WebApplication
 
         Filters.setOpaHandler(opaHandler);
 
-        IndexController indexController = new IndexController(service);
+        IndexController indexController = new IndexController(service, configuration);
         LoginController loginController = new LoginController(service, configuration);
         UserController userController = new UserController(service);
         ProductController productController = new ProductController(service);
@@ -105,6 +105,8 @@ public class WebApplication
 
         get(Endpoints.INDEX.getPath(), indexController.serveIndexPage);
         get(Endpoints.ABOUT.getPath(), indexController.serveAboutPage);
+        get(Endpoints.ALLDOCUMENTS.getPath(), indexController.serveDocumentsPage);
+        get(Endpoints.DOCUMENTS.getPath(), indexController.serveDocument);
         get(Endpoints.NOTAUTHORIZED.getPath(), indexController.serveNotAuthorizedPage);
         get(Endpoints.LOGIN.getPath(), loginController.serveLoginPage);
         get(Endpoints.LOGOUT.getPath(), loginController.logoutUser);

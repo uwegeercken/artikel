@@ -1,0 +1,13 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+    <p class="heading">${messages.get("PAGE_HEADIND_DOCUMENTS")}</p>
+    <p>${messages.get("PAGE_DOCUMENTS_INFO")}</p>
+    <ul>
+        #foreach($document in $documents)
+            <li><a href="/documents/$document">$document</a></li>
+        #end
+    </ul>
+
+    <br>
+#end

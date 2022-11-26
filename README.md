@@ -62,6 +62,7 @@ Product orders can be sent by email. The email body can be configured in the tem
       locale: de
       tempFolder: /tmp
       tokenExpiresMinutes: 10
+      documentsFolder: /home/tester/documents
     opa:
         host: http://localhost:8181
     labels:
@@ -129,4 +130,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-11-03
+Copyright Uwe Geercken, 2022. Last update: 2022-11-26

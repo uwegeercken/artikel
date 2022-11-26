@@ -9,6 +9,7 @@ sparkJava:
   locale: de
   tempFolder: /tmp
   tokenExpiresMinutes: 180
+  documentsFolder: /home/user1/artikel/documents
 
 opa:
   host: http://localhost:8181

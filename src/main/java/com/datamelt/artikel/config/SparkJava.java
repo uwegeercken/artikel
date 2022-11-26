@@ -9,6 +9,7 @@ public class SparkJava
     private String tempFolder;
     private int tokenExpiresMinutes;
     private int port;
+    private String documentsFolder;
 
     public long getStaticfilesExpiretime()
     {
@@ -22,6 +23,8 @@ public class SparkJava
     public int getTokenExpiresMinutes() { return tokenExpiresMinutes; }
 
     public int getPort() { return port; }
+
+    public String getDocumentsFolder() { return documentsFolder; }
 
     public boolean existTempFolder()
     {
