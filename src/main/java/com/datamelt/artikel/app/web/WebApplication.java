@@ -171,6 +171,12 @@ public class WebApplication
             allOk = false;
         }
 
+        boolean sparkDocumentsFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getSparkJava().getDocumentsFolder());
+        if(!sparkDocumentsFolderOk)
+        {
+            allOk = false;
+        }
+
         boolean glabelsFileOk = FileUtility.checkReadAccessFile(configuration.getLabels().getGlabelsFile());
         if(!glabelsFileOk)
         {
