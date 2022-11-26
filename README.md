@@ -10,14 +10,14 @@ The Web application allows for the maintenance of products, producers, markets, 
 - CSS and jQuery for frontend styling and functionality
 - Sqlite database for persistence (https://sqlite.org)
 - Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/)
-- Access to the application functionality is secured using Open Policy Agent
+- Access to the application functionality is controlled using Open Policy Agent
 
 ### Features:
 - add, update, delete products, markets, producers, orders and more
-- order products using a shop approach
-- a CSV loader to load data into the database
+- order products using a shop approach. history of orders.
+- CSV loader to load data into the database
 - using glabels (on Linux) to generate product labels
-- Asciidoc for order dokcments in PDF format
+- Asciidoc for order documents in PDF format
 - Emailing order documents
 
 ## Web Application
@@ -30,7 +30,7 @@ The Web application allows for the maintenance of products, producers, markets, 
 - provide a yaml file with the configuration (see required attributes below). Samples for all configuration files are in the config folder.
 
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
-at the defined location, the database will be created (if possible) and the database table structure will be setup.
+at the defined location, the database will be created (if possible) and the database table structure will be setup. Make sure that the process has sufficient access rights to the folders defined in the configuration file.
 
 The labels section specifies settings for output of product labels (for printing) using the glabels application. The tempFolder is used to output generated label pdf files.
 
@@ -88,6 +88,8 @@ Users are categorized into three different roles:
 - Read and Write User: This user has read access and can execute create, update and delete operations. Additionally access to the shop, email and labels functionality is available.
 - Admin User: This user has all privileges of the read/write user plus access to special functionality, such as user management.
 
+Changes to user rights are immediately transmitted to the opa server.
+
 Note: Access to the home page and the about page is available to anyone.
 
 ### Run the Open Policy Agent server
@@ -96,10 +98,12 @@ If you do not already have an Open Policy Agent server running, download it from
 
     ./opa run --server
 
+Make sure that you manually create a backup of the database at regular intervals.
+
 Note: The Open Policy Agent server is configured from the application on startup - you do not need to provide anything to run the server.
 
 ### Run the Web application
-Make sure the Open Policy Agent server is running. Then, provide the path and name of the configuration file and run:
+Make sure the Open Policy Agent server is running. Then, provide the path and name of the configuration file - please adjust it to your individual needs - and run:
 
     java -jar artikel.jar config.yaml
 
