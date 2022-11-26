@@ -8,6 +8,8 @@ import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.util.Constants;
 import org.eclipse.jetty.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -22,6 +24,8 @@ public class IndexController implements IndexApiInterface
 {
     private WebServiceInterface service;
     private MainConfiguration configuration = null;
+
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     public IndexController(WebServiceInterface service, MainConfiguration configuration)
     {
@@ -85,6 +89,7 @@ public class IndexController implements IndexApiInterface
             return "";
         } else
         {
+            logger.error("could not process file [{}]", documentPath);
             return null;
         }
     };
