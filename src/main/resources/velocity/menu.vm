@@ -16,6 +16,9 @@
                 <li><a href="/productcontainers/">${messages.get("MENU_ENTRY_CONTAINERS")}</a></li>
                 <li><a href="/productorigins/">${messages.get("MENU_ENTRY_ORIGINS")}</a></li>
             </ul>
+            <ul>
+               	<li><a href="/alldocuments/">${messages.get("MENU_ENTRY_DOCUMENTS")}</a></li>
+            </ul>
 		#end
 		<ul>
             #if($tokenpayload)
@@ -31,9 +34,6 @@
         	<li><a href="/users/">${messages.get("MENU_ENTRY_USERS")}</a></li>
         </ul>
         #end
-        <ul>
-        	<li><a href="/alldocuments/">${messages.get("MENU_ENTRY_DOCUMENTS")}</a></li>
-   		</ul>
 		<ul>
 			<li><a href="/about/">${messages.get("MENU_ENTRY_ABOUT")}</a></li>
 		</ul>
