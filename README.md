@@ -6,19 +6,20 @@ Side motivation was to try SparkJava (https://sparkjava.com/) - a micro framewor
 The Web application allows for the maintenance of products, producers, markets, containers and orders. The application offers a shop feature where labels may be printed and orders may be placed for products put in the shop.
 
 ### Implementation details:
-- the code in Hexagonal Architecture way
-- CSS and jQuery for frontend styling and functionality
-- Sqlite database for persistence (https://sqlite.org)
-- Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/)
-- Access to the application functionality is controlled using Open Policy Agent
+- the code in Hexagonal Architecture way.
+- CSS and jQuery for frontend styling and functionality.
+- Sqlite database for persistence (https://sqlite.org).
+- Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/).
+- Access to the application functionality is controlled using Open Policy Agent.
 
 ### Features:
 - add, update, delete products, markets, producers, orders and more
 - order products using a shop approach. history of orders.
-- CSV loader to load data into the database
-- using glabels (on Linux) to generate product labels
-- Asciidoc for order documents in PDF format
-- Emailing order documents
+- history of price adjustments.
+- CSV loader to load data into the database.
+- using glabels (on Linux) to generate product labels.
+- Asciidoc for order documents in PDF format. emailing order documents.
+- serving other documents relevant for the business.
 
 ## Web Application
 ### Preparations for the Web application:
