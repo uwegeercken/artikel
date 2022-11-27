@@ -22,8 +22,7 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 ## Web Application
 ### Preparations for the Web application:
-- to generate the application jar file - with dependencies in the generated "lib" folder - run:
-
+- to generate the application jar file - dependencies are in the generated "lib" folder - run:
 
     mvn clean install
 
@@ -32,13 +31,15 @@ The Web application allows for the maintenance of products, producers, markets, 
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
 at the defined location, the database will be created (if possible) and the database table structure will be setup. Make sure that the process has sufficient access rights to the folders defined in the configuration file.
 
-The labels section specifies settings for output of product labels (for printing) using the glabels application. The tempFolder is used to output generated label pdf files.
+If you want to deliver files through the Web UI - such as e.g. PDF files - specify the folder in the documentsFolder variable and copy the files to that location.
+
+The labels section specifies settings for output of product labels (for printing) using the glabels application. The glabels application needs to be installed. The tempFolder is used to output generated label pdf files.
 
 The email section specifies parameters to access an email server to use when sending emails. An email template can be created which is used during generation of the email. The relevant order dokument in PDF format will be added as an attachment.
 
 The application language is German. But one could easily copy the German resource file and translate it to a different language.
 
-To produce a PDF file for an order AsciiDoc is used. Asciidoc files are read from the variable "templateFileFolder" and have following naming convention:
+To produce a PDF file for an order, AsciiDoc is used. Asciidoc files are read from the variable "templateFileFolder" and have following naming convention:
 
     order_<producer id>.adoc
 
@@ -47,6 +48,8 @@ Although the filename ends with ".adoc", the file is first parsed using Apache V
 Additionally an Asciidoc theme file is used, where the formatting of orders can be adjusted to individual needs. The filename of the theme is:
 
     asciidoc-theme-1.yml
+
+You may adjust this file to your personal formatting needs of the order documents.
 
 Product orders can be sent by email. The email body can be configured in the template: email_template_01.vm.
 
@@ -134,4 +137,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-11-26
+Copyright Uwe Geercken, 2022. Last update: 2022-11-27
