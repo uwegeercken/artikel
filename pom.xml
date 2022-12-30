@@ -199,6 +199,36 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>copy-pdf-folder</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/artikel/pdf</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>pdf</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-documents-folder</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/artikel/documents</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>documents</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>copy-runscript-and-config</id>
                         <phase>validate</phase>
                         <goals>
@@ -209,6 +239,7 @@
                             <resources>
                                 <resource>
                                     <directory>config</directory>
+                                    <filtering>true</filtering>
                                     <includes>
                                         <include>config.yaml</include>
                                         <include>run-artikel-app.sh</include>

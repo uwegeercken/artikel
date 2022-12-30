@@ -1,7 +1,7 @@
 database:
   jdbcClass: org.sqlite.JDBC
   connection: jdbc:sqlite
-  name: /home/user1/artikel/products-mogk.db
+  name: products-mogk.db
 
 sparkJava:
   port: 4567
@@ -9,13 +9,13 @@ sparkJava:
   locale: de
   tempFolder: /tmp
   tokenExpiresMinutes: 180
-  documentsFolder: /home/user1/artikel/documents
+  documentsFolder: documents
 
 opa:
   host: http://localhost:8181
 
 email:
-  templateFileFolder: /home/user1/artikel/config
+  templateFileFolder: config
   emailTemplateFilename: email_template_01.vm
   mailTransportProtocol: smtp
   mailSmtpHost: smtp.web.de
@@ -26,13 +26,13 @@ email:
 
 labels:
   glabelsBinary: /usr/bin/glabels-3-batch
-  glabelsFile: /home/user1/artikel/config/etiketten-01.glabels
-  pdfOutputFolder: /home/user1/artikel/pdf
+  glabelsFile: config/etiketten-01.glabels
+  pdfOutputFolder: pdf
 
 asciidoc:
-  templateFileFolder: /home/user1/artikel/config
-  pdfOutputFolder: /home/user1/artikel/pdf
-  themeFile: /home/user1/artikel/config/asciidoc-theme-1.yml
+  templateFileFolder: config
+  pdfOutputFolder: pdf
+  themeFile: config/asciidoc-theme-1.yml
 
 csvInput:
   filesFolder: /home/user1/artikel/csv

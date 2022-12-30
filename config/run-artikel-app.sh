@@ -2,15 +2,14 @@
 #
 # script to run the artikel web application.
 #
-# replace the workingDir variable according to your setup.
-# replace the <version> tag below with the version you have.
-#
+# the config.yaml file needs to be in the same location as this script.
 #
 # Note: Make sure you have the Open Policy Agent server running, before you start the application.
 #
 
-baseFolder=/opt/artikel
-applicationFolder=${baseFolder}/artikel-<version>
+applicationVersion=artikel-${project.version}
 
-java -jar ${applicationFolder}/artikel.jar ${baseFolder}/config.yaml
+scriptPath=$(dirname -- "$(readlink -f "${BASH_SOURCE}")")
+applicationDir=${scriptPath}/${applicationVersion}
 
+java -jar ${applicationDir}/artikel.jar ${scriptPath}/config.yaml
