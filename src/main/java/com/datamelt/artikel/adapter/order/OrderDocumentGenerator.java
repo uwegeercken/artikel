@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -54,6 +55,20 @@ public class OrderDocumentGenerator implements OrderDocumentInterface
     public String getOrderDocumentFilename(ProductOrder order)
     {
         return Constants.ORDER_FILENAME_PREFIX + formatOrderNumber.format(order.getId()) + Constants.PDF_FILENAME_EXTENSION;
+    }
+
+    @Override
+    public void copyOrderDocumentGenericTemplate(Producer producer)
+    {
+        String genericTemplate = configuration.getAsciidoc().getTemplateFileFolder() + "/" + Constants.ORDER_DOCUMENT_GENERIC_TEAMPLATE;
+        String producerTemplateFilename = configuration.getAsciidoc().getTemplateFileFolder() + "/" + Constants.ORDER_FILENAME_PREFIX + producer.getId() + Constants.ASCIIDOC_FILENAME_EXTENSION;
+        try {
+            Files.copy(new File(genericTemplate).toPath(), new File(producerTemplateFilename).toPath());
+        }
+        catch(Exception ex)
+        {
+            logger.error("error copying order generic template to: [{}]", producerTemplateFilename);
+        }
     }
 
     private String getOrderTemplate(String folder, String filename, ProductOrder order, List<Product> products)

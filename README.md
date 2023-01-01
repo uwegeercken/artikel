@@ -29,16 +29,18 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 - provide a yaml file with the configuration (see required attributes below). Samples for all configuration files are in the config folder.
 
+If you want to deliver files through the Web UI - such as e.g. PDF files - in the configuration file specify the folder in the documentsFolder variable and copy the files to that location.
+
+The application language is German. But one could easily copy the German resource file and translate it to a different language.
+
+#### Configuration for the Web application:
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
 at the defined location, the database will be created (if possible) and the database table structure will be setup. Make sure that the process has sufficient access rights to the folders defined in the configuration file.
 
-If you want to deliver files through the Web UI - such as e.g. PDF files - specify the folder in the documentsFolder variable and copy the files to that location.
 
 The labels section specifies settings for output of product labels (for printing) using the glabels application. The glabels application needs to be installed. The tempFolder is used to output generated label pdf files.
 
 The email section specifies parameters to access an email server to use when sending emails. An email template can be created which is used during generation of the email. The relevant order dokument in PDF format will be added as an attachment.
-
-The application language is German. But one could easily copy the German resource file and translate it to a different language.
 
 To produce a PDF file for an order, AsciiDoc is used. Asciidoc files are read from the variable "templateFileFolder" and have following naming convention:
 
@@ -138,4 +140,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022. Last update: 2022-12-31
+Copyright Uwe Geercken, 2022, 2023. Last update: 2023-01-01

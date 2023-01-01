@@ -9,7 +9,6 @@ import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.HashGenerator;
 import com.datamelt.artikel.app.web.util.Path;
-import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.*;
 import com.datamelt.artikel.util.Constants;
@@ -19,7 +18,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -227,8 +225,8 @@ public class UserController implements UserApiInterface
     }
 
     @Override
-    public int sendAcl() throws Exception
+    public void sendAcl() throws Exception
     {
-        return service.sendAcl();
+        service.sendAcl();
     }
 }

@@ -1,10 +1,8 @@
 package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.adapter.web.form.Form;
-import com.datamelt.artikel.model.Producer;
 import com.datamelt.artikel.model.User;
 
-import java.sql.Connection;
 import java.util.List;
 
 public interface UserApiInterface
@@ -15,5 +13,5 @@ public interface UserApiInterface
     void updateUser(long id, Form form) throws Exception;
     void addUser(Form form) throws Exception;
     boolean getIsUniqueUser(long id, String name) throws Exception;
-    int sendAcl() throws Exception;
+    void sendAcl() throws Exception;
 }

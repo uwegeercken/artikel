@@ -45,6 +45,9 @@ public class Constants
     public static final String MODEL_SHOPLABELSONLY_KEY = "shoplabelsonly";
     public static final String MODEL_VERSION_KEY = "version";
     public static final String MODEL_LASTUPDATE_KEY = "lastupdate";
+    public static final String MODEL_DOCUMENTS_FOLDER = "documentsfolder";
+    public static final String MODEL_LABELS_PDF_OUTPUT_FOLDER = "labelspdfoutputfolder";
+    public static final String MODEL_ORDERS_PDF_OUTPUT_FOLDER = "orderspdfoutputfolder";
 
     public static final String ORDER_FILENAME_PREFIX = "order_";
     public static final String ASCIIDOC_FILENAME_EXTENSION = ".adoc";
@@ -53,4 +56,5 @@ public class Constants
     public static final String USERTOKEN_KEY = "usertoken";
     public static final String REGO_FILENAME = "users-policy.rego";
     public static final String USERTOKEN_ISSUER = "article application";
+    public static final String ORDER_DOCUMENT_GENERIC_TEAMPLATE = "order_[producer_id].adoc";
 }

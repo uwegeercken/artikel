@@ -1,6 +1,5 @@
 package com.datamelt.artikel.port;
 
-import com.datamelt.artikel.adapter.opa.model.OpaAcl;
 import com.datamelt.artikel.adapter.opa.model.OpaInput;
 import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.adapter.web.form.Form;
@@ -71,6 +70,6 @@ public interface WebServiceInterface
     boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration);
 
     OpaValidationResult validateUser(OpaInput input);
-    int sendAcl() throws Exception;
-    int sendPolicies() throws Exception;
+    void sendAcl() throws Exception;
+    void sendPolicies() throws Exception;
 }

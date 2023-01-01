@@ -27,6 +27,8 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     private OrderDocumentInterface orderDocumentGenerator;
     private OpaApiInterface opaClient;
 
+    private FileSystemInterface fileSystemHandler;
+
     public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient) throws Exception
     {
         this.repository = respository;
@@ -34,9 +36,10 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         this.orderDocumentGenerator = orderDocumentGenerator;
         this.email = email;
         this.opaClient = opaClient;
+        this.fileSystemHandler = fileSystemHandler;
 
-        int sendAclStatus = sendAcl();
-        int sendPoliciesStatus =  sendPolicies();
+        sendAcl();
+        sendPolicies();
     }
 
     @Override
@@ -149,6 +152,9 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         {
             logger.debug("adding producer - name: [{}]", producer.getName());
             repository.addProducer(producer);
+
+            logger.debug("copying producer template - id: [{}]", producer.getId());
+            orderDocumentGenerator.copyOrderDocumentGenericTemplate(producer);
         }
         catch (Exception ex)
         {
@@ -372,7 +378,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public int sendAcl() throws Exception
+    public void sendAcl() throws Exception
     {
         OpaAcl acl = new OpaAcl();
         try
@@ -395,11 +401,10 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
 
         int status = opaClient.sendAcl(acl);
         logger.info("sent acl to open policy agent. status code [{}]", status);
-        return status;
     }
 
     @Override
-    public int sendPolicies() throws Exception
+    public void sendPolicies() throws Exception
     {
         String rego = null;
         int status = 0;
@@ -414,7 +419,6 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
         {
             logger.error("error reading policy file: [{}]. error: [{}]",Constants.REGO_FILENAME,ex.getMessage());
         }
-        return status;
     }
 
     @Override

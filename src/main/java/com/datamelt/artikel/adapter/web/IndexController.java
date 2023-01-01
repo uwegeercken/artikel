@@ -43,6 +43,9 @@ public class IndexController implements IndexApiInterface
         Map<String, Object> model = new HashMap<>();
         model.put(Constants.MODEL_VERSION_KEY, WebApplication.APPLCATION_VERSION);
         model.put(Constants.MODEL_LASTUPDATE_KEY, WebApplication.APPLCATION_LAST_UPDATE);
+        model.put(Constants.MODEL_DOCUMENTS_FOLDER, configuration.getSparkJava().getDocumentsFolder());
+        model.put(Constants.MODEL_LABELS_PDF_OUTPUT_FOLDER, configuration.getLabels().getPdfOutputFolder());
+        model.put(Constants.MODEL_ORDERS_PDF_OUTPUT_FOLDER, configuration.getAsciidoc().getPdfOutputFolder());
         return ViewUtility.render(request, model, Path.Template.ABOUT);
 
     };
