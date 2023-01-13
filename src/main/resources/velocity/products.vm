@@ -37,6 +37,7 @@
             <img height="22" width="22" src="/img/remove.png">&nbsp;${messages.get("IMAGE_PRODUCT_DELETE")}&nbsp;
             <img height="22" width="22" src="/img/edit.png">&nbsp;${messages.get("IMAGE_PRODUCT_EDIT")}&nbsp;
             <img height="22" width="22" src="/img/labels.png">&nbsp;${messages.get("IMAGE_LABELS")}
+            <img height="22" width="22" src="/img/labels_checked.png">&nbsp;${messages.get("IMAGE_GENERATE_SHOP_LABELS")}
             <img height="22" width="22" src="/img/shopping_cart_0.png">&nbsp;${messages.get("IMAGE_SHOPPING_CART")}
         </p>
     </div>
@@ -58,7 +59,7 @@
             #insert_readwrite_image("/product/${product.id}/producer/${product.producer.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_PRODUCT_EDIT')}" "${tokenpayload.role}")
             #if($product.producer.noOrdering==1 && $product.unavailable==0)
                 <div class="productcheck">
-                        #if(${product.recentlyChanged()})
+                        #if(${amount}==1)
                             <input class="productcheckBox" name="productcheck-${product.id}" type="checkbox" checked>
                         #else
                             <input class="productcheckBox" name="productcheck-${product.id}" type="checkbox">

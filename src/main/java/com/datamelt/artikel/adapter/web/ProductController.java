@@ -9,7 +9,6 @@ import com.datamelt.artikel.adapter.web.form.FormValidator;
 import com.datamelt.artikel.adapter.web.validator.ValidatorResult;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
-import com.datamelt.artikel.app.web.util.Endpoints;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.*;
@@ -38,7 +37,7 @@ public class ProductController implements ProductApiInterface
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        return ViewUtility.render(request, shopProductsLabelModel(producer), Path.Template.PRODUCTS);
+        return ViewUtility.render(request, shopProductsModel(producer), Path.Template.PRODUCTS);
     };
 
     public Route serveProductPage = (Request request, Response response) -> {
@@ -197,10 +196,13 @@ public class ProductController implements ProductApiInterface
             order.addOrderItem(item);
             order.setProducer(producer);
         }
+        //orderCollection.add(order);
 
         byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
         if(pdfOutputFile!=null)
         {
+            orderCollection.remove(producer.getId());
+
             String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
             response.type(Constants.FILE_CONTENT_TYPE_PDF);
             response.header(Constants.CONTENT_DISPOSITION_KEY, Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
@@ -221,7 +223,7 @@ public class ProductController implements ProductApiInterface
         }
     };
 
-    private Map<String, Object> shopProductsLabelModel(Producer producer)
+    private Map<String, Object> shopProductsModel(Producer producer)
     {
         Map<String, Object> model = new HashMap<>();
         try
@@ -306,7 +308,6 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
-            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(WebApplication.getMessages().get("ERROR_NO_ORDER_DATE")));
             response.redirect("/shopproducts/producer/" + producerId + "/");
             return null;
         }
@@ -332,7 +333,7 @@ public class ProductController implements ProductApiInterface
         {
             deleteProduct(Long.parseLong(request.params(":id")));
         }
-        return ViewUtility.render(request, shopProductsLabelModel(producer) ,Path.Template.PRODUCTS);
+        return ViewUtility.render(request, shopProductsModel(producer) ,Path.Template.PRODUCTS);
     };
 
     public Route createLabels = (Request request, Response response) -> {
@@ -387,7 +388,7 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        Map<String, Object> model =  shopProductsLabelModel(producer);
+        Map<String, Object> model =  shopProductsModel(producer);
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
@@ -403,17 +404,34 @@ public class ProductController implements ProductApiInterface
             if(result.getResultType() == ValidatorResult.RESULT_TYPE_OK)
             {
                 addOrUpdateProduct(model, form);
+                if(producer.getNoOrdering()==1)
+                {
+                    ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+                    ProductOrder order = orderCollection.get(producerId);
+                    if (order == null)
+                    {
+                        order = new ProductOrder(producerId, true);
+                        orderCollection.add(order);
+                    }
+                    ProductOrderItem item = new ProductOrderItem();
+                    item.setProduct(getProductById(Long.parseLong(form.get(FormField.ID))));
+                    item.setAmount(1);
+                    order.addOrderItem(item);
+                    order.setProducer(producer);
+                }
+                return ViewUtility.render(request, shopProductsModel(producer), Path.Template.PRODUCTS);
             }
             else
             {
                 model.put(Constants.MODEL_RESULT_KEY, result);
+                return ViewUtility.render(request,model,Path.Template.PRODUCT);
             }
 
-            return ViewUtility.render(request,model,Path.Template.PRODUCT);
+            //return ViewUtility.render(request,model,Path.Template.PRODUCT);
         }
         else
         {
-            return ViewUtility.render(request, shopProductsLabelModel(producer), Path.Template.PRODUCTS);
+            return ViewUtility.render(request, shopProductsModel(producer), Path.Template.PRODUCTS);
         }
     };
 
