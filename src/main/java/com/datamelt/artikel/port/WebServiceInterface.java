@@ -19,6 +19,7 @@ public interface WebServiceInterface
     void deleteProduct(long id) throws Exception;
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
+    List<ProductHistory> getProductHistory(Product product) throws Exception;
 
     Producer updateProducer(long id, Form form) throws Exception;
     Producer addProducer(Form form) throws Exception;

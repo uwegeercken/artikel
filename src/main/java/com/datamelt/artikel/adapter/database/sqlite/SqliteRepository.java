@@ -128,6 +128,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public List<ProductHistory> getProductHistory(Product product) throws Exception
+    {
+        return CollectionHandler.getProductHistory(connection, product);
+    }
+
+    @Override
     public void deleteProduct(long id) throws Exception
     {
         ProductUpdate p = new ProductUpdate(connection);

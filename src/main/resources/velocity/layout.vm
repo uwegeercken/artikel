@@ -10,7 +10,6 @@
 <script src="/jquery/jquery-ui.js"></script>
 <script src="/jquery/jstorage.js"></script>
 <script src="/jquery/jquery.bpopup.min.js"></script>
-
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 <script type='text/javascript'>
@@ -97,27 +96,27 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<div>
-<div class="top">
-		<table width="100%">
-		<tr>
-			<td width="88%">#parse("/velocity/logo.vm")</td>
-			<td>
-			    #if($tokenpayload)
-                    <img width="40" height="40" src="/img/dummy_user.png" title="$!{tokenpayload.name}" alt="$!{tokenpayload.name}">
-                #end
-            </td>
-		</tr>
-	</table>
+    <div>
+        <div class="top">
+                <table width="100%">
+                <tr>
+                    <td width="88%">#parse("/velocity/logo.vm")</td>
+                    <td>
+                        #if($tokenpayload)
+                            <img width="40" height="40" src="/img/dummy_user.png" title="$!{tokenpayload.name}" alt="$!{tokenpayload.name}">
+                        #end
+                    </td>
+                </tr>
+            </table>
 
-</div>
-<div>
-	#parse("/velocity/menu.vm")
-	<div class="data">
-		$bodyContent
-	</div>
-</div>
-</div>
+        </div>
+        <div>
+            #parse("/velocity/menu.vm")
+            <div class="data">
+                $bodyContent
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 #end

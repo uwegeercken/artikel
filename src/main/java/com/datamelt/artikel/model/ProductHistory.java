@@ -1,6 +1,8 @@
 package com.datamelt.artikel.model;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class ProductHistory
 {
@@ -60,5 +62,24 @@ public class ProductHistory
     public void setPrice(double price)
     {
         this.price = price;
+    }
+
+    public int getTimestampYear()
+    {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date(timestamp));
+        return calendar.get(Calendar.YEAR);
+    }
+
+    public int getTimestampWeek()
+    {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(new Date(timestamp));
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public String getTimestampYearWeek()
+    {
+        return getTimestampYear() + "-" + getTimestampWeek();
     }
 }

@@ -22,6 +22,7 @@ class CollectionHandler
     public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp_created_date desc";
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
     public static final String SQL_QUERY_USERS = "select * from user order by name";
+    public static final String SQL_QUERY_PRODUCT_HISTORY = "select * from product_history where product_id=?";
 
     public static final String SQL_QUERY_PRODUCTS_COUNT = "select count(1) as counter from product";
     public static final String SQL_QUERY_PRODUCERS_PRODUCTS_COUNT = "select producer.name as name, count(1) as counter from product,producer where producer.id=product.producer_id group by producer_id order by producer.name";
@@ -250,5 +251,24 @@ class CollectionHandler
         resultset.close();
         statement.close();
         return users;
+    }
+
+    public static List<ProductHistory> getProductHistory(Connection connection, Product product) throws Exception
+    {
+        List<ProductHistory> fullHistory = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCT_HISTORY);
+        statement.setLong(1, product.getId());
+        ResultSet resultset = statement.executeQuery();
+        while(resultset.next())
+        {
+            ProductHistory history = new ProductHistory(product.getId());
+            history.setId(resultset.getLong("id"));
+            history.setPrice(resultset.getFloat("price"));
+            history.setTimestamp(resultset.getLong("timestamp"));
+            fullHistory.add(history);
+        }
+        resultset.close();
+        statement.close();
+        return fullHistory;
     }
 }

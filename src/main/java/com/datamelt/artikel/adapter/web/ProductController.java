@@ -12,8 +12,13 @@ import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.*;
+import com.datamelt.artikel.model.highcharts.Category;
+import com.datamelt.artikel.model.highcharts.CategoryCollection;
+import com.datamelt.artikel.model.highcharts.Serie;
+import com.datamelt.artikel.model.highcharts.SeriesCollection;
 import com.datamelt.artikel.port.ProductApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
+import com.datamelt.artikel.util.CalendarUtility;
 import com.datamelt.artikel.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +43,72 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
         return ViewUtility.render(request, shopProductsModel(producer), Path.Template.PRODUCTS);
+    };
+
+    public Route servePriceChartPage = (Request request, Response response) -> {
+
+        Map<String, Object> model = new HashMap<>();
+        CategoryCollection categories = new CategoryCollection();
+        categories.add(CalendarUtility.getWeeks(12));
+        model.put("categories", categories.getValues());
+
+        long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+        model.put("producer", producer);
+
+        Set<String> parameters = request.queryParams();
+        List<Long> ids = new ArrayList<>();
+        for(String parameter : parameters)
+        {
+            if(parameter.startsWith("productcheck-"))
+            {
+                String[] parts = parameter.split("-");
+                ids.add(Long.parseLong(parts[1]));
+            }
+        }
+
+        SeriesCollection series = new SeriesCollection();
+        for(long id : ids)
+        {
+            Product product = getProductById(id);
+            Serie serie = new Serie(product.getName());
+            List<ProductHistory> productHistory = getProductHistory(product);
+            HashMap<String,ProductHistory> map = new HashMap<>();
+            for(int i=0; i<productHistory.size();i++)
+            {
+                ProductHistory history = productHistory.get(i);
+                map.put(history.getTimestampYearWeek(), history);
+            }
+
+            double latestValue=-1;
+            for(Category category : categories.getCategories())
+            {
+                String categoryValue=category.getValue();
+                ProductHistory history = map.get(categoryValue);
+                if(history!=null)
+                {
+                    double price = Math.round(history.getPrice() * 100);
+                    price = price/100;
+                    serie.add(price);
+                    latestValue = price;
+                }
+                else
+                {
+                    if(latestValue!=-1)
+                    {
+                        serie.add(latestValue);
+                    }
+                    else
+                    {
+                        serie.add(0);
+                    }
+                }
+            }
+            series.add(serie);
+        }
+
+        model.put("series", series);
+        return ViewUtility.render(request, model, Path.Template.PRICECHART);
     };
 
     public Route serveProductPage = (Request request, Response response) -> {
@@ -493,6 +564,12 @@ public class ProductController implements ProductApiInterface
     public List<ProductContainer> getAllProductContainers() throws Exception
     {
         return service.getAllProductContainers();
+    }
+
+    @Override
+    public List<ProductHistory> getProductHistory(Product product) throws Exception
+    {
+        return service.getProductHistory(product);
     }
 
     @Override

@@ -21,6 +21,9 @@
             <button type="submit" name="submit">
                 <img width="40px" height="40px" src="/img/labels_checked.png" title="${messages.get("IMAGE_GENERATE_SHOP_LABELS")}">
             </button>
+            <button type="submit" name="submit" formaction="/pricechart/producer/${producer.id}/">
+                <img width="40px" height="40px" src="/img/price.png" title="${messages.get("IMAGE_PRICECHART")}">
+            </button>
         #end
     </p>
     <div id="help">

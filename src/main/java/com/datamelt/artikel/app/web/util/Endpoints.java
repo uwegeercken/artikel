@@ -43,6 +43,7 @@ public enum Endpoints
     SHOP_COMPLETE("/shopcomplete/producer/:producerid/" ,"readwrite", "post"),
     SHOPPRODUCTS("/shopproducts/producer/:producerid/","readwrite", "get"),
     ORDERS("/orders/","read", "get"),
+    PRICECHART("/pricechart/producer/:producerid/","read", "post"),
     ORDERITEMS("/orderitems/:id/","read", "get"),
     ORDER_SELECT_DELETE("/order/delete/:id/","readwrite", "get"),
     ORDER_DELETE("/order/delete/:id/","readwrite", "post"),

@@ -21,6 +21,7 @@ public interface ProductApiInterface
     List<Producer> getAllProducers() throws Exception;
     List<ProductContainer> getAllProductContainers() throws Exception;
     List<ProductOrigin> getAllProductOrigins() throws Exception;
+    List<ProductHistory> getProductHistory(Product product) throws Exception;
     byte[] getLabelsOutputFile(long producerId) throws Exception;
     byte[] getLabelsOutputFile(long producerId, ProductOrder order) throws Exception;
 

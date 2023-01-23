@@ -29,6 +29,7 @@ public interface RepositoryInterface
     boolean getIsUniqueProduct(long id, String number) throws Exception;
     List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception;
     void deleteProduct(long id) throws Exception;
+    List<ProductHistory>getProductHistory(Product product) throws Exception;
 
     void addProductContainer(ProductContainer container);
     void updateProductContainer(ProductContainer container);

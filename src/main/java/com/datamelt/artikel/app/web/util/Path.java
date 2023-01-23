@@ -28,6 +28,7 @@ public class Path
         public static final String ORDER_DELETE = "/velocity/deleteproductorder.vm";
         public static final String ORDERITEMS = "/velocity/orderitems.vm";
         public static final String SELECT_ORDER_EMAIL = "/velocity/sendemail.vm";
+        public static final String PRICECHART = "/velocity/pricechart.vm";
 
         public static final String NOTFOUND = "/velocity/notfound.vm";
         public static final String NOTAUTHORIZED = "/velocity/notauthorized.vm";

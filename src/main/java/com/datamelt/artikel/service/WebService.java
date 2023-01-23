@@ -43,7 +43,10 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception { return repository.getAllProducts(producerId, availableOnly); }
+    public List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception
+    {
+        return repository.getAllProducts(producerId, availableOnly);
+    }
 
     @Override
     public Product getProductById(long id) throws Exception
@@ -339,6 +342,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public void deleteProduct(long id) throws Exception
     {
         repository.deleteProduct(id);
+    }
+
+    @Override
+    public List<ProductHistory> getProductHistory(Product product) throws Exception
+    {
+        return repository.getProductHistory(product);
     }
 
     @Override

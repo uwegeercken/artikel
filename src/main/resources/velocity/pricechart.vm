@@ -1,0 +1,52 @@
+#parse("/velocity/layout_highcharts.vm")
+#@mainLayout()
+
+    <p class="heading">${messages.get("PAGETITLE_PRICECHART")} - ${producer.name}</p>
+    <div id="container"></div>
+
+    <script type="text/javascript">
+    Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: '${messages.get("PAGETITLE_PRICECHART")}'
+        },
+        subtitle: {
+            text: '${producer.name}'
+        },
+        xAxis: {
+            categories: $categories
+        },
+        yAxis: {
+            title: {
+                text: '${messages.get("PRICECHART_YAXIS_TITLE")}'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+        #foreach($serie in ${series.getSeries()})
+        {
+            name: '${serie.name}',
+            data: ${serie.values}
+        },
+        #end
+        ]
+    });
+    </script>
+#end
+
+
+
+
+
+
+
+
