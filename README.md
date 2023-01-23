@@ -8,6 +8,7 @@ The Web application allows for the maintenance of products, producers, markets, 
 ### Implementation details:
 - the code in Hexagonal Architecture way.
 - CSS and jQuery for frontend styling and functionality.
+- Highcharts (https://www.highcharts.com) for charting requirements
 - Sqlite database for persistence (https://sqlite.org).
 - Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/).
 - Access to the application functionality is controlled using Open Policy Agent.
@@ -16,6 +17,7 @@ The Web application allows for the maintenance of products, producers, markets, 
 - add, update, delete products, markets, producers, orders and more
 - order products using a shop approach. history of orders.
 - history of price adjustments.
+- chart of price changes over time
 - CSV loader to load data into the database.
 - using glabels (on Linux) to generate product labels.
 - Asciidoc for order documents in PDF format. emailing order documents.
@@ -140,4 +142,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022, 2023. Last update: 2023-01-01
+Copyright Uwe Geercken, 2022, 2023. Last update: 2023-01-23
