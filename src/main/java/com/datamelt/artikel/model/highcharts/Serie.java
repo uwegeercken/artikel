@@ -25,9 +25,11 @@ public class Serie
         }
     }
 
-    public ArrayList<Double> getValues()
+    public String getValues()
     {
-        return values;
+        String valuesAsString = values.toString().replaceAll("0.0", "'nil'");
+
+        return valuesAsString;
     }
 
     public String getName()

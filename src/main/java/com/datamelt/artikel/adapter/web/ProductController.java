@@ -49,7 +49,7 @@ public class ProductController implements ProductApiInterface
 
         Map<String, Object> model = new HashMap<>();
         CategoryCollection categories = new CategoryCollection();
-        categories.add(CalendarUtility.getWeeks(12));
+        categories.add(CalendarUtility.getWeeks(24));
         model.put("categories", categories.getValues());
 
         long producerId = Long.parseLong(request.params(":producerid"));
