@@ -27,9 +27,9 @@ public class Serie
 
     public String getValues()
     {
-        String valuesAsString = values.toString().replaceAll("0.0", "'nil'");
+        //String valuesAsString = values.toString().replaceAll("0.0", "'nil'");
 
-        return valuesAsString;
+        return values.toString();
     }
 
     public String getName()

@@ -49,7 +49,7 @@ public class ProductController implements ProductApiInterface
 
         Map<String, Object> model = new HashMap<>();
         CategoryCollection categories = new CategoryCollection();
-        categories.add(CalendarUtility.getWeeks(24));
+        categories.add(CalendarUtility.getWeeks(26));
         model.put("categories", categories.getValues());
 
         long producerId = Long.parseLong(request.params(":producerid"));
@@ -68,23 +68,32 @@ public class ProductController implements ProductApiInterface
         }
 
         SeriesCollection series = new SeriesCollection();
+        double latestValue=-1;
+
         for(long id : ids)
         {
             Product product = getProductById(id);
             Serie serie = new Serie(product.getName());
             List<ProductHistory> productHistory = getProductHistory(product);
-            HashMap<String,ProductHistory> map = new HashMap<>();
+            HashMap<String, ProductHistory> map = new HashMap<>();
             for(int i=0; i<productHistory.size();i++)
             {
                 ProductHistory history = productHistory.get(i);
-                map.put(history.getTimestampYearWeek(), history);
+                String yearWeek = history.getTimestampYearWeek();
+                if(categories.contains(yearWeek))
+                {
+                    map.put(yearWeek, history);
+                }
+                else
+                {
+                    latestValue = history.getPrice();
+                }
             }
 
-            double latestValue=-1;
             for(Category category : categories.getCategories())
             {
-                String categoryValue=category.getValue();
-                ProductHistory history = map.get(categoryValue);
+                String yearWeek = category.getValue();
+                ProductHistory history = map.get(yearWeek);
                 if(history!=null)
                 {
                     double price = Math.round(history.getPrice() * 100);
@@ -106,7 +115,6 @@ public class ProductController implements ProductApiInterface
             }
             series.add(serie);
         }
-
         model.put("series", series);
         return ViewUtility.render(request, model, Path.Template.PRICECHART);
     };

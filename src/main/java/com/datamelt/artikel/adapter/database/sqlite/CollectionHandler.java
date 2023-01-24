@@ -22,7 +22,7 @@ class CollectionHandler
     public static final String SQL_QUERY_ORDERS = "select * from productorder order by timestamp_created_date desc";
     public static final String SQL_QUERY_ORDER_ITEMS = "select * from productorder_item where productorder_id=?";
     public static final String SQL_QUERY_USERS = "select * from user order by name";
-    public static final String SQL_QUERY_PRODUCT_HISTORY = "select * from product_history where product_id=?";
+    public static final String SQL_QUERY_PRODUCT_HISTORY = "select * from product_history where product_id=? order by timestamp";
 
     public static final String SQL_QUERY_PRODUCTS_COUNT = "select count(1) as counter from product";
     public static final String SQL_QUERY_PRODUCERS_PRODUCTS_COUNT = "select producer.name as name, count(1) as counter from product,producer where producer.id=product.producer_id group by producer_id order by producer.name";

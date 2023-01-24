@@ -22,6 +22,20 @@ public class CategoryCollection
         }
     }
 
+    public boolean contains(String yearWeek)
+    {
+        boolean containsYearWeek = false;
+        for(Category category : categories)
+        {
+            if(category.getValue().equals(yearWeek))
+            {
+                containsYearWeek = true;
+                break;
+            }
+        }
+        return containsYearWeek;
+    }
+
     public void remove(Category category)
     {
         categories.remove(category);
