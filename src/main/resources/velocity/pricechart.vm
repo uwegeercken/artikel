@@ -22,7 +22,7 @@
             title: {
                 text: '${messages.get("PRICECHART_YAXIS_TITLE")}'
             },
-
+            pointFormat: '{point.y:.2f}'
         },
         tooltip: {
                 pointFormat: '${messages.get("PRICECHART_YAXIS_TITLE")}: {point.y:.2f}'

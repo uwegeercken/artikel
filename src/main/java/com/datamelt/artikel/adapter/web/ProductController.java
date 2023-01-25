@@ -96,10 +96,8 @@ public class ProductController implements ProductApiInterface
                 ProductHistory history = map.get(yearWeek);
                 if(history!=null)
                 {
-                    double price = Math.round(history.getPrice() * 100);
-                    price = price/100;
-                    serie.add(price);
-                    latestValue = price;
+                    serie.add(history.getPrice());
+                    latestValue = history.getPrice();
                 }
                 else
                 {
