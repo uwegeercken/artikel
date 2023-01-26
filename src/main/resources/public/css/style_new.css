@@ -17,6 +17,11 @@ body {
 	font-weight: bold;
 }
 
+#container {
+    height:80%;
+    width:90%;
+}
+
 .containerForTextarea {
 	border: 1px solid #999999;
 	margin: 5px 0;
@@ -413,6 +418,7 @@ div.data {
 	margin-top: 0px;
 	margin-left: 170px;
 	width: 90%;
+	height: 90%;
 }
 
 div.connector {
