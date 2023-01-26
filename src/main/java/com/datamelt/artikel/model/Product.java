@@ -1,7 +1,10 @@
 package com.datamelt.artikel.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.datamelt.artikel.util.Constants.GERMAN_DATE_ONLY_FORMAT;
 
 public class Product
 {
@@ -106,6 +109,12 @@ public class Product
     public void setTimestamp(long timestamp)
     {
         this.timestamp = timestamp;
+    }
+
+    public String getLastChangedDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(GERMAN_DATE_ONLY_FORMAT);
+        return sdf.format(new Date(timestamp));
     }
 
     public boolean recentlyChanged()
