@@ -2,7 +2,7 @@
 #@mainLayout()
 
     <p class="heading">${messages.get("PAGE_HEADIND_ABOUT")}</p>
-    <p>${messages.get("PAGE_ABOUT_INFO")}</p>qq
+    <p>${messages.get("PAGE_ABOUT_INFO")}</p>
     <p>${messages.get("PAGE_ABOUT_DOCUMENTS_FOLDER")} ${documentsfolder}.</p>
     <p>${messages.get("PAGE_ABOUT_LABELS_PDF_OUTPUT_FOLDER")} ${labelspdfoutputfolder}.</p>
     <p>${messages.get("PAGE_ABOUT_ORDERS_PDF_OUTPUT_FOLDER")} ${orderspdfoutputfolder}.</p>

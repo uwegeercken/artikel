@@ -118,11 +118,6 @@ public class ProductController implements ProductApiInterface
 
     public Route serveProductPage = (Request request, Response response) -> {
 
-        String path="/product";
-        String method = "post";
-        OpaInput opaInput = new OpaInput(path, method, request.session().attribute(Constants.USERTOKEN_KEY));
-        OpaValidationResult userHasAccess = service.validateUser(opaInput);
-
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
