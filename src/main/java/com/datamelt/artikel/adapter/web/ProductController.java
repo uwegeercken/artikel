@@ -68,10 +68,9 @@ public class ProductController implements ProductApiInterface
         }
 
         SeriesCollection series = new SeriesCollection();
-        double latestValue=-1;
-
         for(long id : ids)
         {
+            double latestValue=-1;
             Product product = getProductById(id);
             Serie serie = new Serie(product.getName());
             List<ProductHistory> productHistory = getProductHistory(product);
