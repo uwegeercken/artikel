@@ -18,9 +18,9 @@ $(document).ready(function() {
   {
 	  if(this.value)
 	  {
-	  	$(".unit").not("[tag*='" + this.value.toLowerCase() + "']").hide();
-	  	$(".unit[tag*='" + this.value.toLowerCase() + "']").show();
-	  	$.jStorage.set("searchtext" + $('#search').attr("searchtype") , this.value)
+        $(".unit").not("[tag*='" + this.value.toLowerCase() + "']").hide();
+        $(".unit[tag*='" + this.value.toLowerCase() + "']").show();
+        $.jStorage.set("searchtext" + $('#search').attr("searchtype") , this.value)
 	  }
 	  else
 	  {
@@ -73,6 +73,14 @@ $(document).ready(function() {
 
   $( "#helpimg" ).click(function() {
 		$("#help").toggle();
+  });
+
+  $( "#checkall" ).click(function() {
+  		$(".productcheckBox").prop("checked", true);
+  });
+
+  $( "#uncheckall" ).click(function() {
+        $(".productcheckBox").prop("checked", false);
   });
 
 	var value = $.jStorage.get("searchtext"+ $('#search').attr("searchtype"));

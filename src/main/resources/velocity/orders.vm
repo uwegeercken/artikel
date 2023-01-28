@@ -24,10 +24,10 @@
     </div>
     #foreach($order in $orders)
         <div class="unit" tag="$order.producer.name.toLowerCase() + $!order.productCreatedDate.toLowerCase()">
-            <a href="/orderitems/${order.id}/"><img class="edit" height="22px" width="22px" src="/img/edit.png" title="${messages.get("IMAGE_ORDER_ITEMS")}"></a>
+            #insert_readwrite_image("/orderitems/${order.id}/" "edit" "/img/edit.png" "${messages.get('IMAGE_ORDER_ITEMS')}" "${tokenpayload.role}")
             #insert_readwrite_image("/order/delete/${order.id}/" "delete" "/img/remove.png" "${messages.get('IMAGE_ORDER_DELETE')}" "${tokenpayload.role}")
-            <a href="/orderitemspdf/${order.id}/"><img class="pdf" height="22px" width="22px" src="/img/order_document.png" title="${messages.get("IMAGE_ORDER_DOCUMENT")}"></a>
-            <a href="/selectorderemail/${order.id}/"><img class="email" height="22px" width="22px" src="/img/email.png" title="${messages.get("IMAGE_ORDER_ITEMS_EMAIL_ORDER")}"></a>
+            #insert_allroles_image("/orderitemspdf/${order.id}/" "pdf" "/img/order_document.png" "${messages.get('IMAGE_ORDER_DOCUMENT')}")
+            #insert_readwrite_image("/selectorderemail/${order.id}/" "email" "/img/email.png" "${messages.get('IMAGE_ORDER_ITEMS_EMAIL_ORDER')}" "${tokenpayload.role}")
             <div class="grouptop">
                 <p class="small">${messages.get("TYPE_ORDER")} - $order.producer.name</p>
                 <p class="small">&nbsp;</p>

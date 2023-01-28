@@ -45,7 +45,10 @@
         </p>
     </div>
     <div id="filter">
-        <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="products_${producer.id}" type="text""></p>
+        ${messages.get("FILTER_TEXTBOX")}:&nbsp;<input id="search" searchtype="products_${producer.id}" type="text"">
+        &nbsp;<img id="checkall" height="30" width="30" src="/img/checkmark_1.png" title="${messages.get("IMAGE_SELECT_ALL")}">
+        &nbsp;<img id="uncheckall" height="30" width="30" src="/img/checkmark_1.png" title="${messages.get("IMAGE_UNSELECT_ALL")}">
+
     </div>
     <div class="error">
         #if (${result})

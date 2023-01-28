@@ -18,13 +18,17 @@
 
 #macro(insert_readwrite_image $href $imgclass $imgsrc $title $role)
     #if(${role}=="readwrite" || ${role}=="admin")
-        <a href="$href"><img class="$imgclass" height="22px" width="22px" src="$imgsrc" title="$title"></a>
+        <a href="$href"><img class="$imgclass" height="32px" width="32px" src="$imgsrc" title="$title"></a>
     #end
+#end
+
+#macro(insert_allroles_image $href $imgclass $imgsrc $title)
+    <a href="$href"><img class="$imgclass" height="32px" width="32px" src="$imgsrc" title="$title"></a>
 #end
 
 #macro(insert_admin_image $href $imgclass $imgsrc $title $role)
     #if(${role}=="admin")
-        <a href="$href"><img class="$imgclass" height="22px" width="22px" src="$imgsrc" title="$title"></a>
+        <a href="$href"><img class="$imgclass" height="32px" width="32px" src="$imgsrc" title="$title"></a>
     #end
 #end
 

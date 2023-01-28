@@ -259,28 +259,28 @@ a {
 img.delete {
 	position: absolute;
 	margin-top: 6px;
-	margin-left: 295px;
+	margin-left: 285px;
 	border: none;
 }
 
 img.edit {
 	position: absolute;
 	margin-top: 6px;
-    margin-left: 270px;
+    margin-left: 250px;
 	border: none;
 }
 
 img.pdf {
 	position: absolute;
 	margin-top: 6px;
-    margin-left: 245px;
+    margin-left: 215px;
 	border: none;
 }
 
 img.email {
 	position: absolute;
 	margin-top: 6px;
-    margin-left: 220px;
+    margin-left: 180px;
 	border: none;
 }
 
@@ -458,6 +458,8 @@ div.horizontaldevider {
 
 #filter {
 	clear: both;
+	display:flex;
+	align-items:center;
 }
 
 /* GT stylesheet */
