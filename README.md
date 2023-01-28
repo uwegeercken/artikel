@@ -8,24 +8,24 @@ The Web application allows for the maintenance of products, producers, markets, 
 ### Implementation details:
 - the code in Hexagonal Architecture way.
 - CSS and jQuery for frontend styling and functionality.
-- Highcharts (https://www.highcharts.com) for charting requirements
+- Highcharts (https://www.highcharts.com) for charting price evolution.
 - Sqlite database for persistence (https://sqlite.org).
 - Web application using SparkJava and Apache Velocity template technology (https://velocity.apache.org/).
-- Access to the application functionality is controlled using Open Policy Agent.
+- Access to the application functionality usind Web Token and controlled by Open Policy Agent.
 
 ### Features:
-- add, update, delete products, markets, producers, orders and more
+- add, update, delete products, markets, producers, orders and more.
 - order products using a shop approach. history of orders.
 - history of price adjustments.
-- chart of price changes over time
+- chart for selected products showing price changes over time.
 - CSV loader to load data into the database.
-- using glabels (on Linux) to generate product labels.
+- using glabels (Linux) to generate product labels.
 - Asciidoc for order documents in PDF format. emailing order documents.
 - serving other documents relevant for the business.
 
 ## Web Application
 ### Preparations for the Web application:
-- to generate the application jar file - dependencies are in the generated "lib" folder - run:
+- to generate the application jar file - dependencies are generated in the "lib" folder - run:
 
     mvn clean install
 
@@ -59,6 +59,7 @@ You may adjust this file to your personal formatting needs of the order document
 Product orders can be sent by email. The email body can be configured in the template: email_template_01.vm.
 
 ### Configuration file content:
+Adjust the variables according to your needs, especially the folders where the different objects are stored and retrieved.
 
     database:
       jdbcClass: org.sqlite.JDBC
@@ -142,4 +143,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022, 2023. Last update: 2023-01-23
+Copyright Uwe Geercken, 2022, 2023. Last update: 2023-01-28
