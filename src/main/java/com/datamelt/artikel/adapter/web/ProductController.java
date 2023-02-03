@@ -11,6 +11,7 @@ import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.NumberFormatter;
 import com.datamelt.artikel.app.web.util.Path;
+import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.model.highcharts.Category;
 import com.datamelt.artikel.model.highcharts.CategoryCollection;
@@ -33,10 +34,12 @@ public class ProductController implements ProductApiInterface
 {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
     private WebServiceInterface service;
+    private MainConfiguration configuration;
 
-    public ProductController(WebServiceInterface service)
+    public ProductController(WebServiceInterface service, MainConfiguration configuration)
     {
         this.service = service;
+        this.configuration = configuration;
     }
 
     public Route serveAllProductsPage = (Request request, Response response) -> {
@@ -49,7 +52,7 @@ public class ProductController implements ProductApiInterface
 
         Map<String, Object> model = new HashMap<>();
         CategoryCollection categories = new CategoryCollection();
-        categories.add(CalendarUtility.getWeeks(26));
+        categories.add(CalendarUtility.getWeeks(configuration.getWebApp().getChartingNumberOfWeeksToDisplay()));
         model.put("categories", categories.getValues());
 
         long producerId = Long.parseLong(request.params(":producerid"));

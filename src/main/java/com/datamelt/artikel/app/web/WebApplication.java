@@ -93,7 +93,7 @@ public class WebApplication
         IndexController indexController = new IndexController(service, configuration);
         LoginController loginController = new LoginController(service, configuration);
         UserController userController = new UserController(service);
-        ProductController productController = new ProductController(service);
+        ProductController productController = new ProductController(service, configuration);
         ProducerController producerController = new ProducerController(service);
         MarketController marketController = new MarketController(service);
         ProductContainerController containerController = new ProductContainerController(service);

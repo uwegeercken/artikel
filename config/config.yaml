@@ -14,6 +14,12 @@ sparkJava:
 opa:
   host: http://localhost:8181
 
+webApp:
+  chartingNumberOfWeeksToDisplay: 10
+  recentlyChangedProductsNumberOfDays: 30
+  shorttermChangedProductsNumberOfDays: 60
+  longtermChangedProductsNumberOfDays: 90
+
 email:
   templateFileFolder: config
   emailTemplateFilename: email_template_01.vm

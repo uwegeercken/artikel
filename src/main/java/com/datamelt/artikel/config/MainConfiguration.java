@@ -13,6 +13,7 @@ public class MainConfiguration
     private AsciidocConfiguration asciidoc;
     private EmailConfiguration email;
     private OpaConfiguration opa;
+    private WebAppConfiguration webApp;
 
     public DatabaseConfiguration getDatabase()
     {
@@ -30,4 +31,6 @@ public class MainConfiguration
     public EmailConfiguration getEmail() { return email; }
 
     public OpaConfiguration getOpa() { return opa; }
+
+    public WebAppConfiguration getWebApp() { return webApp; }
 }
