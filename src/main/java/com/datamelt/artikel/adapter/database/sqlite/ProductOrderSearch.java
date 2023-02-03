@@ -33,9 +33,6 @@ class ProductOrderSearch
             order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
             order.setTimestampEmailSent(resultset.getLong("timestamp_email_sent"));
             order.setId(resultset.getLong("id"));
-
-            Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);
-            order.setOrderItems(items);
         }
         statement.clearParameters();
         resultset.close();
@@ -58,9 +55,6 @@ class ProductOrderSearch
             order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
             order.setTimestampEmailSent(resultset.getLong("timestamp_email_sent"));
             order.setId(resultset.getLong("id"));
-
-            Map<Long, ProductOrderItem> items = CollectionHandler.getAllProductOrderItems(connection, order);
-            order.setOrderItems(items);
         }
         statement.clearParameters();
         resultset.close();

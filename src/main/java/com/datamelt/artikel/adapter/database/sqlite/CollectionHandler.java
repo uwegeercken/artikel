@@ -1,6 +1,7 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.*;
+import com.datamelt.artikel.port.CollectionHandlerInterface;
 import com.datamelt.artikel.util.CalendarUtility;
 import com.datamelt.artikel.util.FileUtility;
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
 
-class CollectionHandler
+class CollectionHandler implements CollectionHandlerInterface
 {
     public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? and timestamp >= ? order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS = "select * from product where producer_id=? and unavailable=0 order by cast(number as int)";
@@ -30,7 +31,8 @@ class CollectionHandler
 
     private static final Logger logger = LoggerFactory.getLogger(CollectionHandler.class);
 
-    public static long getAllProductsCount(Connection connection) throws Exception
+    @Override
+    public long getAllProductsCount(Connection connection) throws Exception
     {
         long numberOfProducts = 0;
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCTS_COUNT);
@@ -43,7 +45,8 @@ class CollectionHandler
         return numberOfProducts;
     }
 
-    public static Map<String,Long> getAllProducersProductsCount(Connection connection) throws Exception
+    @Override
+    public Map<String,Long> getAllProducersProductsCount(Connection connection) throws Exception
     {
         Map<String,Long> productCounts = new HashMap<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCERS_PRODUCTS_COUNT);
@@ -55,7 +58,8 @@ class CollectionHandler
         return productCounts;
     }
 
-    public static List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
+    @Override
+    public List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
     {
         long searchProductsSince = CalendarUtility.getTimestamp(changedSinceNumberOfDays);
 
@@ -121,7 +125,8 @@ class CollectionHandler
         return products;
     }
 
-    public static List<Producer> getAllProducers(Connection connection) throws Exception
+    @Override
+    public List<Producer> getAllProducers(Connection connection) throws Exception
     {
         List<Producer> producers = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCERS);
@@ -139,7 +144,8 @@ class CollectionHandler
         return producers;
     }
 
-    public static List<Market> getAllMarkets(Connection connection) throws Exception
+    @Override
+    public List<Market> getAllMarkets(Connection connection) throws Exception
     {
         List<Market> markets = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_MARKETS);
@@ -156,7 +162,8 @@ class CollectionHandler
         return markets;
     }
 
-    public static List<ProductContainer> getAllProductContainers(Connection connection) throws Exception
+    @Override
+    public List<ProductContainer> getAllProductContainers(Connection connection) throws Exception
     {
         List<ProductContainer> containers = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_CONTAINERS);
@@ -172,7 +179,8 @@ class CollectionHandler
         return containers;
     }
 
-    public static List<ProductOrigin> getAllProductOrigins(Connection connection) throws Exception
+    @Override
+    public List<ProductOrigin> getAllProductOrigins(Connection connection) throws Exception
     {
         List<ProductOrigin> origins = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ORIGINS);
@@ -188,7 +196,8 @@ class CollectionHandler
         return origins;
     }
 
-    public static List<ProductOrder> getAllProductOrders(Connection connection) throws Exception
+    @Override
+    public List<ProductOrder> getAllProductOrders(Connection connection) throws Exception
     {
         List<ProductOrder> orders = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ORDERS);
@@ -203,7 +212,7 @@ class CollectionHandler
             order.setTimestampOrderDate(resultset.getLong("timestamp_order_date"));
             order.setTimestampEmailSent(resultset.getLong("timestamp_email_sent"));
             order.setId(resultset.getLong("id"));
-            order.setOrderItems(getAllProductOrderItems(connection, order));
+            order.setOrderItems(getAllProductOrderItems(connection, order.getId()));
             orders.add(order);
         }
         resultset.close();
@@ -211,11 +220,12 @@ class CollectionHandler
         return orders;
     }
 
-    public static Map<Long, ProductOrderItem> getAllProductOrderItems(Connection connection, ProductOrder order) throws Exception
+    @Override
+    public Map<Long, ProductOrderItem> getAllProductOrderItems(Connection connection, long orderId) throws Exception
     {
         Map<Long, ProductOrderItem> items = new HashMap<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_ORDER_ITEMS);
-        statement.setLong(1, order.getId());
+        statement.setLong(1,orderId);
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())
         {
@@ -231,7 +241,7 @@ class CollectionHandler
             }
             else
             {
-                logger.error("the requested product could not be found. product order id [{}], product id [{}]", order.getId(), resultset.getLong("product_id"));
+                logger.error("the requested product could not be found. product order id [{}], product id [{}]", orderId, resultset.getLong("product_id"));
             }
         }
         resultset.close();
@@ -239,7 +249,8 @@ class CollectionHandler
         return items;
     }
 
-    public static List<User> getAllUsers(Connection connection) throws Exception
+    @Override
+    public List<User> getAllUsers(Connection connection) throws Exception
     {
         List<User> users = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_USERS);
@@ -257,7 +268,8 @@ class CollectionHandler
         return users;
     }
 
-    public static List<ProductHistory> getProductHistory(Connection connection, Product product) throws Exception
+    @Override
+    public List<ProductHistory> getProductHistory(Connection connection, Product product) throws Exception
     {
         List<ProductHistory> fullHistory = new ArrayList<>();
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY_PRODUCT_HISTORY);

@@ -2,6 +2,7 @@ package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.config.DatabaseConfiguration;
+import com.datamelt.artikel.port.CollectionHandlerInterface;
 import com.datamelt.artikel.port.RepositoryInterface;
 import com.datamelt.artikel.util.Constants;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 public class SqliteRepository implements RepositoryInterface
 {
     private final Connection connection;
+    private final CollectionHandlerInterface collectionHandler = new CollectionHandler();
 
     public SqliteRepository(DatabaseConfiguration configuration) throws Exception
     {
@@ -69,7 +71,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<Producer> getAllProducers() throws Exception
     {
-        return CollectionHandler.getAllProducers(connection);
+        return collectionHandler.getAllProducers(connection);
     }
 
     @Override
@@ -130,7 +132,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<ProductHistory> getProductHistory(Product product) throws Exception
     {
-        return CollectionHandler.getProductHistory(connection, product);
+        return collectionHandler.getProductHistory(connection, product);
     }
 
     @Override
@@ -173,7 +175,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
     {
-        return CollectionHandler.getAllProducts(connection, producerId, availableOnly, changedSinceNumberOfDays);
+        return collectionHandler.getAllProducts(connection, producerId, availableOnly, changedSinceNumberOfDays);
     }
 
     @Override
@@ -218,7 +220,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<ProductContainer> getAllProductContainers() throws Exception
     {
-        return CollectionHandler.getAllProductContainers(connection);
+        return collectionHandler.getAllProductContainers(connection);
     }
 
     @Override
@@ -275,7 +277,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<ProductOrigin> getAllProductOrigins() throws Exception
     {
-        return CollectionHandler.getAllProductOrigins(connection);
+        return collectionHandler.getAllProductOrigins(connection);
     }
 
     @Override
@@ -320,7 +322,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<Market> getAllMarkets() throws Exception
     {
-        return CollectionHandler.getAllMarkets(connection);
+        return collectionHandler.getAllMarkets(connection);
     }
 
     @Override
@@ -360,13 +362,17 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public ProductOrder getOrderById(long id) throws Exception
     {
-        return ProductOrderSearch.getOrderById(connection,id);
+        ProductOrder order = ProductOrderSearch.getOrderById(connection,id);
+        order.setOrderItems(collectionHandler.getAllProductOrderItems(connection, order.getId()));
+        return order;
     }
 
     @Override
     public ProductOrder getOrderByNumber(String number) throws Exception
     {
-        return ProductOrderSearch.getOrderByNumber(connection,number);
+        ProductOrder order = ProductOrderSearch.getOrderByNumber(connection,number);
+        order.setOrderItems(collectionHandler.getAllProductOrderItems(connection, order.getId()));
+        return order;
     }
 
     @Override
@@ -378,7 +384,7 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<ProductOrder> getAllOrders() throws Exception
     {
-        return CollectionHandler.getAllProductOrders(connection);
+        return collectionHandler.getAllProductOrders(connection);
     }
 
     @Override
@@ -427,19 +433,21 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public List<ProductOrder> getAllProductOrders() throws Exception
     {
-        return CollectionHandler.getAllProductOrders(connection);
+        return collectionHandler.getAllProductOrders(connection);
     }
 
     @Override
     public ProductOrder getProductOrderById(long id) throws Exception
     {
-        return ProductOrderSearch.getOrderById(connection, id);
+        ProductOrder order = ProductOrderSearch.getOrderById(connection, id);
+        order.setOrderItems(collectionHandler.getAllProductOrderItems(connection, order.getId()));
+        return order;
     }
 
     @Override
     public List<User> getAllUsers() throws Exception
     {
-        return CollectionHandler.getAllUsers(connection);
+        return collectionHandler.getAllUsers(connection);
     }
 
     @Override
@@ -452,12 +460,12 @@ public class SqliteRepository implements RepositoryInterface
     @Override
     public long getAllProductsCount() throws Exception
     {
-        return CollectionHandler.getAllProductsCount(connection);
+        return collectionHandler.getAllProductsCount(connection);
     }
 
     @Override
     public Map<String,Long> getAllProducersProductsCount() throws Exception
     {
-        return CollectionHandler.getAllProducersProductsCount(connection);
+        return collectionHandler.getAllProducersProductsCount(connection);
     }
 }
