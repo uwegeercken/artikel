@@ -1,7 +1,5 @@
 package com.datamelt.artikel.adapter.web;
 
-import com.datamelt.artikel.adapter.opa.model.OpaInput;
-import com.datamelt.artikel.adapter.opa.model.OpaValidationResult;
 import com.datamelt.artikel.adapter.web.form.Form;
 import com.datamelt.artikel.adapter.web.form.FormConverter;
 import com.datamelt.artikel.adapter.web.form.FormField;
@@ -45,7 +43,29 @@ public class ProductController implements ProductApiInterface
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        return ViewUtility.render(request, shopProductsModel(producer), Path.Template.PRODUCTS);
+        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getAllProductsNumberOfDays());
+        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getAllProductsNumberOfDays()), Path.Template.PRODUCTS);
+    };
+
+    public Route serveProductsChangedRecentlyPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getRecentlyChangedProductsNumberOfDays());
+        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getRecentlyChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+    };
+
+    public Route serveProductsUnchangedShortTermPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getShorttermChangedProductsNumberOfDays());
+        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getShorttermChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+    };
+
+    public Route serveProductsUnchangedLongTermPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getLongtermChangedProductsNumberOfDays());
+        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getLongtermChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route servePriceChartPage = (Request request, Response response) -> {
@@ -297,12 +317,12 @@ public class ProductController implements ProductApiInterface
         }
     };
 
-    private Map<String, Object> shopProductsModel(Producer producer)
+    private Map<String, Object> shopProductsModel(Producer producer, int changedSinceNumberOfDays)
     {
         Map<String, Object> model = new HashMap<>();
         try
         {
-            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false));
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, changedSinceNumberOfDays));
         }
         catch (Exception ex)
         {
@@ -402,12 +422,18 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
+        int productsNumberOfDays = configuration.getWebApp().getAllProductsNumberOfDays();
+        if(request.session().attribute("productsNumberOfDays")!=null)
+        {
+            productsNumberOfDays = request.session().attribute("productsNumberOfDays");
+        }
+
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             deleteProduct(Long.parseLong(request.params(":id")));
         }
-        return ViewUtility.render(request, shopProductsModel(producer) ,Path.Template.PRODUCTS);
+        return ViewUtility.render(request, shopProductsModel(producer, productsNumberOfDays) ,Path.Template.PRODUCTS);
     };
 
     public Route createLabels = (Request request, Response response) -> {
@@ -462,7 +488,13 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        Map<String, Object> model =  shopProductsModel(producer);
+        int productsNumberOfDays = configuration.getWebApp().getAllProductsNumberOfDays();
+        if(request.session().attribute("productsNumberOfDays")!=null)
+        {
+            productsNumberOfDays = request.session().attribute("productsNumberOfDays");
+        }
+
+        Map<String, Object> model =  shopProductsModel(producer, productsNumberOfDays);
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
@@ -493,7 +525,7 @@ public class ProductController implements ProductApiInterface
                     order.addOrderItem(item);
                     order.setProducer(producer);
                 }
-                return ViewUtility.render(request, shopProductsModel(producer), Path.Template.PRODUCTS);
+                return ViewUtility.render(request, shopProductsModel(producer, productsNumberOfDays), Path.Template.PRODUCTS);
             }
             else
             {
@@ -505,7 +537,7 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
-            return ViewUtility.render(request, shopProductsModel(producer), Path.Template.PRODUCTS);
+            return ViewUtility.render(request, shopProductsModel(producer, productsNumberOfDays), Path.Template.PRODUCTS);
         }
     };
 
@@ -540,9 +572,9 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception
+    public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
     {
-        return service.getAllProducts(producerId, availableOnly);
+        return service.getAllProducts(producerId, availableOnly, changedSinceNumberOfDays);
     }
 
     @Override
@@ -584,7 +616,7 @@ public class ProductController implements ProductApiInterface
     @Override
     public byte[] getLabelsOutputFile(long producerId) throws Exception
     {
-        List<Product> products = getAllProducts(producerId, false);
+        List<Product> products = getAllProducts(producerId, false, configuration.getWebApp().getAllProductsNumberOfDays() );
         List<ProductLabel> labels = new ArrayList<>();
         for(Product product : products)
         {

@@ -4,7 +4,7 @@ public class WebAppConfiguration
 {
     private int chartingNumberOfWeeksToDisplay;
 
-    private int allProductsNumberOfDays = 0;
+    private final int allProductsNumberOfDays = 0;
     private int recentlyChangedProductsNumberOfDays;
     private int shorttermChangedProductsNumberOfDays;
     private int longtermChangedProductsNumberOfDays;

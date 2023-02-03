@@ -119,6 +119,9 @@ public class WebApplication
         post(Endpoints.USERS_CHANGE_PASSWORD.getPath(), userController.serveUpdatePasswordPage);
 
         get(Endpoints.PRODUCTS.getPath(), productController.serveAllProductsPage);
+        get(Endpoints.PRODUCTS_CHANGED_RECENTLY.getPath(), productController.serveProductsChangedRecentlyPage);
+        get(Endpoints.PRODUCTS_UNCHANGED_SHORTTERM.getPath(),productController.serveProductsUnchangedShortTermPage);
+        get(Endpoints.PRODUCTS_UNCHANGED_LONGTERM.getPath(),productController.serveProductsUnchangedLongTermPage);
         get(Endpoints.GENERATE_LABELS.getPath(), productController.createLabels);
         get(Endpoints.GENERATE_SHOP_LABELS.getPath(), productController.createShopLabels);
         get(Endpoints.PRODUCT_SELECT_UPDATE.getPath(), productController.serveProductPage);

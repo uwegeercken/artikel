@@ -81,4 +81,18 @@ public class CalendarUtility
        String[] weeks = CalendarUtility.getWeeks(10);
        System.out.println("weeks: " + weeks);
     }
+
+    public static long getTimestamp(int numberOfDaysAgo)
+    {
+        if(numberOfDaysAgo>0)
+        {
+            Calendar calendar = new GregorianCalendar();
+            calendar.add(Calendar.DATE, numberOfDaysAgo * -1);
+            return calendar.getTimeInMillis();
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

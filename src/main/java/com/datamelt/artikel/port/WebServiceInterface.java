@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface WebServiceInterface
 {
-    List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception;
+    List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception;
     Product getProductById(long id) throws Exception;
     Product updateProduct(long id, Form form, NumberFormatter numberFormatter) throws Exception;
     Product addProduct(Form form, NumberFormatter numberFormatter) throws Exception;

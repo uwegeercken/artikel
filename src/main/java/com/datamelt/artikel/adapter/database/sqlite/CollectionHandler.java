@@ -1,6 +1,7 @@
 package com.datamelt.artikel.adapter.database.sqlite;
 
 import com.datamelt.artikel.model.*;
+import com.datamelt.artikel.util.CalendarUtility;
 import com.datamelt.artikel.util.FileUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,7 @@ import java.util.*;
 
 class CollectionHandler
 {
-    public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? order by cast(number as int)";
+    public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? and timestamp >= ? order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS = "select * from product where producer_id=? and unavailable=0 order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCERS = "select * from producer order by id";
     public static final String SQL_QUERY_MARKETS = "select * from market order by id";
@@ -54,8 +55,10 @@ class CollectionHandler
         return productCounts;
     }
 
-    public static List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly) throws Exception
+    public static List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
     {
+        long searchProductsSince = CalendarUtility.getTimestamp(changedSinceNumberOfDays);
+
         List<Product> products = new ArrayList<>();
         PreparedStatement statement;
         if(availableOnly)
@@ -67,6 +70,7 @@ class CollectionHandler
             statement = connection.prepareStatement(SQL_QUERY_PRODUCER_PRODUCTS);
         }
         statement.setLong(1, producerId);
+        statement.setLong(2, searchProductsSince);
 
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())

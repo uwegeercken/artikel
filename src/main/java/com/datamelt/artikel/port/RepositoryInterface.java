@@ -2,7 +2,6 @@ package com.datamelt.artikel.port;
 
 import com.datamelt.artikel.model.*;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,7 @@ public interface RepositoryInterface
     Product getProductByNumber(String number) throws Exception;
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
-    List<Product> getAllProducts(long producerId, boolean availableOnly) throws Exception;
+    List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception;
     void deleteProduct(long id) throws Exception;
     List<ProductHistory>getProductHistory(Product product) throws Exception;
 
