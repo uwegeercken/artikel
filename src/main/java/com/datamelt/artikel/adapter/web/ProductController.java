@@ -31,7 +31,7 @@ import java.util.*;
 public class ProductController implements ProductApiInterface
 {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
-    private WebServiceInterface service;
+    private final WebServiceInterface service;
     private MainConfiguration configuration;
 
     public ProductController(WebServiceInterface service, MainConfiguration configuration)
@@ -379,8 +379,6 @@ public class ProductController implements ProductApiInterface
 
     public Route shopProductComplete = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
-        Producer producer = getProducerById(producerId);
-
         Map<String, Object> model = new HashMap<>();
 
         ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
