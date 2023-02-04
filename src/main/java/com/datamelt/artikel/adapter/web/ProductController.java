@@ -43,28 +43,28 @@ public class ProductController implements ProductApiInterface
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getAllProductsNumberOfDays());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getAllProductsNumberOfDays());
         return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getAllProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route serveProductsChangedRecentlyPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getRecentlyChangedProductsNumberOfDays());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getRecentlyChangedProductsNumberOfDays());
         return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getRecentlyChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route serveProductsUnchangedShortTermPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getShorttermChangedProductsNumberOfDays());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getShorttermChangedProductsNumberOfDays());
         return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getShorttermChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route serveProductsUnchangedLongTermPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute("productsNumberOfDays", configuration.getWebApp().getLongtermChangedProductsNumberOfDays());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getLongtermChangedProductsNumberOfDays());
         return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getLongtermChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 

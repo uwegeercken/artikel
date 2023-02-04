@@ -57,4 +57,6 @@ public class Constants
     public static final String REGO_FILENAME = "users-policy.rego";
     public static final String USERTOKEN_ISSUER = "article application";
     public static final String ORDER_DOCUMENT_GENERIC_TEAMPLATE = "order_[producer_id].adoc";
+
+    public static final String SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS = "productsNumberOfDays";
 }
