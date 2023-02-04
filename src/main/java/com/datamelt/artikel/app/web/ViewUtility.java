@@ -25,7 +25,10 @@ public class ViewUtility
         model.put(Constants.MODEL_NUMBER_FORMATTER_KEY, WebApplication.getNumberFormatter());
         model.put(Constants.MODEL_MESSAGES_KEY, WebApplication.getMessages());
         model.put(Constants.MODEL_PRODUCERS_KEY, request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCERS));
-        model.put(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS));
+        model.put(Constants.MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY, WebApplication.getConfiguration().getWebApp().getRecentlyUnchangedProductsNumberOfDays());
+        model.put(Constants.MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY, WebApplication.getConfiguration().getWebApp().getShorttermUnchangedProductsNumberOfDays());
+        model.put(Constants.MODEL_LONGTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY, WebApplication.getConfiguration().getWebApp().getLongtermUnchangedProductsNumberOfDays());
+
         Optional<String> token = Optional.ofNullable(request.session().attribute(Constants.USERTOKEN_KEY));
         if(token.isPresent())
         {

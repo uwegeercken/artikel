@@ -43,29 +43,29 @@ public class ProductController implements ProductApiInterface
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getAllProductsNumberOfDays());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getAllProductsNumberOfDays());
         return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getAllProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route serveProductsChangedRecentlyPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getRecentlyChangedProductsNumberOfDays());
-        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getRecentlyChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDays());
+        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route serveProductsUnchangedShortTermPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getShorttermChangedProductsNumberOfDays());
-        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getShorttermChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDays());
+        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route serveProductsUnchangedLongTermPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_NUMBER_OF_DAYS, configuration.getWebApp().getLongtermChangedProductsNumberOfDays());
-        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getLongtermChangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getLongtermUnchangedProductsNumberOfDays());
+        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getLongtermUnchangedProductsNumberOfDays()), Path.Template.PRODUCTS);
     };
 
     public Route servePriceChartPage = (Request request, Response response) -> {

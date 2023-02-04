@@ -5,28 +5,28 @@ public class WebAppConfiguration
     private int chartingNumberOfWeeksToDisplay;
 
     private final int allProductsNumberOfDays = 0;
-    private int recentlyChangedProductsNumberOfDays;
-    private int shorttermChangedProductsNumberOfDays;
-    private int longtermChangedProductsNumberOfDays;
+    private int recentlyUnchangedProductsNumberOfDays;
+    private int shorttermUnchangedProductsNumberOfDays;
+    private int longtermUnchangedProductsNumberOfDays;
 
     public int getChartingNumberOfWeeksToDisplay()
     {
         return chartingNumberOfWeeksToDisplay;
     }
 
-    public int getRecentlyChangedProductsNumberOfDays()
+    public int getRecentlyUnchangedProductsNumberOfDays()
     {
-        return recentlyChangedProductsNumberOfDays;
+        return recentlyUnchangedProductsNumberOfDays;
     }
 
-    public int getShorttermChangedProductsNumberOfDays()
+    public int getShorttermUnchangedProductsNumberOfDays()
     {
-        return shorttermChangedProductsNumberOfDays;
+        return shorttermUnchangedProductsNumberOfDays;
     }
 
-    public int getLongtermChangedProductsNumberOfDays()
+    public int getLongtermUnchangedProductsNumberOfDays()
     {
-        return longtermChangedProductsNumberOfDays;
+        return longtermUnchangedProductsNumberOfDays;
     }
 
     public int getAllProductsNumberOfDays()

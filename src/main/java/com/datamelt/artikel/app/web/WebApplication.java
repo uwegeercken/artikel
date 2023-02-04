@@ -34,12 +34,13 @@ public class WebApplication
     private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
     private static NumberFormatter numberFormatter;
+    private static MainConfiguration configuration=null;
 
     public static void main(String[] args) throws Exception
     {
         logger.info("initializing web application");
         logger.info("web application version [{}], last update [{}]", APPLCATION_VERSION, APPLCATION_LAST_UPDATE);
-        MainConfiguration configuration=null;
+
         if(args!=null && args.length>0)
         {
             logger.info("loading configuration from file: [{}] ", args[0]);
@@ -119,7 +120,7 @@ public class WebApplication
         post(Endpoints.USERS_CHANGE_PASSWORD.getPath(), userController.serveUpdatePasswordPage);
 
         get(Endpoints.PRODUCTS.getPath(), productController.serveAllProductsPage);
-        get(Endpoints.PRODUCTS_CHANGED_RECENTLY.getPath(), productController.serveProductsChangedRecentlyPage);
+        get(Endpoints.PRODUCTS_UNCHANGED_RECENTLY.getPath(), productController.serveProductsChangedRecentlyPage);
         get(Endpoints.PRODUCTS_UNCHANGED_SHORTTERM.getPath(),productController.serveProductsUnchangedShortTermPage);
         get(Endpoints.PRODUCTS_UNCHANGED_LONGTERM.getPath(),productController.serveProductsUnchangedLongTermPage);
         get(Endpoints.GENERATE_LABELS.getPath(), productController.createLabels);
@@ -225,4 +226,6 @@ public class WebApplication
     }
 
     public static SecretKey getSecretKey() { return secretKey; }
+
+    public static MainConfiguration getConfiguration() { return configuration; }
 }

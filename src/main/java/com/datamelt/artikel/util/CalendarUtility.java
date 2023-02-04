@@ -84,15 +84,15 @@ public class CalendarUtility
 
     public static long getTimestamp(int numberOfDaysAgo)
     {
+        Calendar calendar = new GregorianCalendar();
         if(numberOfDaysAgo>0)
         {
-            Calendar calendar = new GregorianCalendar();
             calendar.add(Calendar.DATE, numberOfDaysAgo * -1);
             return calendar.getTimeInMillis();
         }
         else
         {
-            return 0;
+            return calendar.getTimeInMillis();
         }
     }
 }

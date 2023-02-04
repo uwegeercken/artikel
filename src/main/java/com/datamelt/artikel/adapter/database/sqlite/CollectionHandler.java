@@ -15,7 +15,7 @@ import java.util.*;
 
 class CollectionHandler implements CollectionHandlerInterface
 {
-    public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? and timestamp >= ? order by cast(number as int)";
+    public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? and timestamp < ? order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS = "select * from product where producer_id=? and unavailable=0 order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCERS = "select * from producer order by id";
     public static final String SQL_QUERY_MARKETS = "select * from market order by id";
@@ -61,8 +61,7 @@ class CollectionHandler implements CollectionHandlerInterface
     @Override
     public List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
     {
-        long searchProductsSince = CalendarUtility.getTimestamp(changedSinceNumberOfDays);
-
+        long searchProductsBefore = CalendarUtility.getTimestamp(changedSinceNumberOfDays);
         List<Product> products = new ArrayList<>();
         PreparedStatement statement;
         if(availableOnly)
@@ -74,7 +73,7 @@ class CollectionHandler implements CollectionHandlerInterface
             statement = connection.prepareStatement(SQL_QUERY_PRODUCER_PRODUCTS);
         }
         statement.setLong(1, producerId);
-        statement.setLong(2, searchProductsSince);
+        statement.setLong(2, searchProductsBefore);
 
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())

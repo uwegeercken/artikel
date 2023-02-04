@@ -75,10 +75,10 @@ Adjust the variables according to your needs, especially the folders where the d
     opa:
         host: http://localhost:8181
     webApp:
-      chartingNumberOfWeeksToDisplay: 10
-      recentlyChangedProductsNumberOfDays: 30
-      shorttermChangedProductsNumberOfDays: 60
-      longtermChangedProductsNumberOfDays: 90    
+        chartingNumberOfWeeksToDisplay: 10
+        recentlyUnchangedProductsNumberOfDays: 30
+        shorttermUnchangedProductsNumberOfDays: 60
+        longtermUnchangedProductsNumberOfDays: 90
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
       glabelsFile: /home/tester/labels-01.glabels
