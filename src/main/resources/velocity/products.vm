@@ -24,12 +24,15 @@
             <button type="submit" name="submit" formaction="/pricechart/producer/${producer.id}/">
                 <img width="40px" height="40px" src="/img/price.png" title="${messages.get("IMAGE_PRICECHART")}">
             </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img id="checkall" height="40px" width="40px" src="/img/checkmark_all.png" title="${messages.get("IMAGE_SELECT_ALL")}">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <img id="checkall" height="40px" width="40px" src="/img/checkmark_all.png" title="${messages.get("IMAGE_SELECT_ALL")}">
             <img id="uncheckall" height="40px" width="40px" src="/img/checkmark_none.png" title="${messages.get("IMAGE_UNSELECT_ALL")}">
-            <a href="/unchangedproductsrecently/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-1.png" title="${recentlyUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
-            <a href="/unchangedproductsshortterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-2.png" title="${shorttermUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
-            <a href="/unchangedproductslongterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-3.png" title="${longtermUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
         #end
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/unchangedproductsrecently/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-1.png" title="${recentlyUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
+        <a href="/unchangedproductsshortterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-2.png" title="${shorttermUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
+        <a href="/unchangedproductslongterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-3.png" title="${longtermUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
+
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_LIST")}</p>
