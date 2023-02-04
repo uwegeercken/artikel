@@ -49,7 +49,7 @@ public class LoginController implements LoginApiInterface
         String token = request.session().attribute(Constants.USERTOKEN_KEY);
         Jws<Claims> jws = Token.parseToken(token);
         request.session().removeAttribute(Constants.USERTOKEN_KEY);
-        request.session().removeAttribute("ordercollection");
+        request.session().removeAttribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         logger.info("user logout successful. user [{}]", jws.getBody().getSubject());
         return ViewUtility.render(request,model,Path.Template.INDEX);
     };

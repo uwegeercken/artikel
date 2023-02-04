@@ -172,7 +172,7 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         Optional<ProductOrder> order = Optional.ofNullable(orderCollection.get(producerId));
         Map<String, Object> model = new HashMap<>();
         if(order.isPresent())
@@ -219,7 +219,7 @@ public class ProductController implements ProductApiInterface
             }
         }
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         ProductOrder order = orderCollection.get(producerId);
         if(order==null)
         {
@@ -275,7 +275,7 @@ public class ProductController implements ProductApiInterface
             }
         }
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         ProductOrder order = orderCollection.get(producerId);
         if(order==null)
         {
@@ -348,7 +348,7 @@ public class ProductController implements ProductApiInterface
             logger.error("error parsing amount from value [{}]. productId [{}], producerId [{}]", request.queryParams("productamount"), productId, producerId);
         }
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         ProductOrder order = orderCollection.get(producerId);
         ProductOrderItem shopItem = order.getOrderItem(productId);
         shopItem.setAmount(value);
@@ -365,7 +365,7 @@ public class ProductController implements ProductApiInterface
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         ProductOrder  order = orderCollection.get(producerId);
 
         ProductOrderItem shopItem = order.getOrderItem(productId);
@@ -383,7 +383,7 @@ public class ProductController implements ProductApiInterface
 
         Map<String, Object> model = new HashMap<>();
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         ProductOrder order = orderCollection.get(producerId);
 
         SimpleDateFormat formatter = new SimpleDateFormat(Constants.GERMAN_DATE_ONLY_FORMAT);
@@ -458,7 +458,7 @@ public class ProductController implements ProductApiInterface
         Producer producer = getProducerById(producerId);
         Map<String, Object> model = new HashMap<>();
 
-        ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+        ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         ProductOrder order = orderCollection.get(producerId);
         byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
         if(pdfOutputFile!=null)
@@ -512,7 +512,7 @@ public class ProductController implements ProductApiInterface
                 addOrUpdateProduct(model, form);
                 if(producer.getNoOrdering()==1)
                 {
-                    ProductOrderCollection orderCollection = request.session().attribute("ordercollection");
+                    ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
                     ProductOrder order = orderCollection.get(producerId);
                     if (order == null)
                     {

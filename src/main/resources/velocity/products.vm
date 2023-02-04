@@ -24,6 +24,11 @@
             <button type="submit" name="submit" formaction="/pricechart/producer/${producer.id}/">
                 <img width="40px" height="40px" src="/img/price.png" title="${messages.get("IMAGE_PRICECHART")}">
             </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img id="checkall" height="40px" width="40px" src="/img/checkmark_all.png" title="${messages.get("IMAGE_SELECT_ALL")}">
+            <img id="uncheckall" height="40px" width="40px" src="/img/checkmark_none.png" title="${messages.get("IMAGE_UNSELECT_ALL")}">
+            <a href="/changedproducts/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-1.png" title="${messages.get("IMAGE_CHANGED_RECENTLY")}"></a>
+            <a href="/unchangedproductsst/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-2.png" title="${messages.get("IMAGE_UNCHANGED_SHORTTERM")}"></a>
+            <a href="/unchangedproductslt/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-3.png" title="${messages.get("IMAGE_UNCHANGED_LONGTERM")}"></a>
         #end
     </p>
     <div id="help">
@@ -46,13 +51,6 @@
     </div>
     <div id="filter">
         ${messages.get("FILTER_TEXTBOX")}:&nbsp;<input id="search" searchtype="products_${producer.id}" type="text"">
-        #if($producer.noOrdering==1)
-            &nbsp;<img id="checkall" height="30" width="30" src="/img/checkmark_all.png" title="${messages.get("IMAGE_SELECT_ALL")}">
-            &nbsp;<img id="uncheckall" height="30" width="30" src="/img/checkmark_none.png" title="${messages.get("IMAGE_UNSELECT_ALL")}">
-        #end
-        <a href="/changedproducts/producer/${producer.id}/"><img width="30px" height="30px" src="/img/arrow-1.png" title="${messages.get("IMAGE_CHANGED_RECENTLY")}"></a>
-        <a href="/unchangedproductsst/producer/${producer.id}/"><img width="30px" height="30px" src="/img/arrow-2.png" title="${messages.get("IMAGE_UNCHANGED_SHORTTERM")}"></a>
-        <a href="/unchangedproductslt/producer/${producer.id}/"><img width="30px" height="30px" src="/img/arrow-3.png" title="${messages.get("IMAGE_UNCHANGED_LONGTERM")}"></a>
     </div>
     <div class="error">
         #if (${result})
