@@ -22,11 +22,10 @@
 		#end
 		<ul>
             #if($tokenpayload)
-                <li><a href="/users/changepassword/${tokenpayload.get("id")}/">Passwort ändern</a></li>
-                <li><a href="/logout/">Abmelden</a></li>
+                <li><a href="/users/changepassword/${tokenpayload.get("id")}/">${messages.get("MENU_ENTRY_PASSWORD_CHANGE")}</a></li>
+                <li><a href="/logout/">${messages.get("MENU_ENTRY_LOGOUT")}</a></li>
             #else
-                <li><a href="/login/">Anmelden</a></li>
-
+                <li><a href="/login/">${messages.get("MENU_ENTRY_LOGIN")}</a></li>
             #end
         </ul>
         #if($tokenpayload.role=="admin")
