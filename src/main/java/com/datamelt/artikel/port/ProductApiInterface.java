@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface ProductApiInterface
 {
-    List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception;
+    List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception;
     Product getProductById(long id) throws Exception;
     void updateProduct(long id, Form form, NumberFormatter numberFormatter) throws Exception;
     void addProduct(Form form, NumberFormatter numberFormatter) throws Exception;

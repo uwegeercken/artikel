@@ -16,9 +16,11 @@ opa:
 
 webApp:
   chartingNumberOfWeeksToDisplay: 10
-  recentlyUnchangedProductsNumberOfDays: 30
-  shorttermUnchangedProductsNumberOfDays: 60
-  longtermUnchangedProductsNumberOfDays: 90
+  recentlyUnchangedProductsNumberOfDaysMin: 30
+  recentlyUnchangedProductsNumberOfDaysMax: 60
+  shorttermUnchangedProductsNumberOfDaysMin: 60
+  shorttermUnchangedProductsNumberOfDaysMax: 90
+  longtermUnchangedProductsNumberOfDaysMin: 90
 
 email:
   templateFileFolder: config

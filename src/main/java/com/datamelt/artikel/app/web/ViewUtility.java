@@ -25,9 +25,11 @@ public class ViewUtility
         model.put(Constants.MODEL_NUMBER_FORMATTER_KEY, WebApplication.getNumberFormatter());
         model.put(Constants.MODEL_MESSAGES_KEY, WebApplication.getMessages());
         model.put(Constants.MODEL_PRODUCERS_KEY, request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCERS));
-        model.put(Constants.MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY, WebApplication.getConfiguration().getWebApp().getRecentlyUnchangedProductsNumberOfDays());
-        model.put(Constants.MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY, WebApplication.getConfiguration().getWebApp().getShorttermUnchangedProductsNumberOfDays());
-        model.put(Constants.MODEL_LONGTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY, WebApplication.getConfiguration().getWebApp().getLongtermUnchangedProductsNumberOfDays());
+        model.put(Constants.MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY, WebApplication.getConfiguration().getWebApp().getRecentlyUnchangedProductsNumberOfDaysMin());
+        model.put(Constants.MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MAX_KEY, WebApplication.getConfiguration().getWebApp().getRecentlyUnchangedProductsNumberOfDaysMax());
+        model.put(Constants.MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY, WebApplication.getConfiguration().getWebApp().getShorttermUnchangedProductsNumberOfDaysMin());
+        model.put(Constants.MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MAX_KEY, WebApplication.getConfiguration().getWebApp().getShorttermUnchangedProductsNumberOfDaysMax());
+        model.put(Constants.MODEL_LONGTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY, WebApplication.getConfiguration().getWebApp().getLongtermUnchangedProductsNumberOfDaysMin());
 
         Optional<String> token = Optional.ofNullable(request.session().attribute(Constants.USERTOKEN_KEY));
         if(token.isPresent())

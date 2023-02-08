@@ -26,7 +26,7 @@ public interface RepositoryInterface
     Product getProductByNumber(String number) throws Exception;
     boolean getExistProduct(String number) throws Exception;
     boolean getIsUniqueProduct(long id, String number) throws Exception;
-    List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception;
+    List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception;
     void deleteProduct(long id) throws Exception;
     List<ProductHistory>getProductHistory(Product product) throws Exception;
 
