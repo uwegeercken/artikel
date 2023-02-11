@@ -12,6 +12,9 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <buildah.folder>${project.build.directory}/buildah/${project.artifactId}</buildah.folder>
+        <buildah.image.version>0.2</buildah.image.version>
+        <nexus-url>http://silent1:8082</nexus-url>
     </properties>
 
     <dependencies>
@@ -229,6 +232,21 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>copy-buildah-script</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/artikel/buildah</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>buildah</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>copy-runscript-and-config</id>
                         <phase>validate</phase>
                         <goals>
@@ -269,6 +287,19 @@
                             <overWriteIfNewer>true</overWriteIfNewer>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-dependencies-buildah</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/artikel/buildah/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -288,6 +319,24 @@
                     </archive>
                     <finalName>artikel/artikel-${project.version}/${project.artifactId}</finalName>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>exec-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <id>generate jare server container image using buildah</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>bash</executable>
+                            <commandlineArgs>${buildah.folder}/buildah_artikel.sh ${buildah.image.version}</commandlineArgs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
