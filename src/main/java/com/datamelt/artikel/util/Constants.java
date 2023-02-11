@@ -50,9 +50,12 @@ public class Constants
     public static final String MODEL_MESSAGES_KEY = "messages";
     public static final String MODEL_TOKEN_PAYLOAD_KEY = "tokenpayload";
 
-    public static final String MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY = "recentlyUnchangedProductsNumberOfDays";
-    public static final String MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY = "shorttermUnchangedProductsNumberOfDays";
-    public static final String MODEL_LONGTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY = "longtermUnchangedProductsNumberOfDays";
+    public static final String MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY = "recentlyUnchangedProductsNumberOfDaysMin";
+    public static final String MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MAX_KEY = "recentlyUnchangedProductsNumberOfDaysMax";
+    public static final String MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY = "shorttermUnchangedProductsNumberOfDaysMin";
+    public static final String MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MAX_KEY = "shorttermUnchangedProductsNumberOfDaysMax";
+    public static final String MODEL_LONGTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY = "longtermUnchangedProductsNumberOfDaysMin";
+    public static final String MODEL_UNCHANGED_PRODUCTS_FILTER_KEY = "filter";
 
     public static final String MODEL_PRODUCTORDERITEMS_KEY = "productorderitems";
     public static final String MODEL_SHOPLABELSONLY_KEY = "shoplabelsonly";
@@ -71,7 +74,9 @@ public class Constants
     public static final String USERTOKEN_ISSUER = "article application";
     public static final String ORDER_DOCUMENT_GENERIC_TEAMPLATE = "order_[producer_id].adoc";
 
-    public static final String SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS = "productsChangedNumberOfDays";
+    public static final String SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN = "productsChangedNumberOfDaysMin";
+    public static final String SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX = "productsChangedNumberOfDaysMax";
     public static final String SESSION_ATTRIBUTE_ORDER_COLLECTION = "ordercollection";
     public static final String SESSION_ATTRIBUTE_PRODUCERS = "producers";
+    public static final String SESSION_ATTRIBUTE_FILTER = "filter";
 }

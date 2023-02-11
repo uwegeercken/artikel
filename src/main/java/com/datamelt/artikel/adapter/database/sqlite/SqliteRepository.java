@@ -173,9 +173,9 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
+    public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception
     {
-        return collectionHandler.getAllProducts(connection, producerId, availableOnly, changedSinceNumberOfDays);
+        return collectionHandler.getAllProducts(connection, producerId, availableOnly, changedSinceNumberOfDaysMin, changedSinceNumberOfDaysMax);
     }
 
     @Override

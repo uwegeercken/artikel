@@ -72,7 +72,7 @@ public class ProductOrderController implements ProductOrderApiInterface
             }
             else
             {
-                List<Product> products = getAllProducts(producer.getId(), true, configuration.getWebApp().getAllProductsNumberOfDays() );
+                List<Product> products = getAllProducts(producer.getId(), true, configuration.getWebApp().getAllProductsNumberOfDaysMin(), configuration.getWebApp().getAllProductsNumberOfDaysMax());
                 pdfFileBytes = getOrderDocument(producer, order.get(), products);
             }
 
@@ -130,7 +130,7 @@ public class ProductOrderController implements ProductOrderApiInterface
             File pdfFile = new File(pdfFullFilename);
             if(!pdfFile.exists())
             {
-                List<Product> products = getAllProducts(producer.getId(), true, configuration.getWebApp().getAllProductsNumberOfDays() );
+                List<Product> products = getAllProducts(producer.getId(), true, configuration.getWebApp().getAllProductsNumberOfDaysMin(), configuration.getWebApp().getAllProductsNumberOfDaysMax());
                 byte[] pdfFileBytes = getOrderDocument(producer, order, products);
             }
             boolean success = sendEmail(order, form.get(FormField.EMAIL), configuration);
@@ -186,9 +186,9 @@ public class ProductOrderController implements ProductOrderApiInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
+    public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception
     {
-        return service.getAllProducts(producerId, availableOnly,changedSinceNumberOfDays );
+        return service.getAllProducts(producerId, availableOnly,changedSinceNumberOfDaysMin, changedSinceNumberOfDaysMax);
     }
 
     @Override

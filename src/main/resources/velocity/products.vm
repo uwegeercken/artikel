@@ -6,7 +6,7 @@
     #else
         <form method="post" action="/productlabels/producer/${producer.id}/">
     #end
-    <p class="heading">${messages.get("PAGETITLE_PRODUCT_LIST")} - ${producer.name} ($products.size())</p>
+    <p class="heading">${messages.get("PAGETITLE_PRODUCT_LIST")} - ${producer.name} ($products.size()) - Filter: $filter</p>
     <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
         <a href="/product/0/producer/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/product_add.png" title="${messages.get("IMAGE_PRODUCT_ADD")}"></a>
 
@@ -29,9 +29,9 @@
             <img id="uncheckall" height="40px" width="40px" src="/img/checkmark_none.png" title="${messages.get("IMAGE_UNSELECT_ALL")}">
         #end
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/unchangedproductsrecently/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-1.png" title="${recentlyUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
-        <a href="/unchangedproductsshortterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-2.png" title="${shorttermUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
-        <a href="/unchangedproductslongterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-3.png" title="${longtermUnchangedProductsNumberOfDays} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
+        <a href="/unchangedproductsrecently/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-1.png" title="${recentlyUnchangedProductsNumberOfDaysMin}-${recentlyUnchangedProductsNumberOfDaysMax} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
+        <a href="/unchangedproductsshortterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-2.png" title="${shorttermUnchangedProductsNumberOfDaysMin}-${shorttermUnchangedProductsNumberOfDaysMax} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
+        <a href="/unchangedproductslongterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/arrow-3.png" title="${longtermUnchangedProductsNumberOfDaysMin} ${messages.get("IMAGE_UNCHANGED_PRODUCTS_LONGTERM")}"></a>
 
     </p>
     <div id="help">

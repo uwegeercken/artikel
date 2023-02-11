@@ -43,29 +43,81 @@ public class ProductController implements ProductApiInterface
     public Route serveAllProductsPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getAllProductsNumberOfDays());
-        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getAllProductsNumberOfDays()), Path.Template.PRODUCTS);
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
+        model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY, WebApplication.getMessages().get("UNCHANGED_PRODUCTS_FILTER_ALL"));
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, configuration.getWebApp().getAllProductsNumberOfDaysMin(), configuration.getWebApp().getAllProductsNumberOfDaysMax()));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
+        }
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN, configuration.getWebApp().getAllProductsNumberOfDaysMin());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX, configuration.getWebApp().getAllProductsNumberOfDaysMax());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER, model.get(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY));
+        return ViewUtility.render(request, model, Path.Template.PRODUCTS);
     };
 
     public Route serveProductsChangedRecentlyPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDays());
-        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
+        model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMin() + "-" + configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMax() + " " + WebApplication.getMessages().get("IMAGE_UNCHANGED_PRODUCTS"));
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMin(), configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMax()));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
+        }
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMin());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMax());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER, model.get(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY));
+        return ViewUtility.render(request, model, Path.Template.PRODUCTS);
     };
 
     public Route serveProductsUnchangedShortTermPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDays());
-        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
+        model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDaysMin() + "-" + configuration.getWebApp().getShorttermUnchangedProductsNumberOfDaysMax() + " " + WebApplication.getMessages().get("IMAGE_UNCHANGED_PRODUCTS"));
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDaysMin(), configuration.getWebApp().getShorttermUnchangedProductsNumberOfDaysMax()));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
+        }
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDaysMin());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX, configuration.getWebApp().getShorttermUnchangedProductsNumberOfDaysMax());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER, model.get(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY));
+        return ViewUtility.render(request, model, Path.Template.PRODUCTS);
     };
 
     public Route serveProductsUnchangedLongTermPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getLongtermUnchangedProductsNumberOfDays());
-        return ViewUtility.render(request, shopProductsModel(producer, configuration.getWebApp().getLongtermUnchangedProductsNumberOfDays()), Path.Template.PRODUCTS);
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
+        model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY,  configuration.getWebApp().getLongtermUnchangedProductsNumberOfDaysMin() + " " + WebApplication.getMessages().get("IMAGE_UNCHANGED_PRODUCTS_LONGTERM"));
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, configuration.getWebApp().getLongtermUnchangedProductsNumberOfDaysMin(), configuration.getWebApp().getAllProductsNumberOfDaysMax()));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
+        }
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN, configuration.getWebApp().getLongtermUnchangedProductsNumberOfDaysMin());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX, configuration.getWebApp().getAllProductsNumberOfDaysMax());
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER, model.get(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY));
+        return ViewUtility.render(request, model, Path.Template.PRODUCTS);
     };
 
     public Route servePriceChartPage = (Request request, Response response) -> {
@@ -77,7 +129,7 @@ public class ProductController implements ProductApiInterface
 
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        model.put("producer", producer);
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
 
         Set<String> parameters = request.queryParams();
         List<Long> ids = new ArrayList<>();
@@ -183,7 +235,7 @@ public class ProductController implements ProductApiInterface
         model.put(Constants.MODEL_PRODUCER_KEY, producer);
         if(producer.getNoOrdering()==1)
         {
-            return ViewUtility.render(request,model,Path.Template.SHOPPRODUCTS_NO_ORDERING);
+            return ViewUtility.render(request, model,Path.Template.SHOPPRODUCTS_NO_ORDERING);
         }
         else
         {
@@ -317,21 +369,6 @@ public class ProductController implements ProductApiInterface
         }
     };
 
-    private Map<String, Object> shopProductsModel(Producer producer, int changedSinceNumberOfDays)
-    {
-        Map<String, Object> model = new HashMap<>();
-        try
-        {
-            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, changedSinceNumberOfDays));
-        }
-        catch (Exception ex)
-        {
-            logger.error("error getting products for producerId [{}]", producer.getId());
-        }
-        model.put(Constants.MODEL_PRODUCER_KEY, producer);
-        return model;
-    }
-
     public Route shopProductAmount = (Request request, Response response) -> {
 
         long productId = Long.parseLong(request.params(":id"));
@@ -419,19 +456,37 @@ public class ProductController implements ProductApiInterface
     public Route deleteProduct = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
 
-        int productsNumberOfDays = configuration.getWebApp().getAllProductsNumberOfDays();
-        if(request.session().attribute("productsNumberOfDays")!=null)
+        int productsNumberOfDaysMin = configuration.getWebApp().getAllProductsNumberOfDaysMin();
+        if(request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN)!=null)
         {
-            productsNumberOfDays = request.session().attribute("productsNumberOfDays");
+            productsNumberOfDaysMin = request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN);
         }
-
+        int productsNumberOfDaysMax = configuration.getWebApp().getAllProductsNumberOfDaysMax();
+        if(request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX)!=null)
+        {
+            productsNumberOfDaysMax = request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX);
+        }
+        if(request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER)!=null)
+        {
+            model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY,request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER));
+        }
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, productsNumberOfDaysMin, productsNumberOfDaysMax));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
+        }
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
             deleteProduct(Long.parseLong(request.params(":id")));
         }
-        return ViewUtility.render(request, shopProductsModel(producer, productsNumberOfDays) ,Path.Template.PRODUCTS);
+        return ViewUtility.render(request, model ,Path.Template.PRODUCTS);
     };
 
     public Route createLabels = (Request request, Response response) -> {
@@ -485,14 +540,32 @@ public class ProductController implements ProductApiInterface
     public Route serveUpdateProductPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
 
-        int productsNumberOfDays = configuration.getWebApp().getAllProductsNumberOfDays();
-        if(request.session().attribute("productsNumberOfDays")!=null)
+        int productsNumberOfDaysMin = configuration.getWebApp().getAllProductsNumberOfDaysMin();
+        if(request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN)!=null)
         {
-            productsNumberOfDays = request.session().attribute("productsNumberOfDays");
+            productsNumberOfDaysMin = request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MIN);
+        }
+        int productsNumberOfDaysMax = configuration.getWebApp().getAllProductsNumberOfDaysMax();
+        if(request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX)!=null)
+        {
+            productsNumberOfDaysMax = request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS_MAX);
+        }
+        if(request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER)!=null)
+        {
+            model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY, request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER));
+        }
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, productsNumberOfDaysMin, productsNumberOfDaysMax));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
         }
 
-        Map<String, Object> model =  shopProductsModel(producer, productsNumberOfDays);
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
         {
@@ -523,7 +596,7 @@ public class ProductController implements ProductApiInterface
                     order.addOrderItem(item);
                     order.setProducer(producer);
                 }
-                return ViewUtility.render(request, shopProductsModel(producer, productsNumberOfDays), Path.Template.PRODUCTS);
+                return ViewUtility.render(request, model, Path.Template.PRODUCTS);
             }
             else
             {
@@ -535,7 +608,7 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
-            return ViewUtility.render(request, shopProductsModel(producer, productsNumberOfDays), Path.Template.PRODUCTS);
+            return ViewUtility.render(request, model, Path.Template.PRODUCTS);
         }
     };
 
@@ -570,9 +643,9 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDays) throws Exception
+    public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception
     {
-        return service.getAllProducts(producerId, availableOnly, changedSinceNumberOfDays);
+        return service.getAllProducts(producerId, availableOnly, changedSinceNumberOfDaysMin, changedSinceNumberOfDaysMax);
     }
 
     @Override
@@ -614,7 +687,7 @@ public class ProductController implements ProductApiInterface
     @Override
     public byte[] getLabelsOutputFile(long producerId) throws Exception
     {
-        List<Product> products = getAllProducts(producerId, false, configuration.getWebApp().getAllProductsNumberOfDays() );
+        List<Product> products = getAllProducts(producerId, false, configuration.getWebApp().getAllProductsNumberOfDaysMin(), configuration.getWebApp().getAllProductsNumberOfDaysMax() );
         List<ProductLabel> labels = new ArrayList<>();
         for(Product product : products)
         {
