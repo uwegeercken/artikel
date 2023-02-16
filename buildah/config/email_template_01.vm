@@ -1,0 +1,12 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<title>Bestellung</title>
+	</head>
+	<body>
+		<p>Sch&ouml;nen guten Tag,</p>
+		<p>Anbei sende ich Ihnen die Bestellung der Firma MyCompany f&uuml;r den: <b>${orderdate}</b>.</p>
+		<p>Mit freundlichen Gr&uuml;&szlig;en,</p>
+		<p>Henry Somebody</p>
+	</body>
+</html>

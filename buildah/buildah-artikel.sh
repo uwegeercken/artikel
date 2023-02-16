@@ -13,7 +13,7 @@
 #
  # example: sudo podman run --name "testserver" --rm -v ./rules/:/opt/jare-server/rules:Z silent1:8082/jare-server:latest
 #
-# last update: uwe.geercken@web.de - 2020-04-18
+# last update: uwe.geercken@web.de - 2023-02-15
 #
 
 # absolute path to this script
@@ -28,6 +28,7 @@ image_base_version="11"
 # new image variables
 image_name="artikel"
 image_version="${1}"
+application_version="${2}"
 image_author="uwe.geercken@web.de"
 image_format="docker"
 image_registry_docker_group="silent1:8082"
@@ -40,7 +41,11 @@ image_tag="${image_registry_docker_private}/${image_name}:${image_version}"
 working_container="artikel-working-container"
 application_folder_root="/opt/artikel"
 application_folder_lib="${application_folder_root}/lib"
+application_folder_config="${application_folder_root}/config"
+application_folder_documents="${application_folder_config}/documents"
+application_folder_pdf="${application_folder_config}/pdf"
 application_entrypoint="entrypoint.sh"
+application_jar="artikel.jar"
 
 # make sure scripts are executable
 echo "making entrypoint script executable"
@@ -54,14 +59,23 @@ container=$(buildah --name "${working_container}" from ${image_base}:${image_bas
 # create application directories
 echo "creating directories in container"
 buildah run $container mkdir "${application_folder_root}"
+buildah run $container mkdir "${application_folder_config}"
+buildah run $container mkdir "${application_folder_documents}"
+buildah run $container mkdir "${application_folder_pdf}"
+buildah run $container apt-get update
+buildah run $container apt-get -y install glabels
+buildah run $container rm -rf /var/lib/apt/lists/*
 
 # copy required files
 echo "copying files to container"
 buildah copy $container "${script_folder}/${application_entrypoint}" "${application_folder_root}"
+buildah copy $container "${script_folder}/../${application_version}/${application_jar}" "${application_folder_root}"
+buildah copy $container "${script_folder}/config" "${application_folder_config}"
 buildah copy $container "${script_folder}/lib" "${application_folder_lib}"
 
+
 # configuration
-echo "adding configuration to container"
+echo "adding container configuration"
 buildah config --author "${image_author}" $container
 buildah config --workingdir "${application_folder_root}" $container
 buildah config --entrypoint "${application_folder_root}/${application_entrypoint}" $container

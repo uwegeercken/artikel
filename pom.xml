@@ -12,7 +12,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <buildah.folder>${project.build.directory}/buildah/${project.artifactId}</buildah.folder>
+        <buildah.folder>${project.build.directory}/${project.artifactId}/buildah</buildah.folder>
         <buildah.image.version>0.2</buildah.image.version>
         <nexus-url>http://silent1:8082</nexus-url>
     </properties>
@@ -281,7 +281,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/artikel/artikel-${project.version}/lib</outputDirectory>
+                            <outputDirectory>${project.build.directory}/artikel/${project.artifactId}-${project.version}/lib</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -317,7 +317,7 @@
                             <Class-Path>.</Class-Path>
                         </manifestEntries>
                     </archive>
-                    <finalName>artikel/artikel-${project.version}/${project.artifactId}</finalName>
+                    <finalName>artikel/${project.artifactId}-${project.version}/${project.artifactId}</finalName>
                 </configuration>
             </plugin>
             <plugin>
@@ -326,14 +326,14 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>generate jare server container image using buildah</id>
+                        <id>generate artikel container image using buildah</id>
                         <phase>deploy</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
                         <configuration>
                             <executable>bash</executable>
-                            <commandlineArgs>${buildah.folder}/buildah_artikel.sh ${buildah.image.version}</commandlineArgs>
+                            <commandlineArgs>${buildah.folder}/buildah-artikel.sh ${buildah.image.version} ${project.artifactId}-${project.version}</commandlineArgs>
                         </configuration>
                     </execution>
                 </executions>
