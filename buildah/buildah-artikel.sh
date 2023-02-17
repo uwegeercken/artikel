@@ -26,16 +26,15 @@ image_base="openjdk"
 image_base_version="11"
 
 # new image variables
-image_name="artikel"
-image_version="${1}"
-application_version="${2}"
+artifact_id="${1}"
+artifact_version="${2}"
 image_author="uwe.geercken@web.de"
 image_format="docker"
 image_registry_docker_group="silent1:8082"
 image_registry_docker_private="silent1:8083"
 
-image_name_registry="${image_registry_docker_private}/${image_name}"
-image_tag="${image_registry_docker_private}/${image_name}:${image_version}"
+image_name_registry="${image_registry_docker_private}/${artifact_id}"
+image_tag="${image_registry_docker_private}/${artifact_id}:${artifact_version}"
 
 # variables for container
 working_container="artikel-working-container"
@@ -63,14 +62,14 @@ buildah run $container mkdir "${application_folder_config}"
 buildah run $container mkdir "${application_folder_documents}"
 buildah run $container mkdir "${application_folder_pdf}"
 buildah run $container apt-get update
-buildah run $container apt-get -y install glabels
+buildah run $container apt-get -y -qq install glabels
 buildah run $container rm -rf /var/lib/apt/lists/*
 
 # copy required files
 echo "copying files to container"
 buildah copy $container "${script_folder}/${application_entrypoint}" "${application_folder_root}"
-buildah copy $container "${script_folder}/../${application_version}/${application_jar}" "${application_folder_root}"
-buildah copy $container "${script_folder}/config" "${application_folder_config}"
+buildah copy $container "${script_folder}/../${application_version}/${artifact_id}-${artifact_version}/${application_jar}" "${application_folder_root}"
+#buildah copy $container "${script_folder}/config" "${application_folder_config}"
 buildah copy $container "${script_folder}/lib" "${application_folder_lib}"
 
 
