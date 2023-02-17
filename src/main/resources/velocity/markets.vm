@@ -2,8 +2,10 @@
 #parse("/velocity/layout.vm")
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_MARKET_LIST")} ($markets.size())</p>
-    <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()"><a href="process?action=bsh&ro=1&scriptname=selecteditgroup&id=0&mode=add">
-    <img class="add_external" height="40px" width="40px" src="/img/market_add.png" title="${messages.get("IMAGE_MARKET_ADD")}"></a></p>
+    <p>
+        <img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
+        <a href="/markets/0/"><img class="add_external" height="40px" width="40px" src="/img/market_add.png" title="${messages.get("IMAGE_MARKET_ADD")}"></a>
+    </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_MARKET_LIST")}</p>
         <p>${messages.get("HELP1_MARKET_LIST")}</p>
