@@ -61,8 +61,11 @@ buildah run $container mkdir "${application_folder_root}"
 buildah run $container mkdir "${application_folder_config}"
 buildah run $container mkdir "${application_folder_documents}"
 buildah run $container mkdir "${application_folder_pdf}"
+
+# install software
+export DEBIAN_FRONTEND=noninteractive
 buildah run $container apt-get update
-buildah run $container apt-get -y -qq install glabels
+buildah run $container apt-get -yq install glabels
 buildah run $container rm -rf /var/lib/apt/lists/*
 
 # copy required files
