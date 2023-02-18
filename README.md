@@ -25,15 +25,15 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 ## Web Application
 ### Preparations for the Web application:
-- to generate the application jar file - dependencies are generated in the "lib" folder - run:
+- to generate the application jar file - dependencies are generated in the "lib" folder - image run:
 
-    mvn clean install
+    mvn clean package
 
 - provide a yaml file with the configuration (see required attributes below). Samples for all configuration files are in the config folder.
 
 If you want to deliver files through the Web UI - such as e.g. PDF files - in the configuration file specify the folder in the documentsFolder variable and copy the files to that location.
 
-The application language is German. But one could easily copy the German resource file and translate it to a different language.
+The application language is German or English. But one could easily copy the resource file and translate it to a different language.
 
 #### Configuration for the Web application:
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
@@ -122,6 +122,20 @@ Make sure the Open Policy Agent server is running. Then, provide the path and na
     java -jar artikel.jar config.yaml
 
 Note: On first run, the database and an administrative user will be created in the database. The administrator name and password is output to the log. Make sure you change the password after you logged in. 
+
+### Run the application in a container
+To generate an OCI compliant image run:
+
+    mvn clean package
+
+This will use buildah to generate the container image, so make sure buildah is installed. The container comes without any configuration - you
+will have to volume mount a folder containing all required files when you run the container.
+
+Note: to run the application you need to have an OPA (Open Policy Agent) server running. Specify the OPA address in the config file.
+
+Run the container like this:
+
+    podman run --name "artikel-test" --rm -it -p 5000:4567 -v ./config:/opt/artikel/config:z artikel:latest
 
 ## CSV Loader
 ### Loading CSV Data from files

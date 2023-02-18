@@ -13,7 +13,6 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <buildah.folder>${project.build.directory}/${project.artifactId}/buildah</buildah.folder>
-        <nexus-url>http://silent1:8082</nexus-url>
     </properties>
 
     <dependencies>
