@@ -137,20 +137,7 @@
             <version>3.0.3</version>
         </dependency>
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>nexus</id>
-            <name>Releases</name>
-            <url>${nexus-url}/repository/maven-releases</url>
-            <layout>default</layout>
-        </repository>
-        <snapshotRepository>
-            <id>nexus</id>
-            <name>Snapshot</name>
-            <url>${nexus-url}/repository/maven-snapshots</url>
-            <layout>default</layout>
-        </snapshotRepository>
-    </distributionManagement>
+
 
     <build>
         <plugins>
@@ -286,19 +273,6 @@
                             <overWriteIfNewer>true</overWriteIfNewer>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>copy-dependencies-buildah</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/artikel/buildah/lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -326,7 +300,7 @@
                 <executions>
                     <execution>
                         <id>generate artikel container image using buildah</id>
-                        <phase>deploy</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>

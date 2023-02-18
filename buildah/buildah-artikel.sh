@@ -1,19 +1,13 @@
 #!/bin/bash
-# script to build a container image using buildah and pushing
-# it to the registry/artifactory.
+# script to build a container image using buildah
 #
-# executed by maven as part of the package phase and
-# using the project and dependency files.
 #
-# note: the 'image_registry_user' and 'image_registry_password' environment variables need to be defined.
-#       the image version is triggered from the pom.xml when this script is executed.
-#
-# to get a container from the resulting image, mount a volume which contains the ruleengine project zip file.
+# to get a container from the resulting image, mount a volume which contains config.yaml and additionally required files.
 # You can use docker or podman to run the image.
 #
- # example: sudo podman run --name "testserver" --rm -v ./rules/:/opt/jare-server/rules:Z silent1:8082/jare-server:latest
+ # example: podman run --name "artikel-test" --rm -it -p 5000:4567 -v ./config:/opt/artikel/config:z artikel:latest
 #
-# last update: uwe.geercken@web.de - 2023-02-15
+# last update: uwe.geercken@web.de - 2023-02-18
 #
 
 # absolute path to this script
@@ -30,11 +24,10 @@ artifact_id="${1}"
 artifact_version="${2}"
 image_author="uwe.geercken@web.de"
 image_format="docker"
-image_registry_docker_group="silent1:8082"
-image_registry_docker_private="silent1:8083"
 
 image_name_registry="${image_registry_docker_private}/${artifact_id}"
-image_tag="${image_registry_docker_private}/${artifact_id}:${artifact_version}"
+image_name="${artifact_id}"
+image_tag="${artifact_id}:${artifact_version}"
 
 # variables for container
 working_container="artikel-working-container"
@@ -73,7 +66,7 @@ echo "copying files to container"
 buildah copy $container "${script_folder}/${application_entrypoint}" "${application_folder_root}"
 buildah copy $container "${script_folder}/../${application_version}/${artifact_id}-${artifact_version}/${application_jar}" "${application_folder_root}"
 #buildah copy $container "${script_folder}/config" "${application_folder_config}"
-buildah copy $container "${script_folder}/lib" "${application_folder_lib}"
+buildah copy $container "${script_folder}/../${application_version}/${artifact_id}-${artifact_version}/lib" "${application_folder_lib}"
 
 
 # configuration
@@ -82,21 +75,13 @@ buildah config --author "${image_author}" $container
 buildah config --workingdir "${application_folder_root}" $container
 buildah config --entrypoint "${application_folder_root}/${application_entrypoint}" $container
 
-echo "committing container to image: ${image_name_registry}"
-buildah commit --format "${image_format}" $container "${image_name_registry}"
+echo "committing container to image: ${image_name}"
+buildah commit --format "${image_format}" $container "${image_name}"
 
 echo "removing container: ${container}"
 buildah rm $container
 
-echo "tagging image ${image_name_registry}: ${image_tag}"
-buildah tag  "${image_name_registry}" "${image_tag}"
-
-echo "login to registry ${image_registry_docker_private}, using user: ${image_registry_user}"
-buildah login -u "${image_registry_user}" -p "${image_registry_password}" "${image_registry_docker_private}"
-
-echo "pushing image ${image_name_registry}:latest to: ${image_registry_docker_private}"
-buildah push --tls-verify=false "${image_name_registry}" "docker://${image_name_registry}"
-echo "pushing image ${image_tag} to: ${image_registry_docker_private}"
-buildah push --tls-verify=false "${image_tag}" "docker://${image_tag}"
+echo "tagging image ${image_name}: ${image_tag}"
+buildah tag  "${image_name}" "${image_tag}"
 
 echo "end buildah process"
