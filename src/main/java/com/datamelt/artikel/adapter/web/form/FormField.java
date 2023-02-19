@@ -5,6 +5,7 @@ public enum FormField
     ID("id", "long", false,false),
     NAME("name", "string", true, false),
     NO_ORDERING("no_ordering", "int", false, false),
+    MARKET_TYPE("market_type", "string", false, false),
     PRODUCT_NAME("product_name", "string", false, false),
     TITLE("title", "string", false, true),
     SUBTITLE("subtitle", "string", false, true),

@@ -1,0 +1,24 @@
+#parse("/velocity/macros.vm")
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    <p class="heading">${messages.get("PAGETITLE_MARKET_DELETE")}</p>
+    <form method="POST" action="/market/delete/${market.id}/">
+    <div class="unit">
+        <div class="grouptop">
+            <p class="small">${messages.get("TYPE_MARKET")}</p>
+            <p class="big">$!market.name</a></p>
+        </div>
+    </div>
+    <div class="bottomtext">
+    <p>${messages.get("MARKET_DELETE_CONFIRMATION")}</p>
+    <p>
+        <input type="submit" value="${messages.get("FORM_BUTTON_DELETE")}" name="submit">
+        <input type="submit" value="${messages.get("FORM_BUTTON_CANCEL")}" name="submit">
+    </p>
+    </div>
+    </form>
+    <br>
+    <br>
+    <br>
+#end
+
