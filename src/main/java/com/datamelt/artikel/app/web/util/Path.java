@@ -19,6 +19,8 @@ public class Path
         public static final String PRODUCER = "/velocity/editproducer.vm";
         public static final String PRODUCER_DELETE = "/velocity/deleteproducer.vm";
         public static final String MARKETS = "/velocity/markets.vm";
+        public static final String MARKET = "/velocity/editmarket.vm";
+        public static final String MARKET_DELETE = "/velocity/deletemarket.vm";
         public static final String PRODUCTCONTAINERS = "/velocity/productcontainers.vm";
         public static final String PRODUCTCONTAINER = "/velocity/editproductcontainer.vm";
         public static final String PRODUCTCONTAINER_DELETE = "/velocity/deleteproductcontainer.vm";

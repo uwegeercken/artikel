@@ -153,6 +153,10 @@ public class WebApplication
         post(Endpoints.PRODUCER_DELETE.getPath(), producerController.deleteProducer);
 
         get(Endpoints.MARKETS.getPath(), marketController.serveAllMarketsPage);
+        get(Endpoints.MARKET_SELECT_UPDATE.getPath(), marketController.serveMarketPage);
+        post(Endpoints.MARKET_UPDATE.getPath(), marketController.serveUpdateMarketPage);
+        get(Endpoints.MARKET_SELECT_DELETE.getPath(), marketController.serveDeleteMarketPage);
+        post(Endpoints.MARKET_DELETE.getPath(), marketController.deleteMarket);
 
         get(Endpoints.PRODUCTCONTAINERS.getPath(), containerController.serveAllProductContainersPage);
         get(Endpoints.PRODUCTCONTAINER_SELECT_UPDATE.getPath(), containerController.serveProductContainerPage);

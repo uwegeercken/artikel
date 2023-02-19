@@ -39,6 +39,14 @@ public class FormConverter
         return form;
     }
 
+    public static Form convertToForm(Market market)
+    {
+        Form form = new Form();
+        form.put(FormField.ID, String.valueOf(market.getId()));
+        form.put(FormField.NAME, market.getName());
+        return form;
+    }
+
     public static Form convertToForm(ProductOrigin origin)
     {
         Form form = new Form();

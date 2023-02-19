@@ -36,6 +36,11 @@ public interface WebServiceInterface
     boolean getIsUniqueProductOrigin(long id, String name) throws Exception;
 
     List<Market> getAllMarkets() throws Exception;
+    Market getMarketById(long id) throws Exception;
+    Market updateMarket(long id, Form form) throws Exception;
+    Market addMarket(Form form) throws Exception;
+    boolean getIsUniqueMarket(long id, String name) throws Exception;
+    void deleteMarket(long id) throws Exception;
 
     List<ProductContainer> getAllProductContainers() throws Exception;
     ProductContainer getProductContainerById(long id) throws Exception;
