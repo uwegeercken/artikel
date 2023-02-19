@@ -25,7 +25,7 @@ class MarketUpdate
         {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, market.getName());
-            statement.setString(2, market.getType());
+            statement.setLong(2, market.getType());
             statement.executeUpdate();
             statement.clearParameters();
 
@@ -48,7 +48,7 @@ class MarketUpdate
         {
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE);
             statement.setString(1, market.getName());
-            statement.setString(2, market.getType());
+            statement.setLong(2, market.getType());
             statement.setLong(3, market.getId());
             statement.executeUpdate();
             statement.clearParameters();

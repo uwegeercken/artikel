@@ -43,7 +43,7 @@ public class FormConverter
     {
         Form form = new Form();
         form.put(FormField.ID, String.valueOf(market.getId()));
-        form.put(FormField.MARKET_TYPE, market.getType());
+        form.put(FormField.MARKET_TYPE, String.valueOf(market.getType()));
         form.put(FormField.NAME, market.getName());
         return form;
     }

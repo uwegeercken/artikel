@@ -30,10 +30,10 @@
             <td>
                 <select name="$fields.valueOf("MARKET_TYPE")" size="1">
                 #foreach($type in $types)
-                    #if(${form.get($fields.valueOf("MARKET_TYPE"))}==${type.name})
-                        <option selected value="${type.name}">${type.name}</option>
+                    #if(${form.get($fields.valueOf("MARKET_TYPE"))}==${type.id})
+                        <option selected value="${type.id}">${type.name}</option>
                     #else
-                        <option value="${type.name}">${type.name}</option>
+                        <option value="${type.id}">${type.name}</option>
                     #end
                 #end
                 </select>

@@ -17,7 +17,7 @@ public class SqliteTable
     private static final String CREATE_TABLE_MARKET ="CREATE TABLE if not exists \"market\" (" +
             "\"id\"INTEGER NOT NULL," +
             "\"name\"TEXT NOT NULL UNIQUE," +
-            "\"type\"TEXT NOT NULL," +
+            "\"type\"INTEGER NOT NULL," +
             "PRIMARY KEY(\"id\" AUTOINCREMENT)" +
             ")";
 

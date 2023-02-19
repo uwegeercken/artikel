@@ -23,7 +23,7 @@ class MarketSearch
         {
             market = new Market(resultset.getString("name"));
             market.setId(resultset.getLong("id"));
-            market.setType(resultset.getString("type"));
+            market.setType(resultset.getLong("type"));
         }
         statement.clearParameters();
         resultset.close();
@@ -41,7 +41,7 @@ class MarketSearch
         {
             market = new Market(resultset.getString("name"));
             market.setId(resultset.getLong("id"));
-            market.setType(resultset.getString("type"));
+            market.setType(resultset.getLong("type"));
         }
         statement.clearParameters();
         resultset.close();

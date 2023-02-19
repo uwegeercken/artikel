@@ -35,6 +35,7 @@ public class MarketController implements MarketApiInterface
     public Route serveAllMarketsPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put(Constants.MODEL_MARKETS_KEY, getAllMarkets());
+        model.put(Constants.MODEL_MARKET_TYPES_KEY, getAllTypes());
         return ViewUtility.render(request,model,Path.Template.MARKETS);
 
     };
@@ -74,6 +75,7 @@ public class MarketController implements MarketApiInterface
             deleteMarket(Long.parseLong(request.params(":id")));
         }
         model.put(Constants.MODEL_MARKETS_KEY, getAllMarkets());
+        model.put(Constants.MODEL_MARKET_TYPES_KEY, getAllTypes());
         return ViewUtility.render(request,model,Path.Template.MARKETS);
     };
 

@@ -155,7 +155,7 @@ class CollectionHandler implements CollectionHandlerInterface
         {
             Market market = new Market(resultset.getString("name"));
             market.setId(resultset.getLong("id"));
-            market.setType(resultset.getString("type"));
+            market.setType(resultset.getLong("type"));
             markets.add(market);
         }
         resultset.close();
