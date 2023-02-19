@@ -259,6 +259,54 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public Market updateMarket(long id, Form form) throws Exception
+    {
+        Market market = new Market(form.get(FormField.NAME));
+        market.setId(id);
+        try
+        {
+            logger.debug("updating market - name: [{}]", market.getName());
+            repository.updateMarket(market);
+        }
+        catch (Exception ex)
+        {
+
+            logger.error("error adding market: [{}]", ex.getMessage());
+        }
+        return market;
+    }
+
+    @Override
+    public Market addMarket(Form form) throws Exception
+    {
+        Market market = new Market(form.get(FormField.NAME));
+        market.setName(form.get(FormField.NAME.NAME));
+        try
+        {
+            logger.debug("adding market - name: [{}]", market.getName());
+            repository.addMarket(market);
+        }
+        catch (Exception ex)
+        {
+            logger.error("error adding market: [{}]", ex.getMessage());
+        }
+        return market;
+    }
+
+    public Market getMarketById(long id) throws Exception { return repository.getMarketById(id); }
+
+    @Override
+    public void deleteMarket(long id) throws Exception
+    {
+        repository.removeMarket(id);
+    }
+
+    @Override
+    public boolean getIsUniqueMarket(long id, String name) throws Exception
+    {
+        return repository.getIsUniqueMarket(id, name);
+    }
+    @Override
     public void deleteProductOrder(long id) throws Exception
     {
         repository.deleteProductOrder(id);

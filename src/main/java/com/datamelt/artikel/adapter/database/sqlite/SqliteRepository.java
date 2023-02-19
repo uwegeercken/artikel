@@ -295,6 +295,11 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public boolean getIsUniqueMarket(long id, String name) throws Exception
+    {
+        return MarketSearch.getIsUniqueMarket(connection, id, name);
+    }
+    @Override
     public void removeMarket(long id)
     {
         MarketUpdate p = new MarketUpdate(connection);

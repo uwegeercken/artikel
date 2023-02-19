@@ -53,7 +53,10 @@ public interface RepositoryInterface
     void removeMarket(long id);
     Market getMarketById(long id) throws Exception;
     Market getMarketByName(String name) throws Exception;
+    boolean getIsUniqueMarket(long id, String name) throws Exception;
+
     boolean getExistMarket(String name) throws Exception;
+
     List<Market> getAllMarkets() throws Exception;
 
     void addProductOrder(ProductOrder order);
