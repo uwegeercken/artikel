@@ -4,7 +4,7 @@
     <p class="heading">${messages.get("PAGETITLE_MARKET_LIST")} ($markets.size())</p>
     <p>
         <img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-        <a href="/markets/0/"><img class="add_external" height="40px" width="40px" src="/img/market_add.png" title="${messages.get("IMAGE_MARKET_ADD")}"></a>
+        <a href="/market/0/"><img class="add_external" height="40px" width="40px" src="/img/market_add.png" title="${messages.get("IMAGE_MARKET_ADD")}"></a>
     </p>
     <div id="help">
         <p class="helptitle">${messages.get("PAGETITLE_MARKET_LIST")}</p>
