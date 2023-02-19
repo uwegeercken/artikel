@@ -1,7 +1,10 @@
 package com.datamelt.artikel.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.File;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LabelsConfiguration
 {
     private String glabelsBinary;

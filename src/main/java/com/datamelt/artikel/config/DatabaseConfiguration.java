@@ -1,5 +1,8 @@
 package com.datamelt.artikel.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DatabaseConfiguration
 {
     private String connection;

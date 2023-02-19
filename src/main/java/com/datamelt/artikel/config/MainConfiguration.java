@@ -1,9 +1,12 @@
 package com.datamelt.artikel.config;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Optional;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MainConfiguration
 {
     private DatabaseConfiguration database;

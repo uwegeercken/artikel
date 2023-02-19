@@ -34,7 +34,7 @@ public class WebApplication
     private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
     private static NumberFormatter numberFormatter;
-    private static MainConfiguration configuration=null;
+    private static MainConfiguration configuration = null;
 
     public static void main(String[] args) throws Exception
     {
@@ -44,14 +44,23 @@ public class WebApplication
         if(args!=null && args.length>0)
         {
             logger.info("loading configuration from file: [{}] ", args[0]);
-            configuration = new ConfigurationLoader().getMainConfiguration(args[0]);
+
+            try
+            {
+                configuration = new ConfigurationLoader().getMainConfiguration(args[0]);
+            }
+            catch (Exception ex)
+            {
+                logger.error("fatal error loading configuration file. error: [{}]",ex.getMessage());
+            }
+
         }
         else
         {
             logger.error("a configuration yaml file is required");
             System.exit(1);
         }
-        if(!configurationFilesAndFoldersOk(configuration))
+        if(configuration==null || !configurationFilesAndFoldersOk(configuration))
         {
             System.exit(1);
         }

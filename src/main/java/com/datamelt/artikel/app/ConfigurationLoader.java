@@ -14,24 +14,16 @@ public class ConfigurationLoader
 {
     private static final Logger logger =  LoggerFactory.getLogger(ConfigurationLoader.class);
 
-    public MainConfiguration getMainConfiguration(String filename)
+    public MainConfiguration getMainConfiguration(String filename) throws Exception
     {
-        try
+        File configFile = new File(filename);
+        if(configFile.exists() && configFile.canRead())
         {
-            File configFile = new File(filename);
-            if(configFile.exists() && configFile.canRead())
-            {
-                return loadConfiguration(configFile);
-            }
-            else
-            {
-                logger.debug("could not load configuration from file: [{}]", filename);
-                return null;
-            }
+            return loadConfiguration(configFile);
         }
-        catch (Exception e)
+        else
         {
-            logger.debug("exception loading configuration from file: [{}] ", e.getMessage());
+            logger.debug("could not load configuration from file: [{}]", filename);
             return null;
         }
     }
