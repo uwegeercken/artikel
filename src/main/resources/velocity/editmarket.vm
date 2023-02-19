@@ -29,12 +29,12 @@
             <td>${messages.get("FORM_FIELD_MARKET_TYPE")}:</td>
             <td>
                 <select name="$fields.valueOf("MARKET_TYPE")" size="1">
-                #if(${form.get($fields.valueOf("MARKET_TYPE"))}==${market.type})
-                    <option selected value="${market.type}">${market.type}</option>
-                    <option value="${market.type}">${market.type}</option>
-                #else
-                    <option value="${market.type}">${market.type}</option>
-                    <option selected value="${market.type}">${market.type}</option>
+                #foreach($type in $types)
+                    #if(${form.get($fields.valueOf("MARKET_TYPE"))}==${type.name})
+                        <option selected value="${type.name}">${type.name}</option>
+                    #else
+                        <option value="${type.name}">${type.name}</option>
+                    #end
                 #end
                 </select>
             </td>

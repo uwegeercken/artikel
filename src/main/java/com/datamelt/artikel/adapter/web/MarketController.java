@@ -9,6 +9,7 @@ import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.model.Market;
+import com.datamelt.artikel.model.MarketType;
 import com.datamelt.artikel.port.MarketApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.Constants;
@@ -18,10 +19,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class MarketController implements MarketApiInterface
 {
@@ -44,6 +42,7 @@ public class MarketController implements MarketApiInterface
     public Route serveMarketPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put(Constants.MODEL_FIELDS_KEY, FormField.class);
+        model.put(Constants.MODEL_MARKET_TYPES_KEY, getAllTypes());
         Optional<Market> market = Optional.ofNullable(getMarketById(Long.parseLong(request.params(":id"))));
         if(market.isPresent())
         {
@@ -54,6 +53,7 @@ public class MarketController implements MarketApiInterface
             Form form = new Form();
             form.put(FormField.ID,"0");
             model.put(Constants.MODEL_FORM_KEY, form);
+
         }
         return ViewUtility.render(request,model,Path.Template.MARKET);
 
@@ -73,13 +73,13 @@ public class MarketController implements MarketApiInterface
         {
             deleteMarket(Long.parseLong(request.params(":id")));
         }
-        List<Market> markets = getAllMarkets();
-        model.put(Constants.MODEL_MARKET_KEY, markets);
+        model.put(Constants.MODEL_MARKETS_KEY, getAllMarkets());
         return ViewUtility.render(request,model,Path.Template.MARKETS);
     };
 
     public Route serveUpdateMarketPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_MARKET_TYPES_KEY, getAllTypes());
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
 
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
@@ -107,6 +107,14 @@ public class MarketController implements MarketApiInterface
             return ViewUtility.render(request,model,Path.Template.MARKETS);
         }
     };
+
+    private List<MarketType> getAllTypes()
+    {
+        List<MarketType> types = new ArrayList<>();
+        types.add(new MarketType(0, WebApplication.getMessages().get("MARKET_TYPE_REGULAR_SELLING")));
+        types.add(new MarketType(1,WebApplication.getMessages().get("MARKET_TYPE_HOMEBASE_SELLING")));
+        return types;
+    }
 
     @Override
     public List<Market> getAllMarkets() throws Exception

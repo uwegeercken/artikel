@@ -263,6 +263,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         Market market = new Market(form.get(FormField.NAME));
         market.setId(id);
+        market.setType(form.get(FormField.MARKET_TYPE));;
         try
         {
             logger.debug("updating market - name: [{}]", market.getName());
@@ -281,6 +282,7 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     {
         Market market = new Market(form.get(FormField.NAME));
         market.setName(form.get(FormField.NAME.NAME));
+        market.setType(form.get(FormField.MARKET_TYPE));;
         try
         {
             logger.debug("adding market - name: [{}]", market.getName());
