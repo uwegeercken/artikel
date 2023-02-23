@@ -15,13 +15,13 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 ### Features:
 - add, update, delete products, markets, producers, orders and more.
+- flexible search of products. search products by last time changed.
 - order products using a shop approach. history of orders.
-- history of price adjustments.
 - chart for selected products showing price changes over time.
 - CSV loader to load data into the database.
 - using glabels (Linux) to generate product labels.
 - Asciidoc for order documents in PDF format. emailing order documents.
-- serving other documents relevant for the business.
+- serving documents relevant for the business.
 
 ## Web Application
 ### Preparations for the Web application:
@@ -33,7 +33,7 @@ The Web application allows for the maintenance of products, producers, markets, 
 
 If you want to deliver files through the Web UI - such as e.g. PDF files - in the configuration file specify the folder in the documentsFolder variable and copy the files to that location.
 
-The application language is German or English. But one could easily copy the resource file and translate it to a different language.
+The application language is German (de) or English (en). But one could easily copy the resource file and translate it to a different language.
 
 #### Configuration for the Web application:
 The configuration file contains an entry for the database name. Adjust the path and name to your needs. The application needs access to the folder and write access for the database file. When no database file is found
@@ -124,16 +124,18 @@ Make sure the Open Policy Agent server is running. Then, provide the path and na
 Note: On first run, the database and an administrative user will be created in the database. The administrator name and password is output to the log. Make sure you change the password after you logged in. 
 
 ### Run the application in a container
-To generate an OCI compliant image run:
+To generate an OCI compliant container image run:
 
-    mvn clean package
+    mvn clean install
 
 This will use buildah to generate the container image, so make sure buildah is installed. The container comes without any configuration - you
-will have to volume mount a folder containing all required files when you run the container.
+will have to volume mount a folder containing all required files (to the folder opt/artikel/config in the container) when you run the container.
 
-Note: to run the application you need to have an OPA (Open Policy Agent) server running. Specify the OPA address in the config file.
+Adjust the config.yaml file according to your settings before you run the container.
 
-Run the container like this:
+Note: to run the application you need to have an OPA (Open Policy Agent) server running. Specify the OPA address and port in the config file.
+
+Run the container like e.g. this:
 
     podman run --name "artikel-test" --rm -it -p 5000:4567 -v ./config:/opt/artikel/config:z artikel:latest
 
@@ -162,4 +164,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022, 2023. Last update: 2023-02-03
+Copyright Uwe Geercken, 2022, 2023. Last update: 2023-02-23
