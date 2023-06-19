@@ -557,14 +557,6 @@ public class ProductController implements ProductApiInterface
         {
             model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY, request.session().attribute(Constants.SESSION_ATTRIBUTE_FILTER));
         }
-        try
-        {
-            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, productsNumberOfDaysMin, productsNumberOfDaysMax));
-        }
-        catch (Exception ex)
-        {
-            logger.error("error getting products for producerId [{}]", producer.getId());
-        }
 
         String cancelled = request.queryParams(Constants.FORM_SUBMIT);
         if(!cancelled.equals(WebApplication.getMessages().get("FORM_BUTTON_CANCEL")))
@@ -596,6 +588,14 @@ public class ProductController implements ProductApiInterface
                     order.addOrderItem(item);
                     order.setProducer(producer);
                 }
+                try
+                {
+                    model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, productsNumberOfDaysMin, productsNumberOfDaysMax));
+                }
+                catch (Exception ex)
+                {
+                    logger.error("error getting products for producerId [{}]", producer.getId());
+                }
                 return ViewUtility.render(request, model, Path.Template.PRODUCTS);
             }
             else
@@ -608,6 +608,14 @@ public class ProductController implements ProductApiInterface
         }
         else
         {
+            try
+            {
+                model.put(Constants.MODEL_PRODUCTS_KEY, getAllProducts(producer.getId(),false, productsNumberOfDaysMin, productsNumberOfDaysMax));
+            }
+            catch (Exception ex)
+            {
+                logger.error("error getting products for producerId [{}]", producer.getId());
+            }
             return ViewUtility.render(request, model, Path.Template.PRODUCTS);
         }
     };
