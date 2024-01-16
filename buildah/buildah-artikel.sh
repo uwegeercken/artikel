@@ -17,7 +17,7 @@ script_folder=$(dirname "$script")
 
 # base image
 image_base="openjdk"
-image_base_version="11"
+image_base_version="17"
 
 # new image variables
 artifact_id="${1}"
