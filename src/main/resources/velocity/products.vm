@@ -33,7 +33,7 @@
         <a href="/unchangedproductsshortterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/180-degrees.png" title="${shorttermUnchangedProductsNumberOfDaysMin}-${shorttermUnchangedProductsNumberOfDaysMax} ${messages.get("IMAGE_UNCHANGED_PRODUCTS")}"></a>
         <a href="/unchangedproductslongterm/producer/${producer.id}/"><img width="40px" height="40px" src="/img/270-degrees.png" title="${longtermUnchangedProductsNumberOfDaysMin} ${messages.get("IMAGE_UNCHANGED_PRODUCTS_LONGTERM")}"></a>
         &nbsp;&nbsp;
-        <a href="/changedproductsrecently/producer/${producer.id}/"><img width="40px" height="40px" src="/img/270-degrees.png" title="${recentlyChangedProductsNumberOfDays} ${messages.get("IMAGE_CHANGED_PRODUCTS_RECENTLY")}"></a>
+        <a href="/changedproductsrecently/producer/${producer.id}/"><img width="40px" height="40px" src="/img/edit.png" title="${recentlyChangedProductsNumberOfDays} ${messages.get("IMAGE_CHANGED_PRODUCTS_RECENTLY")}"></a>
 
     </p>
     <div id="help">
