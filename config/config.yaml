@@ -16,6 +16,7 @@ opa:
 
 webApp:
   chartingNumberOfWeeksToDisplay: 10
+  recentlyChangedProductsNumberOfDays: 30
   recentlyUnchangedProductsNumberOfDaysMin: 30
   recentlyUnchangedProductsNumberOfDaysMax: 60
   shorttermUnchangedProductsNumberOfDaysMin: 60
