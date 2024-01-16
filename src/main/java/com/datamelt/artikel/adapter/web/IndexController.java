@@ -3,6 +3,7 @@ package com.datamelt.artikel.adapter.web;
 import com.datamelt.artikel.app.web.ViewUtility;
 import com.datamelt.artikel.app.web.WebApplication;
 import com.datamelt.artikel.config.MainConfiguration;
+import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.port.IndexApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.app.web.util.Path;
@@ -15,10 +16,7 @@ import spark.Response;
 import spark.Route;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class IndexController implements IndexApiInterface
 {

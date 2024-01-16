@@ -76,6 +76,7 @@ Adjust the variables according to your needs, especially the folders where the d
         host: http://localhost:8181
     webApp:
         chartingNumberOfWeeksToDisplay: 10
+        recentlyChangedProductsNumberOfDays: 2
         recentlyUnchangedProductsNumberOfDays: 30
         shorttermUnchangedProductsNumberOfDays: 60
         longtermUnchangedProductsNumberOfDays: 90

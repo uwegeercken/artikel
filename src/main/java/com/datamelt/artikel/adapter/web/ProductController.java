@@ -65,6 +65,23 @@ public class ProductController implements ProductApiInterface
         Producer producer = getProducerById(producerId);
         Map<String, Object> model = new HashMap<>();
         model.put(Constants.MODEL_PRODUCER_KEY, producer);
+        model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY, configuration.getWebApp().getRecentlyChangedProductsNumberOfDays() + " " + WebApplication.getMessages().get("IMAGE_CHANGED_PRODUCTS_RECENTLY"));
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getChangedProducts(producer.getId(), configuration.getWebApp().getRecentlyChangedProductsNumberOfDays()));
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting products for producerId [{}]", producer.getId());
+        }
+        request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCTS_CHANGED_NUMBER_OF_DAYS, configuration.getWebApp().getRecentlyChangedProductsNumberOfDays());
+        return ViewUtility.render(request, model, Path.Template.PRODUCTS);
+    };
+    public Route serveProductsUnchangedRecentlyPage = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_PRODUCER_KEY, producer);
         model.put(Constants.MODEL_UNCHANGED_PRODUCTS_FILTER_KEY, configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMin() + "-" + configuration.getWebApp().getRecentlyUnchangedProductsNumberOfDaysMax() + " " + WebApplication.getMessages().get("IMAGE_UNCHANGED_PRODUCTS"));
         try
         {
@@ -654,6 +671,12 @@ public class ProductController implements ProductApiInterface
     public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception
     {
         return service.getAllProducts(producerId, availableOnly, changedSinceNumberOfDaysMin, changedSinceNumberOfDaysMax);
+    }
+
+    @Override
+    public List<Product> getChangedProducts(long producerId, int changedSinceNumberOfDays) throws Exception
+    {
+        return service.getChangedProducts(producerId, changedSinceNumberOfDays);
     }
 
     @Override

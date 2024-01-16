@@ -25,6 +25,7 @@ public class ViewUtility
         model.put(Constants.MODEL_NUMBER_FORMATTER_KEY, WebApplication.getNumberFormatter());
         model.put(Constants.MODEL_MESSAGES_KEY, WebApplication.getMessages());
         model.put(Constants.MODEL_PRODUCERS_KEY, request.session().attribute(Constants.SESSION_ATTRIBUTE_PRODUCERS));
+        model.put(Constants.MODEL_RECENTLY_CHANGED_PRODUCTS_NUMBER_OF_DAYS_KEY, WebApplication.getConfiguration().getWebApp().getRecentlyChangedProductsNumberOfDays());
         model.put(Constants.MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY, WebApplication.getConfiguration().getWebApp().getRecentlyUnchangedProductsNumberOfDaysMin());
         model.put(Constants.MODEL_RECENTLY_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MAX_KEY, WebApplication.getConfiguration().getWebApp().getRecentlyUnchangedProductsNumberOfDaysMax());
         model.put(Constants.MODEL_SHORTTERM_UNCHANGED_PRODUCTS_NUMBER_OF_DAYS_MIN_KEY, WebApplication.getConfiguration().getWebApp().getShorttermUnchangedProductsNumberOfDaysMin());

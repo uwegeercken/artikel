@@ -17,6 +17,7 @@ class CollectionHandler implements CollectionHandlerInterface
 {
     public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? and timestamp < ? and timestamp > ? order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS = "select * from product where producer_id=? and timestamp < ? and timestamp > ? and unavailable=0 order by cast(number as int)";
+    public static final String SQL_QUERY_CHANGED_PRODUCTS = "select * from product where producer_id=? and timestamp < ? order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCERS = "select * from producer order by id";
     public static final String SQL_QUERY_MARKETS = "select * from market order by id";
     public static final String SQL_QUERY_CONTAINERS = "select * from productcontainer order by id";
@@ -76,6 +77,65 @@ class CollectionHandler implements CollectionHandlerInterface
         statement.setLong(1, producerId);
         statement.setLong(2, searchProductsBefore);
         statement.setLong(3, searchProductsUntil);
+
+        ResultSet resultset = statement.executeQuery();
+        while(resultset.next())
+        {
+            Producer producer = ProducerSearch.getProducerById(connection, resultset.getLong("producer_id"));
+            ProductContainer container = ProductContainerSearch.getProductContainerById(connection, resultset.getLong("productcontainer_id"));
+            ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
+
+            Product product = new Product(resultset.getString("number"));
+            product.setId(resultset.getLong("id"));
+            product.setName(resultset.getString("name"));
+            product.setTitle(resultset.getString("title"));
+            product.setSubtitle(resultset.getString("subtitle"));
+            product.setQuantity(resultset.getInt("quantity"));
+            product.setWeight(resultset.getDouble("weight"));
+            product.setPrice(resultset.getDouble("price"));
+            product.setUnavailable(resultset.getInt("unavailable"));
+            if(container!=null)
+            {
+                product.setContainer(container);
+            }
+            else
+            {
+                logger.error("the requested container could not be found. id [{}]", resultset.getLong("productcontainer_id"));
+            }
+            if(producer!=null)
+            {
+                product.setProducer(producer);
+            }
+            else
+            {
+                logger.error("the requested producer could not be found. id [{}]", resultset.getLong("producer_id"));
+            }
+            if(origin!=null)
+            {
+                product.setOrigin(origin);
+            }
+            else
+            {
+                logger.error("the requested product origin could not be found. id [{}]", resultset.getLong("productorigin_id"));
+            }
+            product.setTimestamp(resultset.getLong("timestamp"));
+
+            products.add(product);
+        }
+        resultset.close();
+        statement.close();
+        return products;
+    }
+
+
+    @Override
+    public List<Product> getChangedProducts(Connection connection, long producerId, int changedSinceNumberOfDays) throws Exception
+    {
+        long searchProductsBefore = CalendarUtility.getTimestamp(changedSinceNumberOfDays);
+        List<Product> products = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_CHANGED_PRODUCTS);
+        statement.setLong(1, producerId);
+        statement.setLong(2, searchProductsBefore);
 
         ResultSet resultset = statement.executeQuery();
         while(resultset.next())

@@ -11,6 +11,7 @@ public interface CollectionHandlerInterface
     long getAllProductsCount(Connection connection) throws Exception;
     Map<String,Long> getAllProducersProductsCount(Connection connection) throws Exception;
     List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception;
+    List<Product> getChangedProducts(Connection connection, long producerId, int limit) throws Exception;
     List<Producer> getAllProducers(Connection connection) throws Exception;
     List<Market> getAllMarkets(Connection connection) throws Exception;
     List<ProductContainer> getAllProductContainers(Connection connection) throws Exception;

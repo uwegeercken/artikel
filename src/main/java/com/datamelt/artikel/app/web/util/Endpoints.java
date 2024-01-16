@@ -10,6 +10,7 @@ public enum Endpoints
     AUTHENTICATE("/authenticate/","read", "post"),
     LOGOUT("/logout/","read", "get"),
     PRODUCTS("/products/producer/:producerid/","read", "get"),
+    PRODUCTS_CHANGED_RECENTLY("/changedproductsrecently/producer/:producerid/","read", "get"),
     PRODUCTS_UNCHANGED_RECENTLY("/unchangedproductsrecently/producer/:producerid/","read", "get"),
     PRODUCTS_UNCHANGED_SHORTTERM("/unchangedproductsshortterm/producer/:producerid/","read", "get"),
     PRODUCTS_UNCHANGED_LONGTERM("/unchangedproductslongterm/producer/:producerid/","read", "get"),

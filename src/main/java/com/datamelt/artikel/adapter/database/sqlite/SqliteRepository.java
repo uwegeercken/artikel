@@ -179,6 +179,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public List<Product> getChangedProducts(long producerId, int changedSinceNumberOfDays) throws Exception
+    {
+        return collectionHandler.getChangedProducts(connection, producerId, changedSinceNumberOfDays);
+    }
+
+    @Override
     public void addProductContainer(ProductContainer container)
     {
         ProductContainerUpdate p = new ProductContainerUpdate(connection);

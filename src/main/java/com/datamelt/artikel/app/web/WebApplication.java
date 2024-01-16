@@ -28,8 +28,8 @@ public class WebApplication
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
-    public static final String APPLCATION_VERSION = "v3.1";
-    public static final String APPLCATION_LAST_UPDATE = "19.02.2023";
+    public static final String APPLCATION_VERSION = "v3.2";
+    public static final String APPLCATION_LAST_UPDATE = "19.06.2023";
 
     private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
@@ -129,7 +129,8 @@ public class WebApplication
         post(Endpoints.USERS_CHANGE_PASSWORD.getPath(), userController.serveUpdatePasswordPage);
 
         get(Endpoints.PRODUCTS.getPath(), productController.serveAllProductsPage);
-        get(Endpoints.PRODUCTS_UNCHANGED_RECENTLY.getPath(), productController.serveProductsChangedRecentlyPage);
+        get(Endpoints.PRODUCTS_CHANGED_RECENTLY.getPath(), productController.serveProductsChangedRecentlyPage);
+        get(Endpoints.PRODUCTS_UNCHANGED_RECENTLY.getPath(), productController.serveProductsUnchangedRecentlyPage);
         get(Endpoints.PRODUCTS_UNCHANGED_SHORTTERM.getPath(),productController.serveProductsUnchangedShortTermPage);
         get(Endpoints.PRODUCTS_UNCHANGED_LONGTERM.getPath(),productController.serveProductsUnchangedLongTermPage);
         get(Endpoints.GENERATE_LABELS.getPath(), productController.createLabels);

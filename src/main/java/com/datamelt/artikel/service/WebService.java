@@ -49,6 +49,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public List<Product> getChangedProducts(long producerId, int changedSinceNumberOfDays) throws Exception
+    {
+        return repository.getChangedProducts(producerId, changedSinceNumberOfDays);
+    }
+
+    @Override
     public Product getProductById(long id) throws Exception
     {
         return repository.getProductById(id);

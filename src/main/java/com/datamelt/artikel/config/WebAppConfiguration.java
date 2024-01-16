@@ -9,6 +9,7 @@ public class WebAppConfiguration
 
     private final int allProductsNumberOfDaysMin = 0;
     private final int allProductsNumberOfDaysMax = 9999;
+    private int recentlyChangedProductsNumberOfDays;
     private int recentlyUnchangedProductsNumberOfDaysMin;
     private int recentlyUnchangedProductsNumberOfDaysMax;
     private int shorttermUnchangedProductsNumberOfDaysMin;
@@ -19,6 +20,8 @@ public class WebAppConfiguration
     {
         return chartingNumberOfWeeksToDisplay;
     }
+
+    public int getRecentlyChangedProductsNumberOfDays() { return recentlyChangedProductsNumberOfDays; }
 
     public int getRecentlyUnchangedProductsNumberOfDaysMin()
     {
