@@ -535,6 +535,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public Product getLastChangedProduct() throws Exception
+    {
+        return repository.getLastChangedProduct();
+    }
+
+    @Override
     public Map<String,Long> getAllProducersProductsCount() throws Exception
     {
         return repository.getAllProducersProductsCount();

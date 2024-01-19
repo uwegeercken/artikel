@@ -8,6 +8,7 @@ import com.datamelt.artikel.app.web.util.Path;
 import com.datamelt.artikel.app.web.util.Token;
 import com.datamelt.artikel.config.MainConfiguration;
 import com.datamelt.artikel.model.Producer;
+import com.datamelt.artikel.model.Product;
 import com.datamelt.artikel.model.User;
 import com.datamelt.artikel.port.LoginApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
@@ -71,6 +72,7 @@ public class LoginController implements LoginApiInterface
                 model.put(Constants.USERTOKEN_KEY, token);
                 request.session().attribute("producers",getAllProducers());
                 model.put("totalproductscount", getAllProductsCount());
+                model.put("lastchangedproduct", getLastChangedProduct());
                 model.put("productcounts", getAllProducersProductsCount());
                 logger.info("user login successful. user [{}]", username);
                 return ViewUtility.render(request, model, Path.Template.INDEX);
@@ -118,5 +120,11 @@ public class LoginController implements LoginApiInterface
     public Map<String,Long> getAllProducersProductsCount() throws Exception
     {
         return service.getAllProducersProductsCount();
+    }
+
+    @Override
+    public Product getLastChangedProduct() throws Exception
+    {
+        return service.getLastChangedProduct();
     }
 }

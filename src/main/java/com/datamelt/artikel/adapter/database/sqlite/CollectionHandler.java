@@ -3,14 +3,12 @@ package com.datamelt.artikel.adapter.database.sqlite;
 import com.datamelt.artikel.model.*;
 import com.datamelt.artikel.port.CollectionHandlerInterface;
 import com.datamelt.artikel.util.CalendarUtility;
-import com.datamelt.artikel.util.FileUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.*;
 
 class CollectionHandler implements CollectionHandlerInterface
@@ -28,6 +26,7 @@ class CollectionHandler implements CollectionHandlerInterface
     public static final String SQL_QUERY_PRODUCT_HISTORY = "select * from product_history where product_id=? order by timestamp";
 
     public static final String SQL_QUERY_PRODUCTS_COUNT = "select count(1) as counter from product";
+    public static final String SQL_QUERY_LAST_CHANGED_PRODUCT = "select * from product order by timestamp desc limit 1";
     public static final String SQL_QUERY_PRODUCERS_PRODUCTS_COUNT = "select producer.name as name, count(1) as counter from product,producer where producer.id=product.producer_id group by producer_id order by producer.name";
 
     private static final Logger logger = LoggerFactory.getLogger(CollectionHandler.class);
@@ -44,6 +43,30 @@ class CollectionHandler implements CollectionHandlerInterface
             numberOfProducts = resultset.getLong("counter");
         }
         return numberOfProducts;
+    }
+
+    @Override
+    public Product getLastChangedProduct(Connection connection) throws Exception
+    {
+        long numberOfProducts = 0;
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY_LAST_CHANGED_PRODUCT);
+
+        ResultSet resultset = statement.executeQuery();
+        Product product = null;
+        if(resultset.next())
+        {
+            product = new Product(resultset.getString("number"));
+            product.setId(resultset.getLong("id"));
+            product.setName(resultset.getString("name"));
+            product.setTitle(resultset.getString("title"));
+            product.setSubtitle(resultset.getString("subtitle"));
+            product.setQuantity(resultset.getInt("quantity"));
+            product.setWeight(resultset.getDouble("weight"));
+            product.setPrice(resultset.getDouble("price"));
+            product.setUnavailable(resultset.getInt("unavailable"));
+            product.setTimestamp(resultset.getLong("timestamp"));
+        }
+        return product;
     }
 
     @Override

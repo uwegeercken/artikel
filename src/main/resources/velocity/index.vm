@@ -5,11 +5,13 @@
     <p>${messages.get("PAGE_INDEX_INFO")}</p>
     #if($tokenpayload)
         <p class="big">${messages.get("PAGE_INDEX_WELCOME_BACK")} ${tokenpayload.subject}</p>
+        <p>${messages.get("PAGE_INDEX_LAST_CHANGED_PRODUCT")}: ${lastchangedproduct.name} - $!{lastchangedproduct.lastChangedDate}</p>
         <table border="0" align="center" width="30%" border="0">
                 <tr>
                     <td width="50%" align="right">${messages.get("PAGE_INDEX_TOTAL_PRODUCTS")}:</td>
                     <td width="50%" align="left" class="big">$totalproductscount</td>
                 </tr>
+
                 #foreach($productcount in ${productcounts.keySet()})
                     <tr colspan="2">
                         <td width="50%" align="right">${productcount}:</td>
@@ -18,7 +20,6 @@
                 #end
         </table>
     #end
-
-    <p align="center"><img height="576px" width="1024px" src="/img/anhaenger_mogk.png"></p>
+    <p align="center"><img height="288px" width="512px" src="/img/anhaenger_mogk.png"></p>
     <br>
 #end

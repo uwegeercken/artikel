@@ -9,4 +9,5 @@ import java.util.List;
 public interface IndexApiInterface
 {
     long getAllProductsCount() throws Exception;
+    Product getLastChangedProduct() throws Exception;
 }

@@ -87,5 +87,7 @@ public interface RepositoryInterface
     void updateUser(User user) throws Exception;
 
     long getAllProductsCount() throws Exception;
+    Product getLastChangedProduct() throws Exception;
     Map<String,Long> getAllProducersProductsCount() throws Exception;
+
 }

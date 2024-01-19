@@ -72,6 +72,7 @@ public interface WebServiceInterface
     String getOrderDocumentFilename(ProductOrder order);
 
     long getAllProductsCount() throws Exception;
+    Product getLastChangedProduct() throws Exception;
     Map<String,Long> getAllProducersProductsCount() throws Exception;
 
     boolean sendEmail(ProductOrder order, String emailRecipient, MainConfiguration configuration);

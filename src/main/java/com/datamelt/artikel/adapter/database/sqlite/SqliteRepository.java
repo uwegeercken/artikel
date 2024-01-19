@@ -475,6 +475,12 @@ public class SqliteRepository implements RepositoryInterface
     }
 
     @Override
+    public Product getLastChangedProduct() throws Exception
+    {
+        return collectionHandler.getLastChangedProduct(connection);
+    }
+
+    @Override
     public Map<String,Long> getAllProducersProductsCount() throws Exception
     {
         return collectionHandler.getAllProducersProductsCount(connection);

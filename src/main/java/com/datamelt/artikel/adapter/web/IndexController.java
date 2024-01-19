@@ -34,6 +34,7 @@ public class IndexController implements IndexApiInterface
     public Route serveIndexPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put("totalproductscount", getAllProductsCount());
+        model.put("lastchangedproduct", getLastChangedProduct());
         return ViewUtility.render(request, model, Path.Template.INDEX);
     };
 
@@ -111,5 +112,11 @@ public class IndexController implements IndexApiInterface
     public long getAllProductsCount() throws Exception
     {
         return service.getAllProductsCount();
+    }
+
+    @Override
+    public Product getLastChangedProduct() throws Exception
+    {
+        return service.getLastChangedProduct();
     }
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 public interface CollectionHandlerInterface
 {
     long getAllProductsCount(Connection connection) throws Exception;
+    Product getLastChangedProduct(Connection connection) throws Exception;
     Map<String,Long> getAllProducersProductsCount(Connection connection) throws Exception;
     List<Product> getAllProducts(Connection connection, long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception;
     List<Product> getChangedProducts(Connection connection, long producerId, int limit) throws Exception;
