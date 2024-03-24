@@ -37,7 +37,7 @@ email:
 
 labels:
   glabelsBinary: /usr/bin/glabels-3-batch
-  productStickerFile: config/stickers-01.glabels
+  productStickersFile: config/stickers-01.glabels
   productLabelsFile: config/etiketten-01.glabels
   pdfOutputFolder: pdf
 

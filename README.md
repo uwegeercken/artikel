@@ -83,7 +83,7 @@ Adjust the variables according to your needs, especially the folders where the d
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
       productLabelsFile: /home/tester/labels-01.glabels
-      productStickerFile: /home/tester/stickers-01.glabels
+      productStickersFile: /home/tester/stickers-01.glabels
     asciidoc:
       templateFileFolder: /home/tester/asciidoc
       pdfOutputFolder: /home/tester/asciidoc/pdf
