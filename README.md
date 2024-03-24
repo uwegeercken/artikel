@@ -82,7 +82,7 @@ Adjust the variables according to your needs, especially the folders where the d
         longtermUnchangedProductsNumberOfDays: 90
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
-      glabelsFile: /home/tester/labels-01.glabels
+      productLabelsFile: /home/tester/labels-01.glabels
     asciidoc:
       templateFileFolder: /home/tester/asciidoc
       pdfOutputFolder: /home/tester/asciidoc/pdf

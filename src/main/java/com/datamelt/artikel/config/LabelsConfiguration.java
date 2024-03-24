@@ -8,12 +8,12 @@ import java.io.File;
 public class LabelsConfiguration
 {
     private String glabelsBinary;
-    private String glabelsFile;
+    private String productLabelsFile;
     private String pdfOutputFolder;
 
-    public String getGlabelsFile()
+    public String getProductLabelsFile()
     {
-        return glabelsFile;
+        return productLabelsFile;
     }
 
     public String getGlabelsBinary()
@@ -21,9 +21,9 @@ public class LabelsConfiguration
         return glabelsBinary;
     }
 
-    public boolean existGlabelsFile()
+    public boolean existProductLabelsFile()
     {
-        File labelsFile = new File(glabelsFile);
+        File labelsFile = new File(productLabelsFile);
         return labelsFile.exists() && labelsFile.canRead();
     }
 

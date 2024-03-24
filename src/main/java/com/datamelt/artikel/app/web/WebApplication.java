@@ -18,6 +18,7 @@ import com.datamelt.artikel.util.FileUtility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spark.Spark;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -28,8 +29,8 @@ public class WebApplication
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
-    public static final String APPLCATION_VERSION = "v3.6";
-    public static final String APPLCATION_LAST_UPDATE = "25.01.2024";
+    public static final String APPLCATION_VERSION = "v3.7";
+    public static final String APPLCATION_LAST_UPDATE = "19.03.2024";
 
     private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
@@ -96,6 +97,11 @@ public class WebApplication
         {
             logger.error("error initializing web service [{}]", ex.getMessage());
             System.exit(1);
+        }
+
+        if(configuration.getSparkJava().getKeystoreFile()!=null)
+        {
+            secure(configuration.getSparkJava().getKeystoreFile(), configuration.getSparkJava().getKeystorePassword(), null, null);
         }
 
         Filters.setOpaHandler(opaHandler);
@@ -197,8 +203,8 @@ public class WebApplication
             allOk = false;
         }
 
-        boolean glabelsFileOk = FileUtility.checkReadAccessFile(configuration.getLabels().getGlabelsFile());
-        if(!glabelsFileOk)
+        boolean productLabelsFileOk = FileUtility.checkReadAccessFile(configuration.getLabels().getProductLabelsFile());
+        if(!productLabelsFileOk)
         {
             allOk = false;
         }

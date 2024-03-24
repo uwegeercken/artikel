@@ -49,12 +49,12 @@ public class CsvLabelFileWriter implements CsvWriterInterface
 
     private byte[] writeLabelsOutputFile(File csvOutputFile) throws Exception
     {
-        if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existGlabelsFile())
+        if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existProductLabelsFile())
         {
             String inputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.LABELS_CSV_FILENAME;
             String outputFilename = configuration.getLabels().getPdfOutputFolder() + "/" + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
-            String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -o " + outputFilename + " " + configuration.getLabels().getGlabelsFile();
+            String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -o " + outputFilename + " " + configuration.getLabels().getProductLabelsFile();
             Process process = Runtime.getRuntime().exec(command);
             process.waitFor(15, TimeUnit.SECONDS);
             File file = new File(outputFilename);
@@ -65,15 +65,15 @@ public class CsvLabelFileWriter implements CsvWriterInterface
         {
             if(!configuration.getLabels().existBinary())
             {
-                logger.error("configuration item: glabelsFile [{}] does not exist or can not be executed", configuration.getLabels().getGlabelsBinary());
+                logger.error("configuration item: productLabelsFile [{}] does not exist or can not be executed", configuration.getLabels().getGlabelsBinary());
             }
             else if(!configuration.getSparkJava().existTempFolder())
             {
                 logger.error("configuration item: tempFolder [{}] does not exist or can not be accessed", configuration.getSparkJava().getTempFolder());
             }
-            else if(!configuration.getLabels().existGlabelsFile())
+            else if(!configuration.getLabels().existProductLabelsFile())
             {
-                logger.error("configuration item: glabelsFile [{}] does not exist or can not be read", configuration.getLabels().existGlabelsFile());
+                logger.error("configuration item: productLabelsFile [{}] does not exist or can not be read", configuration.getLabels().existProductLabelsFile());
             }
             return null;
         }

@@ -14,6 +14,9 @@ public class SparkJava
     private int port;
     private String documentsFolder;
 
+    private String keystoreFile;
+    private String keystorePassword;
+
     public long getStaticfilesExpiretime()
     {
         return staticfilesExpiretime;
@@ -28,6 +31,16 @@ public class SparkJava
     public int getPort() { return port; }
 
     public String getDocumentsFolder() { return documentsFolder; }
+
+    public String getKeystoreFile()
+    {
+        return keystoreFile;
+    }
+
+    public String getKeystorePassword()
+    {
+        return keystorePassword;
+    }
 
     public boolean existTempFolder()
     {
