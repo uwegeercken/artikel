@@ -83,6 +83,7 @@ Adjust the variables according to your needs, especially the folders where the d
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
       productLabelsFile: /home/tester/labels-01.glabels
+      productStickerFile: /home/tester/stickers-01.glabels
     asciidoc:
       templateFileFolder: /home/tester/asciidoc
       pdfOutputFolder: /home/tester/asciidoc/pdf
@@ -165,4 +166,4 @@ provide the path and name of the configuration file and run:
     java -cp artikel.jar com.datamelt.artikel.app.csv.CsvLoaderApplication config.yaml
 
 
-Copyright Uwe Geercken, 2022-2024. Last update: 2024-01-25
+Copyright Uwe Geercken, 2022-2024. Last update: 2024-03-24
