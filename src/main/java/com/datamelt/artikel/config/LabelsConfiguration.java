@@ -9,11 +9,17 @@ public class LabelsConfiguration
 {
     private String glabelsBinary;
     private String productLabelsFile;
+    private String productStickersFile;
     private String pdfOutputFolder;
 
     public String getProductLabelsFile()
     {
         return productLabelsFile;
+    }
+
+    public String getProductStickersFile()
+    {
+        return productStickersFile;
     }
 
     public String getGlabelsBinary()
@@ -25,6 +31,12 @@ public class LabelsConfiguration
     {
         File labelsFile = new File(productLabelsFile);
         return labelsFile.exists() && labelsFile.canRead();
+    }
+
+    public boolean existProductStickersFile()
+    {
+        File stickersFile = new File(productStickersFile);
+        return stickersFile.exists() && stickersFile.canRead();
     }
 
     public boolean existBinary()

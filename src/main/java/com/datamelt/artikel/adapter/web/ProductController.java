@@ -724,7 +724,7 @@ public class ProductController implements ProductApiInterface
         {
             labels.add(new ProductLabel(product, WebApplication.getMessages()));
         }
-        return service.getLabelsOutputFile(labels);
+        return service.getProductLabelsOutputFile(labels);
     }
     @Override
     public byte[] getLabelsOutputFile(long producerId, ProductOrder order) throws Exception
@@ -735,7 +735,7 @@ public class ProductController implements ProductApiInterface
         {
             labels.add(new ProductLabel(product, WebApplication.getMessages()));
         }
-        return service.getLabelsOutputFile(labels);
+        return service.getProductLabelsOutputFile(labels);
     }
 
 

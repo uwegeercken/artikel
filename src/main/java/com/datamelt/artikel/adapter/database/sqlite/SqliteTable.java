@@ -39,7 +39,7 @@ public class SqliteTable
             "\"weight\"NUMERIC NOT NULL DEFAULT 0," +
             "\"price\"NUMERIC NOT NULL DEFAULT 0," +
             "\"ingredients\"TEXT," +
-            "\"allergens\"TEXT," +
+            "\"allergenes\"TEXT," +
             "\"unavailable\"INTEGER DEFAULT 0," +
             "\"producer_id\"INTEGER NOT NULL," +
             "\"productcontainer_id\"INTEGER," +

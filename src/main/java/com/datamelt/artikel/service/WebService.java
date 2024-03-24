@@ -511,9 +511,9 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
+    public byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
     {
-        return csvLabelWriter.getLabelsOutputFile(productLabels);
+        return csvLabelWriter.getProductLabelsOutputFile(productLabels);
     }
 
     @Override

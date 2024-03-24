@@ -63,6 +63,8 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
+            product.setIngredients(resultset.getString("ingredients"));
+            product.setAllergenes(resultset.getString("allergenes"));
             product.setUnavailable(resultset.getInt("unavailable"));
             product.setTimestamp(resultset.getLong("timestamp"));
         }
@@ -116,6 +118,8 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
+            product.setIngredients(resultset.getString("ingredients"));
+            product.setAllergenes(resultset.getString("allergenes"));
             product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {
@@ -175,6 +179,8 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
+            product.setIngredients(resultset.getString("ingredients"));
+            product.setAllergenes(resultset.getString("allergenes"));
             product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {

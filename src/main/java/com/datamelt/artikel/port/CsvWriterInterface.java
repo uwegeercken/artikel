@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CsvWriterInterface
 {
-    byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
+    byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
 }

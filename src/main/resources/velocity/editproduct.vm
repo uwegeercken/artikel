@@ -47,6 +47,18 @@
             </td>
         </tr>
         <tr>
+            <td>${messages.get("FORM_FIELD_INGREDIENTS")}:</td>
+            <td>
+                <input name="$fields.valueOf("INGREDIENTS")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("INGREDIENTS"))}">
+            </td>
+        </tr>
+        <tr>
+            <td>${messages.get("FORM_FIELD_ALLERGENES")}:</td>
+            <td>
+                <input name="$fields.valueOf("ALLERGENES")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("ALLERGENES"))}">
+            </td>
+        </tr>
+        <tr>
             <td>${messages.get("FORM_FIELD_QUANTITY")}:</td>
             <td>
                 <input name="$fields.valueOf("QUANTITY")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("QUANTITY"))}">

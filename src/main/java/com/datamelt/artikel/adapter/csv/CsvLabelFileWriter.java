@@ -27,7 +27,7 @@ public class CsvLabelFileWriter implements CsvWriterInterface
     }
 
     @Override
-    public byte[] getLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
+    public byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
     {
         File csvOutputFile = new File(configuration.getSparkJava().getTempFolder() + "/" + Constants.LABELS_CSV_FILENAME);
 
@@ -44,10 +44,10 @@ public class CsvLabelFileWriter implements CsvWriterInterface
         ObjectWriter writer = mapper.writerFor(ProductLabel.class).with(schema);
         writer.writeValues(csvOutputFile).writeAll(productLabels);
 
-        return writeLabelsOutputFile(csvOutputFile);
+        return writeProductLabelsOutputFile(csvOutputFile);
     }
 
-    private byte[] writeLabelsOutputFile(File csvOutputFile) throws Exception
+    private byte[] writeProductLabelsOutputFile(File csvOutputFile) throws Exception
     {
         if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existProductLabelsFile())
         {

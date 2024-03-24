@@ -8,6 +8,8 @@ public enum FormField
     MARKET_TYPE("market_type", "long", false, false),
     PRODUCT_NAME("product_name", "string", false, false),
     TITLE("title", "string", false, true),
+    INGREDIENTS("ingredients", "string", false, true),
+    ALLERGENES("allergenes", "string", false, true),
     SUBTITLE("subtitle", "string", false, true),
     NUMBER("number", "string", true, false),
     QUANTITY("quantity", "int", false, true),

@@ -1,7 +1,6 @@
 package com.datamelt.artikel.model;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import static com.datamelt.artikel.util.Constants.GERMAN_DATE_ONLY_FORMAT;
@@ -19,6 +18,8 @@ public class Product
     private double weight;
     private double price;
     private int unavailable;
+    private String ingredients;
+    private String allergenes;
     private Producer producer;
     private ProductContainer container;
     private ProductOrigin origin;
@@ -50,6 +51,10 @@ public class Product
     public double getWeight() { return weight; }
 
     public double getPrice() { return price; }
+
+    public String getIngredients() { return ingredients; }
+
+    public String getAllergenes() { return allergenes; }
 
     public Producer getProducer() { return producer; }
 
@@ -85,6 +90,10 @@ public class Product
     {
         this.price = price;
     }
+
+    public void setIngredients(String ingredients) { this.ingredients = ingredients; }
+
+    public void setAllergenes(String allergenes) { this.allergenes = allergenes; }
 
     public void setProducer(Producer producer)
     {
