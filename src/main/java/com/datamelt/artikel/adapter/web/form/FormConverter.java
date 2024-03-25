@@ -66,6 +66,7 @@ public class FormConverter
         form.put(FormField.SUBTITLE, product.getSubtitle());
         form.put(FormField.INGREDIENTS, product.getIngredients());
         form.put(FormField.ALLERGENES, product.getAllergenes());
+        form.put(FormField.USEFORSTICKERS, String.valueOf(product.getUseForStickers()));
         form.put(FormField.QUANTITY, String.valueOf(product.getQuantity()));
         form.put(FormField.WEIGHT,numberFormatter.convertToLocale(product.getWeight()));
         form.put(FormField.PRICE, numberFormatter.convertToLocale((product.getPrice())));
@@ -87,6 +88,7 @@ public class FormConverter
         product.setPrice(numberFormatter.convertToDouble(form.get(FormField.PRICE)));
         product.setIngredients(form.get(FormField.INGREDIENTS));
         product.setAllergenes(form.get(FormField.ALLERGENES));
+        product.setUseForStickers(Integer.parseInt(form.get(FormField.USEFORSTICKERS)));
         product.setUnavailable(Integer.parseInt(form.get(FormField.UNAVAILABLE)));
         return product;
     }

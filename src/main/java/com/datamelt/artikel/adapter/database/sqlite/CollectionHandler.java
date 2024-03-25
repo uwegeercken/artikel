@@ -14,6 +14,7 @@ import java.util.*;
 class CollectionHandler implements CollectionHandlerInterface
 {
     public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? and timestamp < ? and timestamp > ? order by cast(number as int)";
+    public static final String SQL_QUERY_PRODUCER_PRODUCTS_FOR_STICKERS = "select * from product where producer_id=? and useForStickers=1 and unavailable=0 order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS = "select * from product where producer_id=? and timestamp < ? and timestamp > ? and unavailable=0 order by cast(number as int)";
     public static final String SQL_QUERY_CHANGED_PRODUCTS = "select * from product where producer_id=? and timestamp > ? order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCERS = "select * from producer order by id";
@@ -65,6 +66,7 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setPrice(resultset.getDouble("price"));
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
+            product.setUseForStickers(resultset.getInt("useforstickers"));
             product.setUnavailable(resultset.getInt("unavailable"));
             product.setTimestamp(resultset.getLong("timestamp"));
         }
@@ -120,6 +122,7 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setPrice(resultset.getDouble("price"));
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
+            product.setUseForStickers(resultset.getInt("useforstickers"));
             product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {
@@ -154,6 +157,66 @@ class CollectionHandler implements CollectionHandlerInterface
         return products;
     }
 
+    @Override
+    public List<Product> getAllProductsForStickers(Connection connection) throws Exception
+    {
+        // TODO: remove availableonly flag
+        List<Product> products = new ArrayList<>();
+        PreparedStatement statement;
+        statement = connection.prepareStatement(SQL_QUERY_PRODUCER_PRODUCTS_FOR_STICKERS);
+        statement.setLong(1, 5);
+
+        ResultSet resultset = statement.executeQuery();
+        while(resultset.next())
+        {
+            Producer producer = ProducerSearch.getProducerById(connection, resultset.getLong("producer_id"));
+            ProductContainer container = ProductContainerSearch.getProductContainerById(connection, resultset.getLong("productcontainer_id"));
+            ProductOrigin origin = ProductOriginSearch.getProductOriginById(connection, resultset.getLong("productorigin_id"));
+
+            Product product = new Product(resultset.getString("number"));
+            product.setId(resultset.getLong("id"));
+            product.setName(resultset.getString("name"));
+            product.setTitle(resultset.getString("title"));
+            product.setSubtitle(resultset.getString("subtitle"));
+            product.setQuantity(resultset.getInt("quantity"));
+            product.setWeight(resultset.getDouble("weight"));
+            product.setPrice(resultset.getDouble("price"));
+            product.setIngredients(resultset.getString("ingredients"));
+            product.setAllergenes(resultset.getString("allergenes"));
+            product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setUnavailable(resultset.getInt("unavailable"));
+            if(container!=null)
+            {
+                product.setContainer(container);
+            }
+            else
+            {
+                logger.error("the requested container could not be found. id [{}]", resultset.getLong("productcontainer_id"));
+            }
+            if(producer!=null)
+            {
+                product.setProducer(producer);
+            }
+            else
+            {
+                logger.error("the requested producer could not be found. id [{}]", resultset.getLong("producer_id"));
+            }
+            if(origin!=null)
+            {
+                product.setOrigin(origin);
+            }
+            else
+            {
+                logger.error("the requested product origin could not be found. id [{}]", resultset.getLong("productorigin_id"));
+            }
+            product.setTimestamp(resultset.getLong("timestamp"));
+
+            products.add(product);
+        }
+        resultset.close();
+        statement.close();
+        return products;
+    }
 
     @Override
     public List<Product> getChangedProducts(Connection connection, long producerId, int changedSinceNumberOfDays) throws Exception
@@ -181,6 +244,7 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setPrice(resultset.getDouble("price"));
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
+            product.setUseForStickers(resultset.getInt("useforstickers"));
             product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {

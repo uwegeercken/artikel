@@ -8,6 +8,7 @@
                 #foreach($producer in $producers)
                     <li><a href="/products/producer/${producer.id}/">${messages.get("MENU_ENTRY_PRODUCTS")} ${producer.name.toUpperCase()}</a></li>
                 #end
+                <li><a href="/stickers/">${messages.get("MENU_ENTRY_STICKERS")}</a></li>
                 <li><a href="/orders/">${messages.get("MENU_ENTRY_PURCHASE_ORDER")}</a></li>
             </ul>
             <ul>

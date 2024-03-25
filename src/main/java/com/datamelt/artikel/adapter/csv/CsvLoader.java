@@ -102,6 +102,7 @@ public class CsvLoader implements FileInterface
                         product.setPrice(Double.parseDouble(fields[6]));
                         product.setIngredients(fields[7]);
                         product.setAllergenes(fields[8]);
+                        product.setUseForStickers(Integer.parseInt(fields[9]));
                         product.setContainer(container);
                         product.setProducer(producer);
                         product.setOrigin(origin);

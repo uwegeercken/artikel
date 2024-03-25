@@ -60,6 +60,19 @@ public class ProductController implements ProductApiInterface
         return ViewUtility.render(request, model, Path.Template.PRODUCTS);
     };
 
+    public Route serveAllProductStickersPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting product stickers");
+        }
+        return ViewUtility.render(request, model, Path.Template.PRODUCTSTICKERS);
+    };
+
     public Route serveProductsChangedRecentlyPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
@@ -361,12 +374,12 @@ public class ProductController implements ProductApiInterface
         }
         //orderCollection.add(order);
 
-        byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
+        byte[] pdfOutputFile = getProductLabelsOutputFile(producerId, order);
         if(pdfOutputFile!=null)
         {
             orderCollection.remove(producer.getId());
 
-            String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+            String fullFilename = Constants.PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
             response.type(Constants.FILE_CONTENT_TYPE_PDF);
             response.header(Constants.CONTENT_DISPOSITION_KEY, Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
             response.raw().setContentLength(pdfOutputFile.length);
@@ -506,11 +519,26 @@ public class ProductController implements ProductApiInterface
         return ViewUtility.render(request, model ,Path.Template.PRODUCTS);
     };
 
+    public Route createStickers = (Request request, Response response) -> {
+        long producerId = Long.parseLong(request.params(":producerid"));
+        Producer producer = getProducerById(producerId);
+        byte[] pdfOutputFile = getProductStickersOutputFile();
+        String fullFilename = Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+
+        response.type(Constants.FILE_CONTENT_TYPE_PDF);
+        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
+        response.header(Constants.CONTENT_TYPE_KEY,Constants.CONTENT_TYPE_VALUE);
+        response.raw().setContentLength(pdfOutputFile.length);
+        response.raw().getOutputStream().write(pdfOutputFile);
+        response.raw().getOutputStream().flush();
+        response.raw().getOutputStream().close();
+        return response.raw();
+    };
     public Route createLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
-        byte[] pdfOutputFile = getLabelsOutputFile(producerId);
-        String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+        byte[] pdfOutputFile = getProductLabelsOutputFile(producerId);
+        String fullFilename = Constants.PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
         response.type(Constants.FILE_CONTENT_TYPE_PDF);
         response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
@@ -530,11 +558,11 @@ public class ProductController implements ProductApiInterface
 
         ProductOrderCollection orderCollection = request.session().attribute(Constants.SESSION_ATTRIBUTE_ORDER_COLLECTION);
         ProductOrder order = orderCollection.get(producerId);
-        byte[] pdfOutputFile = getLabelsOutputFile(producerId, order);
+        byte[] pdfOutputFile = getProductLabelsOutputFile(producerId, order);
         if(pdfOutputFile!=null)
         {
             orderCollection.remove(producerId);
-            String fullFilename = Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+            String fullFilename = Constants.PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
             response.type(Constants.FILE_CONTENT_TYPE_PDF);
             response.header(Constants.CONTENT_DISPOSITION_KEY, Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
             response.raw().setContentLength(pdfOutputFile.length);
@@ -674,6 +702,12 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
+    public List<Product> getAllProductsForStickers() throws Exception
+    {
+        return service.getAllProductsForStickers();
+    }
+
+    @Override
     public List<Product> getChangedProducts(long producerId, int changedSinceNumberOfDays) throws Exception
     {
         return service.getChangedProducts(producerId, changedSinceNumberOfDays);
@@ -716,7 +750,19 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public byte[] getLabelsOutputFile(long producerId) throws Exception
+    public byte[] getProductStickersOutputFile() throws Exception
+    {
+        List<Product> products = getAllProductsForStickers();
+        List<ProductSticker> stickers = new ArrayList<>();
+        for(Product product : products)
+        {
+            stickers.add(new ProductSticker(product, WebApplication.getMessages()));
+        }
+        return service.getProductStickersOutputFile(stickers);
+    }
+
+    @Override
+    public byte[] getProductLabelsOutputFile(long producerId) throws Exception
     {
         List<Product> products = getAllProducts(producerId, false, configuration.getWebApp().getAllProductsNumberOfDaysMin(), configuration.getWebApp().getAllProductsNumberOfDaysMax() );
         List<ProductLabel> labels = new ArrayList<>();
@@ -727,7 +773,7 @@ public class ProductController implements ProductApiInterface
         return service.getProductLabelsOutputFile(labels);
     }
     @Override
-    public byte[] getLabelsOutputFile(long producerId, ProductOrder order) throws Exception
+    public byte[] getProductLabelsOutputFile(long producerId, ProductOrder order) throws Exception
     {
         List<Product> products = order.getProducts();
         List<ProductLabel> labels = new ArrayList<>();

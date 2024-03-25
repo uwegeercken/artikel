@@ -23,16 +23,16 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     private static final Logger logger =  LoggerFactory.getLogger(WebService.class);
     private final RepositoryInterface repository;
     private final EmailApiInterface email;
-    private final CsvWriterInterface csvLabelWriter;
+    private final CsvWriterInterface csvWriter;
     private OrderDocumentInterface orderDocumentGenerator;
     private OpaApiInterface opaClient;
 
     private FileSystemInterface fileSystemHandler;
 
-    public WebService(RepositoryInterface respository, CsvWriterInterface csvLabelWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient) throws Exception
+    public WebService(RepositoryInterface respository, CsvWriterInterface csvWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient) throws Exception
     {
         this.repository = respository;
-        this.csvLabelWriter = csvLabelWriter;
+        this.csvWriter = csvWriter;
         this.orderDocumentGenerator = orderDocumentGenerator;
         this.email = email;
         this.opaClient = opaClient;
@@ -45,7 +45,13 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     @Override
     public List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception
     {
-        return repository.getAllProducts(producerId, availableOnly, changedSinceNumberOfDaysMin, changedSinceNumberOfDaysMax );
+        return repository.getAllProducts(producerId, availableOnly, changedSinceNumberOfDaysMin, changedSinceNumberOfDaysMax);
+    }
+
+    @Override
+    public List<Product> getAllProductsForStickers() throws Exception
+    {
+        return repository.getAllProductsForStickers();
     }
 
     @Override
@@ -513,7 +519,13 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     @Override
     public byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception
     {
-        return csvLabelWriter.getProductLabelsOutputFile(productLabels);
+        return csvWriter.getProductLabelsOutputFile(productLabels);
+    }
+
+    @Override
+    public byte[] getProductStickersOutputFile(List<ProductSticker> productStickers) throws Exception
+    {
+        return csvWriter.getProductStickersOutputFile(productStickers);
     }
 
     @Override

@@ -40,6 +40,7 @@ public class SqliteTable
             "\"price\"NUMERIC NOT NULL DEFAULT 0," +
             "\"ingredients\"TEXT," +
             "\"allergenes\"TEXT," +
+            "\"useforstickers\"INTEGER," +
             "\"unavailable\"INTEGER DEFAULT 0," +
             "\"producer_id\"INTEGER NOT NULL," +
             "\"productcontainer_id\"INTEGER," +

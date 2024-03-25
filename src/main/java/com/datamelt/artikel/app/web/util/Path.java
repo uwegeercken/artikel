@@ -11,6 +11,7 @@ public class Path
         public static final String USER = "/velocity/edituser.vm";
         public static final String USERS_CHANGE_PASSWORD = "/velocity/changepassword.vm";
         public static final String PRODUCTS = "/velocity/products.vm";
+        public static final String PRODUCTSTICKERS = "/velocity/productstickers.vm";
         public static final String PRODUCT = "/velocity/editproduct.vm";
         public static final String SHOPPRODUCTS = "/velocity/shopproducts.vm";
         public static final String SHOPPRODUCTS_NO_ORDERING = "/velocity/shopproducts_noordering.vm";

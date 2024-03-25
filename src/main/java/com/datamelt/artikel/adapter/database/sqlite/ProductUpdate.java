@@ -5,8 +5,8 @@ import java.sql.*;
 
 class ProductUpdate
 {
-    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, ingredients, allergenes, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, unavailable, timestamp) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "update product set name=?, title=?, subtitle=?, ingredients=?, allergenes=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, unavailable=?, timestamp=? where id=?";
+    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, ingredients, allergenes, useforstickers, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, unavailable, timestamp) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "update product set name=?, title=?, subtitle=?, ingredients=?, allergenes=?, useforstickers=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, unavailable=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from product where id=?";
 
     private final Connection connection;
@@ -27,14 +27,15 @@ class ProductUpdate
             statement.setString(4, product.getSubtitle());
             statement.setString(5, product.getIngredients());
             statement.setString(6, product.getAllergenes());
-            statement.setLong(7, product.getProducer().getId());
-            statement.setLong(8, product.getContainer().getId());
-            statement.setLong(9, product.getOrigin().getId());
-            statement.setLong(10, product.getQuantity());
-            statement.setDouble(11, product.getWeight());
-            statement.setDouble(12, product.getPrice());
-            statement.setInt(13,product.getUnavailable());
-            statement.setLong(14, product.getTimestamp());
+            statement.setInt(7, product.getUseForStickers());
+            statement.setLong(8, product.getProducer().getId());
+            statement.setLong(9, product.getContainer().getId());
+            statement.setLong(10, product.getOrigin().getId());
+            statement.setLong(11, product.getQuantity());
+            statement.setDouble(12, product.getWeight());
+            statement.setDouble(13, product.getPrice());
+            statement.setInt(14,product.getUnavailable());
+            statement.setLong(15, product.getTimestamp());
 
             statement.executeUpdate();
             statement.clearParameters();
@@ -60,17 +61,17 @@ class ProductUpdate
         statement.setString(3, product.getSubtitle());
         statement.setString(4, product.getIngredients());
         statement.setString(5, product.getAllergenes());
-        statement.setString(6, product.getNumber());
-        statement.setLong(7, product.getProducer().getId());
-        statement.setLong(8, product.getContainer().getId());
-        statement.setLong(9, product.getOrigin().getId());
-        statement.setLong(10, product.getQuantity());
-        statement.setDouble(11, product.getWeight());
-        statement.setDouble(12, product.getPrice());
-
-        statement.setInt(13,product.getUnavailable());
-        statement.setLong(14, product.getTimestamp());
-        statement.setLong(15, product.getId());
+        statement.setInt(6, product.getUseForStickers());
+        statement.setString(7, product.getNumber());
+        statement.setLong(8, product.getProducer().getId());
+        statement.setLong(9, product.getContainer().getId());
+        statement.setLong(10, product.getOrigin().getId());
+        statement.setLong(11, product.getQuantity());
+        statement.setDouble(12, product.getWeight());
+        statement.setDouble(13, product.getPrice());
+        statement.setInt(14,product.getUnavailable());
+        statement.setLong(15, product.getTimestamp());
+        statement.setLong(16, product.getId());
         statement.executeUpdate();
         statement.clearParameters();
 

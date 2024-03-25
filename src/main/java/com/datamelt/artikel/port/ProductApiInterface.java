@@ -10,6 +10,7 @@ import java.util.Map;
 public interface ProductApiInterface
 {
     List<Product> getAllProducts(long producerId, boolean availableOnly, int changedSinceNumberOfDaysMin, int changedSinceNumberOfDaysMax) throws Exception;
+    List<Product> getAllProductsForStickers() throws Exception;
     List<Product> getChangedProducts(long producerId, int changedSinceNumberOfDays) throws Exception;
     Product getProductById(long id) throws Exception;
     void updateProduct(long id, Form form, NumberFormatter numberFormatter) throws Exception;
@@ -23,8 +24,9 @@ public interface ProductApiInterface
     List<ProductContainer> getAllProductContainers() throws Exception;
     List<ProductOrigin> getAllProductOrigins() throws Exception;
     List<ProductHistory> getProductHistory(Product product) throws Exception;
-    byte[] getLabelsOutputFile(long producerId) throws Exception;
-    byte[] getLabelsOutputFile(long producerId, ProductOrder order) throws Exception;
+    byte[] getProductStickersOutputFile() throws Exception;
+    byte[] getProductLabelsOutputFile(long producerId) throws Exception;
+    byte[] getProductLabelsOutputFile(long producerId, ProductOrder order) throws Exception;
 
     Producer getProducerById(long producerId) throws Exception;
 

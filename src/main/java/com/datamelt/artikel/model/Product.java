@@ -20,6 +20,7 @@ public class Product
     private int unavailable;
     private String ingredients;
     private String allergenes;
+    private int useForStickers;
     private Producer producer;
     private ProductContainer container;
     private ProductOrigin origin;
@@ -55,6 +56,8 @@ public class Product
     public String getIngredients() { return ingredients; }
 
     public String getAllergenes() { return allergenes; }
+
+    public int getUseForStickers() { return useForStickers; }
 
     public Producer getProducer() { return producer; }
 
@@ -94,6 +97,8 @@ public class Product
     public void setIngredients(String ingredients) { this.ingredients = ingredients; }
 
     public void setAllergenes(String allergenes) { this.allergenes = allergenes; }
+
+    public void setUseForStickers(int useForStickers) { this.useForStickers = useForStickers; }
 
     public void setProducer(Producer producer)
     {

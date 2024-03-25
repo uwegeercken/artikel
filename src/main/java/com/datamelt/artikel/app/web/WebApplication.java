@@ -1,6 +1,6 @@
 package com.datamelt.artikel.app.web;
 
-import com.datamelt.artikel.adapter.csv.CsvLabelFileWriter;
+import com.datamelt.artikel.adapter.csv.CsvFileWriter;
 import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
 import com.datamelt.artikel.adapter.email.EmailHandler;
 import com.datamelt.artikel.adapter.opa.OpaHandler;
@@ -18,7 +18,6 @@ import com.datamelt.artikel.util.FileUtility;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spark.Spark;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -91,7 +90,7 @@ public class WebApplication
         OpaHandler opaHandler = new OpaHandler(configuration);
         try
         {
-            service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvLabelFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), opaHandler);
+            service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), opaHandler);
         }
         catch(Exception ex)
         {
@@ -135,11 +134,13 @@ public class WebApplication
         post(Endpoints.USERS_CHANGE_PASSWORD.getPath(), userController.serveUpdatePasswordPage);
 
         get(Endpoints.PRODUCTS.getPath(), productController.serveAllProductsPage);
+        get(Endpoints.STICKERS.getPath(), productController.serveAllProductStickersPage);
         get(Endpoints.PRODUCTS_CHANGED_RECENTLY.getPath(), productController.serveProductsChangedRecentlyPage);
         get(Endpoints.PRODUCTS_UNCHANGED_RECENTLY.getPath(), productController.serveProductsUnchangedRecentlyPage);
         get(Endpoints.PRODUCTS_UNCHANGED_SHORTTERM.getPath(),productController.serveProductsUnchangedShortTermPage);
         get(Endpoints.PRODUCTS_UNCHANGED_LONGTERM.getPath(),productController.serveProductsUnchangedLongTermPage);
         get(Endpoints.GENERATE_LABELS.getPath(), productController.createLabels);
+        get(Endpoints.GENERATE_STICKERS.getPath(), productController.createStickers);
         get(Endpoints.GENERATE_SHOP_LABELS.getPath(), productController.createShopLabels);
         get(Endpoints.PRODUCT_SELECT_UPDATE.getPath(), productController.serveProductPage);
         post(Endpoints.PRODUCT_UPDATE.getPath(), productController.serveUpdateProductPage);

@@ -10,6 +10,7 @@ public enum FormField
     TITLE("title", "string", false, true),
     INGREDIENTS("ingredients", "string", false, true),
     ALLERGENES("allergenes", "string", false, true),
+    USEFORSTICKERS("useforstickers", "int", false, true),
     SUBTITLE("subtitle", "string", false, true),
     NUMBER("number", "string", true, false),
     QUANTITY("quantity", "int", false, true),

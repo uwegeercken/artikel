@@ -1,9 +1,5 @@
 package com.datamelt.artikel.util;
 
-import com.datamelt.artikel.app.web.WebApplication;
-import com.datamelt.artikel.app.web.util.Endpoints;
-import com.datamelt.artikel.app.web.util.Timestamp;
-
 public class Constants
 {
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -21,11 +17,15 @@ public class Constants
 
     public static final String FILE_CONTENT_TYPE_PDF = "application/pdf;charset=UTF-8";
 
-    public static final String LABELS_CSV_FILENAME = "labels.csv";
+    public static final String PRODUCT_LABELS_CSV_FILENAME = "productlabels.csv";
+    public static final String PRODUCT_STICKERS_CSV_FILENAME = "productstickers.csv";
 
     public static final String CONTENT_DISPOSITION_VALUE = "attachment; filename=";
-    public static final String LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 = "etiketten";
-    public static final String LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2 = ".pdf";
+    public static final String PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 = "etiketten";
+    public static final String PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2 = ".pdf";
+
+    public static final String PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 = "aufkleber";
+    public static final String PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2 = ".pdf";
 
     public static final String MODEL_FORM_KEY = "form";
     public static final String MODEL_FIELDS_KEY = "fields";
@@ -35,6 +35,7 @@ public class Constants
     public static final String MODEL_PRODUCERS_KEY = "producers";
     public static final String MODEL_PRODUCER_KEY = "producer";
     public static final String MODEL_PRODUCTS_KEY = "products";
+    public static final String MODEL_PRODUCT_STICKERS_KEY = "productstickers";
     public static final String MODEL_PRODUCT_KEY = "product";
     public static final String MODEL_ORIGINS_KEY = "origins";
     public static final String MODEL_MARKETS_KEY = "markets";

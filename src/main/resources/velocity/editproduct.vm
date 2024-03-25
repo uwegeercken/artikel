@@ -59,6 +59,20 @@
             </td>
         </tr>
         <tr>
+            <td>${messages.get("FORM_FIELD_USEFORSTICKERS")}:</td>
+            <td>
+                <select id="useforstickers" name="$fields.valueOf("USEFORSTICKERS")" size="1">
+                    #if($!{form.get($fields.valueOf("USEFORSTICKERS"))}==1)
+                        <option selected value="1">${messages.get("PRODUCT_FORM_USEFORSTICKERS")}</option>
+                        <option value="0">${messages.get("PRODUCT_FORM_NOUSEFORSTICKERS")}</option>
+                    #else
+                        <option value="1">${messages.get("PRODUCT_FORM_USEFORSTICKERS")}</option>
+                        <option selected value="0">${messages.get("PRODUCT_FORM_NOUSEFORSTICKERS")}</option>
+                    #end
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td>${messages.get("FORM_FIELD_QUANTITY")}:</td>
             <td>
                 <input name="$fields.valueOf("QUANTITY")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("QUANTITY"))}">
