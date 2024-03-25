@@ -14,7 +14,7 @@ import java.util.*;
 class CollectionHandler implements CollectionHandlerInterface
 {
     public static final String SQL_QUERY_PRODUCER_PRODUCTS = "select * from product where producer_id=? and timestamp < ? and timestamp > ? order by cast(number as int)";
-    public static final String SQL_QUERY_PRODUCER_PRODUCTS_FOR_STICKERS = "select * from product where producer_id=? and useForStickers=1 and unavailable=0 order by cast(number as int)";
+    public static final String SQL_QUERY_PRODUCER_PRODUCTS_FOR_STICKERS = "select * from product where producer_id=? and useforstickers=1 and unavailable=0 order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCER_AVAILABLE_PRODUCTS = "select * from product where producer_id=? and timestamp < ? and timestamp > ? and unavailable=0 order by cast(number as int)";
     public static final String SQL_QUERY_CHANGED_PRODUCTS = "select * from product where producer_id=? and timestamp > ? order by cast(number as int)";
     public static final String SQL_QUERY_PRODUCERS = "select * from producer order by id";
