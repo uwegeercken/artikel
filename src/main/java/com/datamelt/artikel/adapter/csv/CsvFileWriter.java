@@ -48,7 +48,7 @@ public class CsvFileWriter implements CsvWriterInterface
     }
 
     @Override
-    public byte[] getProductStickersOutputFile(List<ProductSticker> productStickers) throws Exception
+    public void printProductStickers(List<ProductSticker> productStickers) throws Exception
     {
         File csvOutputFile = new File(configuration.getSparkJava().getTempFolder() + "/" + Constants.PRODUCT_STICKERS_CSV_FILENAME);
 
@@ -65,7 +65,7 @@ public class CsvFileWriter implements CsvWriterInterface
         mapper.configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true);
         ObjectWriter writer = mapper.writerFor(ProductSticker.class).with(schema);
         writer.writeValues(csvOutputFile).writeAll(productStickers);
-        return writeProductStickersOutputFile(csvOutputFile);
+        printProductStickers(csvOutputFile);
     }
 
     private byte[] writeProductLabelsOutputFile(File csvOutputFile) throws Exception
@@ -100,7 +100,7 @@ public class CsvFileWriter implements CsvWriterInterface
         }
     }
 
-    private byte[] writeProductStickersOutputFile(File csvOutputFile) throws Exception
+    private void printProductStickers(File csvOutputFile) throws Exception
     {
         if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existProductStickersFile())
         {
@@ -110,9 +110,14 @@ public class CsvFileWriter implements CsvWriterInterface
             String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -o " + outputFilename + " " + configuration.getLabels().getProductStickersFile();
             Process process = Runtime.getRuntime().exec(command);
             process.waitFor(15, TimeUnit.SECONDS);
-            File file = new File(outputFilename);
-            FileInputStream stream = new FileInputStream(file);
-            return stream.readAllBytes();
+
+            String printCommand = "lpr -P M110s -#1 " + outputFilename;
+            Process printProcess = Runtime.getRuntime().exec(printCommand);
+            printProcess.waitFor(30, TimeUnit.SECONDS);
+
+//            File file = new File(outputFilename);
+//            FileInputStream stream = new FileInputStream(file);
+//            return stream.readAllBytes();
         }
         else
         {
@@ -128,7 +133,6 @@ public class CsvFileWriter implements CsvWriterInterface
             {
                 logger.error("configuration item: productStickersFile [{}] does not exist or can not be read", configuration.getLabels().existProductStickersFile());
             }
-            return null;
         }
     }
 

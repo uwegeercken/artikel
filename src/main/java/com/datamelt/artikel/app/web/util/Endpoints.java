@@ -21,7 +21,7 @@ public enum Endpoints
     USERS_SELECT_CHANGE_PASSWORD("/users/changepassword/:id/","readwrite", "get"),
     USERS_CHANGE_PASSWORD("/users/changepassword/:id/","readwrite", "post"),
     GENERATE_LABELS("/products/labels/:producerid/","readwrite", "get"),
-    GENERATE_STICKERS("/products/stickers/:producerid/","read", "get"),
+    GENERATE_STICKERS("/products/stickers/","read", "post"),
     GENERATE_SHOP_LABELS("/products/shoplabels/:producerid/","readwrite", "get"),
     PRODUCT_SELECT_UPDATE("/product/:id/producer/:producerid/","readwrite", "get"),
     PRODUCT_UPDATE("/product/:id/producer/:producerid/","readwrite", "post"),

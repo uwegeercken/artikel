@@ -520,19 +520,31 @@ public class ProductController implements ProductApiInterface
     };
 
     public Route createStickers = (Request request, Response response) -> {
-        long producerId = Long.parseLong(request.params(":producerid"));
-        Producer producer = getProducerById(producerId);
-        byte[] pdfOutputFile = getProductStickersOutputFile();
-        String fullFilename = Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + producer.getName() + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+        Map<String, Object> model = new HashMap<>();
+        long id = Long.parseLong(request.queryParams("id"));
+        int quantity = 0;
+        try
+        {
+            quantity = Integer.parseInt(request.queryParams("quantity"));
+            printProductStickers(id, quantity);
+        }
+        catch (Exception ex)
+        {
+            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCTSTICKERS_FORM_PRINT_ERROR")));
+        }
 
-        response.type(Constants.FILE_CONTENT_TYPE_PDF);
-        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
-        response.header(Constants.CONTENT_TYPE_KEY,Constants.CONTENT_TYPE_VALUE);
-        response.raw().setContentLength(pdfOutputFile.length);
-        response.raw().getOutputStream().write(pdfOutputFile);
-        response.raw().getOutputStream().flush();
-        response.raw().getOutputStream().close();
-        return response.raw();
+//        String fullFilename = Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + id + "_" + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+//
+//        response.type(Constants.FILE_CONTENT_TYPE_PDF);
+//        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
+//        response.header(Constants.CONTENT_TYPE_KEY,Constants.CONTENT_TYPE_VALUE);
+//        response.raw().setContentLength(pdfOutputFile.length);
+//        response.raw().getOutputStream().write(pdfOutputFile);
+//        response.raw().getOutputStream().flush();
+//        response.raw().getOutputStream().close();
+//        return response.raw();
+        model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
+        return ViewUtility.render(request, model ,Path.Template.PRODUCTSTICKERS);
     };
     public Route createLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
@@ -750,15 +762,17 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public byte[] getProductStickersOutputFile() throws Exception
+    public void printProductStickers(long id, int quantity) throws Exception
     {
-        List<Product> products = getAllProductsForStickers();
+        // TODO: mehrere etiketten ins csv file generieren oder anzahl der kopien
+        //       über die druckerfunktion??
+        Product product = getProductById(id);
         List<ProductSticker> stickers = new ArrayList<>();
-        for(Product product : products)
+        for(int i=0;i<quantity;i++)
         {
             stickers.add(new ProductSticker(product, WebApplication.getMessages()));
         }
-        return service.getProductStickersOutputFile(stickers);
+        service.printProductStickers(stickers);
     }
 
     @Override

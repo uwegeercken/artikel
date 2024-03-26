@@ -69,7 +69,7 @@ public interface WebServiceInterface
     ProductOrder getProductOrderById(long id) throws Exception;
 
     byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
-    byte[] getProductStickersOutputFile(List<ProductSticker> productStickers) throws Exception;
+    void printProductStickers(List<ProductSticker> productStickers) throws Exception;
     byte [] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
     String getOrderDocumentFilename(ProductOrder order);
 

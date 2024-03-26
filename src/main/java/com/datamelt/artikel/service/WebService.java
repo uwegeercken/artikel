@@ -523,9 +523,9 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public byte[] getProductStickersOutputFile(List<ProductSticker> productStickers) throws Exception
+    public void printProductStickers(List<ProductSticker> productStickers) throws Exception
     {
-        return csvWriter.getProductStickersOutputFile(productStickers);
+        csvWriter.printProductStickers(productStickers);
     }
 
     @Override

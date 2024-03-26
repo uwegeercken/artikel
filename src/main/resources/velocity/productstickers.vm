@@ -1,42 +1,44 @@
 #parse("/velocity/macros.vm")
 #parse("/velocity/layout.vm")
 #@mainLayout()
-    <form method="post" action="/shopproducts/producer/${producer.id}/">
+
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_STICKERS_LIST")} (products.size())</p>
-    <p><img id="helpimg" height="40px" width="40px" src="/img/help_black.png" title="${messages.get("IMAGE_HELP")}" onclick="switchHelp()">
-	    #set($productamount=0)
-        #if($order && ${order.orderItems.size()}>5) #set($productamount=9999) #else #set($productamount=${order.orderItems.size()}) #end
-        <button type="submit" name="submit">
-            <img width="40px" height="40px" src="/img/labels_checked.png" title="${messages.get("IMAGE_GENERATE_SHOP_LABELS")}">
-        </button>
-    </p>
-    <div id="help">
-        <p class="helptitle">${messages.get("PAGETITLE_PRODUCT_STICKERS_LIST")}</p>
-        <p>${messages.get("HELP1_PRODUCT_STICKERS_LIST")}</p>
-        <p>${messages.get("HELP2_PRODUCT_STICKERS_LIST")}</p>
-    </div>
-    <div id="filter">
-        ${messages.get("FILTER_TEXTBOX")}:&nbsp;<input id="search" searchtype="products_${producer.id}" type="text"">
-    </div>
     <div class="error">
         #if (${result})
            <p>#insert_message($result)</p>
         #end
     </div>
-
-    #foreach($product in $products)
-        <div class="unit" tag="$!product.number.toLowerCase() + $!product.name.toLowerCase()">
-            <div class="grouptop" id="${product.number}">
-                <p class="small">${messages.get("TYPE_PRODUCT")} #$!product.number - $!product.producer.name </p>
-                <p class="small">$!{product.title}&nbsp;</p>
-                <p class="big">$!{product.name}</p>
-                <p class="normal">$!{product.subtitle}&nbsp;</p>
-                <p class="normal">#if($!{product.origin.id}!=1) ${messages.get("FORM_FIELD_ORIGIN")}: $!{product.origin.name} #end &nbsp;</p>
-                <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertToLocale($!{product.weight}) kg #if($!{product.container.id}!=1)- ${messages.get("FORM_FIELD_CONTAINER")}: $!{product.container.name}#end</p>
-                <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $numberFormatter.convertToLocale($!{product.price}) ($!{product.lastChangedDate})</p>
-            </div>
-        </div>
-    #end
+    <div class="formbox">
+        <table align="center" width="50%" border="1">
+            #foreach($product in $products)
+            <form method="post" action="/products/stickers/">
+                <tr>
+                    <td>#$!product.number</td>
+                    <td>$!product.title $!product.name</td>
+                    <td>
+                        <input name="id" value="${product.id}" type="hidden">
+                        Menge: <input name="quantity" type="text" size="2" maxlength="2">
+                        von:
+                        <select name="fromdate" size="1">
+                            <option value="yesterday">gestern</option>
+                            <option selected value="today">heute</option>
+                            <option value="tomorrow">morgen</option>
+                        </select>
+                        haltbar:
+                        <select name="todate" size="1">
+                            <option value="tomorrow">5 Tage</option>
+                            <option selected value="today">4 Tage</option>
+                            <option value="yesterday">3 Tage</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="submit" value="${messages.get("FORM_BUTTON_OK")}" name="submit">
+                    </td>
+                </tr>
+                </form>
+            #end
+        </table>
+    </div>
 #end
 
 

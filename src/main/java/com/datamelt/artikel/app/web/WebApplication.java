@@ -140,7 +140,7 @@ public class WebApplication
         get(Endpoints.PRODUCTS_UNCHANGED_SHORTTERM.getPath(),productController.serveProductsUnchangedShortTermPage);
         get(Endpoints.PRODUCTS_UNCHANGED_LONGTERM.getPath(),productController.serveProductsUnchangedLongTermPage);
         get(Endpoints.GENERATE_LABELS.getPath(), productController.createLabels);
-        get(Endpoints.GENERATE_STICKERS.getPath(), productController.createStickers);
+        post(Endpoints.GENERATE_STICKERS.getPath(), productController.createStickers);
         get(Endpoints.GENERATE_SHOP_LABELS.getPath(), productController.createShopLabels);
         get(Endpoints.PRODUCT_SELECT_UPDATE.getPath(), productController.serveProductPage);
         post(Endpoints.PRODUCT_UPDATE.getPath(), productController.serveUpdateProductPage);
