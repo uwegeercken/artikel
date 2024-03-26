@@ -11,6 +11,7 @@ public enum Endpoints
     LOGOUT("/logout/","read", "get"),
     PRODUCTS("/products/producer/:producerid/","read", "get"),
     STICKERS("/stickers/","read", "get"),
+    STICKERS_SINGLEPAGE("/stickers-sp/","read", "get"),
     PRODUCTS_CHANGED_RECENTLY("/changedproductsrecently/producer/:producerid/","read", "get"),
     PRODUCTS_UNCHANGED_RECENTLY("/unchangedproductsrecently/producer/:producerid/","read", "get"),
     PRODUCTS_UNCHANGED_SHORTTERM("/unchangedproductsshortterm/producer/:producerid/","read", "get"),

@@ -135,6 +135,7 @@ public class WebApplication
 
         get(Endpoints.PRODUCTS.getPath(), productController.serveAllProductsPage);
         get(Endpoints.STICKERS.getPath(), productController.serveAllProductStickersPage);
+        get(Endpoints.STICKERS_SINGLEPAGE.getPath(), productController.serveAllProductStickersSinglePage);
         get(Endpoints.PRODUCTS_CHANGED_RECENTLY.getPath(), productController.serveProductsChangedRecentlyPage);
         get(Endpoints.PRODUCTS_UNCHANGED_RECENTLY.getPath(), productController.serveProductsUnchangedRecentlyPage);
         get(Endpoints.PRODUCTS_UNCHANGED_SHORTTERM.getPath(),productController.serveProductsUnchangedShortTermPage);

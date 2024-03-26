@@ -1,0 +1,29 @@
+#macro(mainLayout)
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Artikelverwaltung | $!{pagetitle}</title>
+        <link rel="stylesheet" type="text/css" href="/css/style_new.css">
+	</head>
+	<body>
+        <div>
+            <div class="top">
+                    <table width="100%">
+                    <tr>
+                        <td width="100%">#parse("/velocity/logo.vm")</td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <div class="datastickers">
+                    $bodyContent
+                </div>
+            </div>
+        </div>
+	</body>
+</html>
+#end

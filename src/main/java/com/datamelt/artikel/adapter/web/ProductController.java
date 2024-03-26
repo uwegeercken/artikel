@@ -19,6 +19,7 @@ import com.datamelt.artikel.port.ProductApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.CalendarUtility;
 import com.datamelt.artikel.util.Constants;
+import com.datamelt.artikel.util.DateOfPacking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -62,6 +63,22 @@ public class ProductController implements ProductApiInterface
 
     public Route serveAllProductStickersPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_DATEOFPACKING_KEY, DateOfPacking.class);
+        model.put("layouttest","/velocity/layout.vm");
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting product stickers");
+        }
+        return ViewUtility.render(request, model, Path.Template.PRODUCTSTICKERS);
+    };
+    public Route serveAllProductStickersSinglePage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put(Constants.MODEL_DATEOFPACKING_KEY, DateOfPacking.class);
+        //model.put("layouttest","/velocity/layout_stickers.vm");
         try
         {
             model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
@@ -522,11 +539,13 @@ public class ProductController implements ProductApiInterface
     public Route createStickers = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         long id = Long.parseLong(request.queryParams("id"));
+        int expirationDateOffset = Integer.parseInt(request.queryParams("expirationDateOffset"));
+        int dateOfPackingOffset = Integer.parseInt(request.queryParams("dateOfPackingOffset"));
         int quantity = 0;
         try
         {
             quantity = Integer.parseInt(request.queryParams("quantity"));
-            printProductStickers(id, quantity);
+            printProductStickers(id, quantity, expirationDateOffset, dateOfPackingOffset);
         }
         catch (Exception ex)
         {
@@ -762,7 +781,7 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
-    public void printProductStickers(long id, int quantity) throws Exception
+    public void printProductStickers(long id, int quantity, int expirationDateOffset, int dateOfPackingOffset) throws Exception
     {
         // TODO: mehrere etiketten ins csv file generieren oder anzahl der kopien
         //       über die druckerfunktion??
@@ -770,7 +789,7 @@ public class ProductController implements ProductApiInterface
         List<ProductSticker> stickers = new ArrayList<>();
         for(int i=0;i<quantity;i++)
         {
-            stickers.add(new ProductSticker(product, WebApplication.getMessages()));
+            stickers.add(new ProductSticker(product, expirationDateOffset, dateOfPackingOffset, WebApplication.getMessages()));
         }
         service.printProductStickers(stickers);
     }

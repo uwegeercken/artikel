@@ -383,15 +383,24 @@ a:active {
 	clear: both;
 }
 
+.table-striped th {
+  height: 45px;
+  background-color: black !important;
+  color: white;
+}
+
+.table-striped td {
+  padding: 8px;
+  border: 2px solid #F6F6F6;
+  font-weight: bold;
+}
+
 tr.light>td {
-	background: #f06343;
-	color: #d8d8d8;
-	border-radius: 4px;
-	padding: 4px;
+	background: #ebebe0;
 }
 
 tr.light2>td {
-	background: #E8E8E8;
+	background: #ff9966;
 }
 
 td {
@@ -417,6 +426,14 @@ div.data {
 	position: absolute;
 	margin-top: 0px;
 	margin-left: 170px;
+	width: 90%;
+	height: 90%;
+}
+
+div.datastickers {
+	position: absolute;
+	margin-top: 0px;
+	margin-left: 0px;
 	width: 90%;
 	height: 90%;
 }

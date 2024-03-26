@@ -29,6 +29,8 @@ public class Constants
 
     public static final String MODEL_FORM_KEY = "form";
     public static final String MODEL_FIELDS_KEY = "fields";
+    public static final String MODEL_DATEOFPACKING_KEY = "dateofpacking";
+    public static final String MODEL_EXPIRATIONDATE_KEY = "expirationdate";
     public static final String MODEL_RESULT_KEY = "result";
     public static final String MODEL_CONTAINERS_KEY = "containers";
     public static final String MODEL_CONTAINER_KEY = "container";

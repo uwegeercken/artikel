@@ -57,8 +57,12 @@ public class CsvFileWriter implements CsvWriterInterface
                 .addColumn("number")
                 .addColumn("ingredients")
                 .addColumn("allergenes")
-                .addColumn("unit")
                 .addColumn("price")
+                .addColumn("pricePerKilo")
+                .addColumn("weight")
+                .addColumn("expirationDate")
+                .addColumn("dateOfPacking")
+
                 .build();
         schema = schema.withColumnSeparator('\t');
         CsvMapper mapper = new CsvMapper();
@@ -111,13 +115,9 @@ public class CsvFileWriter implements CsvWriterInterface
             Process process = Runtime.getRuntime().exec(command);
             process.waitFor(15, TimeUnit.SECONDS);
 
-            String printCommand = "lpr -P M110s -#1 " + outputFilename;
+            String printCommand = "lpr -P M110S " + outputFilename;
             Process printProcess = Runtime.getRuntime().exec(printCommand);
             printProcess.waitFor(30, TimeUnit.SECONDS);
-
-//            File file = new File(outputFilename);
-//            FileInputStream stream = new FileInputStream(file);
-//            return stream.readAllBytes();
         }
         else
         {
