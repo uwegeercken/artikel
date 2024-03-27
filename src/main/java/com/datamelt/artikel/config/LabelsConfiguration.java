@@ -10,6 +10,7 @@ public class LabelsConfiguration
     private String glabelsBinary;
     private String productLabelsFile;
     private String productStickersFile;
+    private String productStickersPrinterName;
     private String pdfOutputFolder;
 
     public String getProductLabelsFile()
@@ -21,6 +22,8 @@ public class LabelsConfiguration
     {
         return productStickersFile;
     }
+
+    public String getProductStickersPrinterName() { return productStickersPrinterName; }
 
     public String getGlabelsBinary()
     {

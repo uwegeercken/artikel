@@ -12,8 +12,10 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +50,7 @@ public class CsvFileWriter implements CsvWriterInterface
     }
 
     @Override
-    public void printProductStickers(List<ProductSticker> productStickers) throws Exception
+    public void printProductStickers(List<ProductSticker> productStickers, int quantity) throws Exception
     {
         File csvOutputFile = new File(configuration.getSparkJava().getTempFolder() + "/" + Constants.PRODUCT_STICKERS_CSV_FILENAME);
 
@@ -69,7 +71,7 @@ public class CsvFileWriter implements CsvWriterInterface
         mapper.configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true);
         ObjectWriter writer = mapper.writerFor(ProductSticker.class).with(schema);
         writer.writeValues(csvOutputFile).writeAll(productStickers);
-        printProductStickers(csvOutputFile);
+        printProductStickers(quantity);
     }
 
     private byte[] writeProductLabelsOutputFile(File csvOutputFile) throws Exception
@@ -104,20 +106,32 @@ public class CsvFileWriter implements CsvWriterInterface
         }
     }
 
-    private void printProductStickers(File csvOutputFile) throws Exception
+    private void printProductStickers(int quantity) throws Exception
     {
         if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existProductStickersFile())
         {
             String inputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.PRODUCT_STICKERS_CSV_FILENAME;
             String outputFilename = configuration.getLabels().getPdfOutputFolder() + "/" + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
 
-            String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -o " + outputFilename + " " + configuration.getLabels().getProductStickersFile();
+            String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -c " + quantity + " -o " + outputFilename + " " + configuration.getLabels().getProductStickersFile();
             Process process = Runtime.getRuntime().exec(command);
-            process.waitFor(15, TimeUnit.SECONDS);
+            //process.waitFor(15, TimeUnit.SECONDS);
+            process.waitFor();
 
-            String printCommand = "lpr -P M110S " + outputFilename;
+            Thread.sleep(5000);
+
+            String printCommand = "lpr -o page-ranges=1-999"  + " -P " + configuration.getLabels().getProductStickersPrinterName() + " " + outputFilename;
+            logger.info("sending stickers from [{}] to printer [{}], quantity [{}]", outputFilename, configuration.getLabels().getProductStickersPrinterName(), quantity);
+
             Process printProcess = Runtime.getRuntime().exec(printCommand);
-            printProcess.waitFor(30, TimeUnit.SECONDS);
+            //printProcess.waitFor(60, TimeUnit.SECONDS);
+            printProcess.waitFor();
+
+
+//            ProcessBuilder builderScript = new ProcessBuilder();
+//            builderScript.command("/home/uwe/development/artikel/glabels/printstickers.sh",configuration.getLabels().getProductStickersPrinterName(), ""+quantity);
+//            Process runScript = builderScript.start();
+//            runScript.waitFor(15, TimeUnit.SECONDS);
         }
         else
         {

@@ -25,7 +25,15 @@ public class Filters
 
     public static Filter redirectToLogin = (Request request, Response response) -> {
         String test = request.pathInfo();
-        if(!request.pathInfo().equals(Endpoints.LOGIN.getPath()) && !request.pathInfo().equals(Endpoints.AUTHENTICATE.getPath()) && !request.pathInfo().equals(Endpoints.ABOUT.getPath()) && !request.pathInfo().equals(Endpoints.INDEX.getPath()) && !request.pathInfo().equals(Endpoints.NOTAUTHORIZED.getPath()))
+        if(!request.pathInfo().equals(Endpoints.LOGIN.getPath())
+                && !request.pathInfo().equals(Endpoints.AUTHENTICATE.getPath())
+                && !request.pathInfo().equals(Endpoints.ABOUT.getPath())
+                && !request.pathInfo().equals(Endpoints.INDEX.getPath())
+                && !request.pathInfo().equals(Endpoints.NOTAUTHORIZED.getPath())
+                && !request.pathInfo().equals(Endpoints.STICKERS_SINGLEPAGE.getPath())
+                && !request.pathInfo().equals(Endpoints.STICKERS_SINGLEPAGE.getPath())
+                && !request.pathInfo().equals(Endpoints.GENERATE_STICKERS.getPath())
+        )
         {
             if(request.session().attribute(Constants.USERTOKEN_KEY)!=null)
             {

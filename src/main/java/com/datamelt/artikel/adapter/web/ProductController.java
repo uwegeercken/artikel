@@ -19,13 +19,13 @@ import com.datamelt.artikel.port.ProductApiInterface;
 import com.datamelt.artikel.port.WebServiceInterface;
 import com.datamelt.artikel.util.CalendarUtility;
 import com.datamelt.artikel.util.Constants;
-import com.datamelt.artikel.util.DateOfPacking;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
+import javax.servlet.RequestDispatcher;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -63,8 +63,8 @@ public class ProductController implements ProductApiInterface
 
     public Route serveAllProductStickersPage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put(Constants.MODEL_DATEOFPACKING_KEY, DateOfPacking.class);
-        model.put("layouttest","/velocity/layout.vm");
+        model.put(Constants.MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE, false);
+        model.put(Constants.VELOCITY_LAYOUT_TEMPLATE_KEY,Constants.DEFAULT_VELOCITY_LAYOUT_TEMPLATE);
         try
         {
             model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
@@ -77,8 +77,8 @@ public class ProductController implements ProductApiInterface
     };
     public Route serveAllProductStickersSinglePage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        model.put(Constants.MODEL_DATEOFPACKING_KEY, DateOfPacking.class);
-        //model.put("layouttest","/velocity/layout_stickers.vm");
+        model.put(Constants.MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE, true);
+        model.put(Constants.VELOCITY_LAYOUT_TEMPLATE_KEY,Constants.PRODUCT_STICKERS_VELOCITY_LAYOUT_TEMPLATE);
         try
         {
             model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
@@ -539,6 +539,7 @@ public class ProductController implements ProductApiInterface
     public Route createStickers = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         long id = Long.parseLong(request.queryParams("id"));
+        boolean fromSinglePage = Boolean.parseBoolean(request.queryParams("singlepage"));
         int expirationDateOffset = Integer.parseInt(request.queryParams("expirationDateOffset"));
         int dateOfPackingOffset = Integer.parseInt(request.queryParams("dateOfPackingOffset"));
         int quantity = 0;
@@ -551,19 +552,18 @@ public class ProductController implements ProductApiInterface
         {
             model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCTSTICKERS_FORM_PRINT_ERROR")));
         }
-
-//        String fullFilename = Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + id + "_" + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
-//
-//        response.type(Constants.FILE_CONTENT_TYPE_PDF);
-//        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
-//        response.header(Constants.CONTENT_TYPE_KEY,Constants.CONTENT_TYPE_VALUE);
-//        response.raw().setContentLength(pdfOutputFile.length);
-//        response.raw().getOutputStream().write(pdfOutputFile);
-//        response.raw().getOutputStream().flush();
-//        response.raw().getOutputStream().close();
-//        return response.raw();
         model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
-        return ViewUtility.render(request, model ,Path.Template.PRODUCTSTICKERS);
+        if(fromSinglePage)
+        {
+            model.put(Constants.MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE, true);
+            model.put(Constants.VELOCITY_LAYOUT_TEMPLATE_KEY,Constants.PRODUCT_STICKERS_VELOCITY_LAYOUT_TEMPLATE);
+        }
+        else
+        {
+            model.put(Constants.MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE, false);
+            model.put(Constants.VELOCITY_LAYOUT_TEMPLATE_KEY,Constants.DEFAULT_VELOCITY_LAYOUT_TEMPLATE);
+        }
+        return ViewUtility.render(request, model,Path.Template.PRODUCTSTICKERS);
     };
     public Route createLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
@@ -787,11 +787,11 @@ public class ProductController implements ProductApiInterface
         //       über die druckerfunktion??
         Product product = getProductById(id);
         List<ProductSticker> stickers = new ArrayList<>();
-        for(int i=0;i<quantity;i++)
-        {
+        //for(int i=0;i<quantity;i++)
+        //{
             stickers.add(new ProductSticker(product, expirationDateOffset, dateOfPackingOffset, WebApplication.getMessages()));
-        }
-        service.printProductStickers(stickers);
+        //}
+        service.printProductStickers(stickers, quantity);
     }
 
     @Override

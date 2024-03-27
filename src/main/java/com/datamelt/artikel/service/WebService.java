@@ -523,9 +523,9 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
-    public void printProductStickers(List<ProductSticker> productStickers) throws Exception
+    public void printProductStickers(List<ProductSticker> productStickers, int quantity) throws Exception
     {
-        csvWriter.printProductStickers(productStickers);
+        csvWriter.printProductStickers(productStickers, quantity);
     }
 
     @Override

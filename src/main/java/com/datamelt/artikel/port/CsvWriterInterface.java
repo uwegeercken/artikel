@@ -8,5 +8,5 @@ import java.util.List;
 public interface CsvWriterInterface
 {
     byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
-    void printProductStickers(List<ProductSticker> productStickers) throws Exception;
+    void printProductStickers(List<ProductSticker> productStickers, int quantity) throws Exception;
 }

@@ -70,7 +70,7 @@ Adjust the variables according to your needs, especially the folders where the d
       staticfilesExpiretime: 60
       locale: de
       tempFolder: /tmp
-      tokenExpiresMinutes: 10
+      tokenExpiresMinutes: 180
       documentsFolder: /home/tester/documents
     opa:
         host: http://localhost:8181
@@ -78,12 +78,15 @@ Adjust the variables according to your needs, especially the folders where the d
         chartingNumberOfWeeksToDisplay: 10
         recentlyChangedProductsNumberOfDays: 2
         recentlyUnchangedProductsNumberOfDays: 30
-        shorttermUnchangedProductsNumberOfDays: 60
-        longtermUnchangedProductsNumberOfDays: 90
+        shorttermUnchangedProductsNumberOfDaysMin: 60
+        shorttermUnchangedProductsNumberOfDaysMax: 90
+        longtermUnchangedProductsNumberOfDaysMin: 90
     labels:
       glabelsBinary: /usr/bin/glabels-3-batch
       productLabelsFile: /home/tester/labels-01.glabels
       productStickersFile: /home/tester/stickers-01.glabels
+      productStickersPrinterName: MyPrinter
+      pdfOutputFolder: /home/tester/pdf
     asciidoc:
       templateFileFolder: /home/tester/asciidoc
       pdfOutputFolder: /home/tester/asciidoc/pdf

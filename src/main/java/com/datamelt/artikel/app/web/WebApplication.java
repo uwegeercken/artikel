@@ -118,6 +118,7 @@ public class WebApplication
         before("*", Filters.redirectToLogin);
         //before("*", Filters.validateUserHasAccess);
 
+        get("/", indexController.serveIndexPage);
         get(Endpoints.INDEX.getPath(), indexController.serveIndexPage);
         get(Endpoints.ABOUT.getPath(), indexController.serveAboutPage);
         get(Endpoints.ALLDOCUMENTS.getPath(), indexController.serveDocumentsPage);

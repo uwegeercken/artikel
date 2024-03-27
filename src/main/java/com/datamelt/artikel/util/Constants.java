@@ -2,6 +2,10 @@ package com.datamelt.artikel.util;
 
 public class Constants
 {
+    public static final String VELOCITY_LAYOUT_TEMPLATE_KEY = "layouttemplate";
+    public static final String DEFAULT_VELOCITY_LAYOUT_TEMPLATE = "/velocity/layout.vm";
+    public static final String PRODUCT_STICKERS_VELOCITY_LAYOUT_TEMPLATE = "/velocity/layout_stickers.vm";
+
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DEFAULT_DATE_ONLY_FORMAT = "yyyy-MM-dd";
     public static final String GERMAN_DATE_FORMAT = "dd.MM.yyyy HH:mm";
@@ -29,8 +33,7 @@ public class Constants
 
     public static final String MODEL_FORM_KEY = "form";
     public static final String MODEL_FIELDS_KEY = "fields";
-    public static final String MODEL_DATEOFPACKING_KEY = "dateofpacking";
-    public static final String MODEL_EXPIRATIONDATE_KEY = "expirationdate";
+    public static final String MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE = "stickersfromsinglepage";
     public static final String MODEL_RESULT_KEY = "result";
     public static final String MODEL_CONTAINERS_KEY = "containers";
     public static final String MODEL_CONTAINER_KEY = "container";

@@ -1,5 +1,5 @@
 #parse("/velocity/macros.vm")
-#parse("/velocity/layout.vm")
+#parse($layouttemplate)
 #@mainLayout()
 
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_STICKERS_LIST")}</p>
@@ -11,11 +11,11 @@
     <div class="formbox">
         <table class="table-striped" align="center" width="85%" border="0">
             <tr>
-                <th>Nr</th>
-                <th>Name</th>
-                <th>Anzahl</th>
-                <th>Verpackt</th>
-                <th>Haltbar</th>
+                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_NUMBER")}</th>
+                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_NAME")}</th>
+                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_AMOUNT")}</th>
+                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING")}</th>
+                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE")}</th>
                 <th></th>
             </tr>
             #set($rowcounter=0)
@@ -30,20 +30,22 @@
                     <td>$!product.title $!product.name</td>
                     <td align="center">
                         <input name="id" value="${product.id}" type="hidden">
+                        <input name="singlepage" value="${stickersfromsinglepage}" type="hidden">
                         <input name="quantity" type="text" size="2" maxlength="2">
                     </td>
                     <td align="center">
                         <select name="dateOfPackingOffset" size="1">
-                            <option value="-1">gestern</option>
-                            <option selected value="0">heute</option>
-                            <option value="1">morgen</option>
+                            <option value="-1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_MINUS_ONE")}</option>
+                            <option selected value="0">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_ZERO")}</option>
+                            <option value="1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_PLUS_ONE")}</option>
                         </select>
                     </td>
                     <td align="center">
                         <select name="expirationDateOffset" size="1">
-                            <option value="5">5 Tage</option>
-                            <option selected value="4">4 Tage</option>
-                            <option value="3">3 Tage</option>
+                            <option value="6">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_SIX")}</option>
+                            <option value="5">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FIVE")}</option>
+                            <option selected value="4">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FOUR")}</option>
+                            <option value="3">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_THREE")}</option>
                         </select>
                     </td>
                     <td align="center">
