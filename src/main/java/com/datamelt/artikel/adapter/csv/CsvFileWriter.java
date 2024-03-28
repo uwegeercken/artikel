@@ -12,10 +12,8 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -43,9 +41,11 @@ public class CsvFileWriter implements CsvWriterInterface
             .build();
         schema = schema.withColumnSeparator('\t');
         CsvMapper mapper = new CsvMapper();
-        mapper.configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true);
-        ObjectWriter writer = mapper.writerFor(ProductLabel.class).with(schema);
-        writer.writeValues(csvOutputFile).writeAll(productLabels);
+        mapper
+            .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true)
+            .writerFor(ProductLabel.class).with(schema)
+            .writeValues(csvOutputFile).writeAll(productLabels);
+
         return writeProductLabelsOutputFile(csvOutputFile);
     }
 
@@ -68,9 +68,11 @@ public class CsvFileWriter implements CsvWriterInterface
                 .build();
         schema = schema.withColumnSeparator('\t');
         CsvMapper mapper = new CsvMapper();
-        mapper.configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true);
-        ObjectWriter writer = mapper.writerFor(ProductSticker.class).with(schema);
-        writer.writeValues(csvOutputFile).writeAll(productStickers);
+        mapper
+            .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true)
+            .writerFor(ProductSticker.class).with(schema)
+            .writeValues(csvOutputFile).writeAll(productStickers);
+
         printProductStickers(quantity);
     }
 
@@ -111,14 +113,12 @@ public class CsvFileWriter implements CsvWriterInterface
         if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existProductStickersFile())
         {
             String inputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.PRODUCT_STICKERS_CSV_FILENAME;
-            String outputFilename = configuration.getLabels().getPdfOutputFolder() + "/" + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+            String outputFilename = configuration.getLabels().getPdfOutputFolder() + "/" + Constants.PRODUCT_STICKERS_FILE_FILENAME_PART1 + "_" + System.currentTimeMillis() + Constants.PRODUCT_STICKERS_FILE_FILENAME_PART2;
 
             String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -c " + quantity + " -o " + outputFilename + " " + configuration.getLabels().getProductStickersFile();
             Process process = Runtime.getRuntime().exec(command);
             //process.waitFor(15, TimeUnit.SECONDS);
             process.waitFor();
-
-            Thread.sleep(5000);
 
             String printCommand = "lpr -o page-ranges=1-999"  + " -P " + configuration.getLabels().getProductStickersPrinterName() + " " + outputFilename;
             logger.info("sending stickers from [{}] to printer [{}], quantity [{}]", outputFilename, configuration.getLabels().getProductStickersPrinterName(), quantity);
@@ -126,12 +126,6 @@ public class CsvFileWriter implements CsvWriterInterface
             Process printProcess = Runtime.getRuntime().exec(printCommand);
             //printProcess.waitFor(60, TimeUnit.SECONDS);
             printProcess.waitFor();
-
-
-//            ProcessBuilder builderScript = new ProcessBuilder();
-//            builderScript.command("/home/uwe/development/artikel/glabels/printstickers.sh",configuration.getLabels().getProductStickersPrinterName(), ""+quantity);
-//            Process runScript = builderScript.start();
-//            runScript.waitFor(15, TimeUnit.SECONDS);
         }
         else
         {
