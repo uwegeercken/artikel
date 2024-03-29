@@ -145,6 +145,12 @@ public class Product
         }
     }
 
+    public int getWeightInGram()
+    {
+        double weightInGram = weight*1000;
+        return (int) weightInGram;
+    }
+
     public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }

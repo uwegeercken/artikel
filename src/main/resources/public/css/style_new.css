@@ -371,10 +371,11 @@ a:active {
 }
 
 .formbox2>form>table {
+    position: absolute;
 	border: 1px solid #3a3a3a;
 	border-radius: 4px;
 	margin: 8px;
-	width: 50%;
+	width: 100%;
 	padding: 10px;
 	padding-top: 10px;
 	-moz-box-shadow: 3px 3px 5px 6px #ccc;
@@ -393,6 +394,7 @@ a:active {
   padding: 8px;
   border: 2px solid #F6F6F6;
   font-weight: bold;
+
 }
 
 tr.light>td {
@@ -434,8 +436,8 @@ div.datastickers {
 	position: absolute;
 	margin-top: 0px;
 	margin-left: 0px;
-	width: 90%;
-	height: 90%;
+	width: 100%;
+	height: 100%;
 }
 
 div.connector {

@@ -8,22 +8,11 @@
         <link rel="stylesheet" type="text/css" href="/css/style_new.css">
 	</head>
 	<body>
-        <div>
-            <div class="top">
-                    <table width="100%">
-                    <tr>
-                        <td width="100%">#parse("/velocity/logo.vm")</td>
-                        <td>
-                        </td>
-                    </tr>
-                </table>
-            </div>
             <div>
                 <div class="datastickers">
                     $bodyContent
                 </div>
             </div>
-        </div>
 	</body>
 </html>
 #end

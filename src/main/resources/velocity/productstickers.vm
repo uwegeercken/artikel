@@ -8,11 +8,10 @@
            <p>#insert_message($result)</p>
         #end
     </div>
-    <div class="formbox">
-        <table class="table-striped" align="center" width="85%" border="0">
+
+        <table class="table-striped" align="center" width="95%" border="0">
             <tr>
-                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_NUMBER")}</th>
-                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_NAME")}</th>
+                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_PRODUCT")}</th>
                 <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_AMOUNT")}</th>
                 <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING")}</th>
                 <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE")}</th>
@@ -26,22 +25,24 @@
                 #else
                     <tr class="light">
                 #end
-                    <td>#$!product.number</td>
-                    <td>$!product.title $!product.name</td>
+                    <td>
+                        <p class="small">$!product.title</p>
+                        $!product.name #if($!product.weight!=0)#if($!product.weight<1)$!{product.weightInGram}g #else $!{product.weight}kg#end#end
+                    </td>
                     <td align="center">
                         <input name="id" value="${product.id}" type="hidden">
                         <input name="singlepage" value="${stickersfromsinglepage}" type="hidden">
                         <input name="quantity" type="text" size="2" maxlength="2">
                     </td>
                     <td align="center">
-                        <select name="dateOfPackingOffset" size="1">
+                        <select class="big" name="dateOfPackingOffset" size="1">
                             <option value="-1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_MINUS_ONE")}</option>
                             <option selected value="0">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_ZERO")}</option>
                             <option value="1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_PLUS_ONE")}</option>
                         </select>
                     </td>
                     <td align="center">
-                        <select name="expirationDateOffset" size="1">
+                        <select class="big" name="expirationDateOffset" size="1">
                             <option value="6">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_SIX")}</option>
                             <option value="5">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FIVE")}</option>
                             <option selected value="4">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FOUR")}</option>
@@ -49,14 +50,14 @@
                         </select>
                     </td>
                     <td align="center">
-                        <input type="submit" value="${messages.get("FORM_BUTTON_PRINT")}" name="submit">
+                        <input class="big" type="submit" value="${messages.get("FORM_BUTTON_PRINT")}" name="submit">
                     </td>
                 #set($rowcounter=$rowcounter +1)
                 </tr>
                 </form>
             #end
         </table>
-    </div>
+
 #end
 
 
