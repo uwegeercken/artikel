@@ -31,21 +31,26 @@ public class FileUtility
     public static boolean checkReadAccessFolder(String path)
     {
         boolean canRead=false;
-        File folder = new File(path);
-        if(folder.exists() && folder.isDirectory())
+        if(path!=null)
         {
-            if(folder.canRead())
+            File folder = new File(path);
+            if (folder.exists() && folder.isDirectory())
             {
-                canRead = true;
-            }
-            else
+                if (folder.canRead())
+                {
+                    canRead = true;
+                } else
+                {
+                    logger.error("no read access to folder: [{}]", path);
+                }
+            } else
             {
-                logger.error("no read access to folder: [{}]", path);
+                logger.error("the specified location does not exist or is not a folder: [{}]", path);
             }
         }
         else
         {
-            logger.error("the specified location does not exist or is not a folder: [{}]", path);
+            logger.error("the specified path of the folder is null");
         }
         return canRead;
     }
@@ -53,21 +58,26 @@ public class FileUtility
     public static boolean checkReadWriteAccessFolder(String path)
     {
         boolean canReadWrite=false;
-        File folder = new File(path);
-        if(folder.exists() && folder.isDirectory())
+        if(path!=null)
         {
-            if(folder.canRead() && folder.canWrite())
+            File folder = new File(path);
+            if (folder.exists() && folder.isDirectory())
             {
-                canReadWrite = true;
-            }
-            else
+                if (folder.canRead() && folder.canWrite())
+                {
+                    canReadWrite = true;
+                } else
+                {
+                    logger.error("no read/write access to folder: [{}]", path);
+                }
+            } else
             {
-                logger.error("no read/write access to folder: [{}]", path);
+                logger.error("the specified path does not exist or is not a folder: [{}]", path);
             }
         }
         else
         {
-            logger.error("the specified location does not exist or is not a folder: [{}]", path);
+            logger.error("the specified path of the folder is null");
         }
         return canReadWrite;
     }
@@ -75,21 +85,26 @@ public class FileUtility
     public static boolean checkReadAccessFile(String path)
     {
         boolean canRead=false;
-        File file = new File(path);
-        if(file.isFile())
+        if(path!=null)
         {
-            if(file.canRead())
+            File file = new File(path);
+            if (file.isFile())
             {
-                canRead = true;
-            }
-            else
+                if (file.canRead())
+                {
+                    canRead = true;
+                } else
+                {
+                    logger.error("no read access to file: [{}]", path);
+                }
+            } else
             {
-                logger.error("no read access to file: [{}]", path);
+                logger.error("the specified path is not a file: [{}]", path);
             }
         }
         else
         {
-            logger.error("the specified object is not a file: [{}]", path);
+            logger.error("the specified path of the file is null");
         }
         return canRead;
     }
@@ -97,21 +112,26 @@ public class FileUtility
     public static boolean checkExecuteAccessFile(String path)
     {
         boolean canExecute=false;
-        File file = new File(path);
-        if(file.isFile())
+        if(path!=null)
         {
-            if(file.canExecute())
+            File file = new File(path);
+            if (file.isFile())
             {
-                canExecute = true;
-            }
-            else
+                if (file.canExecute())
+                {
+                    canExecute = true;
+                } else
+                {
+                    logger.error("no execution right on file: [{}]", path);
+                }
+            } else
             {
-                logger.error("no execution right on file: [{}]", path);
+                logger.error("the specified path is not a file: [{}]", path);
             }
         }
         else
         {
-            logger.error("the specified object is not a file: [{}]", path);
+            logger.error("the specified path of the file is null");
         }
         return canExecute;
     }

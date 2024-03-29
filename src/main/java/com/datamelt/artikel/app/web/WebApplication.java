@@ -197,42 +197,56 @@ public class WebApplication
         boolean sparkTempFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getSparkJava().getTempFolder());
         if(!sparkTempFolderOk)
         {
+            logger.error("error checking read/write access to : [{}]", configuration.getSparkJava().getTempFolder());
             allOk = false;
         }
 
         boolean sparkDocumentsFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getSparkJava().getDocumentsFolder());
         if(!sparkDocumentsFolderOk)
         {
+            logger.error("error checking read/write access to : [{}]", configuration.getSparkJava().getDocumentsFolder());
             allOk = false;
         }
 
         boolean productLabelsFileOk = FileUtility.checkReadAccessFile(configuration.getLabels().getProductLabelsFile());
         if(!productLabelsFileOk)
         {
+            logger.error("error checking read access to : [{}]", configuration.getLabels().getProductLabelsFile());
+            allOk = false;
+        }
+
+        boolean productStickersFileOk = FileUtility.checkReadAccessFile(configuration.getLabels().getProductStickersFile());
+        if(!productStickersFileOk)
+        {
+            logger.error("error checking read access to : [{}]", configuration.getLabels().getProductStickersFile());
             allOk = false;
         }
 
         boolean glablesPdfOutputFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getLabels().getPdfOutputFolder());
         if(!glablesPdfOutputFolderOk)
         {
+            logger.error("error checking read/write access to : [{}]", configuration.getLabels().getPdfOutputFolder());
             allOk = false;
         }
 
         boolean glabelsBinaryOk = FileUtility.checkExecuteAccessFile(configuration.getLabels().getGlabelsBinary());
         if(!glabelsBinaryOk)
         {
+            logger.error("error checking execute access to : [{}]", configuration.getLabels().getGlabelsBinary());
             allOk = false;
         }
 
         boolean asciidocTemplateFileFolderOk = FileUtility.checkReadAccessFolder(configuration.getAsciidoc().getTemplateFileFolder());
         if(!asciidocTemplateFileFolderOk)
         {
+            logger.error("error checking read access to : [{}]", configuration.getAsciidoc().getTemplateFileFolder());
             allOk = false;
         }
 
         boolean asciidocPdfOutputFolderOk = FileUtility.checkReadWriteAccessFolder(configuration.getAsciidoc().getPdfOutputFolder());
         if(!asciidocPdfOutputFolderOk)
         {
+            logger.error("error checking read/write access to : [{}]", configuration.getAsciidoc().getPdfOutputFolder());
             allOk = false;
         }
         return allOk;
