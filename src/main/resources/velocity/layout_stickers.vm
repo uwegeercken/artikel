@@ -1,12 +1,107 @@
 #macro(mainLayout)
-<!DOCTYPE HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Artikelverwaltung | $!{pagetitle}</title>
-        <link rel="stylesheet" type="text/css" href="/css/style_new.css">
-	</head>
+<head>
+<title>Artikelverwaltung | $!{pagetitle}</title>
+<link rel="stylesheet" type="text/css" href="/css/style_new.css">
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+<link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
+<script type="text/javascript" src="/jquery/jquery-2.1.3.js"></script>
+<script src="/jquery/jquery-ui.js"></script>
+<script src="/jquery/jstorage.js"></script>
+<script src="/jquery/jquery.bpopup.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<script type='text/javascript'>
+$(document).ready(function() {
+  $('#search').on('input',function()
+  {
+	  if(this.value)
+	  {
+        $(".stickerunit").not("[tag*='" + this.value.toLowerCase() + "']").hide();
+        $(".stickerunit[tag*='" + this.value.toLowerCase() + "']").show();
+        $.jStorage.set("searchtext" + $('#search').attr("searchtype") , this.value)
+	  }
+	  else
+	  {
+	  	$(".stickerunit").show();
+	  	$.jStorage.deleteKey("searchtext" + $('#search').attr("searchtype"));
+	  }
+  });
+
+  $(function() {
+
+	    $('#popup').on('click', function(e) {
+			var id=$("#check option:selected").val() || $("#action option:selected").val();
+			var baseurl="process?action=bsh&ro=1&scriptname=";
+			var suffix="&id=";
+			var url= $("#popupurl").text();
+	        // Prevents the default action to be triggered.
+	        e.preventDefault();
+
+	        if(id!=0)
+	        {
+	        // Triggering bPopup when click event is fired
+	        $('#element_to_pop_up').bPopup({
+	        		loadUrl: baseurl + url + suffix + id,
+	        		transitionClose: true,
+	        		transition: 'fadeln',
+	        		speed: 700
+	        })
+	        }
+	    });
+
+	    $('#popup2').on('click', function(e) {
+			var baseurl="process?action=bsh&ro=1&scriptname=";
+			var url= $("#popupurl2").text();
+	        // Prevents the default action to be triggered.
+	        e.preventDefault();
+
+	        // Triggering bPopup when click event is fired
+	        $('#element_to_pop_up2').bPopup({
+	        		loadUrl: baseurl + url,
+	        		transitionClose: true,
+	        		transition: 'fadeln',
+	        		speed: 700
+	        })
+	    });
+
+	    $('#testdata').on('click', function(e) {
+			window.alert('gaga');
+	    });
+  });
+
+  $( "#helpimg" ).click(function() {
+		$("#help").toggle();
+  });
+
+  $( "#checkall" ).click(function() {
+  		$(".productcheckBox").prop("checked", true);
+  });
+
+  $( "#uncheckall" ).click(function() {
+        $(".productcheckBox").prop("checked", false);
+  });
+
+	var value = $.jStorage.get("searchtext"+ $('#search').attr("searchtype"));
+	if(value)
+	{
+  		$('#search').val(value);
+  		$("#search").trigger("input");
+  	}
+});
+</script>
+<script>
+	$(function() {
+		$( "#datepicker" ).datepicker({
+				dateFormat: "dd.mm.yy",
+				changeMonth: true,
+				changeYear: true,
+				firstDay: 1
+		});
+	});
+</script>
+</head>
 	<body>
             <div>
                 <div class="datastickers">

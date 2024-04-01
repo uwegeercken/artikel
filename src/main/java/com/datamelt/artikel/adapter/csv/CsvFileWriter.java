@@ -120,7 +120,7 @@ public class CsvFileWriter implements CsvWriterInterface
             //process.waitFor(15, TimeUnit.SECONDS);
             process.waitFor();
 
-            String printCommand = "lpr -o page-ranges=1-999"  + " -P " + configuration.getLabels().getProductStickersPrinterName() + " " + outputFilename;
+            String printCommand = "lpr -o page-ranges=1-" + quantity + " -P " + configuration.getLabels().getProductStickersPrinterName() + " " + outputFilename;
             logger.info("sending stickers from [{}] to printer [{}], quantity [{}]", outputFilename, configuration.getLabels().getProductStickersPrinterName(), quantity);
 
             Process printProcess = Runtime.getRuntime().exec(printCommand);

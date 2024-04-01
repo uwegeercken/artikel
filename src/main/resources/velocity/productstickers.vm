@@ -1,63 +1,63 @@
 #parse("/velocity/macros.vm")
 #parse($layouttemplate)
 #@mainLayout()
-
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_STICKERS_LIST")}</p>
+    <div id="filter">
+        <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="stickers" type="text""></p>
+    </div>
     <div class="error">
         #if (${result})
            <p>#insert_message($result)</p>
         #end
     </div>
-
-        <table class="table-striped" align="center" width="95%" border="0">
-            <tr>
-                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_PRODUCT")}</th>
-                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_AMOUNT")}</th>
-                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING")}</th>
-                <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE")}</th>
-                <th></th>
-            </tr>
-            #set($rowcounter=0)
-            #foreach($product in $products)
-            <form method="post" action="/products/stickers/">
-                #if($rowcounter % 2 ==0)
-                    <tr class="light2">
-                #else
-                    <tr class="light">
-                #end
-                    <td>
-                        <p class="small">$!product.title</p>
-                        $!product.name #if($!product.weight!=0)#if($!product.weight<1)$!{product.weightInGram}g #else $!{product.weight}kg#end#end
-                    </td>
-                    <td align="center">
-                        <input name="id" value="${product.id}" type="hidden">
-                        <input name="singlepage" value="${stickersfromsinglepage}" type="hidden">
-                        <input name="quantity" type="text" size="2" maxlength="2">
-                    </td>
-                    <td align="center">
-                        <select class="big" name="dateOfPackingOffset" size="1">
-                            <option value="-1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_MINUS_ONE")}</option>
-                            <option selected value="0">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_ZERO")}</option>
-                            <option value="1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_PLUS_ONE")}</option>
-                        </select>
-                    </td>
-                    <td align="center">
-                        <select class="big" name="expirationDateOffset" size="1">
-                            <option value="6">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_SIX")}</option>
-                            <option value="5">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FIVE")}</option>
-                            <option selected value="4">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FOUR")}</option>
-                            <option value="3">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_THREE")}</option>
-                        </select>
-                    </td>
-                    <td align="center">
-                        <input class="big" type="submit" value="${messages.get("FORM_BUTTON_PRINT")}" name="submit">
-                    </td>
-                #set($rowcounter=$rowcounter +1)
-                </tr>
-                </form>
+    <table class="table-striped" align="center" width="95%" border="0">
+        <tr>
+            <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_PRODUCT")}</th>
+            <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_AMOUNT")}</th>
+            <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING")}</th>
+            <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE")}</th>
+            <th></th>
+        </tr>
+        #set($rowcounter=0)
+        #foreach($product in $products)
+                <form method="post" action="/products/stickers/">
+                    #if($rowcounter % 2 ==0)
+                        <tr class="light2 stickerunit" tag="$!product.number.toLowerCase() + $!product.name.toLowerCase()">
+                    #else
+                        <tr class="light stickerunit" tag="$!product.number.toLowerCase() + $!product.name.toLowerCase()">
+                    #end
+                        <td>
+                            <p class="small">#$!product.number $!product.title</p>
+                            $!product.name #if($!product.weight!=0)#if($!product.weight<1)$!{product.weightInGram}g #else $!{product.weight}kg#end#end
+                        </td>
+                        <td align="center">
+                            <input name="id" value="${product.id}" type="hidden">
+                            <input name="singlepage" value="${stickersfromsinglepage}" type="hidden">
+                            <input name="quantity" type="text" size="2" maxlength="2">
+                        </td>
+                        <td align="center">
+                            <select class="big" name="dateOfPackingOffset" size="1">
+                                <option value="-1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_MINUS_ONE")}</option>
+                                <option selected value="0">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_ZERO")}</option>
+                                <option value="1">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING_OFFSET_PLUS_ONE")}</option>
+                            </select>
+                        </td>
+                        <td align="center">
+                            <select class="big" name="expirationDateOffset" size="1">
+                                <option value="6">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_SIX")}</option>
+                                <option value="5">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FIVE")}</option>
+                                <option selected value="4">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FOUR")}</option>
+                                <option value="3">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_THREE")}</option>
+                            </select>
+                        </td>
+                        <td align="center">
+                            <input class="big" type="submit" value="${messages.get("FORM_BUTTON_PRINT")}" name="submit">
+                        </td>
+                    #set($rowcounter=$rowcounter +1)
+                    </tr>
+                    </form>
             #end
-        </table>
-
+    </table>
 #end
 
 
