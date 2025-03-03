@@ -833,7 +833,8 @@ public class ProductController implements ProductApiInterface
     @Override
     public void addProduct(Form form, NumberFormatter numberFormatter) throws Exception
     {
-        service.addProduct(form, numberFormatter);
+        Product product = service.addProduct(form, numberFormatter);
+        form.put(FormField.ID, String.valueOf(product.getId()));
     }
 
     @Override

@@ -6,7 +6,7 @@
 
     <groupId>com.datamelt</groupId>
     <artifactId>artikel</artifactId>
-    <version>4.2-SNAPSHOT</version>
+    <version>4.3-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -313,4 +313,18 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Releases</name>
+            <url>http://fedserv1:8081/repository/maven-releases</url>
+            <layout>default</layout>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Snapshot</name>
+            <url>http://fedserv1:8081/repository/maven-snapshots</url>
+            <layout>default</layout>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
