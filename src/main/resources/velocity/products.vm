@@ -98,8 +98,8 @@
                 #end
                 <p class="normal">$!{product.subtitle}&nbsp;</p>
                 <p class="normal">#if($!{product.origin.id}!=1) ${messages.get("FORM_FIELD_ORIGIN")}: $!{product.origin.name} #end &nbsp;</p>
-                <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertToLocale($!{product.weight}) kg #if($!{product.container.id}!=1)- ${messages.get("FORM_FIELD_CONTAINER")}: $!{product.container.name}#end</p>
-                <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $numberFormatter.convertToLocale($!{product.price}) ($!{product.lastChangedDate})</p>
+                <p class="normal">${messages.get("FORM_FIELD_QUANTITY")}: $!{product.quantity} - ${messages.get("FORM_FIELD_WEIGHT")}: $numberFormatter.convertWeightToLocale($!{product.weight}) kg #if($!{product.container.id}!=1)- ${messages.get("FORM_FIELD_CONTAINER")}: $!{product.container.name}#end</p>
+                <p class="normal">${messages.get("FORM_FIELD_PRICE")}: € $numberFormatter.convertPriceToLocale($!{product.price}) ($!{product.lastChangedDate})</p>
             </div>
         </div>
     #end

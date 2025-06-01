@@ -6,7 +6,7 @@
 
     <groupId>com.datamelt</groupId>
     <artifactId>artikel</artifactId>
-    <version>4.3-SNAPSHOT</version>
+    <version>4.4-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -284,7 +284,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.datamelt.artikel.app.web.WebApplication</mainClass>
-                        </manifest>
+                        </manifest>xxxx
                         <manifestEntries>
                             <Class-Path>.</Class-Path>
                         </manifestEntries>

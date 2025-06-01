@@ -68,8 +68,8 @@ public class FormConverter
         form.put(FormField.ALLERGENES, product.getAllergenes());
         form.put(FormField.USEFORSTICKERS, String.valueOf(product.getUseForStickers()));
         form.put(FormField.QUANTITY, String.valueOf(product.getQuantity()));
-        form.put(FormField.WEIGHT,numberFormatter.convertToLocale(product.getWeight()));
-        form.put(FormField.PRICE, numberFormatter.convertToLocale((product.getPrice())));
+        form.put(FormField.WEIGHT,numberFormatter.convertWeightToLocale(product.getWeight()));
+        form.put(FormField.PRICE, numberFormatter.convertPriceToLocale((product.getPrice())));
         form.put(FormField.PRODUCER_ID,String.valueOf(product.getProducer().getId()));
         form.put(FormField.CONTAINER_ID,String.valueOf(product.getContainer().getId()));
         form.put(FormField.ORIGIN_ID,String.valueOf(product.getOrigin().getId()));
