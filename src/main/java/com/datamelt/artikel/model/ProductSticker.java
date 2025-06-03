@@ -26,20 +26,20 @@ public class ProductSticker
 
     private final MessageBundleInterface messages;
 
-    public ProductSticker(Product product, int expirationDateOffset, int dateOfPackingOffset, MessageBundleInterface messages)
+    public ProductSticker(Product product, int expiryDays, int dateOfPackingOffset, MessageBundleInterface messages)
     {
         this.messages = messages;
-        mapProductToLabel(product, expirationDateOffset, dateOfPackingOffset);
+        mapProductToLabel(product, expiryDays, dateOfPackingOffset);
     }
 
-    private void mapProductToLabel(Product product, int expirationDateOffset, int dateOfPackingOffset)
+    private void mapProductToLabel(Product product, int expiryDays, int dateOfPackingOffset)
     {
         this.name = product.getTitle() + " " + product.getName();
         this.number = product.getNumber();
         this.ingredients = product.getIngredients();
         this.allergenes = product.getAllergenes();
         this.price =  formatPrice.format(product.getPrice()) +" €";
-        this.expirationDate = LocalDate.now().plusDays(expirationDateOffset).format(formatDates);
+        this.expirationDate = LocalDate.now().plusDays(expiryDays).format(formatDates);
         this.dateOfPacking = LocalDate.now().plusDays(dateOfPackingOffset).format(formatDates);
         if(product.getWeight()>0)
         {

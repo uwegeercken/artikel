@@ -67,6 +67,7 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
             product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setExpiryDays(resultset.getInt("expirydays"));
             product.setUnavailable(resultset.getInt("unavailable"));
             product.setTimestamp(resultset.getLong("timestamp"));
         }
@@ -123,6 +124,7 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
             product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setExpiryDays(resultset.getInt("expirydays"));
             product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {
@@ -184,6 +186,7 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
             product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setExpiryDays(resultset.getInt("expirydays"));
             product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {
@@ -245,6 +248,7 @@ class CollectionHandler implements CollectionHandlerInterface
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
             product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setExpiryDays(resultset.getInt("expirydays"));
             product.setUnavailable(resultset.getInt("unavailable"));
             if(container!=null)
             {

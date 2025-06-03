@@ -5,8 +5,8 @@ import java.sql.*;
 
 class ProductUpdate
 {
-    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, ingredients, allergenes, useforstickers, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, unavailable, timestamp) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String SQL_UPDATE = "update product set name=?, title=?, subtitle=?, ingredients=?, allergenes=?, useforstickers=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, unavailable=?, timestamp=? where id=?";
+    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, ingredients, allergenes, useforstickers, expirydays, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, unavailable, timestamp) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_UPDATE = "update product set name=?, title=?, subtitle=?, ingredients=?, allergenes=?, useforstickers=?, expirydays=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, unavailable=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from product where id=?";
 
     private final Connection connection;
@@ -28,14 +28,15 @@ class ProductUpdate
             statement.setString(5, product.getIngredients());
             statement.setString(6, product.getAllergenes());
             statement.setInt(7, product.getUseForStickers());
-            statement.setLong(8, product.getProducer().getId());
-            statement.setLong(9, product.getContainer().getId());
-            statement.setLong(10, product.getOrigin().getId());
-            statement.setLong(11, product.getQuantity());
-            statement.setDouble(12, product.getWeight());
-            statement.setDouble(13, product.getPrice());
-            statement.setInt(14,product.getUnavailable());
-            statement.setLong(15, product.getTimestamp());
+            statement.setInt(8,product.getExpiryDays());
+            statement.setLong(9, product.getProducer().getId());
+            statement.setLong(10, product.getContainer().getId());
+            statement.setLong(11, product.getOrigin().getId());
+            statement.setLong(12, product.getQuantity());
+            statement.setDouble(13, product.getWeight());
+            statement.setDouble(14, product.getPrice());
+            statement.setInt(15,product.getUnavailable());
+            statement.setLong(16, product.getTimestamp());
 
             statement.executeUpdate();
             statement.clearParameters();
@@ -62,16 +63,17 @@ class ProductUpdate
         statement.setString(4, product.getIngredients());
         statement.setString(5, product.getAllergenes());
         statement.setInt(6, product.getUseForStickers());
-        statement.setString(7, product.getNumber());
-        statement.setLong(8, product.getProducer().getId());
-        statement.setLong(9, product.getContainer().getId());
-        statement.setLong(10, product.getOrigin().getId());
-        statement.setLong(11, product.getQuantity());
-        statement.setDouble(12, product.getWeight());
-        statement.setDouble(13, product.getPrice());
-        statement.setInt(14,product.getUnavailable());
-        statement.setLong(15, product.getTimestamp());
-        statement.setLong(16, product.getId());
+        statement.setInt(7,product.getExpiryDays());
+        statement.setString(8, product.getNumber());
+        statement.setLong(9, product.getProducer().getId());
+        statement.setLong(10, product.getContainer().getId());
+        statement.setLong(11, product.getOrigin().getId());
+        statement.setLong(12, product.getQuantity());
+        statement.setDouble(13, product.getWeight());
+        statement.setDouble(14, product.getPrice());
+        statement.setInt(15,product.getUnavailable());
+        statement.setLong(16, product.getTimestamp());
+        statement.setLong(17, product.getId());
         statement.executeUpdate();
         statement.clearParameters();
 

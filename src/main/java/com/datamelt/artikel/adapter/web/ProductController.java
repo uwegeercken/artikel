@@ -540,17 +540,18 @@ public class ProductController implements ProductApiInterface
         Map<String, Object> model = new HashMap<>();
         long id = Long.parseLong(request.queryParams("id"));
         boolean fromSinglePage = Boolean.parseBoolean(request.queryParams("singlepage"));
-        int expirationDateOffset = Integer.parseInt(request.queryParams("expirationDateOffset"));
+        //int expirationDateOffset = Integer.parseInt(request.queryParams("expirationDateOffset"));
+        int expiryDays = Integer.parseInt(request.queryParams("expirydays"));
         int dateOfPackingOffset = Integer.parseInt(request.queryParams("dateOfPackingOffset"));
         int quantity = 0;
         try
         {
-            quantity = Integer.parseInt(request.queryParams("quantity"));
-            printProductStickers(id, quantity, expirationDateOffset, dateOfPackingOffset);
+            quantity = Integer.parseInt(!request.queryParams("quantity").isEmpty() ? request.queryParams("quantity") : "1");
+            printProductStickers(id, quantity, expiryDays, dateOfPackingOffset);
         }
         catch (Exception ex)
         {
-            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCTSTICKERS_FORM_PRINT_ERROR")));
+            model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCTSTICKERS_FORM_PRINT_ERROR") + ": " + ex.getMessage()));
         }
         model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
         if(fromSinglePage)

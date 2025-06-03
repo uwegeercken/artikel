@@ -21,6 +21,7 @@ public class Product
     private String ingredients;
     private String allergenes;
     private int useForStickers;
+    private int expiryDays;
     private Producer producer;
     private ProductContainer container;
     private ProductOrigin origin;
@@ -58,6 +59,8 @@ public class Product
     public String getAllergenes() { return allergenes; }
 
     public int getUseForStickers() { return useForStickers; }
+
+    public int getExpiryDays() { return expiryDays; }
 
     public Producer getProducer() { return producer; }
 
@@ -99,6 +102,8 @@ public class Product
     public void setAllergenes(String allergenes) { this.allergenes = allergenes; }
 
     public void setUseForStickers(int useForStickers) { this.useForStickers = useForStickers; }
+
+    public void setExpiryDays(int expiryDays) { this.expiryDays = expiryDays; }
 
     public void setProducer(Producer producer)
     {

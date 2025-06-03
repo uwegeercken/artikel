@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class WebService implements WebServiceInterface, CsvWriterInterface
 {

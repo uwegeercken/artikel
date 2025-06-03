@@ -40,6 +40,7 @@ class ProductSearch
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
             product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setExpiryDays(resultset.getInt("expirydays"));
             product.setContainer(container);
             product.setProducer(producer);
             product.setOrigin(origin);
@@ -69,6 +70,7 @@ class ProductSearch
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
             product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setExpiryDays(resultset.getInt("expirydays"));
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));
@@ -103,6 +105,7 @@ class ProductSearch
             product.setIngredients(resultset.getString("ingredients"));
             product.setAllergenes(resultset.getString("allergenes"));
             product.setUseForStickers(resultset.getInt("useforstickers"));
+            product.setExpiryDays(resultset.getInt("expirydays"));
             product.setQuantity(resultset.getInt("quantity"));
             product.setWeight(resultset.getDouble("weight"));
             product.setPrice(resultset.getDouble("price"));

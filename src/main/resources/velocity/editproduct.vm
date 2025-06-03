@@ -85,6 +85,12 @@
             </td>
         </tr>
         <tr>
+            <td>${messages.get("FORM_FIELD_EXPIRYDAYS")}:</td>
+            <td>
+                <input name="$fields.valueOf("EXPIRYDAYS")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("EXPIRYDAYS"))}">
+            </td>
+        </tr>
+        <tr>
             <td>${messages.get("FORM_FIELD_PRICE")}:</td>
             <td>
                 <input name="$fields.valueOf("PRICE")" type="text" size="40" maxlength="255" value="$!{form.get($fields.valueOf("PRICE"))}">

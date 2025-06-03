@@ -15,7 +15,7 @@
             <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_PRODUCT")}</th>
             <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_AMOUNT")}</th>
             <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_DATEOFPACKING")}</th>
-            <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE")}</th>
+            <th>${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRYDAYS")}</th>
             <th></th>
         </tr>
         #set($rowcounter=0)
@@ -43,12 +43,7 @@
                             </select>
                         </td>
                         <td align="center">
-                            <select class="big" name="expirationDateOffset" size="1">
-                                <option value="6">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_SIX")}</option>
-                                <option value="5">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FIVE")}</option>
-                                <option selected value="4">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_FOUR")}</option>
-                                <option value="3">${messages.get("PRODUCT_STICKERS_TABLE_ATTRIBUTE_EXPIRATIONDATE_OFFSET_PLUS_THREE")}</option>
-                            </select>
+                            <input name="expirydays" value="${product.expiryDays}" type="text" size="2" maxlength="2">
                         </td>
                         <td align="center">
                             <input class="big" type="submit" value="${messages.get("FORM_BUTTON_PRINT")}" name="submit">
