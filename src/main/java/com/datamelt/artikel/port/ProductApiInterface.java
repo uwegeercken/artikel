@@ -25,6 +25,7 @@ public interface ProductApiInterface
     List<ProductOrigin> getAllProductOrigins() throws Exception;
     List<ProductHistory> getProductHistory(Product product) throws Exception;
     void printProductStickers(long id, int quantity, int expirationDateOffset, int dateOfPackingOffset) throws Exception;
+    byte[] previewProductSticker(long id) throws Exception;
     byte[] getProductLabelsOutputFile(long producerId) throws Exception;
     byte[] getProductLabelsOutputFile(long producerId, ProductOrder order) throws Exception;
 

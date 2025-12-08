@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import io.jsonwebtoken.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,8 +56,20 @@ public class CsvFileWriter implements CsvWriterInterface
     @Override
     public void printProductStickers(List<ProductSticker> productStickers, int quantity) throws Exception
     {
-        File csvOutputFile = new File(configuration.getSparkJava().getTempFolder() + "/" + Constants.PRODUCT_STICKERS_CSV_FILENAME);
+        writeProductStickersOutputFile(productStickers);
+        printProductStickers(quantity);
+    }
 
+    @Override
+    public byte[] previewProductSticker(ProductSticker productSticker) throws Exception
+    {
+        writeProductStickersOutputFile(List.of(productSticker));
+        return createProductStickerPreviewPdf();
+    }
+
+    private void writeProductStickersOutputFile(List<ProductSticker> productStickers) throws Exception
+    {
+        File csvOutputFile = new File(configuration.getSparkJava().getTempFolder() + "/" + Constants.PRODUCT_STICKERS_CSV_FILENAME);
         CsvSchema schema = CsvSchema.builder().setUseHeader(false)
                 .addColumn("name")
                 .addColumn("number")
@@ -72,11 +85,9 @@ public class CsvFileWriter implements CsvWriterInterface
         schema = schema.withColumnSeparator('\t');
         CsvMapper mapper = new CsvMapper();
         mapper
-            .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true)
-            .writerFor(ProductSticker.class).with(schema)
-            .writeValues(csvOutputFile).writeAll(productStickers);
-
-        printProductStickers(quantity);
+                .configure(JsonGenerator.Feature.IGNORE_UNKNOWN, true)
+                .writerFor(ProductSticker.class).with(schema)
+                .writeValues(csvOutputFile).writeAll(productStickers);
     }
 
     private byte[] writeProductLabelsOutputFile(File csvOutputFile) throws Exception
@@ -213,6 +224,45 @@ public class CsvFileWriter implements CsvWriterInterface
                 logger.error("configuration item: productStickersFile [{}] does not exist or can not be read", configuration.getLabels().existProductStickersFile());
             }
         }
+    }
+
+    private byte[] createProductStickerPreviewPdf() throws Exception
+    {
+        if(configuration.getLabels().existBinary() && configuration.getSparkJava().existTempFolder() && configuration.getLabels().existProductStickersFile())
+        {
+            String inputFilename = configuration.getSparkJava().getTempFolder() + "/" + Constants.PRODUCT_STICKERS_CSV_FILENAME;
+            String outputFilename = configuration.getLabels().getPdfOutputFolder() + "/" + Constants.PRODUCT_STICKERS_FILE_FILENAME_PART1 + Constants.PRODUCT_STICKERS_FILE_FILENAME_PART2;
+
+            String command = configuration.getLabels().getGlabelsBinary() + " -i " + inputFilename + " -c 1 -o " + outputFilename + " " + Strings.replace(configuration.getLabels().getProductStickersFile(),"stickers", "stickers_preview");
+            try
+            {
+                executeCommand("create pdf", command);
+                File file = new File(outputFilename);
+                FileInputStream stream = new FileInputStream(file);
+                return stream.readAllBytes();
+            }
+            catch (IOException e)
+            {
+                logger.error("error while creating or printing pdf: [{}]", e.getMessage());
+            }
+        }
+        else
+        {
+            if(!configuration.getLabels().existBinary())
+            {
+                logger.error("configuration item: glabelsBinary [{}] does not exist or can not be executed", configuration.getLabels().getGlabelsBinary());
+            }
+            else if(!configuration.getSparkJava().existTempFolder())
+            {
+                logger.error("configuration item: tempFolder [{}] does not exist or can not be accessed", configuration.getSparkJava().getTempFolder());
+            }
+            else if(!configuration.getLabels().existProductStickersFile())
+            {
+                logger.error("configuration item: productStickersFile [{}] does not exist or can not be read", configuration.getLabels().existProductStickersFile());
+            }
+            return null;
+        }
+        return null;
     }
 
     private boolean executeCommand(String commandDescription, String command) throws IOException

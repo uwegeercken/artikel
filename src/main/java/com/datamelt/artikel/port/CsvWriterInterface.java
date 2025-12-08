@@ -9,4 +9,5 @@ public interface CsvWriterInterface
 {
     byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
     void printProductStickers(List<ProductSticker> productStickers, int quantity) throws Exception;
+    byte[] previewProductSticker(ProductSticker productSticker) throws Exception;
 }

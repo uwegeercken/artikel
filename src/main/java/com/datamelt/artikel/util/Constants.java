@@ -23,6 +23,7 @@ public class Constants
 
     public static final String PRODUCT_LABELS_CSV_FILENAME = "productlabels.csv";
     public static final String PRODUCT_STICKERS_CSV_FILENAME = "productstickers.csv";
+    public static final String PRODUCT_STICKER_PREVIEW_CSV_FILENAME = "productstickerpreview.csv";
 
     public static final String CONTENT_DISPOSITION_VALUE = "attachment; filename=";
     public static final String PRODUCT_LABELS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 = "etiketten";
@@ -30,6 +31,8 @@ public class Constants
 
     public static final String PRODUCT_STICKERS_FILE_FILENAME_PART1 = "aufkleber";
     public static final String PRODUCT_STICKERS_FILE_FILENAME_PART2 = ".pdf";
+    public static final String PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 = "aufkleber";
+    public static final String PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2 = ".pdf";
 
     public static final String MODEL_FORM_KEY = "form";
     public static final String MODEL_FIELDS_KEY = "fields";

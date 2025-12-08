@@ -566,6 +566,22 @@ public class ProductController implements ProductApiInterface
         }
         return ViewUtility.render(request, model,Path.Template.PRODUCTSTICKERS);
     };
+
+    public Route previewSticker = (Request request, Response response) -> {
+
+        long productId = Long.parseLong(request.params(":id"));
+        byte[] pdfOutputFile = previewProductSticker(productId);
+        String fullFilename = Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART1 + "_" + productId + Constants.PRODUCT_STICKERS_FILE_CONTENT_DISPOSITION_VALUE_FILENAME_PART2;
+        response.type(Constants.FILE_CONTENT_TYPE_PDF);
+        response.header(Constants.CONTENT_DISPOSITION_KEY,Constants.CONTENT_DISPOSITION_VALUE + fullFilename);
+        response.header(Constants.CONTENT_TYPE_KEY,Constants.CONTENT_TYPE_VALUE);
+        response.raw().setContentLength(pdfOutputFile.length);
+        response.raw().getOutputStream().write(pdfOutputFile);
+        response.raw().getOutputStream().flush();
+        response.raw().getOutputStream().close();
+        return response.raw();
+    };
+
     public Route createLabels = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
@@ -796,6 +812,13 @@ public class ProductController implements ProductApiInterface
     }
 
     @Override
+    public byte[] previewProductSticker(long id) throws Exception
+    {
+        Product product = getProductById(id);
+        return service.previewProductSticker(new ProductSticker(product, 1, 1, WebApplication.getMessages()));
+    }
+
+    @Override
     public byte[] getProductLabelsOutputFile(long producerId) throws Exception
     {
         List<Product> products = getAllProducts(producerId, false, configuration.getWebApp().getAllProductsNumberOfDaysMin(), configuration.getWebApp().getAllProductsNumberOfDaysMax() );
@@ -806,6 +829,7 @@ public class ProductController implements ProductApiInterface
         }
         return service.getProductLabelsOutputFile(labels);
     }
+
     @Override
     public byte[] getProductLabelsOutputFile(long producerId, ProductOrder order) throws Exception
     {
@@ -817,7 +841,6 @@ public class ProductController implements ProductApiInterface
         }
         return service.getProductLabelsOutputFile(labels);
     }
-
 
     @Override
     public Product getProductById(long id) throws Exception

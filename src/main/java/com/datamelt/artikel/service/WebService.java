@@ -531,6 +531,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     }
 
     @Override
+    public byte[] previewProductSticker(ProductSticker productSticker) throws Exception
+    {
+        return csvWriter.previewProductSticker(productSticker);
+    }
+
+    @Override
     public byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception
     {
         return orderDocumentGenerator.getOrderDocument(producer,order, products);

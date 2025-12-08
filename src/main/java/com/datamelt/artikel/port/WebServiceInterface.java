@@ -70,6 +70,7 @@ public interface WebServiceInterface
 
     byte[] getProductLabelsOutputFile(List<ProductLabel> productLabels) throws Exception;
     void printProductStickers(List<ProductSticker> productStickers, int quantity) throws Exception;
+    byte[] previewProductSticker(ProductSticker productSticker) throws Exception;
     byte [] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
     String getOrderDocumentFilename(ProductOrder order);
 
