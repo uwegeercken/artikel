@@ -41,6 +41,7 @@ public class SqliteTable
             "\"ingredients\"TEXT," +
             "\"allergenes\"TEXT," +
             "\"useforstickers\"INTEGER," +
+            "\"expirydays\"INTEGER DEFAULT 0," +
             "\"unavailable\"INTEGER DEFAULT 0," +
             "\"producer_id\"INTEGER NOT NULL," +
             "\"productcontainer_id\"INTEGER," +

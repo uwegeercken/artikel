@@ -166,11 +166,11 @@ public class CsvFileWriter implements CsvWriterInterface
 
             try
             {
-                if(checkPrinterAvailability())
+                boolean pdfCreated = executeCommand("create pdf", command);
+                if(pdfCreated)
                 {
-                    if (executeCommand("create pdf", command))
+                    if(checkPrinterAvailability())
                     {
-                        // If the PDF creation was successful, execute the print command asynchronously
                         new Thread(() -> {
                             try
                             {
@@ -181,20 +181,21 @@ public class CsvFileWriter implements CsvWriterInterface
                                 logger.error("error executing print command: [{}]", e.getMessage());
                             }
                         }).start();
+
                     }
                     else
                     {
-                        throw new Exception("error creating pdf file for printing");
+                        throw new Exception(WebApplication.getMessages().get("PRODUCTSTICKERS_FORM_PRINT_ERROR_PRINTER_NOT_FOUND"));
                     }
                 }
                 else
                 {
-                    throw new Exception(WebApplication.getMessages().get("PRODUCTSTICKERS_FORM_PRINT_ERROR_PRINTER_NOT_FOUND"));
+                    throw new Exception("error creating pdf file for printing");
                 }
             }
             catch (IOException e)
             {
-                logger.error("error executing pdf create command [{}]", e.getMessage());
+                logger.error("error while creating or printing pdf: [{}]", e.getMessage());
             }
         }
         else
