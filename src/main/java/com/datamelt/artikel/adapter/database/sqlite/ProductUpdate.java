@@ -5,7 +5,7 @@ import java.sql.*;
 
 class ProductUpdate
 {
-    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, ingredients, allergenes, useforstickers, expirydays, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, unavailable, timestamp) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "insert into product (number, name, title, subtitle, ingredients, allergenes, useforstickers, expirydays, producer_id, productcontainer_id, productorigin_id, quantity,weight,price, unavailable, timestamp) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String SQL_UPDATE = "update product set name=?, title=?, subtitle=?, ingredients=?, allergenes=?, useforstickers=?, expirydays=?, number=?, producer_id=?, productcontainer_id=?, productorigin_id=?, quantity=?, weight=?, price=?, unavailable=?, timestamp=? where id=?";
     private static final String SQL_DELETE = "delete from product where id=?";
 

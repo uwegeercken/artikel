@@ -6,7 +6,7 @@
 
     <groupId>com.datamelt</groupId>
     <artifactId>artikel</artifactId>
-    <version>4.7-SNAPSHOT</version>
+    <version>4.8</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
