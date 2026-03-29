@@ -33,4 +33,6 @@ public interface ProductApiInterface
 
     byte[] getOrderDocument(Producer producer, ProductOrder order, List<Product> products) throws Exception;
     String getOrderDocumentFilename(ProductOrder order);
+
+    void emptyPrinterQueue() throws Exception;
 }

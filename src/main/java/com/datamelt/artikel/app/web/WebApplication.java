@@ -5,6 +5,7 @@ import com.datamelt.artikel.adapter.database.sqlite.SqliteRepository;
 import com.datamelt.artikel.adapter.email.EmailHandler;
 import com.datamelt.artikel.adapter.opa.OpaHandler;
 import com.datamelt.artikel.adapter.order.OrderDocumentGenerator;
+import com.datamelt.artikel.adapter.printer.LabelsPrinter;
 import com.datamelt.artikel.adapter.web.*;
 import com.datamelt.artikel.app.ConfigurationLoader;
 import com.datamelt.artikel.app.web.util.Filters;
@@ -28,8 +29,8 @@ public class WebApplication
 {
     private static final Logger logger =  LoggerFactory.getLogger(WebApplication.class);
 
-    public static final String APPLCATION_VERSION = "v4.8";
-    public static final String APPLCATION_LAST_UPDATE = "21.03.2026";
+    public static final String APPLCATION_VERSION = "v4.9";
+    public static final String APPLCATION_LAST_UPDATE = "29.03.2026";
 
     private static SecretKey secretKey = null;
     private static MessageBundleInterface messages;
@@ -90,7 +91,7 @@ public class WebApplication
         OpaHandler opaHandler = new OpaHandler(configuration);
         try
         {
-            service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), opaHandler);
+            service = new WebService(new SqliteRepository(configuration.getDatabase()), new CsvFileWriter(configuration), new OrderDocumentGenerator(configuration), new EmailHandler(), opaHandler, new LabelsPrinter(configuration));
         }
         catch(Exception ex)
         {
@@ -187,6 +188,8 @@ public class WebApplication
         get(Endpoints.PRODUCTORIGINS.getPath(), originController.serveAllProductOriginsPage);
         get(Endpoints.PRODUCTORIGIN_SELECT_UPDATE.getPath(), originController.serveProductOriginPage);
         post(Endpoints.PRODUCTORIGIN_UPDATE.getPath(), originController.serveUpdateProductOriginPage);
+
+        post(Endpoints.EMPTY_PRINTER_QUEUE.getPath(), productController.emptyPrinterQueue);
 
         get("*", indexController.serveNotFoundPage);
     }

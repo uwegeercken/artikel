@@ -3,7 +3,13 @@
 #@mainLayout()
     <p class="heading">${messages.get("PAGETITLE_PRODUCT_STICKERS_LIST")}</p>
     <div id="filter">
-        <p>${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="stickers" type="text""></p>
+        <p>
+            ${messages.get("FILTER_TEXTBOX")}: <input id="search" searchtype="stickers" type="text">&nbsp&nbsp
+            <form method="post" action="/emptyprinterqueue/">
+                <input name="singlepage" value="${stickersfromsinglepage}" type="hidden">
+                <input class="big" type="submit" value="${messages.get("FORM_BUTTON_EMPTY_PRINTER_QUEUE")}" name="submit">
+            </form>
+        </p>
     </div>
     <div class="error">
         #if (${result})

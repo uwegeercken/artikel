@@ -28,16 +28,18 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     private final CsvWriterInterface csvWriter;
     private OrderDocumentInterface orderDocumentGenerator;
     private OpaApiInterface opaClient;
+    private PrinterInterface printerAdapter;
 
     private FileSystemInterface fileSystemHandler;
 
-    public WebService(RepositoryInterface respository, CsvWriterInterface csvWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient) throws Exception
+    public WebService(RepositoryInterface respository, CsvWriterInterface csvWriter, OrderDocumentInterface orderDocumentGenerator, EmailApiInterface email, OpaApiInterface opaClient, PrinterInterface printerAdapter) throws Exception
     {
         this.repository = respository;
         this.csvWriter = csvWriter;
         this.orderDocumentGenerator = orderDocumentGenerator;
         this.email = email;
         this.opaClient = opaClient;
+        this.printerAdapter = printerAdapter;
         this.fileSystemHandler = fileSystemHandler;
 
         sendAcl();
@@ -66,6 +68,12 @@ public class WebService implements WebServiceInterface, CsvWriterInterface
     public Product getProductById(long id) throws Exception
     {
         return repository.getProductById(id);
+    }
+
+    @Override
+    public void emptyPrinterQueue() throws Exception
+    {
+        printerAdapter.emptyPrinterQueue();
     }
 
     @Override

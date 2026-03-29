@@ -83,4 +83,6 @@ public interface WebServiceInterface
     OpaValidationResult validateUser(OpaInput input);
     void sendAcl() throws Exception;
     void sendPolicies() throws Exception;
+
+    void emptyPrinterQueue() throws Exception;
 }

@@ -18,9 +18,9 @@
             </button>
         #else
             <a href="/products/labels/${producer.id}/"><img class="add_external" height="40px" width="40px" src="/img/labels.png" title="${messages.get("IMAGE_LABELS")}"></a>
-            <button type="submit" name="submit">
+            <<button type="submit" name="submit">
                 <img width="40px" height="40px" src="/img/labels_checked.png" title="${messages.get("IMAGE_GENERATE_SHOP_LABELS")}">
-            </button>
+            </button>>
             <button type="submit" name="submit" formaction="/pricechart/producer/${producer.id}/">
                 <img width="40px" height="40px" src="/img/price.png" title="${messages.get("IMAGE_PRICECHART")}">
             </button>

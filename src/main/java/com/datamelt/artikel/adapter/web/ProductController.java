@@ -25,7 +25,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import javax.servlet.RequestDispatcher;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -75,10 +74,39 @@ public class ProductController implements ProductApiInterface
         }
         return ViewUtility.render(request, model, Path.Template.PRODUCTSTICKERS);
     };
+
     public Route serveAllProductStickersSinglePage = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         model.put(Constants.MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE, true);
         model.put(Constants.VELOCITY_LAYOUT_TEMPLATE_KEY,Constants.PRODUCT_STICKERS_VELOCITY_LAYOUT_TEMPLATE);
+        try
+        {
+            model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
+        }
+        catch (Exception ex)
+        {
+            logger.error("error getting product stickers");
+        }
+        return ViewUtility.render(request, model, Path.Template.PRODUCTSTICKERS);
+    };
+
+    public Route emptyPrinterQueue = (Request request, Response response) -> {
+
+        emptyPrinterQueue();
+
+        Map<String, Object> model = new HashMap<>();
+        boolean fromSinglePage = Boolean.parseBoolean(request.queryParams("singlepage"));
+
+        if(fromSinglePage)
+        {
+            model.put(Constants.MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE, true);
+            model.put(Constants.VELOCITY_LAYOUT_TEMPLATE_KEY, Constants.PRODUCT_STICKERS_VELOCITY_LAYOUT_TEMPLATE);
+        }
+        else
+        {
+            model.put(Constants.MODEL_PRODUCT_STICKERS_FROM_SINGLE_PAGE, false);
+            model.put(Constants.VELOCITY_LAYOUT_TEMPLATE_KEY, Constants.DEFAULT_VELOCITY_LAYOUT_TEMPLATE);
+        }
         try
         {
             model.put(Constants.MODEL_PRODUCTS_KEY, getAllProductsForStickers());
@@ -629,7 +657,6 @@ public class ProductController implements ProductApiInterface
         }
     };
 
-
     public Route serveUpdateProductPage = (Request request, Response response) -> {
         long producerId = Long.parseLong(request.params(":producerid"));
         Producer producer = getProducerById(producerId);
@@ -741,6 +768,12 @@ public class ProductController implements ProductApiInterface
                 model.put(Constants.MODEL_RESULT_KEY, new ValidatorResult(ValidatorResult.RESULTYPE_ERROR, WebApplication.getMessages().get("PRODUCT_FORM_ADD_ERROR")));
             }
         }
+    }
+
+    @Override
+    public void emptyPrinterQueue() throws Exception
+    {
+        service.emptyPrinterQueue();
     }
 
     @Override

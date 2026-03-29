@@ -62,7 +62,8 @@ public enum Endpoints
     ORDERITEMS_PDF("/orderitemspdf/:id/","readwrite", "get"),
     SELECT_ORDER_EMAIL("/selectorderemail/:id/","readwrite", "get"),
     ORDER_EMAIL("/orderitemsemail/:id/","readwrite", "get"),
-    NOTAUTHORIZED("/notauthorized/","read", "get");
+    NOTAUTHORIZED("/notauthorized/","read", "get"),
+    EMPTY_PRINTER_QUEUE("/emptyprinterqueue/","read", "get");
 
     private final String path;
     private final String role;

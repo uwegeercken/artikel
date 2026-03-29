@@ -31,6 +31,7 @@ public class Filters
                 && !request.pathInfo().equals(Endpoints.INDEX.getPath())
                 && !request.pathInfo().equals(Endpoints.NOTAUTHORIZED.getPath())
                 && !request.pathInfo().equals(Endpoints.STICKERS_SINGLEPAGE.getPath())
+                && !request.pathInfo().equals(Endpoints.EMPTY_PRINTER_QUEUE.getPath())
                 && !request.pathInfo().equals(Endpoints.GENERATE_STICKERS.getPath())
         )
         {
